@@ -58,6 +58,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
 
         showDialog("Loading");
+        Log.d("saf","aasf");
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
