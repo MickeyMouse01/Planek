@@ -28,7 +28,7 @@ import static com.example.thomas.plan.Common.Enums.TypeOfGroup;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
-    private static List<Client> listOfClients;
+    public static List<Client> listOfClients;
     private ListView listview;
 
     @Override
@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.add_client) {
-
+            Intent intent = new Intent(this, AddNewClientActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

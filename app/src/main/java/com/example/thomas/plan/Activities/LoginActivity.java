@@ -29,7 +29,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     EditText etUsername, etPassword;
     Button buttonLogin;
-    LoginPresenter mLoginModel;
+    LoginPresenter mLoginPresenter;
 
     private FirebaseAuth mAuth;
     private static final String TAG = "EmailPassword";
@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         buttonLogin = findViewById(R.id.loginButton);
         buttonLogin.setOnClickListener(this);
 
-        mLoginModel = new LoginModel(LoginActivity.this);
+        mLoginPresenter = new LoginModel(LoginActivity.this);
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        mLoginModel.performLogin(username,password);
+        mLoginPresenter.performLogin(username,password);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");

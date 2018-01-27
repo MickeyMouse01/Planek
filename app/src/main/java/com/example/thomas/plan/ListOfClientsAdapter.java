@@ -37,6 +37,7 @@ public class ListOfClientsAdapter extends ArrayAdapter {
 
         firstName.setText(listOfClients.get(position).getName());
         surname.setText(listOfClients.get(position).getSurname());
+
         return rowView;
     }
 }
