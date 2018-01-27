@@ -9,12 +9,12 @@ import com.example.thomas.plan.View.LoginView;
  * Created by Thomas on 24.01.2018.
  */
 
-public class LoginPresenterImpl implements LoginPresenter
+public class LoginModel implements LoginPresenter
 {
 
     LoginView mLoginView;
 
-    public LoginPresenterImpl(LoginView mLoginView) {
+    public LoginModel(LoginView mLoginView) {
         this.mLoginView = mLoginView;
     }
 

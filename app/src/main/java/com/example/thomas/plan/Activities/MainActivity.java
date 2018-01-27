@@ -1,11 +1,7 @@
 package com.example.thomas.plan.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,28 +12,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thomas.plan.Client;
-import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.ListOfClientsAdapter;
 import com.example.thomas.plan.R;
-import com.example.thomas.plan.View.MainView;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.example.thomas.plan.Common.Enums.TypeOfGroup;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView
+        implements NavigationView.OnNavigationItemSelectedListener
 {
     private static List<Client> listOfClients;
     private ListView listview;
@@ -120,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.add_client) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -139,8 +128,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void addClient(Client client) {
-
-    }
 }

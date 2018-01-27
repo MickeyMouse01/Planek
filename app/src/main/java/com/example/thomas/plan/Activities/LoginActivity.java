@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.thomas.plan.Model.LoginPresenterImpl;
+import com.example.thomas.plan.Model.LoginModel;
 import com.example.thomas.plan.Presenter.LoginPresenter;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.View.LoginView;
@@ -29,7 +29,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     EditText etUsername, etPassword;
     Button buttonLogin;
-    LoginPresenter mLoginPresenter;
+    LoginPresenter mLoginModel;
 
     private FirebaseAuth mAuth;
     private static final String TAG = "EmailPassword";
@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         buttonLogin = findViewById(R.id.loginButton);
         buttonLogin.setOnClickListener(this);
 
-        mLoginPresenter = new LoginPresenterImpl(LoginActivity.this);
+        mLoginModel = new LoginModel(LoginActivity.this);
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        mLoginPresenter.performLogin(username,password);
+        mLoginModel.performLogin(username,password);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
