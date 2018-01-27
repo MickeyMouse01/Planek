@@ -68,8 +68,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         mLoginPresenter.performLogin(username,password);
 
-        signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
@@ -99,6 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void loginSuccess() {
         Toast.makeText(getApplicationContext(), "Login succes", Toast.LENGTH_SHORT).show();
+        signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_MESSAGE, 2);
         startActivity(intent);
@@ -106,7 +105,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void loginError() {
-
+        signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
     }
 
