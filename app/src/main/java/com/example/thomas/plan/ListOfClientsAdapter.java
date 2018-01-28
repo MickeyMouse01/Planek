@@ -40,4 +40,9 @@ public class ListOfClientsAdapter extends ArrayAdapter {
 
         return rowView;
     }
+    public void updateListOfClients(List<Client> newlist) {
+        listOfClients.clear();
+        listOfClients.addAll(newlist);
+        this.notifyDataSetChanged();
+    }
 }

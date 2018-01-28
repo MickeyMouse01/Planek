@@ -16,6 +16,10 @@ import com.example.thomas.plan.Presenter.AddNewClientPresenter;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.View.AddNewClientView;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddNewClientActivity extends BaseActivity implements View.OnClickListener, AddNewClientView {
 
     private EditText mFirstName;
@@ -24,6 +28,10 @@ public class AddNewClientActivity extends BaseActivity implements View.OnClickLi
     private Button save;
 
     private Client newClient;
+
+    private ArrayList<Client> lisOfClients;
+
+    private Intent intent;
 
     private AddNewClientPresenter addNewClientPresenter;
 
@@ -38,6 +46,11 @@ public class AddNewClientActivity extends BaseActivity implements View.OnClickLi
         save = findViewById(R.id.add_save_button);
         save.setOnClickListener(this);
 
+        this.intent = intent;
+
+        Bundle data = this.getIntent().getBundleExtra("listOfClients");
+        lisOfClients = data.getParcelableArrayList("listOfClients");
+
         addNewClientPresenter = new AddNewClientModel(AddNewClientActivity.this);
     }
 
@@ -51,8 +64,6 @@ public class AddNewClientActivity extends BaseActivity implements View.OnClickLi
         String firstName = mFirstName.getText().toString();
         String surname = mSurname.getText().toString();
         String typeOfGroup = sTypeOfGroup.getSelectedItem().toString();
-        Log.d("ASFADSFSADFAD","ADD CLIENT");
-
         addNewClientPresenter.performAddNewClient(firstName,surname, Enums.TypeOfGroup.GROUPA);
 
     }
@@ -61,11 +72,16 @@ public class AddNewClientActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void addSuccess(String firsName, String surname, Enums.TypeOfGroup typeOfGroup) {
         newClient = new Client(firsName,surname,typeOfGroup);
-        MainActivity.listOfClients.add(newClient);
+        lisOfClients.add(newClient);
 
-        Log.d("ASFADSFSADFAD","ADD CLIENT");
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Bundle data = new Bundle();
+        data.putParcelableArrayList("listOfClients", lisOfClients);
+
+        Intent intent = new Intent(this, AddNewClientActivity.class);
+        intent.putExtra("listOfClients",data);
+
+        setResult(1,intent);
+        finish();
     }
 
     @Override

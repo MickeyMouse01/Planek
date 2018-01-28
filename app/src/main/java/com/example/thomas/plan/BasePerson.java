@@ -1,12 +1,15 @@
 package com.example.thomas.plan;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.UUID;
 
 /**
  * Created by Thomas on 25.01.2018.
  */
 
-public abstract class BasePerson {
+public abstract class BasePerson implements Parcelable {
 
 
     private String UniqueID;
@@ -18,9 +21,19 @@ public abstract class BasePerson {
         Name = name;
         Surname = surname;
     }
+    public BasePerson () {
+    }
 
-    public BasePerson() {
-
+    protected BasePerson(Parcel in) {
+        UniqueID = in.readString();
+        Name = in.readString();
+        Surname = in.readString();
+    }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(UniqueID);
+        dest.writeString(Name);
+        dest.writeString(Surname);
     }
 
     public String getUniqueID() {

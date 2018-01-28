@@ -2,6 +2,7 @@ package com.example.thomas.plan.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,7 @@ import com.example.thomas.plan.Client;
 import com.example.thomas.plan.ListOfClientsAdapter;
 import com.example.thomas.plan.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +30,9 @@ import static com.example.thomas.plan.Common.Enums.TypeOfGroup;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
-    public static List<Client> listOfClients;
+    private ArrayList<Client> listOfClients;
     private ListView listview;
+    private ListOfClientsAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +50,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        Log.d("MainActivity", "Znovu jsem zavolal metodu onCreate");
         listview = (ListView) findViewById(R.id.list_view);
 
         initClients();
 
-        ListOfClientsAdapter listAdapter = new
-                ListOfClientsAdapter(MainActivity.this, listOfClients);
+        listAdapter = new ListOfClientsAdapter(MainActivity.this, listOfClients);
 
         listview.setAdapter(listAdapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    private static void initClients() {
+    private void initClients() {
         listOfClients = new ArrayList<Client>();
         listOfClients.add(new Client("Josef","Namornik", TypeOfGroup.GROUPA));
         listOfClients.add(new Client("Tomas","Blah", TypeOfGroup.GROUPB));
@@ -101,6 +103,15 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bundle blah = data.getBundleExtra("listOfClients");
+        listOfClients = blah.getParcelableArrayList("listOfClients");
+
+        listAdapter.updateListOfClients(listOfClients);
+
+
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -109,8 +120,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.add_client) {
+            Bundle data = new Bundle();
+            data.putParcelableArrayList("listOfClients", listOfClients);
+
             Intent intent = new Intent(this, AddNewClientActivity.class);
-            startActivity(intent);
+            intent.putExtra("listOfClients",data);
+            startActivityForResult(intent,1);
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
