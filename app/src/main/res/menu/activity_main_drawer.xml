@@ -5,31 +5,32 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/add_client"
-            android:icon="@android:drawable/ic_input_add"
-            android:title="Přidat klienta" />
-        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Moje smeny" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+            android:title="Muj profil" />
 
-    <item android:title="Communicate">
+    </group>
+    <item android:title="-----------------------------------------">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_add_client"
+                android:icon="@android:drawable/ic_input_add"
+                android:title="Přidat klienta" />
+        </menu>
+    </item>
+
+    <item android:title="-----------------------------------------">
+        <menu>
             <item
-                android:id="@+id/logOut"
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Nastavení" />
+            <item
+                android:id="@+id/nav_logout"
                 android:icon="@android:drawable/btn_dialog"
                 android:title="Odhlásit se" />
         </menu>

@@ -9,7 +9,9 @@ import android.os.Parcelable;
 
 public class Nurse extends BasePerson implements Parcelable {
 
-    //todo extend this class with parcelable
+    //TODO extend this class with parcelable
+    //TODO add atribute, list of clients
+
 
     private int shift;
 

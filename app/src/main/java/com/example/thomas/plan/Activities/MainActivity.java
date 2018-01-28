@@ -17,12 +17,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thomas.plan.Client;
-import com.example.thomas.plan.ListOfClientsAdapter;
+import com.example.thomas.plan.Adapters.ListOfClientsAdapter;
 import com.example.thomas.plan.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.thomas.plan.Common.Enums.TypeOfGroup;
 
@@ -119,7 +117,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.add_client) {
+        if (id == R.id.nav_add_client) {
             Bundle data = new Bundle();
             data.putParcelableArrayList("listOfClients", listOfClients);
 
@@ -133,9 +131,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.logOut) {
+        } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }

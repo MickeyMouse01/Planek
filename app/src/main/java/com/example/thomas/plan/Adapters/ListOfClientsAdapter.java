@@ -1,4 +1,4 @@
-package com.example.thomas.plan;
+package com.example.thomas.plan.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.thomas.plan.Client;
+import com.example.thomas.plan.R;
 
 import java.util.ArrayList;
 import java.util.List;
