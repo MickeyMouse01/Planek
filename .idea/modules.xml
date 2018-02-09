@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Plan.iml" filepath="$PROJECT_DIR$/Plan.iml" />
+      <module fileurl="file://C:\Users\pospe\AndroidStudioProjects\Planek\Plan.iml" filepath="C:\Users\pospe\AndroidStudioProjects\Planek\Plan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Planek.iml" filepath="$PROJECT_DIR$/Planek.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\pospe\AndroidStudioProjects\Planek\app\app.iml" filepath="C:\Users\pospe\AndroidStudioProjects\Planek\app\app.iml" />
     </modules>
   </component>
 </project>

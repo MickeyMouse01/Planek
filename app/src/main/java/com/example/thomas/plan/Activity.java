@@ -15,6 +15,7 @@ public class Activity implements Parcelable {
 
     //todo passing Activity between activities
     //todo also atribute time type of Calendar
+    //b;ah
 
 
     private String name;
