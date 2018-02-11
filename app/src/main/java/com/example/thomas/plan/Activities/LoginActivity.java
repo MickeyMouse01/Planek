@@ -3,13 +3,18 @@ package com.example.thomas.plan.Activities;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.thomas.plan.Model.LoginModel;
+
+import com.example.thomas.plan.Client;
+import com.example.thomas.plan.LoginState;
+import com.example.thomas.plan.LoginViewModel;
+import com.example.thomas.plan.MainViewModel;
 import com.example.thomas.plan.Presenter.LoginPresenter;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.View.LoginView;
@@ -24,12 +29,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.arch.lifecycle.*;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginView {
+import java.util.ArrayList;
+
+
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     EditText etUsername, etPassword;
     Button buttonLogin;
     LoginPresenter mLoginPresenter;
+    private LoginViewModel loginViewModel;
 
     private FirebaseAuth mAuth;
     private static final String TAG = "EmailPassword";
@@ -50,7 +60,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         buttonLogin = findViewById(R.id.loginButton);
         buttonLogin.setOnClickListener(this);
 
-        mLoginPresenter = new LoginModel(LoginActivity.this);
+       // mLoginPresenter = new LoginModel(LoginActivity.this);
+        loginViewModel = new LoginViewModel();
+        loginViewModel.getLoggedUser().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+
+            }
+        });
+
+        loginViewModel.getLoginState().observe(this, new Observer<LoginState>() {
+            @Override
+            public void onChanged(@Nullable LoginState loginState) {
+                userLogin(loginState);
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -66,7 +91,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        mLoginPresenter.performLogin(username,password);
+        loginViewModel.performLogin(username,password);
+
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
@@ -87,14 +114,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+    private void userLogin(LoginState loginState) {
+        switch (loginState) {
+            case RESULT_OK:
+                loginSuccess();
+                break;
+            case ERROR_CREDENTIALS:
+                loginError();
+                break;
+            case ERROR_VALIDATIONS:
+                loginValidations();
+                break;
+        }
 
-    @Override
+    }
+
+
+
+
     public void loginValidations() {
 
         Toast.makeText(getApplicationContext(), "Please enter username and password", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
+
     public void loginSuccess() {
         Toast.makeText(getApplicationContext(), "Login succes", Toast.LENGTH_SHORT).show();
         signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
@@ -103,7 +146,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         startActivity(intent);
     }
 
-    @Override
+
     public void loginError() {
         signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();

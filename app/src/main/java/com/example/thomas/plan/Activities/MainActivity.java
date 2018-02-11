@@ -1,5 +1,6 @@
 package com.example.thomas.plan.Activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.thomas.plan.Client;
 import com.example.thomas.plan.Adapters.ListOfClientsAdapter;
+import com.example.thomas.plan.MainViewModel;
 import com.example.thomas.plan.R;
 
 import java.util.ArrayList;
@@ -31,11 +33,15 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Client> listOfClients;
     private ListView listview;
     private ListOfClientsAdapter listAdapter;
+    private MainViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("MainActivity", "Znovu jsem zavolal metodu onCreate");
         listview = (ListView) findViewById(R.id.list_view);
 
-        initClients();
+        initClients(mViewModel);
 
         listAdapter = new ListOfClientsAdapter(MainActivity.this, listOfClients);
 
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    private void initClients() {
+    private void initClients(MainViewModel mViewModel) {
         listOfClients = new ArrayList<Client>();
         listOfClients.add(new Client("Josef","Namornik", TypeOfGroup.GROUPA));
         listOfClients.add(new Client("Tomas","Blah", TypeOfGroup.GROUPB));
@@ -128,8 +134,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_settings) {
 
