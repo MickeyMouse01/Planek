@@ -11,13 +11,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.example.thomas.plan.Client;
 import com.example.thomas.plan.LoginState;
 import com.example.thomas.plan.LoginViewModel;
-import com.example.thomas.plan.MainViewModel;
 import com.example.thomas.plan.Presenter.LoginPresenter;
 import com.example.thomas.plan.R;
-import com.example.thomas.plan.View.LoginView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import android.arch.lifecycle.*;
-
-import java.util.ArrayList;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -132,22 +127,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
 
-    public void loginValidations() {
+    private void loginValidations() {
 
         Toast.makeText(getApplicationContext(), "Please enter username and password", Toast.LENGTH_SHORT).show();
     }
 
 
-    public void loginSuccess() {
+    private void loginSuccess() {
+
         Toast.makeText(getApplicationContext(), "Login succes", Toast.LENGTH_SHORT).show();
         signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
+        Log.d("TAG", "prihalseni");
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_MESSAGE, 2);
         startActivity(intent);
     }
 
 
-    public void loginError() {
+    private void loginError() {
         signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
     }
@@ -155,8 +152,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
+       // showDialog("Loading");
 
-        showDialog("Loading");
         // [START sign_in_with_email]
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -181,7 +178,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             // mStatusTextView.setText(R.string.auth_failed);
                             Toast.makeText(LoginActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                         }
-                        hideDialog();
+                    //    hideDialog();
                         // [END_EXCLUDE]
                     }
                 });

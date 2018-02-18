@@ -1,17 +1,15 @@
-package com.example.thomas.plan;
+package com.example.thomas.plan.Clients;
 
 /**
  * Created by Thomas on 25.01.2018.
  */
 import android.os.Parcel;
-import android.os.Parcelable;
 
+import com.example.thomas.plan.BasePerson;
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
 
-import java.io.Serializable;
 
-
-public class Client extends BasePerson  {
+public class Client extends BasePerson {
 
 
     private TypeOfGroup typeOfGroup;

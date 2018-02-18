@@ -1,24 +1,20 @@
 package com.example.thomas.plan.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.thomas.plan.Client;
+import com.example.thomas.plan.Clients.Client;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.Model.AddNewClientModel;
 import com.example.thomas.plan.Presenter.AddNewClientPresenter;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.View.AddNewClientView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddNewClientActivity extends BaseActivity implements View.OnClickListener, AddNewClientView {
 
