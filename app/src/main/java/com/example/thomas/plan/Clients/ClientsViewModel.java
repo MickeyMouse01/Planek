@@ -3,11 +3,15 @@ package com.example.thomas.plan.Clients;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
+import android.databinding.ObservableList;
 
 import com.example.thomas.plan.Clients.Client;
 import com.example.thomas.plan.Common.Enums;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pospe on 10.02.2018.
@@ -15,14 +19,21 @@ import java.util.ArrayList;
 
 public class ClientsViewModel extends ViewModel {
 
-    private MutableLiveData<ArrayList<Client>> mListOfClients;
-    private ArrayList<Client> clientList = new ArrayList<>();
+    public final MutableLiveData<List<Client>> mListOfClients = new MutableLiveData<>();
+    public final List<Client> clientList = new ArrayList<>();
 
-    public LiveData<ArrayList<Client>> getUsers() {
+    public final ObservableList<Client> items = new ObservableArrayList<>();
+
+    public ClientsViewModel() {
+
+    }
+
+
+    public LiveData<List<Client>> getUsers() {
         if (mListOfClients == null) {
-            mListOfClients = new MutableLiveData<>();
             loadUsers();
         }
+
         return mListOfClients;
     }
 

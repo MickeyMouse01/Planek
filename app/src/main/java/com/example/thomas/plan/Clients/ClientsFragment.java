@@ -1,5 +1,6 @@
 package com.example.thomas.plan.Clients;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.thomas.plan.Activities.MainActivity;
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.databinding.*;
 import com.example.thomas.plan.databinding.ClientsFragmentBinding;
 
 import java.util.ArrayList;
@@ -47,11 +50,13 @@ public class ClientsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mClientsFragmentBinding = ClientsFragmentBinding.inflate(inflater, container, false);
+        mClientsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.clients_fragment, container, false);
 
         mClientsViewModel = MainActivity.obtainViewModel(getActivity());
 
         mClientsFragmentBinding.setViewmodel(mClientsViewModel);
+       // mClientsFragmentBinding.setClient(new Client("konecne","konecne", Enums.TypeOfGroup.GROUPA));
+
 
         setHasOptionsMenu(true);
 
@@ -144,7 +149,7 @@ public class ClientsFragment extends Fragment
     }*/
 
     private void setupListAdapter() {
-        ListView listView =  mClientsFragmentBinding.tasksList;
+        ListView listView =  mClientsFragmentBinding.clientsList;
 
        mClientsAdapter = new ListOfClientsAdapter(
                 new ArrayList<Client>(0),
