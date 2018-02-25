@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.thomas.plan.LoginState;
 import com.example.thomas.plan.LoginViewModel;
-import com.example.thomas.plan.Presenter.LoginPresenter;
+
 import com.example.thomas.plan.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +33,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     EditText etUsername, etPassword;
     Button buttonLogin;
-    LoginPresenter mLoginPresenter;
     private LoginViewModel loginViewModel;
 
     private FirebaseAuth mAuth;

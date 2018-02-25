@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://C:\Users\pospe\AndroidStudioProjects\Planek\Plan.iml" filepath="C:\Users\pospe\AndroidStudioProjects\Planek\Plan.iml" />
       <module fileurl="file://$PROJECT_DIR$/Planek.iml" filepath="$PROJECT_DIR$/Planek.iml" />
+      <module fileurl="file://C:\Users\Tomas\AndroidStudioProjects\Bk\Planek\Planek.iml" filepath="C:\Users\Tomas\AndroidStudioProjects\Bk\Planek\Planek.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Tomas\AndroidStudioProjects\Bk\Planek\app\app.iml" filepath="C:\Users\Tomas\AndroidStudioProjects\Bk\Planek\app\app.iml" />
     </modules>
   </component>
 </project>
