@@ -1,8 +1,10 @@
 package com.example.thomas.plan.Activities;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
@@ -10,12 +12,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.Clients.Client;
+import com.example.thomas.plan.data.Client;
 import com.example.thomas.plan.Clients.ListOfClientsAdapter;
 import com.example.thomas.plan.Clients.ClientsFragment;
 import com.example.thomas.plan.Clients.ClientsViewModel;
@@ -42,26 +46,17 @@ public class MainActivity extends AppCompatActivity
         setupViewFragment();
         setupDrawerLayout();
         setupNavigation();
-/*
-        mViewModel = ViewModelProviders.of(this).get(ClientsViewModel.class);
-        listOfClients = mViewModel.getUsers().getValue();
 
+        mViewModel = obtainViewModel(this);
 
-
-
-        mViewModel.getUsers().observe(this, new Observer<ArrayList<Client>>() {
+        mViewModel.getAddNewClient().observe(this, new Observer<Void>() {
             @Override
-            public void onChanged(@Nullable ArrayList<Client> clients) {
-                listAdapter.notifyDataSetChanged();
+            public void onChanged(@Nullable Void aVoid) {
+                Log.d("Blah","saf");
+                Toast.makeText(MainActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
-        Log.d("MainActivity", "Znovu jsem zavolal metodu onCreate");
-        listview = (ListView) findViewById(R.id.list_view);
-        listAdapter = new ListOfClientsAdapter(MainActivity.this, listOfClients);
-        listview.setAdapter(listAdapter);*/
     }
 
     private void setupToolbar(){

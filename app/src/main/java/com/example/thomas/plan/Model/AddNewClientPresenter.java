@@ -1,4 +1,4 @@
-package com.example.thomas.plan.Presenter;
+package com.example.thomas.plan.Model;
 
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
 

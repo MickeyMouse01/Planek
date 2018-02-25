@@ -1,9 +1,6 @@
 package com.example.thomas.plan.Model;
 
-import android.text.TextUtils;
-
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
-import com.example.thomas.plan.Presenter.AddNewClientPresenter;
 import com.example.thomas.plan.View.AddNewClientView;
 
 /**

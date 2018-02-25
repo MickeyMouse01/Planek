@@ -1,15 +1,14 @@
 package com.example.thomas.plan.Clients;
 
 import android.databinding.DataBindingUtil;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.example.thomas.plan.Clients.Client;
-import com.example.thomas.plan.Clients.ClientItemUserActionsListener;
-import com.example.thomas.plan.Clients.ClientsViewModel;
-import com.example.thomas.plan.databinding.*;
+import com.example.thomas.plan.data.Client;
+import com.example.thomas.plan.databinding.ClientItemBinding;
 
 import java.util.List;
 
@@ -67,7 +66,8 @@ public class ListOfClientsAdapter extends BaseAdapter {
         ClientItemUserActionsListener userActionsListener = new ClientItemUserActionsListener() {
             @Override
             public void onClientClicked(Client client) {
-              //  mTasksViewModel.getOpenTaskEvent().setValue(task.getId());
+                Log.d("Blah","edho");
+                mClientsViewModel.getAddNewClient().call();
             }
         };
 

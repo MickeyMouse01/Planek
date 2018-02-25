@@ -14,9 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.thomas.plan.Activities.MainActivity;
-import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
-import com.example.thomas.plan.databinding.*;
+import com.example.thomas.plan.data.Client;
 import com.example.thomas.plan.databinding.ClientsFragmentBinding;
 
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public class ClientsFragment extends Fragment
     public void onResume() {
         super.onResume();
         mClientsViewModel.getUsers();
+
     }
 
     @Nullable
@@ -55,7 +55,7 @@ public class ClientsFragment extends Fragment
         mClientsViewModel = MainActivity.obtainViewModel(getActivity());
 
         mClientsFragmentBinding.setViewmodel(mClientsViewModel);
-       // mClientsFragmentBinding.setClient(new Client("konecne","konecne", Enums.TypeOfGroup.GROUPA));
+
 
 
         setHasOptionsMenu(true);

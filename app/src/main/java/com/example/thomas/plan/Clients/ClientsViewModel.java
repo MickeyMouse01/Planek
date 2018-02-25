@@ -3,12 +3,10 @@ package com.example.thomas.plan.Clients;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
-import android.databinding.ObservableList;
 
-import com.example.thomas.plan.Clients.Client;
+import com.example.thomas.plan.data.Client;
 import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.SingleLiveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +17,10 @@ import java.util.List;
 
 public class ClientsViewModel extends ViewModel {
 
-    public final MutableLiveData<List<Client>> mListOfClients = new MutableLiveData<>();
+    public MutableLiveData<List<Client>> mListOfClients;
     public final List<Client> clientList = new ArrayList<>();
 
-    public final ObservableList<Client> items = new ObservableArrayList<>();
+    public final SingleLiveEvent<Void> addNewClient = new SingleLiveEvent<>();
 
     public ClientsViewModel() {
 
@@ -31,10 +29,15 @@ public class ClientsViewModel extends ViewModel {
 
     public LiveData<List<Client>> getUsers() {
         if (mListOfClients == null) {
+            mListOfClients = new MutableLiveData<>();
             loadUsers();
         }
 
         return mListOfClients;
+    }
+
+    public SingleLiveEvent<Void> getAddNewClient() {
+        return addNewClient;
     }
 
     public void addClient(Client client){

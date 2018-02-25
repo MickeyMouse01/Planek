@@ -1,4 +1,4 @@
-package com.example.thomas.plan.Clients;
+package com.example.thomas.plan.data;
 
 /**
  * Created by Thomas on 25.01.2018.

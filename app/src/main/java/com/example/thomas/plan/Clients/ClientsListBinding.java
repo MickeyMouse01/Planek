@@ -1,9 +1,11 @@
 package com.example.thomas.plan.Clients;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.databinding.BindingAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.example.thomas.plan.data.Client;
+
 import java.util.List;
 
 /**
@@ -14,11 +16,11 @@ public class ClientsListBinding {
 
 
     @BindingAdapter("app:items")
-    public static void setItems(ListView listView, List<Client> items) {
+    public static void setItems(ListView listView, MutableLiveData<List<Client>> items) {
         ListOfClientsAdapter adapter = (ListOfClientsAdapter) listView.getAdapter();
         if (adapter != null)
         {
-            adapter.replaceData(items);
+            adapter.replaceData(items.getValue());
         }
     }
 }
