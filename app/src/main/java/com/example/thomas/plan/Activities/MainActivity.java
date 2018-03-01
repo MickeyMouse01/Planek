@@ -120,8 +120,7 @@ public class MainActivity extends AppCompatActivity
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bundle blah = data.getBundleExtra("listOfClients");
-        listOfClients = blah.getParcelableArrayList("listOfClients");
+
 
       //  listAdapter.updateListOfClients(listOfClients);
 
@@ -134,12 +133,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add_client) {
-            Bundle data = new Bundle();
-            data.putParcelableArrayList("listOfClients", listOfClients);
-
-            Intent intent = new Intent(this, AddNewClientActivity.class);
-            intent.putExtra("listOfClients",data);
-            startActivityForResult(intent,1);
 
         } else if (id == R.id.nav_gallery) {
 

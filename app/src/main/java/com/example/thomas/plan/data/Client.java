@@ -3,50 +3,64 @@ package com.example.thomas.plan.data;
 /**
  * Created by Thomas on 25.01.2018.
  */
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 
-import com.example.thomas.plan.BasePerson;
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
 
 
-public class Client extends BasePerson {
+public class Client  {
 
+     @PrimaryKey()
+    private String UniqueID;
 
+     @ColumnInfo(name = "type_of_group")
     private TypeOfGroup typeOfGroup;
+
+     @ColumnInfo(name = "first_name")
+    private String Name;
+
+     @ColumnInfo(name = "sur_name")
+    private String Surname;
 
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
-        super(name, surname);
+        Name = name;
+        Surname = surname;
         this.typeOfGroup = typeOfGroup;
     }
 
-    protected Client(Parcel in) {
-        super(in);
-        typeOfGroup = (TypeOfGroup) in.readValue(TypeOfGroup.class.getClassLoader());
+
+    public String getUniqueID() {
+        return UniqueID;
     }
 
-    public static final Creator<Client> CREATOR = new Creator<Client>() {
-        @Override
-        public Client createFromParcel(Parcel in) {
-            return new Client(in);
-        }
 
-        @Override
-        public Client[] newArray(int size) {
-            return new Client[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeValue(typeOfGroup);
+    public void setUniqueID(String uniqueID) {
+        UniqueID = uniqueID;
     }
 
-    public int describeContents() {
-        return 0;
+
+    public String getName() {
+        return Name;
     }
 
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+
+    public String getSurname() {
+        return Surname;
+    }
+
+
+    public void setSurname(String surname) {
+        Surname = surname;
+    }
 
 
     public void setTypeOfGroup(TypeOfGroup typeOfGroup) {
