@@ -2,6 +2,9 @@ package com.example.thomas.plan.Activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.db.SupportSQLiteOpenHelper;
+import android.arch.persistence.room.DatabaseConfiguration;
+import android.arch.persistence.room.InvalidationTracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,11 +22,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thomas.plan.ActivityUtils;
+import com.example.thomas.plan.data.AppDatabase;
 import com.example.thomas.plan.data.Client;
 import com.example.thomas.plan.Clients.ListOfClientsAdapter;
 import com.example.thomas.plan.Clients.ClientsFragment;
 import com.example.thomas.plan.Clients.ClientsViewModel;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.data.ClientDao;
+import com.example.thomas.plan.data.DatabaseInitializer;
 
 import java.util.ArrayList;
 
@@ -52,10 +58,14 @@ public class MainActivity extends AppCompatActivity
         mViewModel.getAddNewClient().observe(this, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
-                Log.d("Blah","saf");
+                Log.d("Blah", "saf");
                 Toast.makeText(MainActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        DatabaseInitializer.populateAsync(AppDatabase.getAppDatabase(this));
+
 
     }
 
@@ -113,6 +123,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            DatabaseInitializer.populateAsync(AppDatabase.getAppDatabase(this));
             return true;
         }
 

@@ -6,30 +6,38 @@ package com.example.thomas.plan.data;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
+import com.example.thomas.plan.data.Converters.TypeOfGroupConverter;
 
-
+@Entity(tableName = "client")
 public class Client  {
 
+     @NonNull
      @PrimaryKey()
-    private String UniqueID;
+     public String UniqueID;
 
      @ColumnInfo(name = "type_of_group")
-    private TypeOfGroup typeOfGroup;
+     @TypeConverters(TypeOfGroupConverter.class)
+     public TypeOfGroup typeOfGroup;
 
      @ColumnInfo(name = "first_name")
-    private String Name;
+     public String Name;
 
      @ColumnInfo(name = "sur_name")
-    private String Surname;
+     public String Surname;
 
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
         Name = name;
         Surname = surname;
         this.typeOfGroup = typeOfGroup;
+    }
+    public Client (){
+
     }
 
 
@@ -38,7 +46,7 @@ public class Client  {
     }
 
 
-    public void setUniqueID(String uniqueID) {
+    public void setUniqueID(@NonNull String uniqueID) {
         UniqueID = uniqueID;
     }
 

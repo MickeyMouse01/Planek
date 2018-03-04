@@ -7,10 +7,21 @@ package com.example.thomas.plan.Common;
 public class Enums {
 
     public enum TypeOfGroup {
-        GROUPA,
-        GROUPB,
-        GROUPC,
+        GROUPA(0),
+        GROUPB(1),
+        GROUPC(2);
+
+        private int code;
+
+        TypeOfGroup(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
     }
+
     public enum Shift {
         MORNING,
         AFTERNOON,
