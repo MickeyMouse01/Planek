@@ -24,6 +24,8 @@ import java.util.ArrayList;
  * Created by pospe on 15.02.2018.
  */
 
+    //todo zjistit proc nejde nastavil listener na kliknuti clienta v linear layoutu v client-item
+
 public class ClientsFragment extends Fragment
         implements NavigationView.OnNavigationItemSelectedListener {
 

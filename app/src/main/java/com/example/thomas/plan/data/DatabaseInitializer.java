@@ -12,6 +12,10 @@ import java.util.UUID;
 /**
  * Created by Tomas on 04-Mar-18.
  */
+    //TODO nastavbda na lokalni databazi, zdroj dat bude ted lokalni databaze
+    //TODO ucesat kod
+
+
 
 public class DatabaseInitializer  {
 
@@ -33,7 +37,7 @@ public class DatabaseInitializer  {
 
     private static void populateWithTestData(AppDatabase db) {
         Client client = new Client();
-        client.setName("MujTest");
+        client.setName("KLientaJednaA");
         client.setSurname("Anoj");
         client.setUniqueID(UUID.randomUUID().toString());
         client.setTypeOfGroup(Enums.TypeOfGroup.GROUPA);

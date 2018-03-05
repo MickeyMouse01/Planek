@@ -1,4 +1,4 @@
-package com.example.thomas.plan.data;
+package com.example.thomas.plan.data.Local;
 
 import android.arch.persistence.room.TypeConverter;
 

@@ -7,11 +7,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
-import com.example.thomas.plan.data.Converters.TypeOfGroupConverter;
+import com.example.thomas.plan.data.Local.Converters.TypeOfGroupConverter;
 
 @Entity(tableName = "client")
 public class Client  {

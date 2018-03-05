@@ -15,6 +15,8 @@ import com.example.thomas.plan.LoginState;
 import com.example.thomas.plan.LoginViewModel;
 
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.data.AppDatabase;
+import com.example.thomas.plan.data.DatabaseInitializer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -89,6 +91,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
 
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
@@ -101,7 +104,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-             Log.d(TAG,"blash");
+             Log.d(TAG,databaseError.getMessage());
             }
         });
 
