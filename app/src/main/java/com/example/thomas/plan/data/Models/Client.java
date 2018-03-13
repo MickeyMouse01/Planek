@@ -1,4 +1,4 @@
-package com.example.thomas.plan.data;
+package com.example.thomas.plan.data.Models;
 
 /**
  * Created by Thomas on 25.01.2018.

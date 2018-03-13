@@ -1,4 +1,4 @@
-package com.example.thomas.plan.data;
+package com.example.thomas.plan.data.Models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -9,11 +9,8 @@ import android.support.annotation.NonNull;
 /**
  * Created by Tomas on 05-Mar-18.
  */
-
-//todo zkonvertovat Image na string
-
-@Entity(tableName = "plan")
-public class Plan {
+@Entity(tableName = "task")
+public class Task {
 
     @NonNull
     @PrimaryKey()
@@ -22,13 +19,13 @@ public class Plan {
     @ColumnInfo(name = "name")
     public String name;
 
-   /* @ColumnInfo(name = "img")
+    /*@ColumnInfo(name = "img")
     public Image img;*/
 
     @ColumnInfo(name = "isDone")
     public boolean isDone;
 
-    public Plan() {
+    public Task() {
     }
 
     @NonNull

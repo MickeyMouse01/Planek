@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.example.thomas.plan.data.Client;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.SingleLiveEvent;
 

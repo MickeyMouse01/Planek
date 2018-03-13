@@ -1,10 +1,11 @@
-package com.example.thomas.plan.data;
+package com.example.thomas.plan.data.Local;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.data.Models.Client;
 
 import java.util.List;
 import java.util.UUID;

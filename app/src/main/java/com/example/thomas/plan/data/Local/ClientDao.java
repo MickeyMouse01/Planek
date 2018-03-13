@@ -2,11 +2,10 @@ package com.example.thomas.plan.data.Local;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.example.thomas.plan.data.Client;
+import com.example.thomas.plan.data.Models.Client;
 
 import java.util.List;
 

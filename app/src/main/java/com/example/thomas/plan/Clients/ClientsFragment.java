@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 import com.example.thomas.plan.Activities.MainActivity;
 import com.example.thomas.plan.R;
-import com.example.thomas.plan.data.Client;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.databinding.ClientsFragmentBinding;
 
 import java.util.ArrayList;

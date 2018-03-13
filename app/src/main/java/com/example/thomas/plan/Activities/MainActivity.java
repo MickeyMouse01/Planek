@@ -19,13 +19,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.data.AppDatabase;
-import com.example.thomas.plan.data.Client;
+import com.example.thomas.plan.data.Local.AppDatabase;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.Clients.ListOfClientsAdapter;
 import com.example.thomas.plan.Clients.ClientsFragment;
 import com.example.thomas.plan.Clients.ClientsViewModel;
 import com.example.thomas.plan.R;
-import com.example.thomas.plan.data.DatabaseInitializer;
+import com.example.thomas.plan.data.Local.DatabaseInitializer;
 
 import java.util.ArrayList;
 

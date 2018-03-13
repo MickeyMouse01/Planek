@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.example.thomas.plan.data.Client;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.databinding.ClientItemBinding;
 
 import java.util.List;

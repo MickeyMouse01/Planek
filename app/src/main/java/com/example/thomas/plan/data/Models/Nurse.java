@@ -1,4 +1,4 @@
-package com.example.thomas.plan.data;
+package com.example.thomas.plan.data.Models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

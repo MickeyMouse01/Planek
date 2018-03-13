@@ -5,7 +5,7 @@
 
         <variable
             name="client"
-            type="com.example.thomas.plan.data.Client" />
+            type="com.example.thomas.plan.data.Models.Client" />
 
         <variable
             name="listener"

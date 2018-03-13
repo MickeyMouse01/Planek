@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.databinding.BindingAdapter;
 import android.widget.ListView;
 
-import com.example.thomas.plan.data.Client;
+import com.example.thomas.plan.data.Models.Client;
 
 import java.util.List;
 
