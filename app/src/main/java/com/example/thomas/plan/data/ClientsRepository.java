@@ -2,7 +2,9 @@ package com.example.thomas.plan.data;
 
 import android.support.annotation.NonNull;
 
-import com.example.thomas.plan.data.Remote.ClientsRemoteDataSource;
+import com.example.thomas.plan.data.Models.Client;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Tomas on 13-Mar-18.
@@ -10,21 +12,25 @@ import com.example.thomas.plan.data.Remote.ClientsRemoteDataSource;
 
 public class ClientsRepository {
 
-    public static ClientsRepository INSTANCE = null;
+    private static volatile ClientsRepository INSTANCE;
+    private DatabaseReference mDatabase;
 
-    private ClientsRemoteDataSource mTasksLocalDataSource;
-
-
-    private ClientsRepository(@NonNull ClientsRemoteDataSource clients){
-        mTasksLocalDataSource = clients;
-
+    private ClientsRepository(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public static ClientsRepository getInstance(ClientsRemoteDataSource clients){
-
-        if (INSTANCE == null){
-            INSTANCE = new ClientsRepository(clients);
+    public static ClientsRepository getInstance(){
+        if (INSTANCE == null) {
+            synchronized (ClientsRepository.class){
+                if (INSTANCE == null) {
+                    INSTANCE = new ClientsRepository();
+                }
+            }
         }
         return INSTANCE;
+    }
+    public Boolean saveClient(@NonNull Client client){
+        mDatabase.child("client").child("UserID").setValue(client);
+        return true;
     }
 }

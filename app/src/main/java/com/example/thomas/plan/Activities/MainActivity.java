@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thomas.plan.ActivityUtils;
+import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Local.AppDatabase;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.Clients.ListOfClientsAdapter;
@@ -58,11 +59,6 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
             }
         });
-
-    DatabaseInitializer.populateSync(AppDatabase.getAppDatabase(this));
-
-
-
     }
 
     private void setupToolbar(){
@@ -96,8 +92,9 @@ public class MainActivity extends AppCompatActivity
 
     public static ClientsViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
-        ClientsViewModel viewModel = ViewModelProviders.of(activity).get(ClientsViewModel.class);
+        ClientsViewModel viewModel = ViewModelProviders.of(activity,factory).get(ClientsViewModel.class);
 
         return viewModel;
     }

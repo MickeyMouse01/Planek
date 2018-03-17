@@ -12,9 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.example.thomas.plan.Clients.ClientsViewModel;
-import com.example.thomas.plan.LoginState;
-import com.example.thomas.plan.LoginViewModel;
+import com.example.thomas.plan.login.LoginState;
+import com.example.thomas.plan.login.LoginViewModel;
 
 import com.example.thomas.plan.R;
 import com.google.android.gms.tasks.OnCompleteListener;

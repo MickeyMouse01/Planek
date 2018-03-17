@@ -1,8 +1,10 @@
-package com.example.thomas.plan;
+package com.example.thomas.plan.login;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.text.TextUtils;
+
+import com.example.thomas.plan.login.LoginState;
 
 /**
  * Created by pospe on 11.02.2018.
