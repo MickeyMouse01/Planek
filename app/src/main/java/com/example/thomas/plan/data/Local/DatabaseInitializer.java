@@ -37,13 +37,6 @@ public class DatabaseInitializer  {
     }
 
     private static void populateWithTestData(AppDatabase db) {
-        Client client = new Client();
-        client.setName("KLientaJednaA");
-        client.setSurname("Anoj");
-        client.setUniqueID(UUID.randomUUID().toString());
-        client.setTypeOfGroup(Enums.TypeOfGroup.GROUPA);
-        addUser(db, client);
-        Log.d("Muj Tag", "Funguje");
 
         List<Client> userList = db.clientDao().getAll();
         Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());

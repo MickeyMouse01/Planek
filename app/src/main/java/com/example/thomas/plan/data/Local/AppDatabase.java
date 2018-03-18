@@ -15,10 +15,6 @@ import com.example.thomas.plan.data.Models.Task;
  * Created by Tomas on 25-Feb-18.
  */
 
-@Database(entities = {  Client.class,
-                        Nurse.class,
-                        Task.class,
-                        Plan.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;

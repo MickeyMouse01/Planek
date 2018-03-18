@@ -19,14 +19,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.thomas.plan.ActivityUtils;
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.data.Local.AppDatabase;
+import com.example.thomas.plan.data.ClientsRepository;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.Clients.ListOfClientsAdapter;
 import com.example.thomas.plan.Clients.ClientsFragment;
 import com.example.thomas.plan.Clients.ClientsViewModel;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Local.DatabaseInitializer;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -39,6 +42,11 @@ public class MainActivity extends AppCompatActivity
     private ListOfClientsAdapter listAdapter;
     private ClientsViewModel mViewModel;
     private Toolbar toolbar;
+    private ClientsRepository repository;
+
+
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,8 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
             }
         });
+        repository = ClientsRepository.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private void setupToolbar(){
@@ -132,6 +142,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add_client) {
+            repository.getClient("e5edccbf-4cf9-40a3-b93a-d2ce8e81c398");
 
         } else if (id == R.id.nav_gallery) {
 

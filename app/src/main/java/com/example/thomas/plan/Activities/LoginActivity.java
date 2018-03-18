@@ -38,11 +38,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private FirebaseAuth mAuth;
     private static final String TAG = "EmailPassword";
-    private static final String FIREBASE_EMAIL = "planningklic@gmail.com" ;
-    private static final String FIREBASE_PASSWORD = "77QTg72MHdGdPUjy";
+    private final String USERNAME = "pospecnik@seznam.cz";
+    private final String PASSWORD = "planek";
 
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+
+    private String username;
+    private String password;
 
 
     @Override
@@ -51,6 +54,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
+
+        etUsername.setText(USERNAME);
+        etPassword.setText(PASSWORD);
 
         buttonLogin = findViewById(R.id.loginButton);
         buttonLogin.setOnClickListener(this);
@@ -72,6 +78,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
 
         mAuth = FirebaseAuth.getInstance();
+        Log.d("INSTANCE",mAuth.toString());
 
     }
 
@@ -84,47 +91,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         // Use a Factory to inject dependencies into the ViewModel
 
         LoginViewModel viewModel = ViewModelProviders.of(activity).get(LoginViewModel.class);
-
         return viewModel;
     }
 
 
     @Override
     public void onClick(View view) {
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
+        username = etUsername.getText().toString();
+        password = etPassword.getText().toString();
 
         loginViewModel.performLogin(username,password);
-
-
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-             Log.d(TAG,databaseError.getMessage());
-            }
-        });
-
-
     }
 
     private void userLogin(LoginState loginState) {
         switch (loginState) {
             case RESULT_OK:
-                loginSuccess();
-                break;
-            case ERROR_CREDENTIALS:
-                loginError();
+                tryToSignIn(username,password);
                 break;
             case ERROR_VALIDATIONS:
                 loginValidations();
@@ -133,64 +115,41 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-
-
-
     private void loginValidations() {
-
-        Toast.makeText(getApplicationContext(), "Please enter username and password", Toast.LENGTH_SHORT).show();
+        etUsername.setError("Enter valid email address");
+        etPassword.setError("bsads");
+        Toast.makeText(getApplicationContext(), "Please enter email and password", Toast.LENGTH_SHORT).show();
     }
 
 
-    private void loginSuccess() {
-
-        Toast.makeText(getApplicationContext(), "Login succes", Toast.LENGTH_SHORT).show();
-        signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
-        Log.d("TAG", "prihalseni");
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, 2);
-        startActivity(intent);
-    }
-
-
-    private void loginError() {
-        signIn(FIREBASE_EMAIL, FIREBASE_PASSWORD);
-        Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
-    }
-
-
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-       // showDialog("Loading");
-
-        // [START sign_in_with_email]
-
+    private void tryToSignIn(String email, String password) {
+        showDialog("Loading");
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e(TAG, "onComplete: Failed=" + task.getException().getMessage());
+                        }
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //  updateUI(user);
+                            Log.d("mojeID",user.getUid());
+                            Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra(EXTRA_MESSAGE, 2);
+                            startActivity(intent);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
                         }
-
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            // mStatusTextView.setText(R.string.auth_failed);
-                            Toast.makeText(LoginActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-                        }
-                    //    hideDialog();
-                        // [END_EXCLUDE]
+                        hideDialog();
                     }
+
                 });
-        // [END sign_in_with_email]
     }
 }

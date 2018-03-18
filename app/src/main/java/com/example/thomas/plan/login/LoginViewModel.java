@@ -31,11 +31,8 @@ public class LoginViewModel extends ViewModel {
             loginState.setValue(LoginState.ERROR_VALIDATIONS);
         } else
         {
-            if(username.equals("admin") && password.equals("admin")) {
-                loginState.setValue(LoginState.RESULT_OK);
-            } else {
-                loginState.setValue(LoginState.ERROR_CREDENTIALS);
-            }
+            loginState.setValue(LoginState.RESULT_OK);
+
         }
     }
 }

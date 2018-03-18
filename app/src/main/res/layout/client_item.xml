@@ -30,6 +30,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:text="@{client.getName()}" />
+            android:text="@{client.getFirstName()}" />
     </LinearLayout>
 </layout>

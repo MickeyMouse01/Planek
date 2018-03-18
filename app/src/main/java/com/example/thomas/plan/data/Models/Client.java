@@ -11,62 +11,61 @@ import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
 import com.example.thomas.plan.data.Local.Converters.TypeOfGroupConverter;
+import com.google.firebase.auth.FirebaseAuth;
 
-@Entity(tableName = "client")
+import java.util.UUID;
+
 public class Client  {
 
-     @NonNull
-     @PrimaryKey()
-     public String UniqueID;
+    private FirebaseAuth mAuth;
 
-     @ColumnInfo(name = "type_of_group")
-     @TypeConverters(TypeOfGroupConverter.class)
-     public TypeOfGroup typeOfGroup;
-
-     @ColumnInfo(name = "first_name")
-     public String Name;
-
-     @ColumnInfo(name = "sur_name")
-     public String Surname;
-
+    public String uniqueID;
+    public TypeOfGroup typeOfGroup;
+    public String firstName;
+    public String surname;
+    public String nurseID;
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
-        Name = name;
-        Surname = surname;
+        mAuth = FirebaseAuth.getInstance();
+        firstName = name;
+        this.surname = surname;
         this.typeOfGroup = typeOfGroup;
+        this.uniqueID = UUID.randomUUID().toString();
+        this.nurseID = mAuth.getCurrentUser().getUid();
     }
     public Client (){
-
+    }
+    public String getFirstName() {
+        return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getNurseID() {
+        return nurseID;
+    }
+
+    public void setNurseID(String nurseID) {
+        this.nurseID = nurseID;
+    }
 
     public String getUniqueID() {
-        return UniqueID;
+        return uniqueID;
     }
 
 
     public void setUniqueID(@NonNull String uniqueID) {
-        UniqueID = uniqueID;
-    }
-
-
-    public String getName() {
-        return Name;
-    }
-
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-
-    public String getSurname() {
-        return Surname;
-    }
-
-
-    public void setSurname(String surname) {
-        Surname = surname;
+        uniqueID = uniqueID;
     }
 
 

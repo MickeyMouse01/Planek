@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "826646193643-68qftp6d81pf0ecr1s763ik5oi50jbj0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.thomas.plan",
+            "certificate_hash": "3ba067d3f5c0a89cc85b2336917b231d80b989c2"
+          }
+        },
+        {
           "client_id": "826646193643-j0vuuf4ej9ukgaosi47r08a933rouduf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
