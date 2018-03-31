@@ -79,6 +79,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         mAuth = FirebaseAuth.getInstance();
         Log.d("INSTANCE",mAuth.toString());
+        buttonLogin.performClick();
 
     }
 

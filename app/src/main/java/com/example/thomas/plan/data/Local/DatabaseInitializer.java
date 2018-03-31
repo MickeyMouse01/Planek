@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.data.Models.Client;
 
+import java.net.UnknownServiceException;
 import java.util.List;
 import java.util.UUID;
 

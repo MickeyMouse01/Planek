@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.example.thomas.plan.data.ClientsRepository;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.SingleLiveEvent;
@@ -20,17 +21,20 @@ public class ClientsViewModel extends ViewModel {
     public MutableLiveData<List<Client>> mListOfClients;
     public final List<Client> clientList = new ArrayList<>();
 
+    private ClientsRepository clientsRepository;
+
+
     public final SingleLiveEvent<Void> addNewClient = new SingleLiveEvent<>();
 
-    public ClientsViewModel() {
-
+    public ClientsViewModel(ClientsRepository mClientsRepository) {
+        this.clientsRepository = mClientsRepository;
     }
-    public LiveData<List<Client>> getUsers() {
+
+    public LiveData<List<Client>> getClients() {
         if (mListOfClients == null) {
             mListOfClients = new MutableLiveData<>();
-            loadUsers();
+            loadClients();
         }
-
         return mListOfClients;
     }
 
@@ -38,18 +42,8 @@ public class ClientsViewModel extends ViewModel {
         return addNewClient;
     }
 
-    public void addClient(Client client){
-        clientList.add(client);
-        mListOfClients.setValue(clientList);
-    }
-
-    private void loadUsers() {
+    private void loadClients() {
         clientList.add(new Client("Josef","Namornik", Enums.TypeOfGroup.GROUPA));
-        clientList.add(new Client("Tomas","Blah", Enums.TypeOfGroup.GROUPB));
-        clientList.add(new Client("Sarka","Furit", Enums.TypeOfGroup.GROUPC));
-        clientList.add(new Client("Michael","Parnik", Enums.TypeOfGroup.GROUPB));
-        clientList.add(new Client("Honza","Lod", Enums.TypeOfGroup.GROUPB));
-        clientList.add(new Client("Martin","Neco", Enums.TypeOfGroup.GROUPC));
         mListOfClients.setValue(clientList);
     }
 

@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity
     private ListOfClientsAdapter listAdapter;
     private ClientsViewModel mViewModel;
     private Toolbar toolbar;
-    private ClientsRepository repository;
 
 
 
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
             }
         });
-        repository = ClientsRepository.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add_client) {
-            repository.getClient("e5edccbf-4cf9-40a3-b93a-d2ce8e81c398");
+
 
         } else if (id == R.id.nav_gallery) {
 
