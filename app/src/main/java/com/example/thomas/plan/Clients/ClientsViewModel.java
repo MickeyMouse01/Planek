@@ -3,8 +3,11 @@ package com.example.thomas.plan.Clients;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.thomas.plan.data.ClientsRepository;
+import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.SingleLiveEvent;
@@ -43,8 +46,15 @@ public class ClientsViewModel extends ViewModel {
     }
 
     private void loadClients() {
-        clientList.add(new Client("Josef","Namornik", Enums.TypeOfGroup.GROUPA));
-        mListOfClients.setValue(clientList);
+        clientsRepository.getClients(new DataSource.LoadClientsCallback() {
+            @Override
+            public void onClientsLoaded(@NonNull List<Client> clients) {
+            //    Log.d("pocet", clients.get(0).getUniqueID());
+                mListOfClients.setValue(clients);
+            }
+        });
+
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.thomas.plan.data.Remote;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +14,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +43,12 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getClients() {
+    public void getClients(@NonNull final LoadClientsCallback callback) {
+       /* List<Client> blah = new ArrayList<>();
+        blah.add(new Client("mam","neco", Enums.TypeOfGroup.GROUPA));
+        blah.add(new Client("mam2","neco2", Enums.TypeOfGroup.GROUPA));
+        callback.onClientsLoaded(new ArrayList<Client>(blah));*/
+
         mDatabase.getDatabase().getReference("clients")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -48,7 +56,8 @@ public class RemoteDataSource implements DataSource {
 
                 GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {};
                 Map<String, Client> map = dataSnapshot.getValue(t);
-
+                List<Client> clients = new ArrayList<>(map.values());
+                callback.onClientsLoaded(clients);
 
 
             }

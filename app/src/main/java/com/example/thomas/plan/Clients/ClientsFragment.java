@@ -44,7 +44,7 @@ public class ClientsFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        mClientsViewModel.getUsers();
+        mClientsViewModel.getClients();
 
     }
 

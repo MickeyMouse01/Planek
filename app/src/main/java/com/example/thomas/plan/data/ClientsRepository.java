@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Remote.RemoteDataSource;
 
+import java.util.List;
+
 /**
  * Created by Tomas on 13-Mar-18.
  */
@@ -33,8 +35,14 @@ public class ClientsRepository implements DataSource {
     public void saveClient(@NonNull Client client){
        remoteDataSource.saveClient(client);
     }
-    public void getClients(){
-        remoteDataSource.getClients();
+    public void getClients(@NonNull final LoadClientsCallback callback){
+        remoteDataSource.getClients(new LoadClientsCallback() {
+            @Override
+            public void onClientsLoaded(@NonNull List<Client> clients) {
+                callback.onClientsLoaded(clients);
+            }
+
+        });
     }
 
     public void getClient(@NonNull final String clientId){
