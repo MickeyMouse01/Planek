@@ -19,19 +19,19 @@ import java.util.List;
 public class ListOfClientsAdapter extends BaseAdapter {
 
     private ClientsViewModel mClientsViewModel;
-
     private List<Client> mClients;
 
 
     public ListOfClientsAdapter(List<Client> clients,
-                        ClientsViewModel tasksViewModel) {
+                                ClientsViewModel tasksViewModel) {
         mClientsViewModel = tasksViewModel;
-        setList(clients);
+        mClients = clients;
 
     }
 
     public void replaceData(List<Client> clients) {
-        setList(clients);
+        mClients = clients;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -66,7 +66,6 @@ public class ListOfClientsAdapter extends BaseAdapter {
         ClientItemUserActionsListener userActionsListener = new ClientItemUserActionsListener() {
             @Override
             public void onClientClicked(Client client) {
-                Log.d("Blah","edho");
                 mClientsViewModel.getAddNewClient().call();
             }
         };
@@ -77,11 +76,5 @@ public class ListOfClientsAdapter extends BaseAdapter {
 
         binding.executePendingBindings();
         return binding.getRoot();
-    }
-
-
-    private void setList(List<Client> clients) {
-        mClients = clients;
-        notifyDataSetChanged();
     }
 }

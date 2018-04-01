@@ -14,13 +14,12 @@ import java.util.List;
 
 public class ClientsListBinding {
 
-
     @BindingAdapter("app:items")
     public static void setItems(ListView listView, MutableLiveData<List<Client>> items) {
         ListOfClientsAdapter adapter = (ListOfClientsAdapter) listView.getAdapter();
-        if (adapter != null)
-        {
+        if (adapter != null) {
             adapter.replaceData(items.getValue());
         }
     }
+
 }

@@ -36,17 +36,10 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
-{
-    private ArrayList<Client> listOfClients;
-    private ListView listview;
-    private ListOfClientsAdapter listAdapter;
+        implements NavigationView.OnNavigationItemSelectedListener {
+
     private ClientsViewModel mViewModel;
     private Toolbar toolbar;
-
-
-
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,25 +60,23 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
             }
         });
-
-        mAuth = FirebaseAuth.getInstance();
     }
 
-    private void setupToolbar(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+    private void setupToolbar() {
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
     private void setupDrawerLayout() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
-    private void setupNavigation(){
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    private void setupNavigation() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -104,11 +95,10 @@ public class MainActivity extends AppCompatActivity
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
-        ClientsViewModel viewModel = ViewModelProviders.of(activity,factory).get(ClientsViewModel.class);
+        ClientsViewModel viewModel = ViewModelProviders.of(activity, factory).get(ClientsViewModel.class);
 
         return viewModel;
     }
-
 
 
     @Override
@@ -131,6 +121,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -143,7 +134,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_add_client) {
 
-
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -155,7 +145,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

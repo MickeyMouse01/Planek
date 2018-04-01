@@ -33,7 +33,8 @@ public class RemoteDataSource implements DataSource {
     // Prevent direct instantiation.
     private RemoteDataSource() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();}
+        mAuth = FirebaseAuth.getInstance();
+    }
 
     public static RemoteDataSource getInstance() {
         if (INSTANCE == null) {
@@ -44,23 +45,19 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void getClients(@NonNull final LoadClientsCallback callback) {
-       /* List<Client> blah = new ArrayList<>();
-        blah.add(new Client("mam","neco", Enums.TypeOfGroup.GROUPA));
-        blah.add(new Client("mam2","neco2", Enums.TypeOfGroup.GROUPA));
-        callback.onClientsLoaded(new ArrayList<Client>(blah));*/
 
         mDatabase.getDatabase().getReference("clients")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {};
+                GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {
+                };
                 Map<String, Client> map = dataSnapshot.getValue(t);
                 List<Client> clients = new ArrayList<>(map.values());
                 callback.onClientsLoaded(clients);
-
-
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -78,6 +75,7 @@ public class RemoteDataSource implements DataSource {
                 Client client = dataSnapshot.child(clientId).getValue(Client.class);
 
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value

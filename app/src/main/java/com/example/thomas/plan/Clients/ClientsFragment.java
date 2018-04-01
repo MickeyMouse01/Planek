@@ -58,8 +58,6 @@ public class ClientsFragment extends Fragment
 
         mClientsFragmentBinding.setViewmodel(mClientsViewModel);
 
-
-
         setHasOptionsMenu(true);
 
         return mClientsFragmentBinding.getRoot();
@@ -104,51 +102,8 @@ public class ClientsFragment extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
         setupListAdapter();
-
-
     }
-
-
-   /* private void showFilteringPopUpMenu() {
-        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_filter));
-        popup.getMenuInflater().inflate(R.menu.filter_tasks, popup.getMenu());
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.active:
-                        mTasksViewModel.setFiltering(TasksFilterType.ACTIVE_TASKS);
-                        break;
-                    case R.id.completed:
-                        mTasksViewModel.setFiltering(TasksFilterType.COMPLETED_TASKS);
-                        break;
-                    default:
-                        mTasksViewModel.setFiltering(TasksFilterType.ALL_TASKS);
-                        break;
-                }
-                mTasksViewModel.loadTasks(false);
-                return true;
-            }
-        });
-
-        popup.show();
-    }*/
-/*
-    private void setupFab() {
-        FloatingActionButton fab =
-                (FloatingActionButton) getActivity().findViewById(R.id.fab_add_task);
-
-        fab.setImageResource(R.drawable.ic_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTasksViewModel.addNewTask();
-            }
-        });
-    }*/
 
     private void setupListAdapter() {
         ListView listView =  mClientsFragmentBinding.clientsList;
