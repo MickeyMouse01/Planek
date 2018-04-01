@@ -3,6 +3,8 @@ package com.example.thomas.plan.Clients;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.SingleLiveEvent;
@@ -18,7 +20,7 @@ import java.util.List;
 
 public class ClientsViewModel extends ViewModel {
 
-    public MutableLiveData<List<Client>> mListOfClients;
+    public ObservableList<Client> mListOfClients;
 
     private ClientsRepository clientsRepository;
     public final SingleLiveEvent<Void> addNewClient = new SingleLiveEvent<>();
@@ -27,9 +29,9 @@ public class ClientsViewModel extends ViewModel {
         this.clientsRepository = mClientsRepository;
     }
 
-    public LiveData<List<Client>> getClients() {
+    public ObservableList<Client> getClients() {
         if (mListOfClients == null) {
-            mListOfClients = new MutableLiveData<>();
+            mListOfClients = new ObservableArrayList<>();
             loadClients();
         }
         return mListOfClients;
@@ -44,7 +46,8 @@ public class ClientsViewModel extends ViewModel {
         clientsRepository.getClients(new DataSource.LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
-                mListOfClients.setValue(clients);
+              //  mListOfClients.setValue(clients);
+                mListOfClients.addAll(clients);
             }
         });
     }

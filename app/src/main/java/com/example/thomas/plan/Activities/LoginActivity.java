@@ -32,8 +32,8 @@ import android.arch.lifecycle.*;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
-    EditText etUsername, etPassword;
-    Button buttonLogin;
+    private EditText etUsername, etPassword;
+    private Button buttonLogin;
     private LoginViewModel loginViewModel;
 
     private FirebaseAuth mAuth;
@@ -78,9 +78,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
 
         mAuth = FirebaseAuth.getInstance();
-        Log.d("INSTANCE",mAuth.toString());
-        buttonLogin.performClick();
 
+        //jen pro rychle spousteni
+        buttonLogin.performClick();
     }
 
     @Override
