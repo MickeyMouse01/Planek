@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.thomas.plan.Activities.MainActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.databinding.ClientsFragmentBinding;
@@ -54,7 +53,7 @@ public class ClientsFragment extends Fragment
                              Bundle savedInstanceState) {
         mClientsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.clients_fragment, container, false);
 
-        mClientsViewModel = MainActivity.obtainViewModel(getActivity());
+        mClientsViewModel = ClientsActivity.obtainViewModel(getActivity());
 
         mClientsFragmentBinding.setViewmodel(mClientsViewModel);
 

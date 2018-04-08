@@ -46,7 +46,6 @@ public class ClientsViewModel extends ViewModel {
         clientsRepository.getClients(new DataSource.LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
-              //  mListOfClients.setValue(clients);
                 mListOfClients.addAll(clients);
             }
         });

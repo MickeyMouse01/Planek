@@ -1,4 +1,4 @@
-package com.example.thomas.plan.Activities;
+package com.example.thomas.plan.Clients;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,27 +15,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.thomas.plan.Activities.LoginActivity;
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.data.ClientsRepository;
-import com.example.thomas.plan.data.Models.Client;
-import com.example.thomas.plan.Clients.ListOfClientsAdapter;
-import com.example.thomas.plan.Clients.ClientsFragment;
-import com.example.thomas.plan.Clients.ClientsViewModel;
 import com.example.thomas.plan.R;
-import com.example.thomas.plan.data.Local.DatabaseInitializer;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity
+public class ClientsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ClientsViewModel mViewModel;
@@ -57,7 +45,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChanged(@Nullable Void aVoid) {
                 Log.d("Blah", "saf");
-                Toast.makeText(MainActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClientsActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
             }
         });
     }
