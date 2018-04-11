@@ -12,11 +12,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.thomas.plan.addEditClient.AddEditClientActivity;
 import com.example.thomas.plan.Activities.LoginActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.ViewModelFactory;
@@ -40,12 +40,10 @@ public class ClientsActivity extends AppCompatActivity
         setupNavigation();
 
         mViewModel = obtainViewModel(this);
-
         mViewModel.getAddNewClient().observe(this, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
-                Log.d("Blah", "saf");
-                Toast.makeText(ClientsActivity.this, "TOto je klinuti", Toast.LENGTH_SHORT).show();
+               addNewClient();
             }
         });
     }
@@ -82,9 +80,7 @@ public class ClientsActivity extends AppCompatActivity
     public static ClientsViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
         ClientsViewModel viewModel = ViewModelProviders.of(activity, factory).get(ClientsViewModel.class);
-
         return viewModel;
     }
 
@@ -121,7 +117,7 @@ public class ClientsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add_client) {
-
+            mViewModel.addNewClient.call();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -132,10 +128,13 @@ public class ClientsActivity extends AppCompatActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void addNewClient(){
+        Intent intent = new Intent(this, AddEditClientActivity.class);
+        startActivity(intent);
     }
 
 }

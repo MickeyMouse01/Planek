@@ -10,8 +10,8 @@ import com.example.thomas.plan.data.Remote.RemoteDataSource;
  */
 
 public class Injection {
-    public static ClientsRepository provideClientsRepository(@NonNull Context context) {
-        return ClientsRepository.getInstance(RemoteDataSource.getInstance());
+    public static Repository provideClientsRepository(@NonNull Context context) {
+        return Repository.getInstance(RemoteDataSource.getInstance());
     }
 
 }

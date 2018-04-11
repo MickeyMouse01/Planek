@@ -10,9 +10,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string-array name="type_of_group">
-            <item>Skupina A</item>
-            <item>Skupina B</item>
-            <item>Skupina C</item>
+        <item>Skupina A</item>
+        <item>Skupina B</item>
+        <item>Skupina C</item>
     </string-array>
 
 </resources>

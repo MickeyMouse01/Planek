@@ -73,8 +73,8 @@ public class Client  {
         this.typeOfGroup = typeOfGroup;
     }
 
-    public TypeOfGroup getTypeOfGroup() {
-        return typeOfGroup;
+    public String getTypeOfGroup() {
+        return typeOfGroup.name();
     }
 
 }

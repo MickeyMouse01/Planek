@@ -5,7 +5,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.thomas.plan.Clients.ClientsViewModel;
-import com.example.thomas.plan.data.ClientsRepository;
+import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
+import com.example.thomas.plan.data.Repository;
 import com.example.thomas.plan.data.Injection;
 
 /**
@@ -18,7 +19,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final Application mApplication;
 
-    private final ClientsRepository clientsRepository;
+    private final Repository repository;
 
     public static ViewModelFactory getInstance(Application application) {
         if (INSTANCE == null) {
@@ -32,16 +33,18 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         return INSTANCE;
     }
 
-    private ViewModelFactory(Application app, ClientsRepository clients) {
+    private ViewModelFactory(Application app, Repository clients) {
         mApplication = app;
-        clientsRepository = clients;
+        repository = clients;
     }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ClientsViewModel.class)) {
             //noinspection unchecked
-            return (T) new ClientsViewModel(clientsRepository);
+            return (T) new ClientsViewModel(repository);
+        } else if(modelClass.isAssignableFrom(AddEditClientViewModel.class)) {
+            return (T) new AddEditClientViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

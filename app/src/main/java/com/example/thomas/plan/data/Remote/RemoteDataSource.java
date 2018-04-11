@@ -3,7 +3,6 @@ package com.example.thomas.plan.data.Remote;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.google.firebase.auth.FirebaseAuth;

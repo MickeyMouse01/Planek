@@ -20,16 +20,35 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="10px"
-        android:paddingTop="10px">
-
+        android:paddingTop="10px"
+       >
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="192dp"
+            android:layout_height="37dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:text="@{client.getFirstName()}" />
+            android:text="@{client.getFirstName()}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:id="@+id/add_surname"
+            android:layout_width="102dp"
+            android:layout_height="29dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:text="@{client.getSurname()}" />
+
+        <TextView
+            android:id="@+id/add_type_of_group"
+            android:layout_width="wrap_content"
+            android:layout_height="29dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:text="@{client.getTypeOfGroup()}" />
+
     </LinearLayout>
 </layout>

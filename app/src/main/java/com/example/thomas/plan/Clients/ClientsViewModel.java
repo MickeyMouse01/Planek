@@ -1,16 +1,14 @@
 package com.example.thomas.plan.Clients;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.SingleLiveEvent;
-import com.example.thomas.plan.data.ClientsRepository;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Repository;
 
 import java.util.List;
 
@@ -21,12 +19,12 @@ import java.util.List;
 public class ClientsViewModel extends ViewModel {
 
     public ObservableList<Client> mListOfClients;
-
-    private ClientsRepository clientsRepository;
     public final SingleLiveEvent<Void> addNewClient = new SingleLiveEvent<>();
 
-    public ClientsViewModel(ClientsRepository mClientsRepository) {
-        this.clientsRepository = mClientsRepository;
+    private Repository repository;
+
+    public ClientsViewModel(Repository mRepository) {
+        this.repository = mRepository;
     }
 
     public ObservableList<Client> getClients() {
@@ -43,9 +41,10 @@ public class ClientsViewModel extends ViewModel {
 
     private void loadClients() {
 
-        clientsRepository.getClients(new DataSource.LoadClientsCallback() {
+        repository.getClients(new DataSource.LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
+                mListOfClients.clear();
                 mListOfClients.addAll(clients);
             }
         });

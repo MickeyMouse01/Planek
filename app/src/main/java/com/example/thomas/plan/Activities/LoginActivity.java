@@ -28,6 +28,8 @@ import android.arch.lifecycle.*;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+
     private EditText etUsername, etPassword;
     private Button buttonLogin;
     private LoginViewModel loginViewModel;
@@ -36,9 +38,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private static final String TAG = "EmailPassword";
     private final String USERNAME = "pospecnik@seznam.cz";
     private final String PASSWORD = "planek";
-
-
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
     private String username;
     private String password;
@@ -74,9 +73,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
 
         mAuth = FirebaseAuth.getInstance();
-
         //jen pro rychle spousteni
-       // buttonLogin.performClick();
+        //buttonLogin.performClick();
     }
 
     @Override

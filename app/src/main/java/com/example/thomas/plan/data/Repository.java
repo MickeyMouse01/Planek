@@ -11,21 +11,21 @@ import java.util.List;
  * Created by Tomas on 13-Mar-18.
  */
 
-public class ClientsRepository implements DataSource {
+public class Repository implements DataSource {
 
-    private static volatile ClientsRepository INSTANCE;
+    private static volatile Repository INSTANCE;
 
     private RemoteDataSource remoteDataSource;
 
-    private ClientsRepository(RemoteDataSource remoteDataSource){
+    private Repository(RemoteDataSource remoteDataSource){
         this.remoteDataSource = remoteDataSource;
     }
 
-    public static ClientsRepository getInstance(RemoteDataSource remoteDataSource){
+    public static Repository getInstance(RemoteDataSource remoteDataSource){
         if (INSTANCE == null) {
-            synchronized (ClientsRepository.class){
+            synchronized (Repository.class){
                 if (INSTANCE == null) {
-                    INSTANCE = new ClientsRepository(remoteDataSource);
+                    INSTANCE = new Repository(remoteDataSource);
                 }
             }
         }
