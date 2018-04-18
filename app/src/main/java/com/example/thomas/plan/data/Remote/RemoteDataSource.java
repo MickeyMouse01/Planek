@@ -53,8 +53,10 @@ public class RemoteDataSource implements DataSource {
                 GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {
                 };
                 Map<String, Client> map = dataSnapshot.getValue(t);
-                List<Client> clients = new ArrayList<>(map.values());
-                callback.onClientsLoaded(clients);
+                if (map != null) {
+                    List<Client> clients = new ArrayList<>(map.values());
+                    callback.onClientsLoaded(clients);
+                }
             }
 
             @Override

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Toast;
 
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.databinding.ClientItemBinding;
@@ -23,8 +24,8 @@ public class ListOfClientsAdapter extends BaseAdapter {
 
 
     public ListOfClientsAdapter(List<Client> clients,
-                                ClientsViewModel tasksViewModel) {
-        mClientsViewModel = tasksViewModel;
+                                ClientsViewModel clientsViewModel) {
+        mClientsViewModel = clientsViewModel;
         mClients = clients;
 
     }
@@ -66,7 +67,8 @@ public class ListOfClientsAdapter extends BaseAdapter {
         ClientItemUserActionsListener userActionsListener = new ClientItemUserActionsListener() {
             @Override
             public void onClientClicked(Client client) {
-                mClientsViewModel.getAddNewClient().call();
+                Log.d("ClientId", client.getUniqueID());
+              mClientsViewModel.viewClient().setValue(client.getUniqueID());
             }
         };
 

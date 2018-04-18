@@ -55,17 +55,9 @@ public class Client  {
         return nurseID;
     }
 
-    public void setNurseID(String nurseID) {
-        this.nurseID = nurseID;
-    }
 
     public String getUniqueID() {
         return uniqueID;
-    }
-
-
-    public void setUniqueID(@NonNull String uniqueID) {
-        uniqueID = uniqueID;
     }
 
 

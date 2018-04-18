@@ -21,6 +21,7 @@ import com.example.thomas.plan.Activities.LoginActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.viewClient.ViewClientActivity;
 
 
 public class ClientsActivity extends AppCompatActivity
@@ -40,10 +41,17 @@ public class ClientsActivity extends AppCompatActivity
         setupNavigation();
 
         mViewModel = obtainViewModel(this);
-        mViewModel.getAddNewClient().observe(this, new Observer<Void>() {
+        mViewModel.addNewClient().observe(this, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
                addNewClient();
+            }
+        });
+
+        mViewModel.viewClient().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String clientId) {
+                viewClient(clientId);
             }
         });
     }
@@ -117,7 +125,7 @@ public class ClientsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_add_client) {
-            mViewModel.addNewClient.call();
+            mViewModel.addNewClient().call();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -134,6 +142,10 @@ public class ClientsActivity extends AppCompatActivity
     }
     private void addNewClient(){
         Intent intent = new Intent(this, AddEditClientActivity.class);
+        startActivity(intent);
+    }
+    private void viewClient(String clientId){
+        Intent intent = new Intent(this, ViewClientActivity.class);
         startActivity(intent);
     }
 

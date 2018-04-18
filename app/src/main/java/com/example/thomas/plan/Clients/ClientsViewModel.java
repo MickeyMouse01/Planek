@@ -10,6 +10,7 @@ import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ import java.util.List;
 public class ClientsViewModel extends ViewModel {
 
     public ObservableList<Client> mListOfClients;
-    public final SingleLiveEvent<Void> addNewClient = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> mAddNewClient = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mViewClient = new SingleLiveEvent<>();
 
     private Repository repository;
 
@@ -35,8 +37,12 @@ public class ClientsViewModel extends ViewModel {
         return mListOfClients;
     }
 
-    public SingleLiveEvent<Void> getAddNewClient() {
-        return addNewClient;
+    public SingleLiveEvent<Void> addNewClient() {
+        return mAddNewClient;
+    }
+
+    public SingleLiveEvent<String> viewClient() {
+        return mViewClient;
     }
 
     private void loadClients() {

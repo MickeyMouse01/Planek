@@ -50,14 +50,12 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void AddOrEditClient() {
-
             String firstName = mFirstName.getText().toString();
             String surname = mSurname.getText().toString();
             int typeOfGroup = sTypeOfGroup.getSelectedItemPosition();
 
             Client newClient = new Client(firstName, surname, Enums.TypeOfGroup.values()[typeOfGroup]);
             mViewModel.saveClient(newClient);
-
     }
 
 

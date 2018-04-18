@@ -13,8 +13,6 @@ import com.example.thomas.plan.data.Repository;
 
 public class AddEditClientViewModel extends ViewModel {
     public ObservableField<Client> newClient = new ObservableField<>();
-
-
     private Repository repository;
 
     public AddEditClientViewModel(Repository mRepository) {
