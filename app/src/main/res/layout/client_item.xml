@@ -1,4 +1,5 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <data>
         <import type="android.view.View.OnClickListener" />
@@ -25,7 +26,7 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="192dp"
+            android:layout_width="164dp"
             android:layout_height="37dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -49,6 +50,22 @@
             android:layout_marginLeft="16dp"
             android:layout_weight="1"
             android:text="@{client.getTypeOfGroup()}" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="@{() -> listener.onClientInfoClicked(client)}"
+            app:srcCompat="@android:drawable/ic_dialog_info" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="@{() -> listener.removeClient(client)}"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
 
     </LinearLayout>
 </layout>

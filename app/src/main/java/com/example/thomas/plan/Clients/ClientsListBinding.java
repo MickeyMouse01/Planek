@@ -15,12 +15,13 @@ import java.util.List;
 
 public class ClientsListBinding {
 
-    @BindingAdapter("app:items")
-    public static void setItems(ListView listView, ObservableList<Client> items) {
+    @BindingAdapter("app:clients")
+    public static void setClients(ListView listView, ObservableList<Client> items) {
         ListOfClientsAdapter adapter = (ListOfClientsAdapter) listView.getAdapter();
         if (adapter != null) {
             adapter.replaceData(items);
         }
     }
-
 }
+
+

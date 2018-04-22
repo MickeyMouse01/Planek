@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -22,7 +22,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.thomas.plan.Clients.ClientsViewModel" />
+            type="com.example.thomas.plan.plans.PlansViewModel" />
 
     </data>
     <RelativeLayout
@@ -52,7 +52,7 @@
 
             <ListView
                 android:id="@+id/clients_list"
-                app:clients="@{viewmodel.mListOfClients}"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />

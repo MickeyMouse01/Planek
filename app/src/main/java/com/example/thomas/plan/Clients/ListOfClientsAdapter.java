@@ -67,8 +67,18 @@ public class ListOfClientsAdapter extends BaseAdapter {
         ClientItemUserActionsListener userActionsListener = new ClientItemUserActionsListener() {
             @Override
             public void onClientClicked(Client client) {
-                Log.d("ClientId", client.getUniqueID());
-              mClientsViewModel.viewClient().setValue(client.getUniqueID());
+
+            }
+
+            @Override
+            public void onClientInfoClicked(Client client) {
+                mClientsViewModel.viewClient().setValue(client.getUniqueID());
+            }
+
+            //todo nejaky modal okno na potvrzovani
+            @Override
+            public void removeClient(Client client) {
+                mClientsViewModel.removeClient(client.getUniqueID());
             }
         };
 

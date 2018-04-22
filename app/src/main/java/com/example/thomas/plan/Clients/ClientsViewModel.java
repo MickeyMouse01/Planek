@@ -46,7 +46,6 @@ public class ClientsViewModel extends ViewModel {
     }
 
     private void loadClients() {
-
         repository.getClients(new DataSource.LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
@@ -54,5 +53,9 @@ public class ClientsViewModel extends ViewModel {
                 mListOfClients.addAll(clients);
             }
         });
+    }
+    public void removeClient(String clientId){
+        repository.deleteClient(clientId);
+        loadClients();
     }
 }

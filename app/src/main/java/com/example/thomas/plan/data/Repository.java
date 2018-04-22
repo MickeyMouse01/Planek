@@ -49,4 +49,8 @@ public class Repository implements DataSource {
         remoteDataSource.getClient(clientId);
     }
 
+    public void deleteClient(@NonNull String clientId){
+        remoteDataSource.deleteClient(clientId);
+    }
+
 }

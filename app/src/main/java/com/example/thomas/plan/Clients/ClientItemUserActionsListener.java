@@ -9,4 +9,6 @@ import com.example.thomas.plan.data.Models.Client;
 public interface ClientItemUserActionsListener {
 
     void onClientClicked(Client client);
+    void onClientInfoClicked(Client client);
+    void removeClient(Client client);
 }

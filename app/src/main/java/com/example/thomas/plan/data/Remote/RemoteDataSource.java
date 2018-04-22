@@ -90,4 +90,7 @@ public class RemoteDataSource implements DataSource {
         mDatabase.child("clients")
                 .child(client.getUniqueID()).setValue(client);
     }
+    public  void deleteClient(@NonNull String clientId){
+        mDatabase.child("clients").child(clientId).removeValue();
+    }
 }

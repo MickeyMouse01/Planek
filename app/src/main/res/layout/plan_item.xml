@@ -1,0 +1,37 @@
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <data>
+        <import type="android.view.View.OnClickListener" />
+
+        <variable
+            name="plan"
+            type="com.example.thomas.plan.data.Models.Plan" />
+
+        <variable
+            name="listener"
+            type="com.example.thomas.plan.plans.PlanItemUserActionsListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:orientation="horizontal"
+        android:background="@drawable/touch_feedback"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="10px"
+        android:paddingTop="10px">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="164dp"
+            android:layout_height="37dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="@{plan.getName()}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+
+    </LinearLayout>
+</layout>
