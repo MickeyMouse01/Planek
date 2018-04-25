@@ -126,9 +126,9 @@ public class ClientsActivity extends AppCompatActivity
 
         if (id == R.id.nav_add_client) {
             mViewModel.addNewClient().call();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_list_clients) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_list_plans) {
 
         } else if (id == R.id.nav_settings) {
 

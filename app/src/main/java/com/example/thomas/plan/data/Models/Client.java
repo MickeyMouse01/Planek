@@ -3,6 +3,7 @@ package com.example.thomas.plan.data.Models;
 /**
  * Created by Thomas on 25.01.2018.
  */
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -15,15 +16,16 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.UUID;
 
-public class Client  {
+public class Client {
 
     private FirebaseAuth mAuth;
 
-    public String uniqueID;
+    public final String uniqueID;
     public TypeOfGroup typeOfGroup;
     public String firstName;
     public String surname;
     public String nurseID;
+    public String planId;
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
         mAuth = FirebaseAuth.getInstance();
@@ -33,8 +35,11 @@ public class Client  {
         this.uniqueID = UUID.randomUUID().toString();
         this.nurseID = mAuth.getCurrentUser().getUid();
     }
-    public Client (){
+
+    public Client() {
+        this.uniqueID = UUID.randomUUID().toString();
     }
+
     public String getFirstName() {
         return firstName;
     }
@@ -55,11 +60,9 @@ public class Client  {
         return nurseID;
     }
 
-
     public String getUniqueID() {
         return uniqueID;
     }
-
 
     public void setTypeOfGroup(TypeOfGroup typeOfGroup) {
         this.typeOfGroup = typeOfGroup;
@@ -69,4 +72,11 @@ public class Client  {
         return typeOfGroup.name();
     }
 
+    public String getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(String planId) {
+        this.planId = planId;
+    }
 }

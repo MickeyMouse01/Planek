@@ -28,7 +28,8 @@
         <activity
             android:name=".addEditClient.AddEditClientActivity"
             android:parentActivityName=".Clients.ClientsActivity" />
-        <activity android:name=".viewClient.ViewClientActivity"></activity>
+        <activity android:name=".viewClient.ViewClientActivity" />
+        <activity android:name=".addEditPlan.AddEditPlanActivity"></activity>
     </application>
 
 </manifest>

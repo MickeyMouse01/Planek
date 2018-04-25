@@ -17,9 +17,21 @@
     <item android:title="-----------------------------------------">
         <menu>
             <item
-                android:id="@+id/nav_add_client"
+                android:id="@+id/nav_list_clients"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Seznam klientu" />
+            <item
+                android:id="@+id/nav_list_plans"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Seznam planu" />
+            <item
+            android:id="@+id/nav_add_client"
+            android:icon="@android:drawable/ic_input_add"
+            android:title="Přidat klienta" />
+            <item
+                android:id="@+id/nav_add_plan"
                 android:icon="@android:drawable/ic_input_add"
-                android:title="Přidat klienta" />
+                android:title="Přidat plan" />
         </menu>
     </item>
 

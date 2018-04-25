@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Tomas on 22-Apr-18.
  */
 
-public class ListOfPlansAdapter extends BaseAdapter {
+public class  ListOfPlansAdapter extends BaseAdapter {
 
     private PlansViewModel mPlansViewModel;
     private List<Plan> mPlans;

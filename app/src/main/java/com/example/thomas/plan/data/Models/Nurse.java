@@ -9,62 +9,38 @@ import android.support.annotation.NonNull;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.data.Local.Converters;
 
+import java.util.UUID;
+
 /**
  * Created by Tomas on 05-Mar-18.
  */
-//todo pridat atribut shift a zkonvertovat
 
-@Entity(tableName = "nurse")
 public class Nurse {
 
-    @NonNull
-    @PrimaryKey()
-    public String UniqueID;
-
-    @ColumnInfo(name = "first_name")
-    public String Name;
-
-    @ColumnInfo(name = "sur_name")
-    public String Surname;
-
+    public final String uniqueID;
+    public String name;
+    public String surname;
 
     public Nurse(String name, String surname) {
-        Name = name;
-        Surname = surname;
+        this.name = name;
+        this.surname = surname;
+        this.uniqueID = UUID.randomUUID().toString();
     }
-
-    public Nurse() {
-
-    }
-
 
     public String getUniqueID() {
-        return UniqueID;
+        return uniqueID;
     }
-
-
-    public void setUniqueID(@NonNull String uniqueID) {
-        UniqueID = uniqueID;
-    }
-
-
     public String getName() {
-        return Name;
+        return name;
     }
-
-
     public void setName(String name) {
-        Name = name;
+        name = name;
     }
-
-
     public String getSurname() {
-        return Surname;
+        return surname;
     }
-
-
     public void setSurname(String surname) {
-        Surname = surname;
+        surname = surname;
     }
 
 

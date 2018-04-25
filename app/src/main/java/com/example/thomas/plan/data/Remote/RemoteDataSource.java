@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Plan;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -92,5 +93,56 @@ public class RemoteDataSource implements DataSource {
     }
     public  void deleteClient(@NonNull String clientId){
         mDatabase.child("clients").child(clientId).removeValue();
+    }
+
+    public void getPlans(@NonNull final LoadPlansCallback callback) {
+
+        mDatabase.getDatabase().getReference("plans")
+                .getRef().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>>() {
+                };
+                Map<String, Plan> map = dataSnapshot.getValue(t);
+                if (map != null) {
+                    List<Plan> plans = new ArrayList<>(map.values());
+                    callback.onPlansLoaded(plans);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e("blah", "Failed to read app title value.", error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void getPlan(@NonNull final String planId) {
+        mDatabase.getDatabase().getReference("plans")
+                .getRef().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Plan plan = dataSnapshot.child(planId).getValue(Plan.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e("blah", "Failed to read app title value.", error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void savePlan(@NonNull Plan plan) {
+        mDatabase.child("plans")
+                .child(plan.getUniqueID()).setValue(plan);
+    }
+    public  void deletePlan(@NonNull String planId){
+        mDatabase.child("plans").child(planId).removeValue();
     }
 }

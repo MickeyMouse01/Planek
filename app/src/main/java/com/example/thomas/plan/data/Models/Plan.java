@@ -6,29 +6,21 @@ import android.arch.persistence.room.PrimaryKey;
 import android.media.Image;
 import android.support.annotation.NonNull;
 
+import java.util.UUID;
+
 /**
  * Created by Tomas on 05-Mar-18.
  */
 
-//todo zkonvertovat Image na string
-
-@Entity(tableName = "plan")
 public class Plan {
 
-    @NonNull
-    @PrimaryKey()
-    public String UniqueID;
-
-    @ColumnInfo(name = "name")
+    public final String UniqueID;
     public String name;
-
-   /* @ColumnInfo(name = "img")
-    public Image img;*/
-
-    @ColumnInfo(name = "isDone")
+    public String pathToImg;
     public boolean isDone;
 
     public Plan() {
+        this.UniqueID = UUID.randomUUID().toString();
     }
 
     @NonNull
@@ -36,9 +28,6 @@ public class Plan {
         return UniqueID;
     }
 
-    public void setUniqueID(@NonNull String uniqueID) {
-        UniqueID = uniqueID;
-    }
 
     public String getName() {
         return name;
@@ -48,13 +37,13 @@ public class Plan {
         this.name = name;
     }
 
-    /*public Image getImg() {
-        return img;
+    public String getPathToImg() {
+        return pathToImg;
     }
 
-    public void setImg(Image img) {
-        this.img = img;
-    }*/
+    public void setPathToImg(String pathToImg) {
+        this.pathToImg = pathToImg;
+    }
 
     public boolean isDone() {
         return isDone;
