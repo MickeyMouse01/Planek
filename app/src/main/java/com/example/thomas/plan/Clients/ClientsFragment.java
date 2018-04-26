@@ -113,6 +113,4 @@ public class ClientsFragment extends Fragment
         );
         listView.setAdapter(mClientsAdapter);
     }
-
-
 }

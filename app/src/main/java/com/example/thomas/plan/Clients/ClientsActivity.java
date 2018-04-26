@@ -21,6 +21,8 @@ import com.example.thomas.plan.Activities.LoginActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
+import com.example.thomas.plan.plans.PlansFragment;
 import com.example.thomas.plan.viewClient.ViewClientActivity;
 
 
@@ -36,7 +38,7 @@ public class ClientsActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         setupToolbar();
-        setupViewFragment();
+        setupViewFragment(0);
         setupDrawerLayout();
         setupNavigation();
 
@@ -45,6 +47,13 @@ public class ClientsActivity extends AppCompatActivity
             @Override
             public void onChanged(@Nullable Void aVoid) {
                addNewClient();
+            }
+        });
+
+        mViewModel.addNewPlan().observe(this, new Observer<Void>() {
+            @Override
+            public void onChanged(@Nullable Void aVoid) {
+                addNewPlan();
             }
         });
 
@@ -74,16 +83,30 @@ public class ClientsActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void setupViewFragment() {
-        ClientsFragment clientsFragment =
-                (ClientsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (clientsFragment == null) {
-            // Create the fragment
-            clientsFragment = ClientsFragment.newInstance();
-            ActivityUtils.replaceFragmentInActivity(
-                    getSupportFragmentManager(), clientsFragment, R.id.contentFrame);
+    private void setupViewFragment(int frame) {
+        if (frame != 1) {
+            ClientsFragment clientsFragment =
+                    (ClientsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+            if (clientsFragment == null) {
+                // Create the fragment
+                clientsFragment = ClientsFragment.newInstance();
+                ActivityUtils.replaceFragmentInActivity(
+                        getSupportFragmentManager(), clientsFragment, R.id.contentFrame);
+            }
+            //todo opravit chybu, cannot be cast to plansfragmetn
+        } else {
+            PlansFragment plansFragment =
+                    (PlansFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+            if (plansFragment == null) {
+                // Create the fragment
+                plansFragment = PlansFragment.newInstance();
+                ActivityUtils.replaceFragmentInActivity(
+                        getSupportFragmentManager(), plansFragment, R.id.contentFrame);
         }
+
     }
+    }
+
 
     public static ClientsViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
@@ -116,7 +139,7 @@ public class ClientsActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        setupViewFragment(1);
     }
 
     @Override
@@ -126,6 +149,10 @@ public class ClientsActivity extends AppCompatActivity
 
         if (id == R.id.nav_add_client) {
             mViewModel.addNewClient().call();
+        }
+         else if (id == R.id.nav_add_plan) {
+            mViewModel.addNewPlan().call();
+
         } else if (id == R.id.nav_list_clients) {
 
         } else if (id == R.id.nav_list_plans) {
@@ -143,6 +170,11 @@ public class ClientsActivity extends AppCompatActivity
     private void addNewClient(){
         Intent intent = new Intent(this, AddEditClientActivity.class);
         startActivity(intent);
+    }
+
+    private void addNewPlan(){
+        Intent intent = new Intent(this, AddEditPlanActivity.class);
+        startActivityForResult(intent,1);
     }
     private void viewClient(String clientId){
         Intent intent = new Intent(this, ViewClientActivity.class);

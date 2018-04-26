@@ -49,7 +49,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         return viewModel;
     }
 
-    private void AddOrEditClient() {
+    private void addOrEditClient() {
             String firstName = mFirstName.getText().toString();
             String surname = mSurname.getText().toString();
             int typeOfGroup = sTypeOfGroup.getSelectedItemPosition();
@@ -61,7 +61,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        AddOrEditClient();
+        addOrEditClient();
         finish();
     }
 }

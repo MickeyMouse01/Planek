@@ -21,6 +21,7 @@ public class ClientsViewModel extends ViewModel {
 
     public ObservableList<Client> mListOfClients;
     private final SingleLiveEvent<Void> mAddNewClient = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> mAddNewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mViewClient = new SingleLiveEvent<>();
 
     private Repository repository;
@@ -39,6 +40,10 @@ public class ClientsViewModel extends ViewModel {
 
     public SingleLiveEvent<Void> addNewClient() {
         return mAddNewClient;
+    }
+
+    public SingleLiveEvent<Void> addNewPlan() {
+        return mAddNewPlan;
     }
 
     public SingleLiveEvent<String> viewClient() {

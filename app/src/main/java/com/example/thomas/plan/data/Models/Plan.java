@@ -14,18 +14,18 @@ import java.util.UUID;
 
 public class Plan {
 
-    public final String UniqueID;
+    public final String uniqueID;
     public String name;
     public String pathToImg;
     public boolean isDone;
 
     public Plan() {
-        this.UniqueID = UUID.randomUUID().toString();
+        this.uniqueID = UUID.randomUUID().toString();
     }
 
     @NonNull
     public String getUniqueID() {
-        return UniqueID;
+        return uniqueID;
     }
 
 

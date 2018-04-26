@@ -15,7 +15,6 @@ import static android.support.v4.util.Preconditions.checkNotNull;
 
 public class ActivityUtils {
 
-
     @SuppressLint("RestrictedApi")
     public static void replaceFragmentInActivity(@NonNull FragmentManager fragmentManager,
                                                  @NonNull Fragment fragment, int frameId) {

@@ -5,9 +5,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
-import com.example.thomas.plan.Clients.ClientsFragment;
-import com.example.thomas.plan.Clients.ClientsViewModel;
-import com.example.thomas.plan.Clients.ListOfClientsAdapter;
 
 
 /**
