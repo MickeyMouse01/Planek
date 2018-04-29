@@ -107,6 +107,7 @@ public class ClientsFragment extends Fragment
     private void setupListAdapter() {
         ListView listView =  mClientsFragmentBinding.clientsList;
 
+
        mClientsAdapter = new ListOfClientsAdapter(
                 new ArrayList<Client>(0),
                 mClientsViewModel

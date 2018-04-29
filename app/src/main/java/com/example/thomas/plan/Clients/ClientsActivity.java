@@ -38,7 +38,7 @@ public class ClientsActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         setupToolbar();
-        setupViewFragment(0);
+        setupViewFragment(1);
         setupDrawerLayout();
         setupNavigation();
 

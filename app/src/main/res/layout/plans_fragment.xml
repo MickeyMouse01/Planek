@@ -51,7 +51,7 @@
                 android:text="Seznam klientu"/>
 
             <ListView
-                android:id="@+id/clients_list"
+                android:id="@+id/plans_list"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
