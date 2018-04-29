@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.thomas.plan.addEditClient.AddEditClientActivity;
 import com.example.thomas.plan.Activities.LoginActivity;
@@ -29,7 +28,7 @@ import com.example.thomas.plan.viewClient.ViewClientActivity;
 public class ClientsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ClientsViewModel mViewModel;
+    private MainViewModel mViewModel;
     private Toolbar toolbar;
 
     @Override
@@ -38,7 +37,7 @@ public class ClientsActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         setupToolbar();
-        setupViewFragment(1);
+        setupViewFragment(0);
         setupDrawerLayout();
         setupNavigation();
 
@@ -108,10 +107,10 @@ public class ClientsActivity extends AppCompatActivity
     }
 
 
-    public static ClientsViewModel obtainViewModel(FragmentActivity activity) {
+    public static MainViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        ClientsViewModel viewModel = ViewModelProviders.of(activity, factory).get(ClientsViewModel.class);
+        MainViewModel viewModel = ViewModelProviders.of(activity, factory).get(MainViewModel.class);
         return viewModel;
     }
 

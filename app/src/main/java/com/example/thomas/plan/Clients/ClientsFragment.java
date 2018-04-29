@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class ClientsFragment extends Fragment
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ClientsViewModel mClientsViewModel;
+    private MainViewModel mMainViewModel;
     private ListOfClientsAdapter mClientsAdapter;
     private ClientsFragmentBinding mClientsFragmentBinding;
 
@@ -43,7 +43,7 @@ public class ClientsFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        mClientsViewModel.getClients();
+        mMainViewModel.getClients();
 
     }
 
@@ -53,9 +53,9 @@ public class ClientsFragment extends Fragment
                              Bundle savedInstanceState) {
         mClientsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.clients_fragment, container, false);
 
-        mClientsViewModel = ClientsActivity.obtainViewModel(getActivity());
+        mMainViewModel = ClientsActivity.obtainViewModel(getActivity());
 
-        mClientsFragmentBinding.setViewmodel(mClientsViewModel);
+        mClientsFragmentBinding.setViewmodel(mMainViewModel);
 
         setHasOptionsMenu(true);
 
@@ -110,7 +110,7 @@ public class ClientsFragment extends Fragment
 
        mClientsAdapter = new ListOfClientsAdapter(
                 new ArrayList<Client>(0),
-                mClientsViewModel
+               mMainViewModel
         );
         listView.setAdapter(mClientsAdapter);
     }

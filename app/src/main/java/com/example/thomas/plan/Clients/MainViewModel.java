@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Repository;
 
 import java.util.Collections;
@@ -17,16 +18,18 @@ import java.util.List;
  * Created by pospe on 10.02.2018.
  */
 
-public class ClientsViewModel extends ViewModel {
+public class MainViewModel extends ViewModel {
 
     public ObservableList<Client> mListOfClients;
+    public ObservableList<Plan> mListOfPlans;
     private final SingleLiveEvent<Void> mAddNewClient = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> mAddNewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mViewClient = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mViewPlan = new SingleLiveEvent<>();
 
     private Repository repository;
 
-    public ClientsViewModel(Repository mRepository) {
+    public MainViewModel(Repository mRepository) {
         this.repository = mRepository;
     }
 
@@ -62,5 +65,31 @@ public class ClientsViewModel extends ViewModel {
     public void removeClient(String clientId){
         repository.deleteClient(clientId);
         loadClients();
+    }
+
+    public ObservableList<Plan> getPlans() {
+        if (mListOfPlans == null) {
+            mListOfPlans = new ObservableArrayList<>();
+            loadPlans();
+        }
+        return mListOfPlans;
+    }
+    public SingleLiveEvent<String> viewPlan() {
+        return mViewPlan;
+    }
+
+
+    private void loadPlans(){
+        /*repository.getPlans(new DataSource.LoadPlansCallback() {
+            @Override
+            public void onPlansLoaded(@NonNull List<Plan> plans) {
+                mListOfPlans.clear();
+                mListOfPlans.addAll(plans);
+            }
+        });*/
+    }
+    public void removePlan(String planId){
+        repository.deleteClient(planId);
+        loadPlans();
     }
 }

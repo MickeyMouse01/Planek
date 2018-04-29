@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.databinding.PlanItemBinding;
 
@@ -17,13 +18,13 @@ import java.util.List;
 
 public class  ListOfPlansAdapter extends BaseAdapter {
 
-    private PlansViewModel mPlansViewModel;
+    private MainViewModel mMainViewModel;
     private List<Plan> mPlans;
 
 
     public ListOfPlansAdapter(List<Plan> plans,
-                                PlansViewModel plansViewModel) {
-        mPlansViewModel = plansViewModel;
+                                MainViewModel mainViewModel) {
+        mMainViewModel = mainViewModel;
         mPlans = plans;
 
     }
@@ -70,13 +71,13 @@ public class  ListOfPlansAdapter extends BaseAdapter {
 
             @Override
             public void onPlanInfoClicked(Plan plan) {
-                mPlansViewModel.viewPlan().setValue(plan.getUniqueID());
+                mMainViewModel.viewPlan().setValue(plan.getUniqueID());
             }
 
             //todo nejaky modal okno na potvrzovani
             @Override
             public void removePlan(Plan plan) {
-                mPlansViewModel.removePlan(plan.getUniqueID());
+                mMainViewModel.removePlan(plan.getUniqueID());
             }
         };
 

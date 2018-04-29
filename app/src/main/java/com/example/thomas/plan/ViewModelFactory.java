@@ -4,7 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.example.thomas.plan.Clients.ClientsViewModel;
+import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
 import com.example.thomas.plan.addEditPlan.AddEditPlanViewModel;
 import com.example.thomas.plan.data.Repository;
@@ -42,8 +42,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(ClientsViewModel.class)) {
-            return (T) new ClientsViewModel(repository);
+        if (modelClass.isAssignableFrom(MainViewModel.class)) {
+            return (T) new MainViewModel(repository);
         } else if(modelClass.isAssignableFrom(AddEditClientViewModel.class)) {
             return (T) new AddEditClientViewModel(repository);
         }else if(modelClass.isAssignableFrom(AddEditPlanViewModel.class)) {

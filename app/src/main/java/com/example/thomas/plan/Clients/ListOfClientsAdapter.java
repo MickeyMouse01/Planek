@@ -1,12 +1,10 @@
 package com.example.thomas.plan.Clients;
 
 import android.databinding.DataBindingUtil;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.databinding.ClientItemBinding;
@@ -19,13 +17,13 @@ import java.util.List;
 
 public class ListOfClientsAdapter extends BaseAdapter {
 
-    private ClientsViewModel mClientsViewModel;
+    private MainViewModel mMainViewModel;
     private List<Client> mClients;
 
 
     public ListOfClientsAdapter(List<Client> clients,
-                                ClientsViewModel clientsViewModel) {
-        mClientsViewModel = clientsViewModel;
+                                MainViewModel mainViewModel) {
+        mMainViewModel = mainViewModel;
         mClients = clients;
 
     }
@@ -72,13 +70,13 @@ public class ListOfClientsAdapter extends BaseAdapter {
 
             @Override
             public void onClientInfoClicked(Client client) {
-                mClientsViewModel.viewClient().setValue(client.getUniqueID());
+                mMainViewModel.viewClient().setValue(client.getUniqueID());
             }
 
             //todo nejaky modal okno na potvrzovani
             @Override
             public void removeClient(Client client) {
-                mClientsViewModel.removeClient(client.getUniqueID());
+                mMainViewModel.removeClient(client.getUniqueID());
             }
         };
 

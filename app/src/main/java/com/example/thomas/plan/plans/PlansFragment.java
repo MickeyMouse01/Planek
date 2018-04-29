@@ -1,15 +1,20 @@
 package com.example.thomas.plan.plans;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.thomas.plan.Clients.ListOfClientsAdapter;
-import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.Clients.ClientsActivity;
+import com.example.thomas.plan.Clients.MainViewModel;
+import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.databinding.PlansFragmentBinding;
 
@@ -24,7 +29,7 @@ import java.util.ArrayList;
 public class  PlansFragment extends Fragment
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private PlansViewModel mPlansViewModel;
+    private MainViewModel mMainViewModel;
     private ListOfPlansAdapter mPlansAdapter;
     private PlansFragmentBinding mPlansFragmentBinding;
 
@@ -39,13 +44,24 @@ public class  PlansFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        mPlansViewModel.getPlans();
+        mMainViewModel.getPlans();
+
     }
 
+    @Nullable
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setupListAdapter();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        mPlansFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.clients_fragment, container, false);
+
+        mMainViewModel = ClientsActivity.obtainViewModel(getActivity());
+
+
+        mPlansFragmentBinding.setViewmodel(mMainViewModel);
+
+        setHasOptionsMenu(true);
+
+        return mPlansFragmentBinding.getRoot();
     }
 
     private void setupListAdapter() {
@@ -53,7 +69,7 @@ public class  PlansFragment extends Fragment
 
         mPlansAdapter = new ListOfPlansAdapter(
                 new ArrayList<Plan>(0),
-                mPlansViewModel
+                mMainViewModel
         );
         listView.setAdapter(mPlansAdapter);
     }
