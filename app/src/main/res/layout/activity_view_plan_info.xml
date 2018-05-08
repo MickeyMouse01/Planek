@@ -5,26 +5,20 @@
 
 
     <TextView
-        android:id="@+id/view_firstname"
+        android:id="@+id/view_name_of_plan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/view_surname"
+        android:id="@+id/view_is_plan_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Datum vytvoreni" />
 
-    <TextView
-        android:id="@+id/view_type_of_group"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/view_nurseid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+
 </LinearLayout>

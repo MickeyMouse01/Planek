@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -28,9 +30,20 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".addEditClient.AddEditClientActivity"
+            android:label="@string/add_client"
             android:parentActivityName=".Clients.ClientsActivity" />
-        <activity android:name=".viewClient.ViewClientActivity" />
-        <activity android:name=".addEditPlan.AddEditPlanActivity"></activity>
+        <activity
+            android:name=".viewClientInfo.ViewClientActivity"
+            android:label="@string/client_info"
+            android:parentActivityName=".Clients.ClientsActivity" />
+        <activity
+            android:name=".addEditPlan.AddEditPlanActivity"
+            android:label="@string/add_plan"
+            android:parentActivityName=".Clients.ClientsActivity" />
+        <activity
+            android:name=".viewPlanInfo.ViewPlanInfoActivity"
+            android:label="@string/plan_info"
+            android:parentActivityName=".Clients.ClientsActivity"></activity>
     </application>
 
 </manifest>

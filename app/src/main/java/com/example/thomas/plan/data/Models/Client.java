@@ -20,12 +20,12 @@ public class Client {
 
     private FirebaseAuth mAuth;
 
-    public final String uniqueID;
-    public TypeOfGroup typeOfGroup;
-    public String firstName;
-    public String surname;
-    public String nurseID;
-    public String planId;
+    private final String uniqueID;
+    private TypeOfGroup typeOfGroup;
+    private String firstName;
+    private String surname;
+    private String nurseID;
+    private String planId;
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
         mAuth = FirebaseAuth.getInstance();

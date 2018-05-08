@@ -10,11 +10,10 @@ import java.util.UUID;
 
 public class Task {
 
-    public final String uniqueID;
-    public String name;
-    public String pathToImg;
-    public boolean isDone;
-
+    private final String uniqueID;
+    private String name;
+    //public String pathToImg;
+    private boolean passed;
 
     public Task() {
         this.uniqueID = UUID.randomUUID().toString();
@@ -33,11 +32,11 @@ public class Task {
         this.name = name;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public boolean isPassed() {
+        return passed;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setPassed(boolean passed) {
+        this.passed = passed;
     }
 }

@@ -15,21 +15,28 @@ public interface DataSource {
 
     interface LoadClientsCallback {
         void onClientsLoaded(@NonNull List<Client> clients);
+
+    }
+    interface LoadClientCallback {
+        void onClientLoaded(@NonNull Client client);
     }
 
     void getClients(@NonNull LoadClientsCallback callback);
 
-    void getClient(@NonNull String clinetId);
+    void getClient(@NonNull String clientId, LoadClientCallback callback);
 
-    void saveClient(@NonNull Client task);
+    void saveClient(@NonNull Client client);
 
     interface LoadPlansCallback {
         void onPlansLoaded(@NonNull List<Plan> plans);
     }
+    interface LoadPlanCallback {
+        void onPlanLoaded(@NonNull Plan plan);
+    }
 
     void getPlans(@NonNull LoadPlansCallback callback);
 
-    void getPlan(@NonNull String clinetId);
+    void getPlan(@NonNull String planId, LoadPlanCallback callback);
 
     void savePlan(@NonNull Plan task);
 

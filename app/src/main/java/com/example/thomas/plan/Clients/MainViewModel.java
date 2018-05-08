@@ -53,6 +53,10 @@ public class MainViewModel extends ViewModel {
         return mViewClient;
     }
 
+    public SingleLiveEvent<String> viewPlan() {
+        return mViewPlan;
+    }
+
     private void loadClients() {
         repository.getClients(new DataSource.LoadClientsCallback() {
             @Override
@@ -62,7 +66,8 @@ public class MainViewModel extends ViewModel {
             }
         });
     }
-    public void removeClient(String clientId){
+
+    public void removeClient(String clientId) {
         repository.deleteClient(clientId);
         loadClients();
     }
@@ -74,22 +79,24 @@ public class MainViewModel extends ViewModel {
         }
         return mListOfPlans;
     }
-    public SingleLiveEvent<String> viewPlan() {
-        return mViewPlan;
-    }
 
 
-    private void loadPlans(){
-        /*repository.getPlans(new DataSource.LoadPlansCallback() {
+    private void loadPlans() {
+        repository.getPlans(new DataSource.LoadPlansCallback() {
             @Override
             public void onPlansLoaded(@NonNull List<Plan> plans) {
                 mListOfPlans.clear();
                 mListOfPlans.addAll(plans);
             }
-        });*/
+        });
     }
-    public void removePlan(String planId){
-        repository.deleteClient(planId);
+
+    public void removePlan(String planId) {
+        repository.deletePlan(planId);
         loadPlans();
+    }
+
+    public int getFragment() {
+        return 0;
     }
 }

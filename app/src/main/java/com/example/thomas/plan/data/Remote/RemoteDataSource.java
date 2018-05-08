@@ -51,8 +51,7 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {
-                };
+                GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {};
                 Map<String, Client> map = dataSnapshot.getValue(t);
                 if (map != null) {
                     List<Client> clients = new ArrayList<>(map.values());
@@ -69,13 +68,13 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getClient(@NonNull final String clientId) {
+    public void getClient(@NonNull final String clientId, final LoadClientCallback callback) {
         mDatabase.getDatabase().getReference("clients")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Client client = dataSnapshot.child(clientId).getValue(Client.class);
-
+                callback.onClientLoaded(client);
             }
 
             @Override
@@ -120,13 +119,13 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getPlan(@NonNull final String planId) {
+    public void getPlan(@NonNull final String planId, final LoadPlanCallback callback) {
         mDatabase.getDatabase().getReference("plans")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Plan plan = dataSnapshot.child(planId).getValue(Plan.class);
-
+                callback.onPlanLoaded(plan);
             }
 
             @Override

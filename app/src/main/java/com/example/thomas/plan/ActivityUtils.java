@@ -22,6 +22,6 @@ public class ActivityUtils {
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(frameId, fragment);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 }

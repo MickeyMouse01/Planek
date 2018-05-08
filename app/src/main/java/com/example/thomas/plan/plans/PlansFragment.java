@@ -52,14 +52,12 @@ public class  PlansFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mPlansFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.clients_fragment, container, false);
+        mPlansFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.plans_fragment, container, false);
 
         mMainViewModel = ClientsActivity.obtainViewModel(getActivity());
-
-
         mPlansFragmentBinding.setViewmodel(mMainViewModel);
-
         setHasOptionsMenu(true);
+        setupListAdapter();
 
         return mPlansFragmentBinding.getRoot();
     }
@@ -73,7 +71,6 @@ public class  PlansFragment extends Fragment
         );
         listView.setAdapter(mPlansAdapter);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

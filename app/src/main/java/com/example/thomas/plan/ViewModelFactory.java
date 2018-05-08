@@ -9,7 +9,8 @@ import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
 import com.example.thomas.plan.addEditPlan.AddEditPlanViewModel;
 import com.example.thomas.plan.data.Repository;
 import com.example.thomas.plan.data.Injection;
-import com.example.thomas.plan.viewClient.ViewClientViewModel;
+import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
+import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
 
 /**
  * Created by Tomas on 14-Mar-18.
@@ -51,6 +52,9 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         }
         else if(modelClass.isAssignableFrom(ViewClientViewModel.class)) {
             return (T) new ViewClientViewModel(repository);
+        }
+        else if(modelClass.isAssignableFrom(ViewPlanInfoViewModel.class)) {
+            return (T) new ViewPlanInfoViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

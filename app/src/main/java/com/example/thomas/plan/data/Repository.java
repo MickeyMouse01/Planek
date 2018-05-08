@@ -46,8 +46,13 @@ public class Repository implements DataSource {
 
         });
     }
-    public void getClient(@NonNull final String clientId){
-        remoteDataSource.getClient(clientId);
+    public void getClient(@NonNull final String clientId, final LoadClientCallback callback){
+        remoteDataSource.getClient(clientId, new LoadClientCallback() {
+            @Override
+            public void onClientLoaded(@NonNull Client client) {
+                callback.onClientLoaded(client);
+            }
+        });
     }
 
     public void deleteClient(@NonNull String clientId){
@@ -68,10 +73,16 @@ public class Repository implements DataSource {
         });
     }
 
-    public void getPlan(@NonNull final String planId){
-        remoteDataSource.getPlan(planId);
+    public void getPlan(@NonNull final String planId,final LoadPlanCallback callback){
+        remoteDataSource.getPlan(planId, new LoadPlanCallback() {
+            @Override
+            public void onPlanLoaded(@NonNull Plan plan) {
+                callback.onPlanLoaded(plan);
+            }
+        });
     }
 
+    //todo bug, kdyz zbyde posledni plan/klienta, tak se odstrani z databaze ale ne z view
     public void deletePlan(@NonNull String planId){
         remoteDataSource.deletePlan(planId);
     }

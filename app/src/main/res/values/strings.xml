@@ -6,6 +6,10 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="add_client">Přidat klienta</string>
+    <string name="add_plan">Přidat plán</string>
+    <string name="client_info">Info o klientovi</string>
+    <string name="plan_info">Info o plánu</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

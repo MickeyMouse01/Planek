@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import android.arch.lifecycle.*;
 
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class  LoginActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
