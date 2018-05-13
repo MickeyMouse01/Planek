@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
 import com.example.thomas.plan.addEditPlan.AddEditPlanViewModel;
+import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
 import com.example.thomas.plan.data.Repository;
 import com.example.thomas.plan.data.Injection;
 import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
@@ -45,16 +46,16 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
             return (T) new MainViewModel(repository);
-        } else if(modelClass.isAssignableFrom(AddEditClientViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(AddEditClientViewModel.class)) {
             return (T) new AddEditClientViewModel(repository);
-        }else if(modelClass.isAssignableFrom(AddEditPlanViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(AddEditPlanViewModel.class)) {
             return (T) new AddEditPlanViewModel(repository);
-        }
-        else if(modelClass.isAssignableFrom(ViewClientViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(ViewClientViewModel.class)) {
             return (T) new ViewClientViewModel(repository);
-        }
-        else if(modelClass.isAssignableFrom(ViewPlanInfoViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(ViewPlanInfoViewModel.class)) {
             return (T) new ViewPlanInfoViewModel(repository);
+        } else if (modelClass.isAssignableFrom(AddEditTaskViewModel.class)) {
+            return (T) new AddEditTaskViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

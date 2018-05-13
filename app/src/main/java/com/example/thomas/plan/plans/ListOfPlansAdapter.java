@@ -19,17 +19,16 @@ import java.util.List;
  * Created by Tomas on 22-Apr-18.
  */
 
-public class  ListOfPlansAdapter extends BaseAdapter {
+public class ListOfPlansAdapter extends BaseAdapter {
 
     private MainViewModel mMainViewModel;
     private List<Plan> mPlans;
 
 
     public ListOfPlansAdapter(List<Plan> plans,
-                                MainViewModel mainViewModel) {
+                              MainViewModel mainViewModel) {
         mMainViewModel = mainViewModel;
         mPlans = plans;
-
     }
 
     public void replaceData(List<Plan> plans) {

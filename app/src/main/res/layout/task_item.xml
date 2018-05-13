@@ -5,12 +5,8 @@
         <import type="android.view.View.OnClickListener" />
 
         <variable
-            name="client"
-            type="com.example.thomas.plan.data.Models.Client" />
-
-        <variable
             name="listener"
-            type="com.example.thomas.plan.Clients.ItemUserActionsListener" />
+            type="com.example.thomas.plan.plans.PlanItemUserActionsListener" />
     </data>
 
     <LinearLayout
@@ -21,51 +17,38 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="10px"
-        android:paddingTop="10px"
-        android:onClick="@{() -> listener.onItemClicked(client)}">
+        android:paddingTop="10px">
+
+        <ImageView
+            android:id="@+id/myImageView"
+            android:layout_width="66dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/view_plan_task_name"
             android:layout_width="164dp"
             android:layout_height="37dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="@{client.getFirstName()}"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        <TextView
-            android:id="@+id/add_surname"
-            android:layout_width="102dp"
-            android:layout_height="29dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="@{client.getSurname()}" />
-
-        <TextView
-            android:id="@+id/add_type_of_group"
-            android:layout_width="wrap_content"
-            android:layout_height="29dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="@{client.getTypeOfGroup()}" />
-
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/view_plan_task_info_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="@{() -> listener.onItemInfoClicked(client)}"
+
             app:srcCompat="@android:drawable/ic_dialog_info" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/view_plan_task_delete_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="@{() -> listener.removeItem(client)}"
+
             app:srcCompat="@android:drawable/ic_menu_delete" />
+
 
     </LinearLayout>
 </layout>

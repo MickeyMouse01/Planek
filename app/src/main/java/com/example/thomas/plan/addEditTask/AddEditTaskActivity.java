@@ -1,4 +1,4 @@
-package com.example.thomas.plan.addEditPlan;
+package com.example.thomas.plan.addEditTask;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -15,72 +15,73 @@ import android.widget.ImageView;
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Task;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class AddEditPlanActivity extends BaseActivity implements View.OnClickListener {
+public class AddEditTaskActivity extends BaseActivity implements View.OnClickListener {
 
+    private AddEditTaskViewModel viewModel;
     private EditText mName;
     private Button save;
     private ImageView imageView;
-    private AddEditPlanViewModel mViewModel;
     private Bitmap imageBitmap;
+    private String relatesPlan = null;
     private static final int PICK_IMAGE = 1;
+
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        mViewModel = obtainViewModel(this);
-        mName = findViewById(R.id.add_name);
-        imageView = findViewById(R.id.add_image);
-        save = findViewById(R.id.add_save_button);
+        viewModel = obtainViewModel(this);
+        mName = findViewById(R.id.add_task_name);
+        imageView = findViewById(R.id.add_task_image);
+        save = findViewById(R.id.add_save_task);
+        relatesPlan = intent.getStringExtra("PlanId");
         save.setOnClickListener(this);
         imageView.setOnClickListener(this);
+
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_add_edit_plan;
+        return R.layout.activity_add_edit_task;
     }
 
-    private static AddEditPlanViewModel obtainViewModel(FragmentActivity activity) {
+    private static AddEditTaskViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        AddEditPlanViewModel viewModel = ViewModelProviders.of(activity, factory).get(AddEditPlanViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(AddEditTaskViewModel.class);
     }
-
-    private void addOrEditPlan() {
+    private void addOrEditTask(){
         String name = mName.getText().toString();
-        Plan newPlan = new Plan();
-        newPlan.setName(name);
-        //newPlan.setImage(imageBitmap); todo upravit aby to ukladalo do storage databaze
-        showDialog("Saving");
-        mViewModel.savePlan(newPlan);
-        hideDialog();
+        Task newTask = new Task(name);
+        if (relatesPlan != null){
+            newTask.setIdOfPlan(relatesPlan);
+            viewModel.saveTaskToPlan(relatesPlan, newTask);
+        }
+        //newTask.setImage(imageBitmap); todo upravit aby to ukladalo do storage databaze
+        viewModel.saveTask(newTask, relatesPlan);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add_image:
+        switch (v.getId()){
+            case R.id.add_task_image:
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
                 break;
-            case R.id.add_save_button:
-                addOrEditPlan();
+            case R.id.add_save_task:
+                addOrEditTask();
                 finish();
         }
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
-
             Uri selectedImage = data.getData();
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -96,5 +97,3 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         }
     }
 }
-
-

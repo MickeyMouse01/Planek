@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Remote.RemoteDataSource;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class Repository implements DataSource {
         return INSTANCE;
     }
 
+    //Clients
     public void saveClient(@NonNull Client client){
        remoteDataSource.saveClient(client);
     }
@@ -59,10 +61,10 @@ public class Repository implements DataSource {
         remoteDataSource.deleteClient(clientId);
     }
 
+    //Plans
     public void savePlan(@NonNull Plan plan){
         remoteDataSource.savePlan(plan);
     }
-
     public void getPlans(@NonNull final LoadPlansCallback callback){
         remoteDataSource.getPlans(new LoadPlansCallback() {
             @Override
@@ -81,10 +83,53 @@ public class Repository implements DataSource {
             }
         });
     }
-
     //todo bug, kdyz zbyde posledni plan/klienta, tak se odstrani z databaze ale ne z view
     public void deletePlan(@NonNull String planId){
         remoteDataSource.deletePlan(planId);
     }
+
+    public void updatePlan(String planId, Plan plan){
+        remoteDataSource.getPlan(planId, new LoadPlanCallback() {
+            @Override
+            public void onPlanLoaded(@NonNull Plan plan) {
+
+            }
+        });
+    }
+
+    //Tasks
+    @Override
+    public void saveTask(@NonNull Task task, String planId){
+        remoteDataSource.saveTask(task,planId);
+    }
+
+    @Override
+    public void getTasks(@NonNull final LoadTasksCallback callback){
+        remoteDataSource.getTasks(new LoadTasksCallback() {
+            @Override
+            public void onTasksLoaded(@NonNull List<Task> tasks) {
+                callback.onTasksLoaded(tasks);
+            }
+
+        });
+    }
+
+
+    @Override
+    public void getTask(@NonNull final String taskId, final LoadTaskCallback callback){
+        remoteDataSource.getTask(taskId, new LoadTaskCallback() {
+            @Override
+            public void onTaskLoaded(@NonNull Task task) {
+                callback.onTaskLoaded(task);
+            }
+        });
+    }
+    @Override
+    public void deleteTask(@NonNull String taskId){
+        remoteDataSource.deleteTask(taskId);
+    }
+
+
+
 
 }

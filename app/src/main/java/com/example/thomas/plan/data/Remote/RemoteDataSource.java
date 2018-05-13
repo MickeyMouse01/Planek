@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +29,7 @@ public class RemoteDataSource implements DataSource {
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private final String ON_CANCELLED = "RemoteDataSource";
 
 
     // Prevent direct instantiation.
@@ -43,6 +45,7 @@ public class RemoteDataSource implements DataSource {
         return INSTANCE;
     }
 
+    //Clients
     @Override
     public void getClients(@NonNull final LoadClientsCallback callback) {
 
@@ -51,7 +54,8 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {};
+                GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {
+                };
                 Map<String, Client> map = dataSnapshot.getValue(t);
                 if (map != null) {
                     List<Client> clients = new ArrayList<>(map.values());
@@ -62,7 +66,7 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.e("blah", "Failed to read app title value.", error.toException());
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
             }
         });
     }
@@ -80,7 +84,7 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.e("blah", "Failed to read app title value.", error.toException());
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
             }
         });
     }
@@ -90,14 +94,15 @@ public class RemoteDataSource implements DataSource {
         mDatabase.child("clients")
                 .child(client.getUniqueID()).setValue(client);
     }
-    public  void deleteClient(@NonNull String clientId){
+    @Override
+    public void deleteClient(@NonNull String clientId) {
         mDatabase.child("clients").child(clientId).removeValue();
     }
-
+    //Plans
     public void getPlans(@NonNull final LoadPlansCallback callback) {
 
         mDatabase.getDatabase().getReference("plans")
-                .getRef().addValueEventListener(new ValueEventListener() {
+                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -113,15 +118,16 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.e("blah", "Failed to read app title value.", error.toException());
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
             }
         });
     }
 
+
     @Override
     public void getPlan(@NonNull final String planId, final LoadPlanCallback callback) {
         mDatabase.getDatabase().getReference("plans")
-                .getRef().addValueEventListener(new ValueEventListener() {
+                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Plan plan = dataSnapshot.child(planId).getValue(Plan.class);
@@ -131,7 +137,7 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.e("blah", "Failed to read app title value.", error.toException());
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
             }
         });
     }
@@ -141,7 +147,71 @@ public class RemoteDataSource implements DataSource {
         mDatabase.child("plans")
                 .child(plan.getUniqueID()).setValue(plan);
     }
-    public  void deletePlan(@NonNull String planId){
+
+    private DatabaseReference getSpecificPlanReference(String planId){
+        return mDatabase.child("plans").child(planId);
+    }
+
+    public void deletePlan(@NonNull String planId) {
         mDatabase.child("plans").child(planId).removeValue();
+    }
+
+    //Tasks
+    @Override
+    public void getTasks(@NonNull final LoadTasksCallback callback) {
+        mDatabase.getDatabase().getReference("tasks")
+                .getRef().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
+                };
+                Map<String, Task> map = dataSnapshot.getValue(t);
+                if (map != null) {
+                    List<Task> tasks = new ArrayList<>(map.values());
+                    callback.onTasksLoaded(tasks);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
+            }
+        });
+    }
+
+
+
+
+    @Override
+    public void getTask(@NonNull final String taskId, final LoadTaskCallback callback) {
+        mDatabase.getDatabase().getReference("tasks")
+                .getRef().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Task task = dataSnapshot.child(taskId).getValue(Task.class);
+                callback.onTaskLoaded(task);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
+            }
+        });
+    }
+
+
+
+    @Override
+    public void saveTask(@NonNull Task task, String planId) {
+        mDatabase.child("tasks")
+                .child(task.getUniqueID()).setValue(task);
+    }
+
+    public void deleteTask(@NonNull String taskId) {
+        mDatabase.child("tasks").child(taskId).removeValue();
     }
 }

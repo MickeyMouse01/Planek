@@ -43,7 +43,12 @@
         <activity
             android:name=".viewPlanInfo.ViewPlanInfoActivity"
             android:label="@string/plan_info"
-            android:parentActivityName=".Clients.ClientsActivity"></activity>
+            android:parentActivityName=".Clients.ClientsActivity" />
+        <activity
+            android:name=".addEditTask.AddEditTaskActivity"
+            android:label="@string/add_task"
+            android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity"
+            />
     </application>
 
 </manifest>

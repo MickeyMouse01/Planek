@@ -62,20 +62,20 @@ public class ListOfClientsAdapter extends BaseAdapter {
             binding = DataBindingUtil.getBinding(view);
         }
 
-        ClientItemUserActionsListener userActionsListener = new ClientItemUserActionsListener() {
+        ItemUserActionsListener userActionsListener = new ItemUserActionsListener() {
             @Override
-            public void onClientClicked(Client client) {
+            public void onItemClicked(Client client) {
 
             }
 
             @Override
-            public void onClientInfoClicked(Client client) {
+            public void onItemInfoClicked(Client client) {
                 mMainViewModel.viewClient().setValue(client.getUniqueID());
             }
 
             //todo nejaky modal okno na potvrzovani
             @Override
-            public void removeClient(Client client) {
+            public void removeItem(Client client) {
                 mMainViewModel.removeClient(client.getUniqueID());
             }
         };

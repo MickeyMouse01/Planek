@@ -3,6 +3,8 @@ package com.example.thomas.plan.data.Models;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,9 +15,11 @@ public class Plan {
 
     private final String uniqueID;
     private String name;
+    private List<Task> listOfRelatesTasks = new ArrayList<>();
     //private Bitmap image;
 
     public Plan() {
+        addToListOfRelatesTasks(new Task("name"));
         this.uniqueID = UUID.randomUUID().toString();
     }
 
@@ -24,6 +28,20 @@ public class Plan {
         return uniqueID;
     }
 
+    public List<Task> getListOfRelatesTasks() {
+        return listOfRelatesTasks;
+    }
+
+    public void setListOfRelatesTasks(List<Task> listOfRelatesTasks) {
+        this.listOfRelatesTasks = listOfRelatesTasks;
+    }
+
+    public void addToListOfRelatesTasks(Task task){
+        if(listOfRelatesTasks == null){
+            listOfRelatesTasks = new ArrayList<>();
+        }
+        listOfRelatesTasks.add(task);
+    }
 
     public String getName() {
         return name;

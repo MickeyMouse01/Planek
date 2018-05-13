@@ -14,7 +14,12 @@ public class Task {
     private String name;
     //public String pathToImg;
     private boolean passed;
+    private String idOfPlan;
 
+    public Task(String name) {
+        this.name = name;
+        this.uniqueID = UUID.randomUUID().toString();
+    }
     public Task() {
         this.uniqueID = UUID.randomUUID().toString();
     }
@@ -22,6 +27,14 @@ public class Task {
     @NonNull
     public String getUniqueID() {
         return uniqueID;
+    }
+
+    public String getIdOfPlan() {
+        return idOfPlan;
+    }
+
+    public void setIdOfPlan(String idOfPlan) {
+        this.idOfPlan = idOfPlan;
     }
 
     public String getName() {

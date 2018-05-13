@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Task;
 
 import java.util.List;
 
@@ -13,10 +14,12 @@ import java.util.List;
 
 public interface DataSource {
 
+    //Clients
     interface LoadClientsCallback {
         void onClientsLoaded(@NonNull List<Client> clients);
 
     }
+
     interface LoadClientCallback {
         void onClientLoaded(@NonNull Client client);
     }
@@ -26,10 +29,13 @@ public interface DataSource {
     void getClient(@NonNull String clientId, LoadClientCallback callback);
 
     void saveClient(@NonNull Client client);
+    void deleteClient(@NonNull String clientId);
 
+    //Plans
     interface LoadPlansCallback {
         void onPlansLoaded(@NonNull List<Plan> plans);
     }
+
     interface LoadPlanCallback {
         void onPlanLoaded(@NonNull Plan plan);
     }
@@ -40,5 +46,23 @@ public interface DataSource {
 
     void savePlan(@NonNull Plan task);
 
+    void deletePlan(@NonNull String planId);
 
+
+    //Tasks
+    interface LoadTasksCallback {
+        void onTasksLoaded(@NonNull List<Task> tasks);
+    }
+
+    interface LoadTaskCallback {
+        void onTaskLoaded(@NonNull Task task);
+    }
+
+    void getTasks(@NonNull LoadTasksCallback callback);
+
+    void getTask(@NonNull String taskId, LoadTaskCallback callback);
+
+    void saveTask(@NonNull Task task, String planId);
+
+    void deleteTask(@NonNull String taskId);
 }
