@@ -32,6 +32,8 @@ public class ClientsActivity extends BaseActivity
 
     private MainViewModel mViewModel;
     private Toolbar toolbar;
+    private final int VIEW_CLIENTS = 0;
+    private final int VIEW_PLANS = 1;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -64,8 +66,9 @@ public class ClientsActivity extends BaseActivity
             }
         });
 
+
+        setupViewFragment(mViewModel.getCurrentFragment().getValue());
         setupToolbar();
-        setupViewFragment(mViewModel.getFragment()); //todo chce to zobecnit
         setupDrawerLayout();
         setupNavigation();
     }
@@ -95,7 +98,6 @@ public class ClientsActivity extends BaseActivity
 
     private void setupViewFragment(int frame) {
         if (frame != 1) {
-
             ClientsFragment clientsFragment = ClientsFragment.newInstance();
             ActivityUtils.replaceFragmentInActivity(
                     getSupportFragmentManager(), clientsFragment, R.id.contentFrame);
@@ -179,12 +181,14 @@ public class ClientsActivity extends BaseActivity
     }
 
     private void viewClient(String clientId) {
+        mViewModel.getCurrentFragment().setValue(VIEW_CLIENTS);
         Intent intent = new Intent(this, ViewClientActivity.class);
         intent.putExtra("ClientId", clientId);
         startActivity(intent);
     }
 
     private void viewPlan(String planId) {
+        mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
         Intent intent = new Intent(this, ViewPlanInfoActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);

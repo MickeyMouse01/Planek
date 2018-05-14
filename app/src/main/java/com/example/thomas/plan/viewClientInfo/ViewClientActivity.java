@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
@@ -53,9 +54,17 @@ public class ViewClientActivity extends BaseActivity {
     }
 
     private void initialize(Client client){
-        firstName.setText(client.getFirstName());
-        surname.setText(client.getSurname());
-        typeOfGroup.setText(client.getTypeOfGroup());
-        nurseId.setText(client.getNurseID());
+        if(client == null){
+            finish();
+            Toast.makeText(this, "Klient byl odstranen", Toast.LENGTH_SHORT).show();
+        } else {
+            firstName.setText(client.getFirstName());
+            surname.setText(client.getSurname());
+            typeOfGroup.setText(client.getTypeOfGroup());
+            nurseId.setText(client.getNurseID());
+        }
+
+
+
     }
 }

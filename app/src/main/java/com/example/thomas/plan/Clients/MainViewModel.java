@@ -1,6 +1,8 @@
 package com.example.thomas.plan.Clients;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
@@ -20,16 +22,20 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel {
 
+    public final int VIEW_CLIENTS = 0;
+    public final int VIEW_PLANS = 1;
     public ObservableList<Client> mListOfClients;
     public ObservableList<Plan> mListOfPlans;
     private final SingleLiveEvent<Void> mAddNewClient = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> mAddNewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mViewClient = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mViewPlan = new SingleLiveEvent<>();
+    private MutableLiveData<Integer> currentFragment;
 
     private Repository repository;
 
     public MainViewModel(Repository mRepository) {
+
         this.repository = mRepository;
     }
 
@@ -39,6 +45,14 @@ public class MainViewModel extends ViewModel {
             loadClients();
         }
         return mListOfClients;
+    }
+
+    public MutableLiveData<Integer> getCurrentFragment() {
+        if (currentFragment == null){
+            currentFragment = new MutableLiveData<>();
+            currentFragment.setValue(VIEW_CLIENTS);
+        }
+        return currentFragment;
     }
 
     public SingleLiveEvent<Void> addNewClient() {

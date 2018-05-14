@@ -20,6 +20,7 @@ import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,7 +55,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
         viewModel.getTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
-                listOfTasksAdapter.replaceData(tasks);
+                listOfTasksAdapter.replaceData(getSpecificTasks(tasks));
             }
         });
 
@@ -64,6 +65,15 @@ public class ViewPlanInfoActivity extends BaseActivity {
                 runActivity();
             }
         });
+    }
+    private List<Task> getSpecificTasks(List<Task> tasks){
+        List<Task> blah = new ArrayList<>();
+        for (Task x : tasks) {
+            if (x.getIdOfPlan().equals(viewPlanId)){
+                blah.add(x);
+            }
+        }
+        return blah;
     }
 
     private void runActivity(){
