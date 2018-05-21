@@ -14,6 +14,7 @@ public class Task {
     private String name;
     //public String pathToImg;
     private boolean passed;
+    private String createdDate;
     private String idOfPlan;
 
     public Task(String name) {
@@ -27,6 +28,14 @@ public class Task {
     @NonNull
     public String getUniqueID() {
         return uniqueID;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getIdOfPlan() {

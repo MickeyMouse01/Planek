@@ -7,6 +7,9 @@ import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Remote.RemoteDataSource;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +37,20 @@ public class Repository implements DataSource {
         return INSTANCE;
     }
 
+
+    private Date getDate(String dateTime) {
+        String pattern = "dd.MM.yyyy_HH:mm:ss";
+        Date date = null;
+        try {
+            date = new SimpleDateFormat(pattern).parse(dateTime);
+        }
+        catch (ParseException e){
+            //throw parse exception ale musim se podivat jak
+        }
+
+        return date;
+    }
+
     //Clients
     public void saveClient(@NonNull Client client){
        remoteDataSource.saveClient(client);
@@ -43,6 +60,7 @@ public class Repository implements DataSource {
         remoteDataSource.getClients(new LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
+
                 callback.onClientsLoaded(clients);
             }
 
@@ -128,8 +146,5 @@ public class Repository implements DataSource {
     public void deleteTask(@NonNull String taskId){
         remoteDataSource.deleteTask(taskId);
     }
-
-
-
 
 }

@@ -14,6 +14,10 @@ import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 //todo seradit podle jmena
 public class AddEditClientActivity extends BaseActivity implements View.OnClickListener {
 
@@ -21,7 +25,6 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     private EditText mSurname;
     private Spinner sTypeOfGroup;
     private Button save;
-    private Client newClient;
     private AddEditClientViewModel mViewModel;
 
     @Override
@@ -53,8 +56,10 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
             String firstName = mFirstName.getText().toString();
             String surname = mSurname.getText().toString();
             int typeOfGroup = sTypeOfGroup.getSelectedItemPosition();
-
+            String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
+                    .format(Calendar.getInstance().getTime());
             Client newClient = new Client(firstName, surname, Enums.TypeOfGroup.values()[typeOfGroup]);
+            newClient.setCreatedDate(dateTime);
             mViewModel.saveClient(newClient);
     }
 

@@ -75,7 +75,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
         PlanItemUserActionsListener userActionsListener = new PlanItemUserActionsListener() {
             @Override
             public void onPlanClicked(Plan plan) {
-
+                mMainViewModel.previewPlan().setValue(plan.getUniqueID());
             }
 
             @Override

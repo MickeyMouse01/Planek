@@ -47,8 +47,11 @@
         <activity
             android:name=".addEditTask.AddEditTaskActivity"
             android:label="@string/add_task"
-            android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity"
-            />
+            android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity" />
+        <activity
+            android:name=".previewPlan.PreviewPlanActivity"
+            android:label="@string/title_activity_preview_plan"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

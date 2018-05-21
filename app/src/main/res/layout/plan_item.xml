@@ -21,11 +21,11 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="10px"
-        android:paddingTop="10px">
+        android:paddingTop="10px"
+        android:onClick="@{() -> listener.onPlanClicked(plan)}">
 
         <ImageView
             android:id="@+id/myImageView"
-
             android:layout_width="66dp"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />

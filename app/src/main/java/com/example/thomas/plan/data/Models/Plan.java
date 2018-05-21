@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ public class Plan {
 
     private final String uniqueID;
     private String name;
+    private String createdDate;
     private List<Task> listOfRelatesTasks = new ArrayList<>();
     //private Bitmap image;
 
@@ -26,6 +28,14 @@ public class Plan {
     @NonNull
     public String getUniqueID() {
         return uniqueID;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     public List<Task> getListOfRelatesTasks() {

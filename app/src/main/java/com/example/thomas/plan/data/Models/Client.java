@@ -26,6 +26,7 @@ public class Client {
     private String surname;
     private String nurseID;
     private String planId;
+    private String createdDate;
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
         mAuth = FirebaseAuth.getInstance();
@@ -38,6 +39,14 @@ public class Client {
 
     public Client() {
         this.uniqueID = UUID.randomUUID().toString();
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getFirstName() {

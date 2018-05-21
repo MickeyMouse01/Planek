@@ -19,6 +19,8 @@ import com.example.thomas.plan.data.Models.Task;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class AddEditTaskActivity extends BaseActivity implements View.OnClickListener {
 
@@ -56,7 +58,10 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     }
     private void addOrEditTask(){
         String name = mName.getText().toString();
+        String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
+                .format(Calendar.getInstance().getTime());
         Task newTask = new Task(name);
+        newTask.setCreatedDate(dateTime);
         if (relatesPlan != null){
             newTask.setIdOfPlan(relatesPlan);
             viewModel.saveTaskToPlan(relatesPlan, newTask);

@@ -22,6 +22,7 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.plans.PlansFragment;
+import com.example.thomas.plan.previewPlan.PreviewPlanActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
@@ -63,6 +64,13 @@ public class ClientsActivity extends BaseActivity
             @Override
             public void onChanged(@Nullable String planId) {
                 viewPlan(planId);
+            }
+        });
+
+        mViewModel.previewPlan().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String planId) {
+                previewPlan(planId);
             }
         });
 
@@ -190,6 +198,13 @@ public class ClientsActivity extends BaseActivity
     private void viewPlan(String planId) {
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
         Intent intent = new Intent(this, ViewPlanInfoActivity.class);
+        intent.putExtra("PlanId", planId);
+        startActivity(intent);
+    }
+
+    private void previewPlan(String planId){
+        mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
+        Intent intent = new Intent(this, PreviewPlanActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }

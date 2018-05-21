@@ -19,5 +19,6 @@
         <item>Skupina B</item>
         <item>Skupina C</item>
     </string-array>
+    <string name="title_activity_preview_plan">PreviewPlanActivity</string>
 
 </resources>

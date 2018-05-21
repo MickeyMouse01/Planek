@@ -16,9 +16,14 @@ import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
+import com.google.firebase.database.ServerValue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddEditPlanActivity extends BaseActivity implements View.OnClickListener {
 
@@ -55,7 +60,10 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
     private void addOrEditPlan() {
         String name = mName.getText().toString();
         Plan newPlan = new Plan();
+        String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
+                .format(Calendar.getInstance().getTime());
         newPlan.setName(name);
+        newPlan.setCreatedDate(dateTime);
         //newPlan.setImage(imageBitmap); todo upravit aby to ukladalo do storage databaze
         showDialog("Saving");
         mViewModel.savePlan(newPlan);
