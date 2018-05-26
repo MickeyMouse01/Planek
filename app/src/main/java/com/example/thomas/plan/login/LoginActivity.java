@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import android.arch.lifecycle.*;
 
 
-public class  LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
@@ -47,8 +47,41 @@ public class  LoginActivity extends BaseActivity implements View.OnClickListener
         setupViewFragment(whichFragment);
         switchButton.setOnClickListener(this);
 
+        loginViewModel.getLoginState().observe(this, new Observer<LoginState>() {
+            @Override
+            public void onChanged(@Nullable LoginState loginState) {
 
+                userLogin(loginState);
 
+            }
+        });
+
+    }
+
+    private void userLogin(LoginState loginState) {
+        switch (loginState) {
+            case RESULT_OK:
+                startActivity();
+                break;
+            case ERROR_VALIDATIONS:
+                loginValidations();
+                break;
+            case ERROR_CREDENTIALS:
+                Toast.makeText(this, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loginValidations() {
+        Toast.makeText(this,
+                "Please enter email and password", Toast.LENGTH_SHORT).show();
+    }
+
+    private void startActivity(){
+        Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ClientsActivity.class);
+        intent.putExtra("message", 2);
+        startActivity(intent);
     }
 
     @Override
@@ -57,7 +90,7 @@ public class  LoginActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void setupViewFragment(boolean frame) {
-        if (frame){
+        if (frame) {
             PatternLockFragment patternFragment = PatternLockFragment.newInstance();
             ActivityUtils.replaceFragmentInActivity(
                     getSupportFragmentManager(), patternFragment, R.id.contentFrame);
@@ -73,7 +106,6 @@ public class  LoginActivity extends BaseActivity implements View.OnClickListener
 
     public static LoginViewModel obtainViewModel(FragmentActivity activity) {
         LoginViewModel viewModel = ViewModelProviders.of(activity).get(LoginViewModel.class);
-
         return viewModel;
     }
 

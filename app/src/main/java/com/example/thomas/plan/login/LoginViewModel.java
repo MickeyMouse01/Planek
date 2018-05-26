@@ -32,17 +32,11 @@ public class LoginViewModel extends ViewModel {
         return loginState;
     }
 
-
+    //todo dostat tady apliakcnni kontext
     public void performLogin(String username, String password) {
 
-        if (TextUtils.isEmpty(username) ||  TextUtils.isEmpty(password))
-        {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
             loginState.setValue(LoginState.ERROR_VALIDATIONS);
-        } else
-        {
-            loginState.setValue(LoginState.RESULT_OK);
         }
     }
-
-
 }

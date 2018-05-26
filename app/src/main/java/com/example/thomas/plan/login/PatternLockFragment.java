@@ -61,8 +61,7 @@ public class PatternLockFragment extends Fragment {
             public void onComplete(List<PatternLockView.Dot> pattern) {
                String lock = PatternLockUtils.patternToString(mPatternLockView, pattern);
                if (PATTERN_LOCK.equals(lock)){
-                   Log.d(getClass().getName(), loginViewModel.toString());
-                    loginViewModel.performLogin("ja","ja");
+                   loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
                }
 
             }

@@ -73,54 +73,16 @@ public class LoginFragment extends Fragment {
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
+                //todo vylepsit
                 loginViewModel.performLogin(username, password);
+                tryToSignIn(username,password);
             }
         });
-
-        // mLoginPresenter = new LoginModel(LoginActivity.this);
-
-        Toast.makeText(getActivity(), loginViewModel.toString(), Toast.LENGTH_SHORT).show();
-        loginViewModel.getLoggedUser().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
-        });
-
-        loginViewModel.getLoginState().observe(this, new Observer<LoginState>() {
-            @Override
-            public void onChanged(@Nullable LoginState loginState) {
-                userLogin(loginState);
-            }
-        });
-
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void userLogin(LoginState loginState) {
-        switch (loginState) {
-            case RESULT_OK:
-                //todo na prasaka udelane, musi se to opravit, tohle pridat do view modelu
-                tryToSignIn(USERNAME, PASSWORD);
-                break;
-            case ERROR_VALIDATIONS:
-                loginValidations();
-                break;
-            case ERROR_CREDENTIALS:
-                Toast.makeText(getActivity(), "Authentication failed.",
-                        Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void loginValidations() {
-        etUsername.setError("Enter valid email address");
-        etPassword.setError("bsads");
-        Toast.makeText(getActivity().getApplicationContext(),
-                "Please enter email and password", Toast.LENGTH_SHORT).show();
-    }
-
     private void tryToSignIn(String email, String password) {
-        //showDialog("loading")
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -130,20 +92,11 @@ public class LoginFragment extends Fragment {
                         }
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Log.d("mojeID", user.getUid());
-                            Toast.makeText(getActivity().getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getActivity(), ClientsActivity.class);
-                            intent.putExtra("message", 2);
-                            startActivity(intent);
-
+                            loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getActivity(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            loginViewModel.getLoginState().setValue(LoginState.ERROR_CREDENTIALS);
                         }
                         //hideDialog();
                     }
