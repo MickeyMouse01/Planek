@@ -51,11 +51,9 @@ public class PreviewPlanActivity extends BaseActivity {
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState,intent);
+        super.onViewReady(savedInstanceState, intent);
 
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -64,16 +62,6 @@ public class PreviewPlanActivity extends BaseActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
     private static PreviewPlanViewModel obtainViewModel(FragmentActivity activity) {
@@ -145,7 +133,6 @@ public class PreviewPlanActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_preview_plan, container, false);
 
 
-
             mViewModel = PreviewPlanActivity.obtainViewModel(getActivity());
             mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
                 @Override
@@ -159,7 +146,8 @@ public class PreviewPlanActivity extends BaseActivity {
 
             return rootView;
         }
-        private void setText(){
+
+        private void setText() {
             textView.setText(listOfTasks.get(getArguments().getInt(ARG_SECTION_NUMBER)).getName());
         }
     }

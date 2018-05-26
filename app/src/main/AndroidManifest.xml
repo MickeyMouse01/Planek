@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".login.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -51,7 +51,8 @@
         <activity
             android:name=".previewPlan.PreviewPlanActivity"
             android:label="@string/title_activity_preview_plan"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity" />
     </application>
 
 </manifest>

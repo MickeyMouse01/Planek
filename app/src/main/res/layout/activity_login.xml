@@ -1,74 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.thomas.plan.Clients.ClientsActivity"
+    tools:showIn="@layout/app_bar_main">
 
-
-    <ImageView
-        android:id="@+id/logo"
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="389dp"
-        android:src="@mipmap/ic_launcher_round" />
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/logo"
-        android:layout_marginLeft="141dp"
-        android:layout_marginRight="141dp"
-        android:layout_marginTop="104dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Username" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/username"
-        android:layout_alignRight="@+id/username"
-        android:layout_below="@+id/username"
-        android:layout_marginTop="79dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Password"
-        />
+        android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/switch_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_alignLeft="@+id/password"
-        android:layout_alignRight="@+id/password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="104dp"
-        android:text="Přihlásit se"
-        android:onClick="onClick"/>
-
-    <TextView
-        android:id="@+id/forgetPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/loginButton"
-        android:layout_alignRight="@+id/loginButton"
-        android:layout_below="@+id/loginButton"
-
-        android:layout_marginTop="50dp"
-        android:text="Zapomenuté heslo" />
-
+         />
 
 </RelativeLayout>

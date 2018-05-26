@@ -26,7 +26,7 @@ import java.util.ArrayList;
     //todo zjistit proc nejde nastavil listener na kliknuti clienta v linear layoutu v client-item
 
 public class ClientsFragment extends Fragment
-        implements NavigationView.OnNavigationItemSelectedListener {
+         {
 
     private MainViewModel mMainViewModel;
     private ListOfClientsAdapter mClientsAdapter;
@@ -77,26 +77,6 @@ public class ClientsFragment extends Fragment
 
 
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_add_client) {
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_settings) {
-
-        } else if (id == R.id.nav_logout) {
-        }
-
-        DrawerLayout drawer = (DrawerLayout) getView().findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

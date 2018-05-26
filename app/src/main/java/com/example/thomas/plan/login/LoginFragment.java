@@ -1,21 +1,21 @@
-package com.example.thomas.plan.Activities;
+package com.example.thomas.plan.login;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.example.thomas.plan.Clients.ClientsActivity;
-import com.example.thomas.plan.login.LoginState;
-import com.example.thomas.plan.login.LoginViewModel;
-
 import com.example.thomas.plan.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,12 +23,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import android.arch.lifecycle.*;
 
-
-public class  LoginActivity extends BaseActivity implements View.OnClickListener {
-
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+public class LoginFragment extends Fragment {
 
     private EditText etUsername, etPassword;
     private Button buttonLogin;
@@ -42,22 +38,48 @@ public class  LoginActivity extends BaseActivity implements View.OnClickListener
     private String username;
     private String password;
 
+    public LoginFragment() {
+        // Required empty public constructor
+    }
+
+    public static LoginFragment newInstance() {
+        return new LoginFragment();
+    }
 
     @Override
-    protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState, intent);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        loginViewModel = LoginActivity.obtainViewModel(getActivity());
 
-        etUsername = findViewById(R.id.username);
-        etPassword = findViewById(R.id.password);
+        return inflater.inflate(R.layout.fragment_login, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+        etUsername = getView().findViewById(R.id.username);
+        etPassword = getView().findViewById(R.id.password);
 
         etUsername.setText(USERNAME);
         etPassword.setText(PASSWORD);
 
-        buttonLogin = findViewById(R.id.loginButton);
-        buttonLogin.setOnClickListener(this);
+        buttonLogin = getView().findViewById(R.id.loginButton);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = etUsername.getText().toString();
+                password = etPassword.getText().toString();
 
-       // mLoginPresenter = new LoginModel(LoginActivity.this);
-        loginViewModel = obtainViewModel(this);
+                loginViewModel.performLogin(username, password);
+            }
+        });
+
+        // mLoginPresenter = new LoginModel(LoginActivity.this);
+
+        Toast.makeText(getActivity(), loginViewModel.toString(), Toast.LENGTH_SHORT).show();
         loginViewModel.getLoggedUser().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -73,54 +95,34 @@ public class  LoginActivity extends BaseActivity implements View.OnClickListener
         });
 
         mAuth = FirebaseAuth.getInstance();
-        //jen pro rychle spousteni
-        //buttonLogin.performClick();
-    }
-
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_login;
-    }
-
-    public static LoginViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-
-        LoginViewModel viewModel = ViewModelProviders.of(activity).get(LoginViewModel.class);
-        return viewModel;
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        username = etUsername.getText().toString();
-        password = etPassword.getText().toString();
-
-        loginViewModel.performLogin(username,password);
     }
 
     private void userLogin(LoginState loginState) {
         switch (loginState) {
             case RESULT_OK:
-                tryToSignIn(username,password);
+                //todo na prasaka udelane, musi se to opravit, tohle pridat do view modelu
+                tryToSignIn(USERNAME, PASSWORD);
                 break;
             case ERROR_VALIDATIONS:
                 loginValidations();
                 break;
+            case ERROR_CREDENTIALS:
+                Toast.makeText(getActivity(), "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void loginValidations() {
         etUsername.setError("Enter valid email address");
         etPassword.setError("bsads");
-        Toast.makeText(getApplicationContext(), "Please enter email and password", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(),
+                "Please enter email and password", Toast.LENGTH_SHORT).show();
     }
 
-
     private void tryToSignIn(String email, String password) {
-        showDialog("Loading");
+        //showDialog("loading")
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
@@ -130,21 +132,26 @@ public class  LoginActivity extends BaseActivity implements View.OnClickListener
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Log.d("mojeID",user.getUid());
-                            Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, ClientsActivity.class);
-                            intent.putExtra(EXTRA_MESSAGE, 2);
+                            Log.d("mojeID", user.getUid());
+                            Toast.makeText(getActivity().getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), ClientsActivity.class);
+                            intent.putExtra("message", 2);
                             startActivity(intent);
+
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-                        hideDialog();
+                        //hideDialog();
                     }
 
                 });
     }
 }
+
+
+
+

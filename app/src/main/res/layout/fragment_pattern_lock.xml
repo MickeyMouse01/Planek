@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".login.PatternLockFragment">
+
+    <com.andrognito.patternlockview.PatternLockView
+        android:id="@+id/pattern_lock_view"
+        android:layout_width="286dp"
+        android:layout_height="288dp"
+        android:layout_centerInParent="true"
+        app:correctStateColor="@color/colorAccent"
+        app:normalStateColor="@color/colorPrimary"
+        app:wrongStateColor="@color/pomegranate" />
+
+</RelativeLayout>

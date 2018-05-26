@@ -16,7 +16,7 @@ import android.view.MenuItem;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.addEditClient.AddEditClientActivity;
-import com.example.thomas.plan.Activities.LoginActivity;
+import com.example.thomas.plan.login.LoginActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;
@@ -25,7 +25,6 @@ import com.example.thomas.plan.plans.PlansFragment;
 import com.example.thomas.plan.previewPlan.PreviewPlanActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
-import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
 
 
 public class ClientsActivity extends BaseActivity
@@ -146,10 +145,6 @@ public class ClientsActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
