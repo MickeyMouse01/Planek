@@ -1,11 +1,15 @@
 package com.example.thomas.plan.tasks;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.thomas.plan.R;
@@ -21,6 +25,8 @@ public class ListOfTasksAdapter extends BaseAdapter {
     private View viewTask;
     private TextView textViewName;
     private ImageView infoImage, deleteImage;
+    private CheckBox checkBox;
+    private RelativeLayout relativeLayout;
 
 
     public ListOfTasksAdapter(List<Task> tasks,
@@ -55,20 +61,26 @@ public class ListOfTasksAdapter extends BaseAdapter {
 
         viewTask = inflater.inflate(R.layout.task_item, null);
         textViewName = viewTask.findViewById(R.id.view_plan_task_name);
-        infoImage = viewTask.findViewById(R.id.view_plan_task_info_image);
         deleteImage = viewTask.findViewById(R.id.view_plan_task_delete_image);
+        relativeLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
+        checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
         textViewName.setText(tasks.get(position).getName());
-        infoImage.setOnClickListener(new View.OnClickListener() {
+
+        if(tasks.get(position).isPassed()){
+            relativeLayout.setBackgroundColor(Color.GREEN);
+        }
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                Log.d("klikanec","klikanec");
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                viewModel.taskChecked(tasks.get(position).getUniqueID());
             }
         });
 
         deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.deleteTask(tasks.get(position).getUniqueID());
+                tasks.remove(position);
             }
         });
 

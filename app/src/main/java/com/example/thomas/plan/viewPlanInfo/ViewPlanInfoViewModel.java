@@ -32,12 +32,12 @@ public class ViewPlanInfoViewModel extends ViewModel {
     }
 
     private void loadTasks(){
-        repository.getTasks(new DataSource.LoadTasksCallback() {
+        repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 listOfTasks.setValue(tasks);
             }
-        });
+        },"517a1dea-f0e9-4ee4-8f1b-9ac4c8d6a634");
     }
 
     public MutableLiveData<Plan> getViewedPlan() {
@@ -55,5 +55,9 @@ public class ViewPlanInfoViewModel extends ViewModel {
 
     public void deleteTask(String taskId){
         repository.deleteTask(taskId);
+    }
+
+    public void taskChecked(String taskId) {
+        //repository.updatePlan();
     }
 }

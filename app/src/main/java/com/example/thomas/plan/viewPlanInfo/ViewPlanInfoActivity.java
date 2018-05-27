@@ -36,7 +36,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        super.onViewReady(savedInstanceState,intent);
+        super.onViewReady(savedInstanceState, intent);
 
         viewModel = obtainViewModel(this);
 
@@ -55,7 +55,9 @@ public class ViewPlanInfoActivity extends BaseActivity {
         viewModel.getTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
-                listOfTasksAdapter.replaceData(getSpecificTasks(tasks));
+                if (tasks != null) {
+                    listOfTasksAdapter.replaceData(getSpecificTasks(tasks));
+                }
             }
         });
 
@@ -66,23 +68,27 @@ public class ViewPlanInfoActivity extends BaseActivity {
             }
         });
     }
-    private List<Task> getSpecificTasks(List<Task> tasks){
+
+    private List<Task> getSpecificTasks(List<Task> tasks) {
         List<Task> taskList = new ArrayList<>();
+
         for (Task x : tasks) {
-            if (x.getIdOfPlan().equals(viewPlanId)){
-                taskList.add(x);
+            if(x != null){ //todo wtf ? chodi tam v arraylistu null elemnt
+                if (x.getIdOfPlan().equals(viewPlanId)) {
+                    taskList.add(x);
+                }
             }
         }
         return taskList;
     }
 
-    private void runActivity(){
+    private void runActivity() {
         Intent intent = new Intent(this, AddEditTaskActivity.class);
         intent.putExtra("PlanId", viewPlanId);
         startActivity(intent);
     }
 
-    private void setupListAdapter(){
+    private void setupListAdapter() {
         listViewTasks = findViewById(R.id.view_plan_list_tasks);
         listOfTasksAdapter = new ListOfTasksAdapter(
                 tasks,
@@ -103,7 +109,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
         return viewModel;
     }
 
-    private void initialize(Plan plan){
+    private void initialize(Plan plan) {
         nameOfPlan.setText(plan.getName());
     }
 

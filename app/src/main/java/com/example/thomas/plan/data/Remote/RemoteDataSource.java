@@ -30,6 +30,7 @@ public class RemoteDataSource implements DataSource {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private final String ON_CANCELLED = "RemoteDataSource";
+    private final String LIST_OF_RELATES_TASKS = "listOfRelatesTasks";
 
 
     // Prevent direct instantiation.
@@ -108,13 +109,13 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>>() {
+                /*GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>>() {
                 };
                 Map<String, Plan> map = dataSnapshot.getValue(t);
                 if (map != null) {
                     List<Plan> plans = new ArrayList<>(map.values());
                     callback.onPlansLoaded(plans);
-                }
+                }*/
             }
 
             @Override
@@ -144,15 +145,16 @@ public class RemoteDataSource implements DataSource {
         });
     }
 
+
     @Override
     public void savePlan(@NonNull Plan plan) {
         mDatabase.child("plans")
                 .child(plan.getUniqueID()).setValue(plan);
     }
 
-    private DatabaseReference getSpecificPlanReference(String planId) {
+    /*private DatabaseReference getSpecificPlanReference(String planId) {
         return mDatabase.child("plans").child(planId);
-    }
+    }*/
 
     public void deletePlan(@NonNull String planId) {
         mDatabase.child("plans").child(planId).removeValue();
@@ -193,7 +195,7 @@ public class RemoteDataSource implements DataSource {
                 GenericTypeIndicator<ArrayList<Task>> t = new GenericTypeIndicator<ArrayList<Task>>() {
                 };
                 ArrayList<Task> map = dataSnapshot
-                        .child(planId).child("listOfRelatesTasks")
+                        .child(planId).child(LIST_OF_RELATES_TASKS)
                         .getValue(t);
                 ;
                 if (map != null) {
@@ -236,5 +238,12 @@ public class RemoteDataSource implements DataSource {
 
     public void deleteTask(@NonNull String taskId) {
         mDatabase.child("tasks").child(taskId).removeValue();
+    }
+
+    @Override
+    public void deleteTaskFromPlan(@NonNull String planId, @NonNull Integer position) {
+        mDatabase.child("plans").child(planId)
+                .child(LIST_OF_RELATES_TASKS)
+                .child(position.toString()).removeValue();
     }
 }

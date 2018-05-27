@@ -68,5 +68,7 @@ public interface DataSource {
 
     void deleteTask(@NonNull String taskId);
 
+    void deleteTaskFromPlan(@NonNull String planId, @NonNull Integer position);
+
 
 }

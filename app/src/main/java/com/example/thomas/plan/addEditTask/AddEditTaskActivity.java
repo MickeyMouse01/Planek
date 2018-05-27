@@ -67,7 +67,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
             viewModel.saveTaskToPlan(relatesPlan, newTask);
         }
         //newTask.setImage(imageBitmap); todo upravit aby to ukladalo do storage databaze
-        viewModel.saveTask(newTask, relatesPlan);
+
     }
 
     @Override

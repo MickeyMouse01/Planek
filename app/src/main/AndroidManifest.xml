@@ -51,8 +51,9 @@
         <activity
             android:name=".previewTasks.PreviewTasksActivity"
             android:label="@string/title_activity_preview_plan"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity" />
+            android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".planForClient.PlanForClientActivity"></activity>
     </application>
 
 </manifest>

@@ -27,15 +27,6 @@ public class AddEditTaskViewModel extends ViewModel {
                 repository.savePlan(plan);
             }
         });
-
-
-    }
-    private void blah(Plan plan, Task task){
-
-    }
-
-    public Plan getRelatesPlan() {
-        return relatesPlan;
     }
 
     public void saveTask(Task newTask,String planId) {

@@ -157,4 +157,8 @@ public class Repository implements DataSource {
         remoteDataSource.deleteTask(taskId);
     }
 
+    @Override
+    public void deleteTaskFromPlan(@NonNull String planId, @NonNull Integer position) {
+        remoteDataSource.deleteTaskFromPlan(planId,position);
+    }
 }

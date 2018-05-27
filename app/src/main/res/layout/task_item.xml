@@ -9,46 +9,53 @@
             type="com.example.thomas.plan.plans.PlanItemUserActionsListener" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/view_plan_relative_layout"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_height="100dp"
         android:orientation="horizontal"
-        android:background="@drawable/touch_feedback"
+        android:paddingBottom="10px"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="10px"
         android:paddingTop="10px">
+
+        <CheckBox
+            android:id="@+id/view_plan_ispassed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="19dp"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/myImageView"
-            android:layout_width="66dp"
-            android:layout_height="match_parent"
+            android:layout_width="114dp"
+            android:layout_height="87dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="78dp"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
         <TextView
             android:id="@+id/view_plan_task_name"
-            android:layout_width="164dp"
-            android:layout_height="37dp"
+            android:layout_width="457dp"
+            android:layout_height="62dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="102dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-        <ImageButton
-            android:id="@+id/view_plan_task_info_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            app:srcCompat="@android:drawable/ic_dialog_info" />
 
         <ImageButton
             android:id="@+id/view_plan_task_delete_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_weight="1"
-
             app:srcCompat="@android:drawable/ic_menu_delete" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
