@@ -132,6 +132,16 @@ public class Repository implements DataSource {
         });
     }
 
+    @Override
+    public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, String planId) {
+        remoteDataSource.getSpecificTasksForPlan(new LoadTasksCallback() {
+            @Override
+            public void onTasksLoaded(@NonNull List<Task> tasks) {
+                callback.onTasksLoaded(tasks);
+            }
+        }, planId);
+    }
+
 
     @Override
     public void getTask(@NonNull final String taskId, final LoadTaskCallback callback){

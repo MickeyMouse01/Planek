@@ -67,13 +67,13 @@ public class ViewPlanInfoActivity extends BaseActivity {
         });
     }
     private List<Task> getSpecificTasks(List<Task> tasks){
-        List<Task> blah = new ArrayList<>();
+        List<Task> taskList = new ArrayList<>();
         for (Task x : tasks) {
             if (x.getIdOfPlan().equals(viewPlanId)){
-                blah.add(x);
+                taskList.add(x);
             }
         }
-        return blah;
+        return taskList;
     }
 
     private void runActivity(){

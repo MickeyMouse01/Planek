@@ -94,10 +94,12 @@ public class RemoteDataSource implements DataSource {
         mDatabase.child("clients")
                 .child(client.getUniqueID()).setValue(client);
     }
+
     @Override
     public void deleteClient(@NonNull String clientId) {
         mDatabase.child("clients").child(clientId).removeValue();
     }
+
     //Plans
     public void getPlans(@NonNull final LoadPlansCallback callback) {
 
@@ -148,7 +150,7 @@ public class RemoteDataSource implements DataSource {
                 .child(plan.getUniqueID()).setValue(plan);
     }
 
-    private DatabaseReference getSpecificPlanReference(String planId){
+    private DatabaseReference getSpecificPlanReference(String planId) {
         return mDatabase.child("plans").child(planId);
     }
 
@@ -171,7 +173,6 @@ public class RemoteDataSource implements DataSource {
                     List<Task> tasks = new ArrayList<>(map.values());
                     callback.onTasksLoaded(tasks);
                 }
-
             }
 
             @Override
@@ -182,7 +183,30 @@ public class RemoteDataSource implements DataSource {
         });
     }
 
+    @Override
+    public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId) {
+        mDatabase.getDatabase().getReference("plans")
+                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                GenericTypeIndicator<ArrayList<Task>> t = new GenericTypeIndicator<ArrayList<Task>>() {
+                };
+                ArrayList<Task> map = dataSnapshot
+                        .child(planId).child("listOfRelatesTasks")
+                        .getValue(t);
+                ;
+                if (map != null) {
+                    callback.onTasksLoaded(map);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
     @Override
@@ -202,7 +226,6 @@ public class RemoteDataSource implements DataSource {
             }
         });
     }
-
 
 
     @Override

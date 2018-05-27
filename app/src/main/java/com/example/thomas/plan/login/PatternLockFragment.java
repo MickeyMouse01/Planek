@@ -21,7 +21,6 @@ public class PatternLockFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     private PatternLockView mPatternLockView;
-    private PatternLockViewListener mPatternLockViewListener;
     private String PATTERN_LOCK = "03678";
 
     public PatternLockFragment() {
@@ -50,6 +49,7 @@ public class PatternLockFragment extends Fragment {
             @Override
             public void onStarted() {
 
+
             }
 
             @Override
@@ -59,16 +59,18 @@ public class PatternLockFragment extends Fragment {
 
             @Override
             public void onComplete(List<PatternLockView.Dot> pattern) {
-               String lock = PatternLockUtils.patternToString(mPatternLockView, pattern);
-               if (PATTERN_LOCK.equals(lock)){
-                   loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
-               }
+                String lock = PatternLockUtils.patternToString(mPatternLockView, pattern);
+                if (PATTERN_LOCK.equals(lock)) {
+                    loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                } else {
+                    loginViewModel.getLoginState().setValue(LoginState.ERROR_CREDENTIALS);
+                }
 
             }
 
             @Override
             public void onCleared() {
-                Log.d("blah", "onCleared");
+
             }
         });
     }

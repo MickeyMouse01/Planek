@@ -3,12 +3,18 @@ package com.example.thomas.plan.addEditClient;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.andrognito.patternlockview.PatternLockView;
+import com.andrognito.patternlockview.listener.PatternLockViewListener;
+import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
@@ -17,14 +23,20 @@ import com.example.thomas.plan.data.Models.Client;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 //todo seradit podle jmena
 public class AddEditClientActivity extends BaseActivity implements View.OnClickListener {
 
-    private EditText mFirstName;
+    private EditText mFirstName,mUserName;
     private EditText mSurname;
     private Spinner sTypeOfGroup;
     private Button save;
+    private String actualLock = "";
+    private TextView txtForPassword;
+    private int countForSave = 0;
+
+    private PatternLockView mPatternLockView;
     private AddEditClientViewModel mViewModel;
 
     @Override
@@ -35,6 +47,10 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mSurname = findViewById(R.id.add_surname);
         sTypeOfGroup = findViewById(R.id.type_of_group);
         save = findViewById(R.id.add_save_button);
+        txtForPassword = findViewById(R.id.add_password_pattern_text);
+        mPatternLockView = findViewById(R.id.add_pattern_lock_view);
+        mUserName = findViewById(R.id.add_username);
+        addListenerForPattern();
         mViewModel = obtainViewModel(this);
         String idOfClient = intent.getStringExtra("idClient");
 
@@ -52,14 +68,61 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         return viewModel;
     }
 
+    private void addListenerForPattern(){
+        mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
+            @Override
+            public void onStarted() {
+
+            }
+
+            @Override
+            public void onProgress(List<PatternLockView.Dot> progressPattern) {
+            }
+
+            @Override
+            public void onComplete(List<PatternLockView.Dot> pattern) {
+                String lock = PatternLockUtils.patternToString(mPatternLockView, pattern);
+                if(!actualLock.isEmpty() && !actualLock.equals(lock)){
+                    mPatternLockView.clearPattern();
+                    actualLock = "";
+                    countForSave = 0;
+                    txtForPassword.setText("Heslo se neshoduje, zadejte znovu!");
+
+                    Toast.makeText(AddEditClientActivity.this,
+                            "Heslo se neshoduje, zadejte znovu!",
+                            Toast.LENGTH_SHORT).show();
+
+                }else{
+                    countForSave++;
+                    txtForPassword.setText("Zadejte znovu pro potvrzeni!");
+                    actualLock = lock;
+                }
+
+                if(countForSave == 2){
+                    countForSave = 0;
+                    actualLock = lock;
+                    txtForPassword.setText("Heslo úspěšně vybráno!");
+                }
+
+            }
+
+            @Override
+            public void onCleared() {
+            }
+        });
+    }
+
     private void addOrEditClient() {
             String firstName = mFirstName.getText().toString();
             String surname = mSurname.getText().toString();
             int typeOfGroup = sTypeOfGroup.getSelectedItemPosition();
+            String userName = mUserName.getText().toString();
             String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
                     .format(Calendar.getInstance().getTime());
             Client newClient = new Client(firstName, surname, Enums.TypeOfGroup.values()[typeOfGroup]);
             newClient.setCreatedDate(dateTime);
+            newClient.setUsername(userName);
+            newClient.setPassword(actualLock);
             mViewModel.saveClient(newClient);
     }
 
@@ -67,6 +130,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         addOrEditClient();
+        //todo validacka na empty inputs
         finish();
     }
 }

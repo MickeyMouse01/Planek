@@ -30,6 +30,7 @@ public class ViewPlanInfoViewModel extends ViewModel {
         }
         return listOfTasks;
     }
+
     private void loadTasks(){
         repository.getTasks(new DataSource.LoadTasksCallback() {
             @Override

@@ -22,7 +22,7 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.plans.PlansFragment;
-import com.example.thomas.plan.previewPlan.PreviewPlanActivity;
+import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
 
@@ -199,7 +199,7 @@ public class ClientsActivity extends BaseActivity
 
     private void previewPlan(String planId){
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
-        Intent intent = new Intent(this, PreviewPlanActivity.class);
+        Intent intent = new Intent(this, PreviewTasksActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }

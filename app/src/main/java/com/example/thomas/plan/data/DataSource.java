@@ -60,9 +60,13 @@ public interface DataSource {
 
     void getTasks(@NonNull LoadTasksCallback callback);
 
+    void getSpecificTasksForPlan(@NonNull LoadTasksCallback callback, String planId);
+
     void getTask(@NonNull String taskId, LoadTaskCallback callback);
 
     void saveTask(@NonNull Task task, String planId);
 
     void deleteTask(@NonNull String taskId);
+
+
 }

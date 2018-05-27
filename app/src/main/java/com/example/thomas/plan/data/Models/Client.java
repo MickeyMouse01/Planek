@@ -27,6 +27,8 @@ public class Client {
     private String nurseID;
     private String planId;
     private String createdDate;
+    private String password;
+    private String username;
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
         mAuth = FirebaseAuth.getInstance();
@@ -35,6 +37,22 @@ public class Client {
         this.typeOfGroup = typeOfGroup;
         this.uniqueID = UUID.randomUUID().toString();
         this.nurseID = mAuth.getCurrentUser().getUid();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Client() {

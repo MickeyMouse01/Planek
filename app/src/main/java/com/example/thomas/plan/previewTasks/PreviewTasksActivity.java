@@ -1,14 +1,10 @@
-package com.example.thomas.plan.previewPlan;
+package com.example.thomas.plan.previewTasks;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,12 +23,11 @@ import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreviewPlanActivity extends BaseActivity {
+public class PreviewTasksActivity extends BaseActivity implements TasksListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -43,7 +38,8 @@ public class PreviewPlanActivity extends BaseActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    private PreviewTasksViewModel mViewModel;
+    private String viewPlanId;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -53,8 +49,9 @@ public class PreviewPlanActivity extends BaseActivity {
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mViewModel = obtainViewModel(this);
+        viewPlanId = intent.getStringExtra("PlanId");
+        mViewModel.setViewedPlanId(viewPlanId);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -62,16 +59,17 @@ public class PreviewPlanActivity extends BaseActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
     }
 
-    private static PreviewPlanViewModel obtainViewModel(FragmentActivity activity) {
+    private static PreviewTasksViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(PreviewPlanViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(PreviewTasksViewModel.class);
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_preview_plan;
+        return R.layout.activity_preview_tasks;
     }
 
 
@@ -97,6 +95,16 @@ public class PreviewPlanActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void updateTasks(List<Task> tasks) {
+        mViewModel.getListOfTasks().setValue(tasks);
+    }
+
+    @Override
+    public void getTaskInfo() {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -106,11 +114,13 @@ public class PreviewPlanActivity extends BaseActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String LIST_SIZE = "list_size";
 
 
-        public PreviewPlanViewModel mViewModel;
+        public PreviewTasksViewModel mViewModel;
         private List<Task> listOfTasks = new ArrayList<>();
-        TextView textView;
+        private TextView textView;
+        private TasksListener tasksListener;
 
         public PlaceholderFragment() {
         }
@@ -123,6 +133,7 @@ public class PreviewPlanActivity extends BaseActivity {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+
             fragment.setArguments(args);
             return fragment;
         }
@@ -130,10 +141,10 @@ public class PreviewPlanActivity extends BaseActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_preview_plan, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_preview_tasks, container, false);
 
 
-            mViewModel = PreviewPlanActivity.obtainViewModel(getActivity());
+            mViewModel = PreviewTasksActivity.obtainViewModel(getActivity());
             mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
                 @Override
                 public void onChanged(@Nullable List<Task> tasks) {
@@ -142,7 +153,8 @@ public class PreviewPlanActivity extends BaseActivity {
                 }
             });
 
-            textView = (TextView) rootView.findViewById(R.id.preview_name);
+            textView = rootView.findViewById(R.id.preview_name);
+
 
             return rootView;
         }
@@ -161,18 +173,21 @@ public class PreviewPlanActivity extends BaseActivity {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
+        private int sizeOfList;
+        //musim pockat na nacteni
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            PlaceholderFragment blah = PlaceholderFragment.newInstance(position + 1);
+            sizeOfList = blah.listOfTasks.size();
+            return blah;
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return sizeOfList;
         }
     }
 }
