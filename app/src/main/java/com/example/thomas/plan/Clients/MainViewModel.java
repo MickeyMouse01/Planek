@@ -2,7 +2,6 @@ package com.example.thomas.plan.Clients;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Repository;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +26,8 @@ public class MainViewModel extends ViewModel {
     public ObservableList<Plan> mListOfPlans;
     private final SingleLiveEvent<Void> mAddNewClient = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> mAddNewPlan = new SingleLiveEvent<>();
-    private final SingleLiveEvent<String> mViewClient = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mViewInfoClient = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mPreviewClient = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mViewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mPreviewPlan = new SingleLiveEvent<>();
     private MutableLiveData<Integer> currentFragment;
@@ -63,15 +62,15 @@ public class MainViewModel extends ViewModel {
     public SingleLiveEvent<Void> addNewPlan() {
         return mAddNewPlan;
     }
-
     public SingleLiveEvent<String> viewClient() {
-        return mViewClient;
+        return mViewInfoClient;
     }
-
+    public SingleLiveEvent<String> previewClient() {
+        return mPreviewClient;
+    }
     public SingleLiveEvent<String> viewPlan() {
         return mViewPlan;
     }
-
     public SingleLiveEvent<String> previewPlan() {
         return mPreviewPlan;
     }
@@ -113,9 +112,5 @@ public class MainViewModel extends ViewModel {
     public void removePlan(String planId) {
         repository.deletePlan(planId);
         loadPlans();
-    }
-
-    public int getFragment() {
-        return 0;
     }
 }

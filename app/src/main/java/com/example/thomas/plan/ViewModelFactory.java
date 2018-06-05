@@ -8,8 +8,9 @@ import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
 import com.example.thomas.plan.addEditPlan.AddEditPlanViewModel;
 import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
-import com.example.thomas.plan.data.Repository;
 import com.example.thomas.plan.data.Injection;
+import com.example.thomas.plan.data.Repository;
+import com.example.thomas.plan.planForClient.PreviewClientViewModel;
 import com.example.thomas.plan.previewTasks.PreviewTasksViewModel;
 import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
@@ -26,6 +27,11 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final Repository repository;
 
+    private ViewModelFactory(Application app, Repository clients) {
+        mApplication = app;
+        repository = clients;
+    }
+
     public static ViewModelFactory getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (ViewModelFactory.class) {
@@ -36,11 +42,6 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             }
         }
         return INSTANCE;
-    }
-
-    private ViewModelFactory(Application app, Repository clients) {
-        mApplication = app;
-        repository = clients;
     }
 
     @Override
@@ -57,8 +58,10 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new ViewPlanInfoViewModel(repository);
         } else if (modelClass.isAssignableFrom(AddEditTaskViewModel.class)) {
             return (T) new AddEditTaskViewModel(repository);
-        }  else if (modelClass.isAssignableFrom(PreviewTasksViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(PreviewTasksViewModel.class)) {
             return (T) new PreviewTasksViewModel(repository);
+        } else if (modelClass.isAssignableFrom(PreviewClientViewModel.class)) {
+            return (T) new PreviewClientViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

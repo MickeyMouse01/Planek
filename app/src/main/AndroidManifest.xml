@@ -53,7 +53,7 @@
             android:label="@string/title_activity_preview_plan"
             android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".planForClient.PlanForClientActivity" />
+        <activity android:name=".planForClient.PreviewClientActivity" />
     </application>
 
 </manifest>

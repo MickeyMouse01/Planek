@@ -21,6 +21,7 @@ import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
+import com.example.thomas.plan.planForClient.PreviewClientActivity;
 import com.example.thomas.plan.plans.PlansFragment;
 import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
@@ -57,6 +58,12 @@ public class ClientsActivity extends BaseActivity
             @Override
             public void onChanged(@Nullable String clientId) {
                 viewClient(clientId);
+            }
+        });
+        mViewModel.previewClient().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String clientId) {
+                previewClient(clientId);
             }
         });
         mViewModel.viewPlan().observe(this, new Observer<String>() {
@@ -186,6 +193,13 @@ public class ClientsActivity extends BaseActivity
     private void viewClient(String clientId) {
         mViewModel.getCurrentFragment().setValue(VIEW_CLIENTS);
         Intent intent = new Intent(this, ViewClientActivity.class);
+        intent.putExtra("ClientId", clientId);
+        startActivity(intent);
+    }
+
+    private void previewClient(String clientId) {
+        mViewModel.getCurrentFragment().setValue(VIEW_CLIENTS);
+        Intent intent = new Intent(this, PreviewClientActivity.class);
         intent.putExtra("ClientId", clientId);
         startActivity(intent);
     }

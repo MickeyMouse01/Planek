@@ -53,7 +53,6 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
         super.onViewReady(savedInstanceState, intent);
 
         mViewModel = obtainViewModel(this);
-        Log.d(NAME_OF_CLASS, "je to tu");
         viewPlanId = intent.getStringExtra("PlanId");
         mViewModel.setViewedPlanId(viewPlanId);
         // Create the adapter that will return a fragment for each of the three
@@ -70,7 +69,6 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
                 mViewPager.setAdapter(mSectionsPagerAdapter);
-
                 hideDialog();
 
             }

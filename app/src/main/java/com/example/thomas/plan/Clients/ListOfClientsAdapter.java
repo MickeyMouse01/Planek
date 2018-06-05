@@ -65,7 +65,7 @@ public class ListOfClientsAdapter extends BaseAdapter {
         ItemUserActionsListener userActionsListener = new ItemUserActionsListener() {
             @Override
             public void onItemClicked(Client client) {
-
+                mMainViewModel.previewClient().setValue(client.getUniqueID());
             }
 
             @Override

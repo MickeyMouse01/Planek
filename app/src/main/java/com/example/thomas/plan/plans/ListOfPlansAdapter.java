@@ -77,7 +77,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
             @Override
             public void onPlanClicked(Plan plan) {
                 mMainViewModel.previewPlan().setValue(plan.getUniqueID());
-                Log.d(NAME_OF_CLASS, plan.getUniqueID());
+
             }
 
             @Override
