@@ -1,9 +1,7 @@
 package com.example.thomas.plan.addEditTask;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Plan;

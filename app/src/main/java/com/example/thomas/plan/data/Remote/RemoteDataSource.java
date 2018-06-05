@@ -26,11 +26,11 @@ import java.util.Map;
 public class RemoteDataSource implements DataSource {
 
     private static RemoteDataSource INSTANCE;
-
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+    private final String NAME_OF_CLASS = getClass().getName();
     private final String ON_CANCELLED = "RemoteDataSource";
     private final String LIST_OF_RELATES_TASKS = "listOfRelatesTasks";
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
 
     // Prevent direct instantiation.
@@ -109,13 +109,13 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                /*GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>>() {
+                GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>>() {
                 };
                 Map<String, Plan> map = dataSnapshot.getValue(t);
                 if (map != null) {
                     List<Plan> plans = new ArrayList<>(map.values());
                     callback.onPlansLoaded(plans);
-                }*/
+                }
             }
 
             @Override
@@ -125,7 +125,6 @@ public class RemoteDataSource implements DataSource {
             }
         });
     }
-
 
     @Override
     public void getPlan(@NonNull final String planId, final LoadPlanCallback callback) {
@@ -144,7 +143,6 @@ public class RemoteDataSource implements DataSource {
             }
         });
     }
-
 
     @Override
     public void savePlan(@NonNull Plan plan) {
@@ -187,18 +185,20 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId) {
+
         mDatabase.getDatabase().getReference("plans")
-                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+                .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
 
                 GenericTypeIndicator<ArrayList<Task>> t = new GenericTypeIndicator<ArrayList<Task>>() {
                 };
                 ArrayList<Task> map = dataSnapshot
                         .child(planId).child(LIST_OF_RELATES_TASKS)
                         .getValue(t);
-                ;
                 if (map != null) {
+
                     callback.onTasksLoaded(map);
                 }
             }
@@ -209,7 +209,6 @@ public class RemoteDataSource implements DataSource {
             }
         });
     }
-
 
     @Override
     public void getTask(@NonNull final String taskId, final LoadTaskCallback callback) {
@@ -228,7 +227,6 @@ public class RemoteDataSource implements DataSource {
             }
         });
     }
-
 
     @Override
     public void saveTask(@NonNull Task task, String planId) {

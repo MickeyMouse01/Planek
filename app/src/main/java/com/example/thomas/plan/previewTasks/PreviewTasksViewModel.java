@@ -3,6 +3,7 @@ package com.example.thomas.plan.previewTasks;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Task;
@@ -16,6 +17,7 @@ public class PreviewTasksViewModel extends ViewModel {
     private Repository repository;
     private MutableLiveData<List<Task>> mListOfTasks;
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
+        private String NAME_OF_CLASS = getClass().getName();
 
     public PreviewTasksViewModel(Repository repository){
         this.repository = repository;
@@ -40,6 +42,7 @@ public class PreviewTasksViewModel extends ViewModel {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 mListOfTasks.setValue(tasks);
+
             }
         },viewedPlanId.getValue());
     }

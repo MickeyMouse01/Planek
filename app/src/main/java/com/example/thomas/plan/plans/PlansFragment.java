@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ public class  PlansFragment extends Fragment
     private MainViewModel mMainViewModel;
     private ListOfPlansAdapter mPlansAdapter;
     private PlansFragmentBinding mPlansFragmentBinding;
+    private String NAME_OF_CLASS = getClass().getName();
 
     public PlansFragment() {
         // Requires empty public constructor
@@ -58,7 +60,6 @@ public class  PlansFragment extends Fragment
         mPlansFragmentBinding.setViewmodel(mMainViewModel);
         setHasOptionsMenu(true);
         setupListAdapter();
-
         return mPlansFragmentBinding.getRoot();
     }
 

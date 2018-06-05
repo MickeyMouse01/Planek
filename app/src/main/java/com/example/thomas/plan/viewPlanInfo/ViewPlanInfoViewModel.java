@@ -16,6 +16,7 @@ public class ViewPlanInfoViewModel extends ViewModel {
 
     private Repository repository;
     private MutableLiveData<Plan> viewedPlan;
+    private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<List<Task>> listOfTasks;
 
     public ViewPlanInfoViewModel(Repository mRepository) {
@@ -37,7 +38,11 @@ public class ViewPlanInfoViewModel extends ViewModel {
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 listOfTasks.setValue(tasks);
             }
-        },"517a1dea-f0e9-4ee4-8f1b-9ac4c8d6a634");
+        },viewedPlanId.getValue());
+    }
+
+    public void setViewedPlanId(String viewedPlanId) {
+        this.viewedPlanId.setValue(viewedPlanId);
     }
 
     public MutableLiveData<Plan> getViewedPlan() {

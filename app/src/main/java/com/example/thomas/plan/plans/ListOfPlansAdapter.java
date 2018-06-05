@@ -23,6 +23,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
 
     private MainViewModel mMainViewModel;
     private List<Plan> mPlans;
+    private String NAME_OF_CLASS = getClass().getName();
 
 
     public ListOfPlansAdapter(List<Plan> plans,
@@ -76,6 +77,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
             @Override
             public void onPlanClicked(Plan plan) {
                 mMainViewModel.previewPlan().setValue(plan.getUniqueID());
+                Log.d(NAME_OF_CLASS, plan.getUniqueID());
             }
 
             @Override

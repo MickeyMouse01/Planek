@@ -21,7 +21,6 @@ public class Plan {
     //private Bitmap image;
 
     public Plan() {
-        addToListOfRelatesTasks(new Task("name"));
         this.uniqueID = UUID.randomUUID().toString();
     }
 

@@ -43,15 +43,18 @@ public class ViewPlanInfoActivity extends BaseActivity {
         setupListAdapter();
 
         viewPlanId = intent.getStringExtra("PlanId");
+        viewModel.setViewedPlanId(viewPlanId);
         viewModel.setViewedPlan(viewPlanId);
         nameOfPlan = findViewById(R.id.view_name_of_plan);
         fab = findViewById(R.id.fab);
+
         viewModel.getViewedPlan().observe(this, new Observer<Plan>() {
             @Override
             public void onChanged(@Nullable Plan plan) {
                 initialize(plan);
             }
         });
+
         viewModel.getTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
@@ -73,7 +76,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
         List<Task> taskList = new ArrayList<>();
 
         for (Task x : tasks) {
-            if(x != null){ //todo wtf ? chodi tam v arraylistu null elemnt
+            if(x != null){
                 if (x.getIdOfPlan().equals(viewPlanId)) {
                     taskList.add(x);
                 }

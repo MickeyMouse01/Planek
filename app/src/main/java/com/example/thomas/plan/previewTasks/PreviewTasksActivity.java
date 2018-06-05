@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,8 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private PreviewTasksViewModel mViewModel;
     private String viewPlanId;
+    private String NAME_OF_CLASS = getClass().getName();
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -50,15 +53,28 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
         super.onViewReady(savedInstanceState, intent);
 
         mViewModel = obtainViewModel(this);
+        Log.d(NAME_OF_CLASS, "je to tu");
         viewPlanId = intent.getStringExtra("PlanId");
         mViewModel.setViewedPlanId(viewPlanId);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
+        showDialog("Loading data");
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mViewModel);
+
+
+        mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable List<Task> tasks) {
+                mViewPager.setAdapter(mSectionsPagerAdapter);
+
+                hideDialog();
+
+            }
+        });
 
     }
 
@@ -115,6 +131,7 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String LIST_SIZE = "list_size";
+        private String NAME_OF_CLASS = getClass().getName();
 
 
         public PreviewTasksViewModel mViewModel;
@@ -133,14 +150,13 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-
             fragment.setArguments(args);
             return fragment;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+                                 final Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_preview_tasks, container, false);
 
 
@@ -154,13 +170,11 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
             });
 
             textView = rootView.findViewById(R.id.preview_name);
-
-
             return rootView;
         }
 
         private void setText() {
-            textView.setText(listOfTasks.get(getArguments().getInt(ARG_SECTION_NUMBER)).getName());
+            textView.setText(listOfTasks.get(getArguments().getInt(ARG_SECTION_NUMBER) - 1).getName());
         }
     }
 
@@ -170,24 +184,28 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+        private PreviewTasksViewModel tasks;
         private int sizeOfList;
+
+        public SectionsPagerAdapter(FragmentManager fm, PreviewTasksViewModel tasks) {
+            super(fm);
+            this.tasks = tasks;
+        }
+
+
+
         //musim pockat na nacteni
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            PlaceholderFragment blah = PlaceholderFragment.newInstance(position + 1);
-            sizeOfList = blah.listOfTasks.size();
-            return blah;
+            return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return sizeOfList;
+            return mViewModel.getListOfTasks().getValue().size();
         }
     }
 }

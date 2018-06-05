@@ -80,7 +80,7 @@ public class ListOfTasksAdapter extends BaseAdapter {
         deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tasks.remove(position);
+                tasks.remove(position); //todo tohle nemuze byt takto
             }
         });
 
