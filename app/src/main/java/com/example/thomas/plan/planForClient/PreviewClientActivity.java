@@ -2,28 +2,33 @@ package com.example.thomas.plan.planForClient;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.data.Models.Client;
-import com.example.thomas.plan.data.Models.Plan;
 
-public class PreviewClientActivity extends BaseActivity {
+public class PreviewClientActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView nameOfClient,surnameOfClient;
     private ImageButton addNewPlanBut;
     private ListView listViewOnePlan, listViewTasks;
     private String clientId;
     private PreviewClientViewModel mViewModel;
+
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -45,8 +50,7 @@ public class PreviewClientActivity extends BaseActivity {
                 initializeClient(client);
             }
         });
-
-
+        addNewPlanBut.setOnClickListener(this);
 
     }
 
@@ -62,7 +66,49 @@ public class PreviewClientActivity extends BaseActivity {
     }
 
     private void initializeClient(Client client){
+        nameOfClient.setText(client.getFirstName());
+        surnameOfClient.setText(client.getSurname());
+
+        if(client.getPlanId() == null) {
+            addNewPlanBut.setVisibility(View.VISIBLE);
+            listViewOnePlan.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
 
     }
 
+    @Override
+    public void onClick(View v) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(PreviewClientActivity.this);
+        builderSingle.setCancelable(true);
+        builderSingle.setNeutralButton("Zrusit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setNegativeButton("Pridat vytvoreny", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("Vybral jsem z katulani nabidky", "nabidka");
+            }
+        });
+
+        builderSingle.setPositiveButton("Vytvorit novy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(PreviewClientActivity.this, AddEditPlanActivity.class);
+                intent.putExtra("ClientId",clientId);
+                startActivityForResult(intent, 1);
+           }
+        });
+        builderSingle.show();
+    }
 }

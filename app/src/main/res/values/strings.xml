@@ -12,6 +12,7 @@
     <string name="plan_info">Info o plánu</string>
     <string name="add_task">Přidat task</string>
     <string name="title_activity_preview_plan">PreviewPlanActivity</string>
+    <string name="preview_client">Prohlížení klienta</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

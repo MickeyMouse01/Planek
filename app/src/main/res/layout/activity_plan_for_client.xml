@@ -43,6 +43,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="318dp"
+        android:clickable="true"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <ListView
@@ -57,7 +59,7 @@
         android:id="@+id/plan_for_client_lv_plan"
         android:layout_width="762dp"
         android:layout_height="77dp"
-        android:layout_alignStart="@+id/plan_for_client_button_for_add"
-        android:layout_alignTop="@+id/plan_for_client_button_for_add"
-        android:layout_marginStart="-70dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="307dp" />
 </RelativeLayout>

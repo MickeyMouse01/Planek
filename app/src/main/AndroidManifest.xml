@@ -38,8 +38,7 @@
             android:parentActivityName=".Clients.ClientsActivity" />
         <activity
             android:name=".addEditPlan.AddEditPlanActivity"
-            android:label="@string/add_plan"
-            android:parentActivityName=".Clients.ClientsActivity" />
+            android:label="@string/add_plan" />
         <activity
             android:name=".viewPlanInfo.ViewPlanInfoActivity"
             android:label="@string/plan_info"
@@ -53,7 +52,10 @@
             android:label="@string/title_activity_preview_plan"
             android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".planForClient.PreviewClientActivity" />
+        <activity
+            android:name=".planForClient.PreviewClientActivity"
+            android:label="@string/preview_client"
+            android:parentActivityName=".Clients.ClientsActivity" />
     </application>
 
 </manifest>

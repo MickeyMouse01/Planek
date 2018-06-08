@@ -22,6 +22,22 @@ public class Enums {
         }
     }
 
+    public enum ActivityNavigator {
+        CLIENTS_FRAGMENT(0),
+        PLANS_FRAGMENT(1),
+        PREVIEW_CLIENT(2);
+
+        private int code;
+
+        ActivityNavigator(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
+
     public enum Shift {
         MORNING,
         AFTERNOON,

@@ -32,11 +32,14 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
     private ImageView imageView;
     private AddEditPlanViewModel mViewModel;
     private Bitmap imageBitmap;
+    private String clientId;
     private static final int PICK_IMAGE = 1;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+
+        clientId = intent.getStringExtra("ClientId");
 
         mViewModel = obtainViewModel(this);
         mName = findViewById(R.id.add_name);
@@ -66,6 +69,9 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         newPlan.setCreatedDate(dateTime);
         //newPlan.setImage(imageBitmap); todo upravit aby to ukladalo do storage databaze
         showDialog("Saving");
+        if(clientId != null){
+            mViewModel.savePlanToClient(newPlan,clientId);
+        }
         mViewModel.savePlan(newPlan);
         hideDialog();
     }
