@@ -31,7 +31,7 @@
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/plan_name"
             android:layout_width="164dp"
             android:layout_height="37dp"
             android:layout_gravity="center_vertical"
@@ -39,7 +39,7 @@
             android:text="@{plan.getName()}"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/infoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -47,7 +47,7 @@
             app:srcCompat="@android:drawable/ic_dialog_info" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -1,12 +1,15 @@
 package com.example.thomas.plan.plans;
 
+import android.arch.lifecycle.ViewModel;
 import android.databinding.DataBindingUtil;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.R;
@@ -23,6 +26,10 @@ public class ListOfPlansAdapter extends BaseAdapter {
 
     private MainViewModel mMainViewModel;
     private List<Plan> mPlans;
+    private TextView nameOfPlan;
+    private View planView;
+    private ImageButton infoButton, deleteButton;
+
     private String NAME_OF_CLASS = getClass().getName();
 
 
@@ -54,6 +61,13 @@ public class ListOfPlansAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, final ViewGroup viewGroup) {
+        /*LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+
+        planView = inflater.inflate(R.layout.plan_item, null);
+
+        nameOfPlan = planView.findViewById(R.id.plan_name);*/
+
+
         PlanItemBinding binding;
         View v = view;
         Plan p = getItem(position);

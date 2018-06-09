@@ -20,6 +20,7 @@ import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.plans.ListOfPlansAdapter;
 
 public class PreviewClientActivity extends BaseActivity implements View.OnClickListener {
 
@@ -28,6 +29,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     private ListView listViewOnePlan, listViewTasks;
     private String clientId;
     private PreviewClientViewModel mViewModel;
+    private ListOfPlansAdapter plansAdapter;
 
 
     @Override
@@ -64,6 +66,14 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(PreviewClientViewModel.class);
     }
+
+    /*private void setupListAdapter(){
+        mClientsAdapter = new ListOfClientsAdapter(
+                new ArrayList<Client>(0),
+                mMainViewModel
+        );
+        listView.setAdapter(mClientsAdapter);
+    }*/
 
     private void initializeClient(Client client){
         nameOfClient.setText(client.getFirstName());

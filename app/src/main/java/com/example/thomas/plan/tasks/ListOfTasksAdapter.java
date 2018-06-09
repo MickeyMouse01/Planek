@@ -1,7 +1,6 @@
 package com.example.thomas.plan.tasks;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +65,7 @@ public class ListOfTasksAdapter extends BaseAdapter {
         checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
         textViewName.setText(tasks.get(position).getName());
 
-        if(tasks.get(position).isPassed()){
+        if (tasks.get(position).isPassed()) {
             relativeLayout.setBackgroundColor(Color.GREEN);
         }
 
