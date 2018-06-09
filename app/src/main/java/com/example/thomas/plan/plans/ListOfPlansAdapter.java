@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.thomas.plan.Clients.MainViewModel;
@@ -29,6 +30,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
     private TextView nameOfPlan;
     private View planView;
     private ImageButton infoButton, deleteButton;
+    private LinearLayout linearLayout;
 
     private String NAME_OF_CLASS = getClass().getName();
 
@@ -60,56 +62,39 @@ public class ListOfPlansAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, final ViewGroup viewGroup) {
-        /*LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+    public View getView(final int position, View view, final ViewGroup viewGroup) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
         planView = inflater.inflate(R.layout.plan_item, null);
 
-        nameOfPlan = planView.findViewById(R.id.plan_name);*/
+        nameOfPlan = planView.findViewById(R.id.plan_name);
+        infoButton = planView.findViewById(R.id.infoButton);
+        deleteButton = planView.findViewById(R.id.deleteButton);
+        linearLayout = planView.findViewById(R.id.plan_item_linear);
 
 
-        PlanItemBinding binding;
-        View v = view;
-        Plan p = getItem(position);
+        nameOfPlan.setText(mPlans.get(position).getName());
 
-        if (view == null) {
-            // Inflate
-            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-
-            v = inflater.inflate(R.layout.plan_item, null);
-            // Create the binding
-            binding = PlanItemBinding.inflate(inflater, viewGroup, false);
-            ImageView imageView = v.findViewById(R.id.myImageView);
-            //todo kdybych nechtel bindovani
-
-        } else {
-            // Recycling view
-            binding = DataBindingUtil.getBinding(view);
-        }
-
-        PlanItemUserActionsListener userActionsListener = new PlanItemUserActionsListener() {
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPlanClicked(Plan plan) {
-                mMainViewModel.previewPlan().setValue(plan.getUniqueID());
-
+            public void onClick(View v) {
+                mMainViewModel.previewPlan().setValue(mPlans.get(position).getUniqueID());
             }
+        });
 
+        infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPlanInfoClicked(Plan plan) {
-                mMainViewModel.viewPlan().setValue(plan.getUniqueID());
+            public void onClick(View v) {
+                mMainViewModel.viewPlan().setValue(mPlans.get(position).getUniqueID());
             }
+        });
 
-            //todo nejaky modal okno na potvrzovani
-            //todo nejak spatne se maze plan
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void removePlan(Plan plan) {
-                mMainViewModel.removePlan(plan.getUniqueID());
+            public void onClick(View v) {
+                mMainViewModel.removePlan(mPlans.get(position).getUniqueID());
             }
-        };
-
-        binding.setPlan(mPlans.get(position));
-        binding.setListener(userActionsListener);
-        binding.executePendingBindings();
-        return binding.getRoot();
+        });
+        return planView;
     }
 }
