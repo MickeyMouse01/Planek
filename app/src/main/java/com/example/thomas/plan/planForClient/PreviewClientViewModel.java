@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Repository;
 
 public class PreviewClientViewModel extends ViewModel {
@@ -14,6 +15,7 @@ public class PreviewClientViewModel extends ViewModel {
 
     private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
     private MutableLiveData<Client> viewedClient;
+    private MutableLiveData<Plan> selectedPlan;
 
     public PreviewClientViewModel(Repository repository) {
         this.repository = repository;
@@ -39,5 +41,24 @@ public class PreviewClientViewModel extends ViewModel {
                 viewedClient.setValue(client);
             }
         });
+    }
+
+    public MutableLiveData<Plan> getSelectedPlan(String planId) {
+        if (selectedPlan == null) {
+            selectedPlan = new MutableLiveData<>();
+            loadPlan(planId);
+        }
+        return selectedPlan;
+    }
+
+    private void loadPlan(String planId) {
+        if (planId != null){
+            repository.getPlan(planId, new DataSource.LoadPlanCallback() {
+                @Override
+                public void onPlanLoaded(@NonNull Plan plan) {
+                    selectedPlan.setValue(plan);
+                }
+            });
+        }
     }
 }

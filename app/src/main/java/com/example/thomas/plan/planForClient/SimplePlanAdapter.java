@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,10 +23,10 @@ public class SimplePlanAdapter extends BaseAdapter {
 
     private PreviewClientViewModel viewModel;
     private Plan plan;
-    private View viewTask;
-    private TextView textViewName;
-    private ImageView infoImage, deleteImage;
-    private RelativeLayout relativeLayout;
+    private View planView;
+    private TextView nameOfPlan;
+    private ImageButton infoButton, deleteButton;
+    private LinearLayout linearLayout;
 
     public SimplePlanAdapter(Plan plan,
                              PreviewClientViewModel viewModel) {
@@ -51,14 +53,16 @@ public class SimplePlanAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        viewTask = inflater.inflate(R.layout.plan_item, null);
-        textViewName = viewTask.findViewById(R.id.view_plan_task_name);
-        deleteImage = viewTask.findViewById(R.id.view_plan_task_delete_image);
-        relativeLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
-        textViewName.setText(plan.getName());
+        planView = inflater.inflate(R.layout.plan_item, null);
+        nameOfPlan = planView.findViewById(R.id.plan_name);
+        infoButton = planView.findViewById(R.id.infoButton);
+        deleteButton = planView.findViewById(R.id.deleteButton);
+        linearLayout = planView.findViewById(R.id.plan_item_linear);
+
+        nameOfPlan.setText(plan.getName());
 
 
 
-        return viewTask;
+        return planView;
     }
 }

@@ -20,6 +20,7 @@ import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 
 public class PreviewClientActivity extends BaseActivity implements View.OnClickListener {
@@ -29,7 +30,8 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     private ListView listViewOnePlan, listViewTasks;
     private String clientId;
     private PreviewClientViewModel mViewModel;
-    private ListOfPlansAdapter plansAdapter;
+    private SimplePlanAdapter planAdapter;
+    private String selectedPlanId;
 
 
     @Override
@@ -43,13 +45,19 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         nameOfClient = findViewById(R.id.plan_for_client_name);
         surnameOfClient = findViewById(R.id.plan_for_client_surname);
         addNewPlanBut = findViewById(R.id.plan_for_client_button_for_add);
-        listViewOnePlan = findViewById(R.id.plan_for_client_lv_plan);
         listViewTasks = findViewById(R.id.plan_for_client_lv_tasks);
 
         mViewModel.getViewedClient().observe(this, new Observer<Client>() {
             @Override
             public void onChanged(@Nullable Client client) {
                 initializeClient(client);
+            }
+        });
+        //todo zmenit ze static na dynamic
+        mViewModel.getSelectedPlan("f3aeab35-2b2a-419e-925a-8810af79ba5c").observe(this, new Observer<Plan>() {
+            @Override
+            public void onChanged(@Nullable Plan plan) {
+                setupListAdapter(plan);
             }
         });
         addNewPlanBut.setOnClickListener(this);
@@ -67,17 +75,19 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         return ViewModelProviders.of(activity, factory).get(PreviewClientViewModel.class);
     }
 
-    /*private void setupListAdapter(){
-        mClientsAdapter = new ListOfClientsAdapter(
-                new ArrayList<Client>(0),
-                mMainViewModel
+    private void setupListAdapter(Plan plan){
+        listViewOnePlan =  findViewById(R.id.plan_for_client_lv_plan);
+        planAdapter = new SimplePlanAdapter(
+                plan,
+                mViewModel
         );
-        listView.setAdapter(mClientsAdapter);
-    }*/
+        listViewOnePlan.setAdapter(planAdapter);
+    }
 
     private void initializeClient(Client client){
         nameOfClient.setText(client.getFirstName());
         surnameOfClient.setText(client.getSurname());
+        selectedPlanId = client.getPlanId();
 
         if(client.getPlanId() == null) {
             addNewPlanBut.setVisibility(View.VISIBLE);
