@@ -5,7 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.thomas.plan.ActionItemListener;
+import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.databinding.ClientItemBinding;
 
@@ -17,13 +22,17 @@ import java.util.List;
 
 public class ListOfClientsAdapter extends BaseAdapter {
 
-    private MainViewModel mMainViewModel;
     private List<Client> mClients;
+    private View clientView;
+    private ImageButton infoButton, deleteButton;
+    private LinearLayout linearLayout;
+    private TextView nameOfClient,surname,typeOfGroup;
+    private ActionItemListener actionItemListener;
 
 
     public ListOfClientsAdapter(List<Client> clients,
-                                MainViewModel mainViewModel) {
-        mMainViewModel = mainViewModel;
+                                ActionItemListener actionListener) {
+        this.actionItemListener = actionListener;
         mClients = clients;
 
     }
@@ -49,42 +58,45 @@ public class ListOfClientsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, final View view, final ViewGroup viewGroup) {
-        ClientItemBinding binding;
-        if (view == null) {
-            // Inflate
-            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+    public View getView(final int position, final View view, final ViewGroup viewGroup) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        clientView = inflater.inflate(R.layout.plan_item, null);
 
-            // Create the binding
-            binding = ClientItemBinding.inflate(inflater, viewGroup, false);
-        } else {
-            // Recycling view
-            binding = DataBindingUtil.getBinding(view);
-        }
+        nameOfClient = clientView.findViewById(R.id.client_item_name);
+        surname = clientView.findViewById(R.id.client_item_surname);
+        typeOfGroup = clientView.findViewById(R.id.client_item_typeOfgroup);
 
-        ItemUserActionsListener userActionsListener = new ItemUserActionsListener() {
+        infoButton = clientView.findViewById(R.id.client_item_info_button);
+        deleteButton = clientView.findViewById(R.id.client_item_delete_button);
+        linearLayout = clientView.findViewById(R.id.client_item_linear);
+
+
+        nameOfClient.setText(mClients.get(position).getFirstName());
+        surname.setText(mClients.get(position).getSurname());
+        typeOfGroup.setText(mClients.get(position).getTypeOfGroup());
+
+
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClicked(Client client) {
-                mMainViewModel.previewClient().setValue(client.getUniqueID());
+            public void onClick(View v) {
+                actionItemListener.onItemClick(mClients.get(position));
             }
+        });
 
+        infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemInfoClicked(Client client) {
-                mMainViewModel.viewClient().setValue(client.getUniqueID());
+            public void onClick(View v) {
+                actionItemListener.onItemInfoClick(mClients.get(position));
             }
+        });
 
-            //todo nejaky modal okno na potvrzovani
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void removeItem(Client client) {
-                mMainViewModel.removeClient(client.getUniqueID());
+            public void onClick(View v) {
+                actionItemListener.onItemDeleteClick(mClients.get(position));
             }
-        };
-
-        binding.setClient(mClients.get(position));
-
-        binding.setListener(userActionsListener);
-
-        binding.executePendingBindings();
-        return binding.getRoot();
+        });
+        return clientView;
     }
 }

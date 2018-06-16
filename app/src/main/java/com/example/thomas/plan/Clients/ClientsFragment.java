@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.databinding.ClientsFragmentBinding;
@@ -31,6 +32,7 @@ public class ClientsFragment extends Fragment
     private MainViewModel mMainViewModel;
     private ListOfClientsAdapter mClientsAdapter;
     private ClientsFragmentBinding mClientsFragmentBinding;
+    private ActionItemListener<Client> actionItemListener;
 
     public ClientsFragment() {
         // Requires empty public constructor
@@ -87,10 +89,24 @@ public class ClientsFragment extends Fragment
     private void setupListAdapter() {
         ListView listView =  mClientsFragmentBinding.clientsList;
 
+        actionItemListener = new ActionItemListener<Client>() {
+            @Override
+            public void onItemClick(Client item) {
+                mMainViewModel.previewClient().setValue(item.getUniqueID());
+            }
 
+            @Override
+            public void onItemInfoClick(Client item) {
+                mMainViewModel.viewClient().setValue(item.getUniqueID());
+            }
+
+            @Override
+            public void onItemDeleteClick(Client item) {
+                mMainViewModel.removeClient(item.getUniqueID());
+            }
+        };
        mClientsAdapter = new ListOfClientsAdapter(
-                new ArrayList<Client>(0),
-               mMainViewModel
+                new ArrayList<Client>(0),actionItemListener
         );
         listView.setAdapter(mClientsAdapter);
     }

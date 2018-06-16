@@ -1,19 +1,8 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <data>
-        <import type="android.view.View.OnClickListener" />
-
-        <variable
-            name="client"
-            type="com.example.thomas.plan.data.Models.Client" />
-
-        <variable
-            name="listener"
-            type="com.example.thomas.plan.Clients.ItemUserActionsListener" />
-    </data>
-
     <LinearLayout
+        android:id="@+id/client_item_linear"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:orientation="horizontal"
@@ -21,50 +10,44 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="10px"
-        android:paddingTop="10px"
-        android:onClick="@{() -> listener.onItemClicked(client)}">
+        android:paddingTop="10px">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/client_item_name"
             android:layout_width="164dp"
             android:layout_height="37dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="@{client.getFirstName()}"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
-            android:id="@+id/add_surname"
+            android:id="@+id/client_item_surname"
             android:layout_width="102dp"
             android:layout_height="29dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="@{client.getSurname()}" />
+            android:layout_weight="1"/>
 
         <TextView
-            android:id="@+id/add_type_of_group"
+            android:id="@+id/client_item_typeOfgroup"
             android:layout_width="wrap_content"
             android:layout_height="29dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
-            android:layout_weight="1"
-            android:text="@{client.getTypeOfGroup()}" />
+            android:layout_weight="1"/>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/client_item_info_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="@{() -> listener.onItemInfoClicked(client)}"
             app:srcCompat="@android:drawable/ic_dialog_info" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/client_item_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="@{() -> listener.removeItem(client)}"
             app:srcCompat="@android:drawable/ic_menu_delete" />
 
     </LinearLayout>
