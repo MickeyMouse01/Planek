@@ -1,21 +1,16 @@
 package com.example.thomas.plan.plans;
 
-import android.arch.lifecycle.ViewModel;
-import android.databinding.DataBindingUtil;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.thomas.plan.Clients.MainViewModel;
+import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Plan;
-import com.example.thomas.plan.databinding.PlanItemBinding;
 
 import java.util.List;
 
@@ -25,19 +20,18 @@ import java.util.List;
 
 public class ListOfPlansAdapter extends BaseAdapter {
 
-    private MainViewModel mMainViewModel;
     private List<Plan> mPlans;
     private TextView nameOfPlan;
     private View planView;
     private ImageButton infoButton, deleteButton;
     private LinearLayout linearLayout;
+    private ActionItemListener actionListener;
 
     private String NAME_OF_CLASS = getClass().getName();
 
 
-    public ListOfPlansAdapter(List<Plan> plans,
-                              MainViewModel mainViewModel) {
-        mMainViewModel = mainViewModel;
+    public ListOfPlansAdapter(List<Plan> plans, ActionItemListener actionItemListener) {
+        actionListener = actionItemListener;
         mPlans = plans;
     }
 
@@ -78,21 +72,21 @@ public class ListOfPlansAdapter extends BaseAdapter {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainViewModel.previewPlan().setValue(mPlans.get(position).getUniqueID());
+                actionListener.onItemClick(mPlans.get(position));
             }
         });
 
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainViewModel.viewPlan().setValue(mPlans.get(position).getUniqueID());
+                actionListener.onItemInfoClick(mPlans.get(position));
             }
         });
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMainViewModel.removePlan(mPlans.get(position).getUniqueID());
+                actionListener.onItemDeleteClick(mPlans.get(position));
             }
         });
         return planView;

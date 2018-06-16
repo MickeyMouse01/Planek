@@ -1,5 +1,6 @@
 package com.example.thomas.plan.tasks;
 
+import android.drm.DrmStore;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.TaskActionListener;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
 
@@ -19,18 +22,17 @@ import java.util.List;
 
 public class ListOfTasksAdapter extends BaseAdapter {
 
-    private ViewPlanInfoViewModel viewModel;
     private List<Task> tasks;
     private View viewTask;
     private TextView textViewName;
     private ImageView infoImage, deleteImage;
     private CheckBox checkBox;
     private RelativeLayout relativeLayout;
+    private TaskActionListener taskItemListener;
 
 
-    public ListOfTasksAdapter(List<Task> tasks,
-                              ViewPlanInfoViewModel viewModel) {
-        this.viewModel = viewModel;
+    public ListOfTasksAdapter(List<Task> tasks, TaskActionListener taskListener) {
+        taskItemListener = taskListener;
         this.tasks = tasks;
     }
 
@@ -72,14 +74,14 @@ public class ListOfTasksAdapter extends BaseAdapter {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                viewModel.taskChecked(tasks.get(position).getUniqueID());
+                taskItemListener.onItemChecked(tasks.get(position));
             }
         });
 
         deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tasks.remove(position); //todo tohle nemuze byt takto
+                //tasks.remove(position); //todo tohle nemuze byt takto
             }
         });
 

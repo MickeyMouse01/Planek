@@ -9,28 +9,38 @@ import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Repository;
 
+import java.util.List;
+
 public class PreviewClientViewModel extends ViewModel {
 
     Repository repository;
 
     private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
+    private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<Client> viewedClient;
     private MutableLiveData<Plan> selectedPlan;
+    private MutableLiveData<List<Plan>> listOfAllPlans;
 
     public PreviewClientViewModel(Repository repository) {
         this.repository = repository;
     }
 
-    public void setViewedPlanId(String viewedPlanId) {
-        this.viewedClientId.setValue(viewedPlanId);
+    public void setViewedPlanId(String planId) {
+        this.viewedPlanId.setValue(planId);
     }
 
+    public void setViewedClientId(String viewedClientId) {
+        this.viewedClientId.setValue(viewedClientId);
+    }
 
-    public MutableLiveData<Client> getViewedClient() {
+    public MutableLiveData<Client> getViewedClient(boolean initializeClient) {
         if (viewedClient == null) {
             viewedClient = new MutableLiveData<>();
+        }
+        if (initializeClient) {
             loadClient();
         }
+
         return viewedClient;
     }
 
@@ -43,17 +53,17 @@ public class PreviewClientViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<Plan> getSelectedPlan(String planId) {
+    public MutableLiveData<Plan> getSelectedPlan() {
         if (selectedPlan == null) {
             selectedPlan = new MutableLiveData<>();
-            loadPlan(planId);
         }
+        loadPlan();
         return selectedPlan;
     }
 
-    private void loadPlan(String planId) {
-        if (planId != null){
-            repository.getPlan(planId, new DataSource.LoadPlanCallback() {
+    private void loadPlan() {
+        if (viewedPlanId.getValue() != null) {
+            repository.getPlan(viewedPlanId.getValue(), new DataSource.LoadPlanCallback() {
                 @Override
                 public void onPlanLoaded(@NonNull Plan plan) {
                     selectedPlan.setValue(plan);
@@ -61,4 +71,23 @@ public class PreviewClientViewModel extends ViewModel {
             });
         }
     }
+
+    public MutableLiveData<List<Plan>> getListOfAllPlans() {
+        if (listOfAllPlans == null) {
+            listOfAllPlans = new MutableLiveData<>();
+            loadAllPlans();
+        }
+        return listOfAllPlans;
+    }
+
+
+    private void loadAllPlans() {
+        repository.getPlans(new DataSource.LoadPlansCallback() {
+            @Override
+            public void onPlansLoaded(@NonNull List<Plan> plans) {
+                listOfAllPlans.setValue(plans);
+            }
+        });
+    }
 }
+

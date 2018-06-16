@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.TaskActionListener;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditClient.AddEditClientActivity;
 import com.example.thomas.plan.addEditTask.AddEditTaskActivity;
@@ -33,6 +34,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
     private FloatingActionButton fab;
     private List<Task> tasks;
     private String viewPlanId;
+    private TaskActionListener taskItemListener;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -93,9 +95,30 @@ public class ViewPlanInfoActivity extends BaseActivity {
 
     private void setupListAdapter() {
         listViewTasks = findViewById(R.id.view_plan_list_tasks);
+        taskItemListener = new TaskActionListener() {
+            @Override
+            public void onItemChecked(Task item) {
+                viewModel.taskChecked(item.getUniqueID());
+            }
+
+            @Override
+            public void onItemClick(Object item) {
+
+            }
+
+            @Override
+            public void onItemInfoClick(Object item) {
+
+            }
+
+            @Override
+            public void onItemDeleteClick(Object item) {
+
+            }
+        };
+
         listOfTasksAdapter = new ListOfTasksAdapter(
-                tasks,
-                viewModel
+                tasks, taskItemListener
         );
         listViewTasks.setAdapter(listOfTasksAdapter);
     }

@@ -28,7 +28,7 @@ import com.example.thomas.plan.data.Models.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreviewTasksActivity extends BaseActivity implements TasksListener {
+public class PreviewTasksActivity extends BaseActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -109,16 +109,6 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void updateTasks(List<Task> tasks) {
-        mViewModel.getListOfTasks().setValue(tasks);
-    }
-
-    @Override
-    public void getTaskInfo() {
-
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -135,7 +125,6 @@ public class PreviewTasksActivity extends BaseActivity implements TasksListener 
         public PreviewTasksViewModel mViewModel;
         private List<Task> listOfTasks = new ArrayList<>();
         private TextView textView;
-        private TasksListener tasksListener;
 
         public PlaceholderFragment() {
         }
