@@ -2,6 +2,7 @@ package com.example.thomas.plan.planForClient;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.data.DataSource;
@@ -14,6 +15,8 @@ import java.util.List;
 public class PreviewClientViewModel extends ViewModel {
 
     Repository repository;
+
+    public ObservableList<Plan> mListOfPlans;
 
     private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();

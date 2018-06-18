@@ -60,7 +60,7 @@ public class ListOfClientsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, final View view, final ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        clientView = inflater.inflate(R.layout.plan_item, null);
+        clientView = inflater.inflate(R.layout.client_item, null);
 
         nameOfClient = clientView.findViewById(R.id.client_item_name);
         surname = clientView.findViewById(R.id.client_item_surname);

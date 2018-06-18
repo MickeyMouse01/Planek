@@ -8,17 +8,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.plans.ListOfPlansAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +33,11 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     private ListView listViewOnePlan, listViewTasks;
     private String clientId;
     private PreviewClientViewModel mViewModel;
-    private SimplePlanAdapter planAdapter;
+    private ListOfPlansAdapter planAdapter;
     private String selectedPlanId;
     private Client viewedClient;
     private AlertDialog.Builder dialogBuilder;
+    private ActionItemListener<Plan> actionItemListener;
 
     public static PreviewClientViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
@@ -77,11 +81,29 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void setupListAdapter(Plan plan) {
+        List<Plan> listOfPlan = new ArrayList<>();
+        listOfPlan.add(plan);
+        actionItemListener = new ActionItemListener<Plan>() {
+            @Override
+            public void onItemClick(Plan item) {
+                Log.d("Plan","PlanCliecked");
+            }
 
-        planAdapter = new SimplePlanAdapter(
+            @Override
+            public void onItemInfoClick(Plan item) {
+
+            }
+
+            @Override
+            public void onItemDeleteClick(Plan item) {
+
+            }
+        };
+        planAdapter = new ListOfPlansAdapter(listOfPlan,actionItemListener);
+        /*planAdapter = new SimplePlanAdapter(
                 plan,
                 mViewModel
-        );
+        );*/
         listViewOnePlan.setAdapter(planAdapter);
     }
 

@@ -66,29 +66,30 @@ public class ListOfPlansAdapter extends BaseAdapter {
         deleteButton = planView.findViewById(R.id.deleteButton);
         linearLayout = planView.findViewById(R.id.plan_item_linear);
 
+        if(!mPlans.isEmpty()){
+            nameOfPlan.setText(mPlans.get(position).getName());
 
-        nameOfPlan.setText(mPlans.get(position).getName());
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    actionListener.onItemClick(mPlans.get(position));
+                }
+            });
 
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionListener.onItemClick(mPlans.get(position));
-            }
-        });
+            infoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    actionListener.onItemInfoClick(mPlans.get(position));
+                }
+            });
 
-        infoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionListener.onItemInfoClick(mPlans.get(position));
-            }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionListener.onItemDeleteClick(mPlans.get(position));
-            }
-        });
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    actionListener.onItemDeleteClick(mPlans.get(position));
+                }
+            });
+        }
         return planView;
     }
 }
