@@ -75,7 +75,7 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void getClient(@NonNull final String clientId, final LoadClientCallback callback) {
         mDatabase.getDatabase().getReference("clients")
-                .getRef().addValueEventListener(new ValueEventListener() {
+                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

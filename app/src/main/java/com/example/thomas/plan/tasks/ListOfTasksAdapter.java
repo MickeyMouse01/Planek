@@ -1,6 +1,5 @@
 package com.example.thomas.plan.tasks;
 
-import android.drm.DrmStore;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,9 @@ import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.R;
-import com.example.thomas.plan.TaskActionListener;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfTasksAdapter extends BaseAdapter {
@@ -28,16 +26,26 @@ public class ListOfTasksAdapter extends BaseAdapter {
     private ImageView infoImage, deleteImage;
     private CheckBox checkBox;
     private RelativeLayout relativeLayout;
-    private TaskActionListener taskItemListener;
+    private ActionItemListener taskItemListener;
 
 
-    public ListOfTasksAdapter(List<Task> tasks, TaskActionListener taskListener) {
+    public ListOfTasksAdapter(List<Task> tasks, ActionItemListener taskListener) {
         taskItemListener = taskListener;
         this.tasks = tasks;
     }
 
+    public ListOfTasksAdapter(Task task, ActionItemListener taskListener) {
+        taskItemListener = taskListener;
+        tasks = new ArrayList<>();
+        tasks.add(task);
+    }
+
     public void replaceData(List<Task> tasks) {
         this.tasks = tasks;
+        notifyDataSetChanged();
+    }
+    public void clearData(){
+        tasks.clear();
         notifyDataSetChanged();
     }
 
@@ -74,7 +82,7 @@ public class ListOfTasksAdapter extends BaseAdapter {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                taskItemListener.onItemChecked(tasks.get(position));
+
             }
         });
 

@@ -12,6 +12,7 @@ import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Plan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,9 +35,18 @@ public class ListOfPlansAdapter extends BaseAdapter {
         actionListener = actionItemListener;
         mPlans = plans;
     }
+    public ListOfPlansAdapter(Plan plan, ActionItemListener actionItemListener){
+        actionListener = actionItemListener;
+        mPlans = new ArrayList<>();
+        mPlans.add(plan);
+    }
 
     public void replaceData(List<Plan> plans) {
         mPlans = plans;
+        notifyDataSetChanged();
+    }
+    public void clearData(){
+        mPlans.clear();
         notifyDataSetChanged();
     }
 

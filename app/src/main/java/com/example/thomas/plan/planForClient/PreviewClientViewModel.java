@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
 import java.util.List;
@@ -21,11 +22,16 @@ public class PreviewClientViewModel extends ViewModel {
     private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<Client> viewedClient;
-    private MutableLiveData<Plan> selectedPlan;
+    public MutableLiveData<Plan> selectedPlan;
+    private MutableLiveData<List<Task>> listOfTasks;
     private MutableLiveData<List<Plan>> listOfAllPlans;
 
     public PreviewClientViewModel(Repository repository) {
         this.repository = repository;
+    }
+
+    public String getViewedPlanId() {
+        return viewedPlanId.getValue();
     }
 
     public void setViewedPlanId(String planId) {
@@ -36,14 +42,11 @@ public class PreviewClientViewModel extends ViewModel {
         this.viewedClientId.setValue(viewedClientId);
     }
 
-    public MutableLiveData<Client> getViewedClient(boolean initializeClient) {
+    public MutableLiveData<Client> getViewedClient() {
         if (viewedClient == null) {
             viewedClient = new MutableLiveData<>();
-        }
-        if (initializeClient) {
             loadClient();
         }
-
         return viewedClient;
     }
 
@@ -75,22 +78,28 @@ public class PreviewClientViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<List<Plan>> getListOfAllPlans() {
-        if (listOfAllPlans == null) {
-            listOfAllPlans = new MutableLiveData<>();
-            loadAllPlans();
+    public MutableLiveData<List<Task>> getTasks() {
+        if (listOfTasks == null) {
+            listOfTasks = new MutableLiveData<>();
+            loadTasks();
         }
-        return listOfAllPlans;
+        return listOfTasks;
     }
 
-
-    private void loadAllPlans() {
-        repository.getPlans(new DataSource.LoadPlansCallback() {
+    private void loadTasks(){
+        repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
-            public void onPlansLoaded(@NonNull List<Plan> plans) {
-                listOfAllPlans.setValue(plans);
+            public void onTasksLoaded(@NonNull List<Task> tasks) {
+                listOfTasks.setValue(tasks);
             }
-        });
+        },viewedPlanId.getValue());
+    }
+
+    public void deleteSelectedPlan(){
+        Client client = getViewedClient().getValue();
+        client.setPlanId(null);
+        getViewedClient().postValue(client);
+        repository.saveClient(client);
     }
 }
 

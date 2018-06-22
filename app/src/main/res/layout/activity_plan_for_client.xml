@@ -62,4 +62,15 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="307dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/preview_client_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/plan_for_client_lv_tasks"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="30dp"
+        app:backgroundTint="@android:color/holo_red_dark"
+        app:srcCompat="@android:drawable/ic_input_add" />
 </RelativeLayout>
