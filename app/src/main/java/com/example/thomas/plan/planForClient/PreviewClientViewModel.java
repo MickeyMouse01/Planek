@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
@@ -12,6 +13,7 @@ import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 public class PreviewClientViewModel extends ViewModel {
 
@@ -101,5 +103,16 @@ public class PreviewClientViewModel extends ViewModel {
         getViewedClient().postValue(client);
         repository.saveClient(client);
     }
-}
+
+    public void deleteTaskFromPlan(String planId, final Task task){
+
+            repository.getPlan(planId, new DataSource.LoadPlanCallback() {
+                @Override
+                public void onPlanLoaded(@NonNull Plan plan) {
+                    repository.deleteTaskFromPlan(plan.getUniqueID(),task.getUniqueID());
+                }
+            });
+        }
+    }
+
 

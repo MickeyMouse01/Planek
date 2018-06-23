@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -17,7 +19,7 @@ public class Plan {
     private final String uniqueID;
     private String name;
     private String createdDate;
-    private List<Task> listOfRelatesTasks = new ArrayList<>();
+    private Map<String, Task> listOfRelatesTasks;
     //private Bitmap image;
 
     public Plan() {
@@ -37,19 +39,23 @@ public class Plan {
         this.createdDate = createdDate;
     }
 
-    public List<Task> getListOfRelatesTasks() {
-        return listOfRelatesTasks;
-    }
-
-    public void setListOfRelatesTasks(List<Task> listOfRelatesTasks) {
+    public void setListOfRelatesTasks(Map<String, Task> listOfRelatesTasks) {
         this.listOfRelatesTasks = listOfRelatesTasks;
     }
 
+    public Map<String, Task> getListOfRelatesTasks() {
+        return listOfRelatesTasks;
+    }
+
+    /*public void setListOfRelatesTasks(List<Task> listOfRelatesTasks) {
+        this.listOfRelatesTasks = listOfRelatesTasks;
+    }*/
+
     public void addToListOfRelatesTasks(Task task){
         if(listOfRelatesTasks == null){
-            listOfRelatesTasks = new ArrayList<>();
+            listOfRelatesTasks = new HashMap<>();;
         }
-        listOfRelatesTasks.add(task);
+        listOfRelatesTasks.put(task.getUniqueID(), task);
     }
 
     public String getName() {

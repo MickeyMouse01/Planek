@@ -31,9 +31,9 @@ public class ViewPlanInfoActivity extends BaseActivity {
     private ListView listViewTasks;
     private ListOfTasksAdapter listOfTasksAdapter;
     private FloatingActionButton fab;
-    private List<Task> tasks;
+    private List<Task> mTasks = new ArrayList<>();
     private String viewPlanId;
-    private ActionItemListener taskItemListener;
+    private ActionItemListener<Task> taskItemListener;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -83,6 +83,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
                 }
             }
         }
+        mTasks = taskList;
         return taskList;
     }
 
@@ -94,25 +95,27 @@ public class ViewPlanInfoActivity extends BaseActivity {
 
     private void setupListAdapter() {
         listViewTasks = findViewById(R.id.view_plan_list_tasks);
-        taskItemListener = new ActionItemListener() {
+        taskItemListener = new ActionItemListener<Task>() {
             @Override
-            public void onItemClick(Object item) {
+            public void onItemClick(Task item) {
 
             }
 
             @Override
-            public void onItemInfoClick(Object item) {
+            public void onItemInfoClick(Task item) {
 
             }
 
             @Override
-            public void onItemDeleteClick(Object item) {
-
+            public void onItemDeleteClick(Task item) {
+                mTasks.remove(item);
+                listOfTasksAdapter.replaceData(mTasks);
+                viewModel.deleteTaskFromPlan(viewPlanId,item);
             }
         };
 
         listOfTasksAdapter = new ListOfTasksAdapter(
-                tasks, taskItemListener
+                mTasks, taskItemListener
         );
         listViewTasks.setAdapter(listOfTasksAdapter);
     }

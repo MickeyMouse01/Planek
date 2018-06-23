@@ -112,7 +112,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             listViewOnePlan.setAdapter(planAdapter);
     }
 
-    private void setupTaskAdapter(final List<Task> task){
+    private void setupTaskAdapter(final List<Task> tasks){
         taskActionItemListener = new ActionItemListener<Task>() {
             @Override
             public void onItemClick(Task item) {
@@ -126,10 +126,12 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onItemDeleteClick(Task item) {
-
+                tasks.remove(item);
+                taskAdapter.replaceData(tasks);
+                mViewModel.deleteTaskFromPlan(mViewModel.getViewedPlanId(),item);
             }
         };
-        taskAdapter = new ListOfTasksAdapter(task, taskActionItemListener);
+        taskAdapter = new ListOfTasksAdapter(tasks, taskActionItemListener);
         listViewTasks.setAdapter(taskAdapter);
     }
 

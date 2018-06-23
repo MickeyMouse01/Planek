@@ -106,13 +106,13 @@ public class RemoteDataSource implements DataSource {
     public void getPlans(@NonNull final LoadPlansCallback callback) {
 
         mDatabase.getDatabase().getReference("plans")
-                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+                .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>>() {
+                GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>> () {
                 };
-                Map<String, Plan> map = dataSnapshot.getValue(t);
+                Map<String,Plan> map = dataSnapshot.getValue(t);
                 if (map != null) {
                     List<Plan> plans = new ArrayList<>(map.values());
                     callback.onPlansLoaded(plans);
@@ -149,6 +149,11 @@ public class RemoteDataSource implements DataSource {
     public void savePlan(@NonNull Plan plan) {
         mDatabase.child("plans")
                 .child(plan.getUniqueID()).setValue(plan);
+        /*if (!plan.getListOfRelatesTasks().isEmpty()){
+            mDatabase.child("plans").child(plan.getUniqueID())
+                    .child(LIST_OF_RELATES_TASKS).child(plan.getListOfRelatesTasks().get(0).getUniqueID())
+                    .setValue(plan.getListOfRelatesTasks().get(0));
+        }*/
     }
 
     /*private DatabaseReference getSpecificPlanReference(String planId) {
@@ -193,14 +198,14 @@ public class RemoteDataSource implements DataSource {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                GenericTypeIndicator<ArrayList<Task>> t = new GenericTypeIndicator<ArrayList<Task>>() {
+                GenericTypeIndicator<Map<String,Task>> t = new GenericTypeIndicator<Map<String,Task>>() {
                 };
-                ArrayList<Task> map = dataSnapshot
-                        .child(planId).child(LIST_OF_RELATES_TASKS)
-                        .getValue(t);
-                if (map != null) {
+                Map<String,Task> map = dataSnapshot.child(planId)
+                        .child(LIST_OF_RELATES_TASKS).getValue(t);
 
-                    callback.onTasksLoaded(map);
+                if (map != null) {
+                    List<Task> tasks = new ArrayList<>(map.values());
+                    callback.onTasksLoaded(tasks);
                 }
             }
 
@@ -240,9 +245,8 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void deleteTaskFromPlan(@NonNull String planId, @NonNull Integer position) {
+    public void deleteTaskFromPlan(@NonNull String planId, @NonNull String taskId) {
         mDatabase.child("plans").child(planId)
-                .child(LIST_OF_RELATES_TASKS)
-                .child(position.toString()).removeValue();
+                .child(LIST_OF_RELATES_TASKS).child(taskId).removeValue();
     }
 }

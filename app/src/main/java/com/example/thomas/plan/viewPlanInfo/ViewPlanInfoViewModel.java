@@ -66,4 +66,14 @@ public class ViewPlanInfoViewModel extends ViewModel {
     public void taskChecked(String taskId) {
         Log.d("TaskChecked","TaskChecked");
     }
+
+    public void deleteTaskFromPlan(String planId, final Task task){
+
+        repository.getPlan(planId, new DataSource.LoadPlanCallback() {
+            @Override
+            public void onPlanLoaded(@NonNull Plan plan) {
+                repository.deleteTaskFromPlan(plan.getUniqueID(),task.getUniqueID());
+            }
+        });
+    }
 }
