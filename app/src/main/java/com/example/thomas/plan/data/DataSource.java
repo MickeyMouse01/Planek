@@ -21,7 +21,7 @@ public interface DataSource {
     }
 
     interface LoadClientCallback {
-        void onClientLoaded(@NonNull Client client);
+        void onClientLoaded(Client client);
     }
 
     void getClients(@NonNull LoadClientsCallback callback);
@@ -30,6 +30,8 @@ public interface DataSource {
 
     void saveClient(@NonNull Client client);
     void deleteClient(@NonNull String clientId);
+
+    void searchClientByUsername(@NonNull String username, LoadClientCallback callback);
 
     //Plans
     interface LoadPlansCallback {

@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void getClients(@NonNull final LoadClientsCallback callback) {
 
-        mDatabase.getDatabase().getReference("clients")
+        mDatabase.getDatabase().getReference("clients").orderByChild("createdDate")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -100,6 +101,32 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void deleteClient(@NonNull String clientId) {
         mDatabase.child("clients").child(clientId).removeValue();
+    }
+
+    @Override
+    public void searchClientByUsername(@NonNull String username, final LoadClientCallback callback) {
+        Query query = mDatabase.child("clients").orderByChild("username").equalTo(username);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<Map<String, Client>> t = new GenericTypeIndicator<Map<String, Client>>() {
+                };
+                Map<String, Client> map = dataSnapshot.getValue(t);
+                if (map != null) {
+                    List<Client> clients = new ArrayList<>(map.values());
+                    Client client = clients.get(0);
+                    callback.onClientLoaded(client);
+                } else {
+                    callback.onClientLoaded(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Problem", databaseError.toString());
+            }
+        });
     }
 
     //Plans

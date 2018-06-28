@@ -79,6 +79,16 @@ public class Repository implements DataSource {
         remoteDataSource.deleteClient(clientId);
     }
 
+    @Override
+    public void searchClientByUsername(@NonNull String username, final LoadClientCallback callback) {
+            remoteDataSource.searchClientByUsername(username, new LoadClientCallback() {
+                @Override
+                public void onClientLoaded(@NonNull Client client) {
+                    callback.onClientLoaded(client);
+                }
+            });
+    }
+
     //Plans
     public void savePlan(@NonNull Plan plan){
         remoteDataSource.savePlan(plan);

@@ -80,7 +80,6 @@ public class ClientsActivity extends BaseActivity
             }
         });
 
-
         setupViewFragment(mViewModel.getCurrentFragment().getValue());
         setupToolbar();
         setupDrawerLayout();

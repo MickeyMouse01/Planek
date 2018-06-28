@@ -11,8 +11,24 @@
         android:layout_width="286dp"
         android:layout_height="288dp"
         android:layout_centerInParent="true"
+        android:layout_marginTop="800dp"
         app:correctStateColor="@color/colorAccent"
         app:normalStateColor="@color/colorPrimary"
         app:wrongStateColor="@color/pomegranate" />
+
+    <EditText
+        android:id="@+id/login_username_pattern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="211dp"
+        android:ems="10"
+        android:hint="Uživatelské jméno"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textStyle="bold"
+        />
 
 </RelativeLayout>

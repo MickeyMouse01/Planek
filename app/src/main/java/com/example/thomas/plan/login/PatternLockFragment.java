@@ -3,11 +3,10 @@ package com.example.thomas.plan.login;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
@@ -15,13 +14,14 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.example.thomas.plan.R;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class PatternLockFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     private PatternLockView mPatternLockView;
-    private String PATTERN_LOCK = "03678";
+    private EditText usernameTextField;
 
     public PatternLockFragment() {
         // Required empty public constructor
@@ -45,10 +45,11 @@ public class PatternLockFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mPatternLockView = getView().findViewById(R.id.pattern_lock_view);
+        usernameTextField = getView().findViewById(R.id.login_username_pattern);
+
         mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
             public void onStarted() {
-
 
             }
 
@@ -60,12 +61,12 @@ public class PatternLockFragment extends Fragment {
             @Override
             public void onComplete(List<PatternLockView.Dot> pattern) {
                 String lock = PatternLockUtils.patternToString(mPatternLockView, pattern);
-                if (PATTERN_LOCK.equals(lock)) {
-                    loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
-                } else {
-                    loginViewModel.getLoginState().setValue(LoginState.ERROR_CREDENTIALS);
-                }
 
+                if (usernameTextField.getText().toString().isEmpty()) {
+                    usernameTextField.setError("Uživatelské jméno musí být vyplněno");
+                    mPatternLockView.clearPattern();
+                } else
+                    loginViewModel.performLoginClient(usernameTextField.getText().toString(), lock);
             }
 
             @Override

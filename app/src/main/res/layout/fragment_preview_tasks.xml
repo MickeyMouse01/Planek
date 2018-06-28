@@ -22,7 +22,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="183dp"
-        android:onClick="onClick"
         android:text="Make Photo" />
 
     <TextView
@@ -32,7 +31,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="338dp"
-        android:onClick="onClick"
         android:text="Make Photo" />
 
 

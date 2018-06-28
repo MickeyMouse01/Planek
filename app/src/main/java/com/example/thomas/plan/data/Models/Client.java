@@ -37,6 +37,7 @@ public class Client {
         this.typeOfGroup = typeOfGroup;
         this.uniqueID = UUID.randomUUID().toString();
         this.nurseID = mAuth.getCurrentUser().getUid();
+        this.planId = "null";
     }
 
     public String getPassword() {
