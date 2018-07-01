@@ -29,13 +29,13 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:$lifecycleAwareComponentsVesrion"
-    //implementation "android.arch.lifecycle:compiler:$lifecycleAwareComponentsVesrion"
+    implementation "android.arch.lifecycle:extensions:$lifecycleAwareComponentsVersion"
 
     // Firebase support
     implementation "com.google.firebase:firebase-database:$firebaseServicesVersion"
     implementation "com.google.firebase:firebase-storage:$firebaseServicesVersion"
     implementation "com.google.firebase:firebase-auth:$firebaseServicesVersion"
+    implementation 'com.firebaseui:firebase-ui-auth:4.0.0'
 
     // Google SignIn SDK (only required for Google SignIn)
     implementation "com.google.android.gms:play-services-auth:$googlePlayServicesVersion"
@@ -47,7 +47,4 @@ dependencies {
     // Pattern Lock view
     implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
 }
-
-
-
 apply plugin: 'com.google.gms.google-services'

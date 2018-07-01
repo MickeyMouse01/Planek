@@ -19,12 +19,17 @@ import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
+import com.firebase.ui.auth.AuthUI;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     public static Client LOGGED_CLIENT;
+    private static final int RC_SIGN_IN = 123;
 
     private final int NURSE_LOGIN = 1;
     private final int CLIENT_LOGIN = 0;
@@ -134,12 +139,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             }
             case REGISTER: {
-                RegisterFragment patternFragment = RegisterFragment.newInstance();
-                ActivityUtils.replaceFragmentInActivity(
-                        getSupportFragmentManager(), patternFragment, R.id.contentFrame);
-                switchButton.setVisibility(View.GONE);
-                actualFragment = REGISTER;
-                break;
+
+                List<AuthUI.IdpConfig> providers = Arrays.asList(
+                        new AuthUI.IdpConfig.EmailBuilder().build());
+
+                startActivityForResult(
+                        AuthUI.getInstance()
+                                .createSignInIntentBuilder()
+                                .setAvailableProviders(providers)
+                                .build(),
+                        RC_SIGN_IN);
             }
             case FORGOTTEN_PASSWORD: {
                 Log.d("Ahoj","heslo");

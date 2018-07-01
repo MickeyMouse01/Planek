@@ -14,7 +14,7 @@ buildscript {
     ext {
         androidSupportLibraryVersion = '27.1.1'
         constraintLayoutVersion = '1.1.2'
-        lifecycleAwareComponentsVesrion = '1.1.1'
+        lifecycleAwareComponentsVersion = '1.1.1'
         roomDatabaseVersion = '1.1.0'
         firebaseServicesVersion = '16.0.1'
         googlePlayServicesVersion = '15.0.1'
