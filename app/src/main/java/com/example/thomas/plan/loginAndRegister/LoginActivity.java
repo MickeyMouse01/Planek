@@ -1,11 +1,13 @@
-package com.example.thomas.plan.login;
+package com.example.thomas.plan.loginAndRegister;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,26 +26,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     public static Client LOGGED_CLIENT;
 
+    private final int NURSE_LOGIN = 1;
+    private final int CLIENT_LOGIN = 0;
+    private final int REGISTER = 2;
+    private final int FORGOTTEN_PASSWORD = 3;
+    private int actualFragment = 0;
 
     private Button switchButton;
-    private boolean isClientTryingToLogIn;
     private LoginViewModel loginViewModel;
 
     public static LoginViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         LoginViewModel viewModel = ViewModelProviders.of(activity, factory).get(LoginViewModel.class);
-
         return viewModel;
     }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
-        isClientTryingToLogIn = true;
+
         switchButton = findViewById(R.id.switch_fragment);
         loginViewModel = obtainViewModel(this);
 
-        setupViewFragment(isClientTryingToLogIn);
+        setupViewFragment(CLIENT_LOGIN);
         switchButton.setOnClickListener(this);
 
         loginViewModel.getLoginState().observe(this, new Observer<LoginState>() {
@@ -66,6 +71,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case ERROR_CREDENTIALS:
                 Toast.makeText(this, "Authentication failed.",
                         Toast.LENGTH_SHORT).show();
+                break;
+            case ERROR_UNKNOWN:
+                Toast.makeText(this, loginViewModel.getErrorMessage().getValue(),
+                        Toast.LENGTH_LONG).show();
         }
     }
 
@@ -75,7 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void startActivity() {
-        if (!isClientTryingToLogIn) {
+        if (actualFragment == NURSE_LOGIN) {
             Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, ClientsActivity.class);
             intent.putExtra("message", 2);
@@ -92,7 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void startPreviewTasksActivity(){
+    private void startPreviewTasksActivity() {
         Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, PreviewTasksActivity.class);
         //todo predelat
@@ -105,25 +114,62 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return R.layout.activity_login;
     }
 
-    private void setupViewFragment(boolean frame) {
-        if (frame) {
-            PatternLockFragment patternFragment = PatternLockFragment.newInstance();
-            ActivityUtils.replaceFragmentInActivity(
-                    getSupportFragmentManager(), patternFragment, R.id.contentFrame);
-            switchButton.setText("Vychovatel");
-        } else {
+    private void setupViewFragment(int frame) {
 
-            LoginFragment loginFragment = LoginFragment.newInstance();
-            ActivityUtils.replaceFragmentInActivity(
-                    getSupportFragmentManager(), loginFragment, R.id.contentFrame);
-            switchButton.setText("Klient");
+        switch (frame) {
+            case CLIENT_LOGIN: {
+                PatternLockFragment patternFragment = PatternLockFragment.newInstance();
+                ActivityUtils.replaceFragmentInActivity(
+                        getSupportFragmentManager(), patternFragment, R.id.contentFrame);
+                switchButton.setText("Vychovatel");
+                actualFragment = CLIENT_LOGIN;
+                break;
+            }
+            case NURSE_LOGIN: {
+                LoginFragment loginFragment = LoginFragment.newInstance();
+                ActivityUtils.replaceFragmentInActivity(
+                        getSupportFragmentManager(), loginFragment, R.id.contentFrame);
+                switchButton.setText("Klient");
+                actualFragment = NURSE_LOGIN;
+                break;
+            }
+            case REGISTER: {
+                RegisterFragment patternFragment = RegisterFragment.newInstance();
+                ActivityUtils.replaceFragmentInActivity(
+                        getSupportFragmentManager(), patternFragment, R.id.contentFrame);
+                switchButton.setVisibility(View.GONE);
+                actualFragment = REGISTER;
+                break;
+            }
+            case FORGOTTEN_PASSWORD: {
+                Log.d("Ahoj","heslo");
+            }
         }
+
     }
 
     @Override
     public void onClick(View view) {
-        isClientTryingToLogIn = !isClientTryingToLogIn;
-        setupViewFragment(isClientTryingToLogIn);
+        switch (view.getId()) {
+
+
+            case R.id.switch_fragment: {
+                if (actualFragment == CLIENT_LOGIN) {
+                    setupViewFragment(NURSE_LOGIN);
+                } else {
+                    setupViewFragment(CLIENT_LOGIN);
+                }
+                break;
+            }
+            case R.id.register: {
+                setupViewFragment(REGISTER);
+                break;
+            }
+            case R.id.forgetPassword: {
+                setupViewFragment(FORGOTTEN_PASSWORD);
+                break;
+            }
+        }
     }
 }
 

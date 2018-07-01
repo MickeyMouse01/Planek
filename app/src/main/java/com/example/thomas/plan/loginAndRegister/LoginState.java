@@ -1,4 +1,4 @@
-package com.example.thomas.plan.login;
+package com.example.thomas.plan.loginAndRegister;
 
 /**
  * Created by pospe on 11.02.2018.
@@ -7,5 +7,6 @@ package com.example.thomas.plan.login;
 public enum LoginState {
     RESULT_OK,
     ERROR_VALIDATIONS,
-    ERROR_CREDENTIALS
+    ERROR_CREDENTIALS,
+    ERROR_UNKNOWN
 }

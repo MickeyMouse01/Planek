@@ -1,4 +1,4 @@
-package com.example.thomas.plan.login;
+package com.example.thomas.plan.loginAndRegister;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,6 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.example.thomas.plan.R;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class PatternLockFragment extends Fragment {

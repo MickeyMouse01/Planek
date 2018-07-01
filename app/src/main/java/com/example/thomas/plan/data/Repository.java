@@ -56,6 +56,21 @@ public class Repository implements DataSource {
        remoteDataSource.saveClient(client);
     }
 
+    @Override
+    public void uploadImage(@NonNull String name, byte[] data) {
+        remoteDataSource.uploadImage(name,data);
+    }
+
+    @Override
+    public void downloadImage(@NonNull String name, final LoadImageCallback callback) {
+        remoteDataSource.downloadImage(name, new LoadImageCallback() {
+            @Override
+            public void onImageLoaded(byte[] bytes) {
+                callback.onImageLoaded(bytes);
+            }
+        });
+    }
+
     public void getClients(@NonNull final LoadClientsCallback callback){
         remoteDataSource.getClients(new LoadClientsCallback() {
             @Override

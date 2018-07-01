@@ -16,7 +16,7 @@ import android.view.MenuItem;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.addEditClient.AddEditClientActivity;
-import com.example.thomas.plan.login.LoginActivity;
+import com.example.thomas.plan.loginAndRegister.LoginActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;

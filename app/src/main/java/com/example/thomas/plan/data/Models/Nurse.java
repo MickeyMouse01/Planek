@@ -18,6 +18,8 @@ import java.util.UUID;
 public class Nurse {
 
     public final String uniqueID;
+    public String username;
+    public String password; //todo pridat nejaky hash
     public String name;
     public String surname;
 

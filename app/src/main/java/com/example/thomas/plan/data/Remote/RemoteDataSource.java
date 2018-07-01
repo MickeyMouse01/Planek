@@ -7,6 +7,7 @@ import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +35,14 @@ public class RemoteDataSource implements DataSource {
     private final String ON_CANCELLED = "RemoteDataSource";
     private final String LIST_OF_RELATES_TASKS = "listOfRelatesTasks";
     private DatabaseReference mDatabase;
+    private StorageReference mStorage;
     private FirebaseAuth mAuth;
 
 
     // Prevent direct instantiation.
     private RemoteDataSource() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -46,6 +52,29 @@ public class RemoteDataSource implements DataSource {
         }
         return INSTANCE;
     }
+
+    @Override
+    public void uploadImage(@NonNull String name, byte[] data) {
+        UploadTask uploadTask = mStorage.child(name).putBytes(data);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d("obrazek nahran", "img");
+            }
+        });
+    }
+
+    public void downloadImage(@NonNull String name, final LoadImageCallback callback){
+        StorageReference image = mStorage.child(name);
+        final long SIZE = 256 * 256;
+        image.getBytes(SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                callback.onImageLoaded(bytes);
+            }
+        });
+    }
+
 
     //Clients
     @Override
@@ -276,4 +305,6 @@ public class RemoteDataSource implements DataSource {
         mDatabase.child("plans").child(planId)
                 .child(LIST_OF_RELATES_TASKS).child(taskId).removeValue();
     }
+
+
 }

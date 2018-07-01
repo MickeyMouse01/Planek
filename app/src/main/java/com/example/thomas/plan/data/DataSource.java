@@ -23,6 +23,12 @@ public interface DataSource {
     interface LoadClientCallback {
         void onClientLoaded(Client client);
     }
+    interface  LoadImageCallback{
+        void onImageLoaded(byte[] bytes);
+    }
+
+    void uploadImage(@NonNull String name, byte[] data);
+    void downloadImage(@NonNull String name, final LoadImageCallback callback);
 
     void getClients(@NonNull LoadClientsCallback callback);
 

@@ -17,6 +17,7 @@ import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -100,6 +101,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(imageBitmap);
 
+                mViewModel.uploadImage(imageBitmap, "obrazek");
+
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -109,6 +112,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
             }
         }
     }
+
+
 }
 
 

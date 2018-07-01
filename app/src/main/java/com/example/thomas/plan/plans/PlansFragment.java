@@ -47,7 +47,6 @@ public class PlansFragment extends Fragment
     public void onResume() {
         super.onResume();
         mMainViewModel.getPlans();
-
     }
 
     @Nullable

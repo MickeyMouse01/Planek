@@ -10,7 +10,7 @@ import com.example.thomas.plan.addEditPlan.AddEditPlanViewModel;
 import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
 import com.example.thomas.plan.data.Injection;
 import com.example.thomas.plan.data.Repository;
-import com.example.thomas.plan.login.LoginViewModel;
+import com.example.thomas.plan.loginAndRegister.LoginViewModel;
 import com.example.thomas.plan.planForClient.PreviewClientViewModel;
 import com.example.thomas.plan.previewTasks.PreviewTasksViewModel;
 import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
@@ -49,7 +49,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             return (T) new LoginViewModel(repository);
-        }else if (modelClass.isAssignableFrom(MainViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(MainViewModel.class)) {
             return (T) new MainViewModel(repository);
         } else if (modelClass.isAssignableFrom(AddEditClientViewModel.class)) {
             return (T) new AddEditClientViewModel(repository);
