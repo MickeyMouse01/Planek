@@ -55,6 +55,7 @@
             android:name=".planForClient.PreviewClientActivity"
             android:label="@string/preview_client"
             android:parentActivityName=".Clients.ClientsActivity" />
+
     </application>
 
 </manifest>

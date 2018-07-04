@@ -3,6 +3,7 @@ package com.example.thomas.plan.data;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Remote.RemoteDataSource;
@@ -22,13 +23,13 @@ public class Repository implements DataSource {
 
     private RemoteDataSource remoteDataSource;
 
-    private Repository(RemoteDataSource remoteDataSource){
+    private Repository(RemoteDataSource remoteDataSource) {
         this.remoteDataSource = remoteDataSource;
     }
 
-    public static Repository getInstance(RemoteDataSource remoteDataSource){
+    public static Repository getInstance(RemoteDataSource remoteDataSource) {
         if (INSTANCE == null) {
-            synchronized (Repository.class){
+            synchronized (Repository.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new Repository(remoteDataSource);
                 }
@@ -43,22 +44,57 @@ public class Repository implements DataSource {
         Date date = null;
         try {
             date = new SimpleDateFormat(pattern).parse(dateTime);
-        }
-        catch (ParseException e){
+        } catch (ParseException e) {
             //throw parse exception ale musim se podivat jak
         }
 
         return date;
     }
 
-    //Clients
-    public void saveClient(@NonNull Client client){
-       remoteDataSource.saveClient(client);
+
+    @Override
+    public void searchNurseByEmail(@NonNull String email, final LoadNurseCallback callback) {
+        remoteDataSource.searchNurseByEmail(email, new LoadNurseCallback() {
+            @Override
+            public void onNurseLoaded(Nurse nurse) {
+                callback.onNurseLoaded(nurse);
+            }
+        });
+    }
+
+    @Override
+    public void getNurses(@NonNull final LoadNursesCallback callback) {
+        remoteDataSource.getNurses(new LoadNursesCallback() {
+            @Override
+            public void onNursesLoaded(@NonNull List<Nurse> nurses) {
+                callback.onNursesLoaded(nurses);
+            }
+        });
+    }
+
+    @Override
+    public void getNurse(@NonNull String nurseId, final LoadNurseCallback callback) {
+        remoteDataSource.getNurse(nurseId, new LoadNurseCallback() {
+            @Override
+            public void onNurseLoaded(Nurse nurse) {
+                callback.onNurseLoaded(nurse);
+            }
+        });
+    }
+
+    @Override
+    public void saveNurse(@NonNull Nurse nurse) {
+        remoteDataSource.saveNurse(nurse);
+    }
+
+    @Override
+    public void deleteNurse(@NonNull String nurseId) {
+        remoteDataSource.deleteNurse(nurseId);
     }
 
     @Override
     public void uploadImage(@NonNull String name, byte[] data) {
-        remoteDataSource.uploadImage(name,data);
+        remoteDataSource.uploadImage(name, data);
     }
 
     @Override
@@ -71,7 +107,12 @@ public class Repository implements DataSource {
         });
     }
 
-    public void getClients(@NonNull final LoadClientsCallback callback){
+    //Clients
+    public void saveClient(@NonNull Client client) {
+        remoteDataSource.saveClient(client);
+    }
+
+    public void getClients(@NonNull final LoadClientsCallback callback) {
         remoteDataSource.getClients(new LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
@@ -81,7 +122,8 @@ public class Repository implements DataSource {
 
         });
     }
-    public void getClient(@NonNull final String clientId, final LoadClientCallback callback){
+
+    public void getClient(@NonNull final String clientId, final LoadClientCallback callback) {
         remoteDataSource.getClient(clientId, new LoadClientCallback() {
             @Override
             public void onClientLoaded(@NonNull Client client) {
@@ -90,25 +132,26 @@ public class Repository implements DataSource {
         });
     }
 
-    public void deleteClient(@NonNull String clientId){
+    public void deleteClient(@NonNull String clientId) {
         remoteDataSource.deleteClient(clientId);
     }
 
     @Override
     public void searchClientByUsername(@NonNull String username, final LoadClientCallback callback) {
-            remoteDataSource.searchClientByUsername(username, new LoadClientCallback() {
-                @Override
-                public void onClientLoaded(@NonNull Client client) {
-                    callback.onClientLoaded(client);
-                }
-            });
+        remoteDataSource.searchClientByUsername(username, new LoadClientCallback() {
+            @Override
+            public void onClientLoaded(@NonNull Client client) {
+                callback.onClientLoaded(client);
+            }
+        });
     }
 
     //Plans
-    public void savePlan(@NonNull Plan plan){
+    public void savePlan(@NonNull Plan plan) {
         remoteDataSource.savePlan(plan);
     }
-    public void getPlans(@NonNull final LoadPlansCallback callback){
+
+    public void getPlans(@NonNull final LoadPlansCallback callback) {
         remoteDataSource.getPlans(new LoadPlansCallback() {
             @Override
             public void onPlansLoaded(@NonNull List<Plan> plans) {
@@ -118,7 +161,7 @@ public class Repository implements DataSource {
         });
     }
 
-    public void getPlan(@NonNull final String planId,final LoadPlanCallback callback){
+    public void getPlan(@NonNull final String planId, final LoadPlanCallback callback) {
         remoteDataSource.getPlan(planId, new LoadPlanCallback() {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
@@ -126,12 +169,13 @@ public class Repository implements DataSource {
             }
         });
     }
+
     //todo bug, kdyz zbyde posledni plan/klienta, tak se odstrani z databaze ale ne z view
-    public void deletePlan(@NonNull String planId){
+    public void deletePlan(@NonNull String planId) {
         remoteDataSource.deletePlan(planId);
     }
 
-    public void updatePlan(String planId, Plan plan){
+    public void updatePlan(String planId, Plan plan) {
         remoteDataSource.getPlan(planId, new LoadPlanCallback() {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
@@ -142,12 +186,12 @@ public class Repository implements DataSource {
 
     //Tasks
     @Override
-    public void saveTask(@NonNull Task task, String planId){
-        remoteDataSource.saveTask(task,planId);
+    public void saveTask(@NonNull Task task, String planId) {
+        remoteDataSource.saveTask(task, planId);
     }
 
     @Override
-    public void getTasks(@NonNull final LoadTasksCallback callback){
+    public void getTasks(@NonNull final LoadTasksCallback callback) {
         remoteDataSource.getTasks(new LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
@@ -169,7 +213,7 @@ public class Repository implements DataSource {
 
 
     @Override
-    public void getTask(@NonNull final String taskId, final LoadTaskCallback callback){
+    public void getTask(@NonNull final String taskId, final LoadTaskCallback callback) {
         remoteDataSource.getTask(taskId, new LoadTaskCallback() {
             @Override
             public void onTaskLoaded(@NonNull Task task) {
@@ -177,13 +221,14 @@ public class Repository implements DataSource {
             }
         });
     }
+
     @Override
-    public void deleteTask(@NonNull String taskId){
+    public void deleteTask(@NonNull String taskId) {
         remoteDataSource.deleteTask(taskId);
     }
 
     @Override
     public void deleteTaskFromPlan(@NonNull String planId, @NonNull String taskId) {
-        remoteDataSource.deleteTaskFromPlan(planId,taskId);
+        remoteDataSource.deleteTaskFromPlan(planId, taskId);
     }
 }

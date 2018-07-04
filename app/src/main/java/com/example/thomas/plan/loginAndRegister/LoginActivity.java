@@ -5,9 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,27 +16,31 @@ import com.example.thomas.plan.Clients.ClientsActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    public static Client LOGGED_CLIENT;
     private static final int RC_SIGN_IN = 123;
-
+    public static Client LOGGED_CLIENT;
     private final int NURSE_LOGIN = 1;
     private final int CLIENT_LOGIN = 0;
-    private final int REGISTER = 2;
-    private final int FORGOTTEN_PASSWORD = 3;
     private int actualFragment = 0;
 
     private Button switchButton;
     private LoginViewModel loginViewModel;
+    private Boolean isNewUser = false;
 
     public static LoginViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -53,7 +55,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switchButton = findViewById(R.id.switch_fragment);
         loginViewModel = obtainViewModel(this);
 
-        setupViewFragment(CLIENT_LOGIN);
+        setupView(CLIENT_LOGIN);
         switchButton.setOnClickListener(this);
 
         loginViewModel.getLoginState().observe(this, new Observer<LoginState>() {
@@ -88,12 +90,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 "Please enter email and password", Toast.LENGTH_SHORT).show();
     }
 
+
     private void startActivity() {
         if (actualFragment == NURSE_LOGIN) {
             Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, ClientsActivity.class);
-            intent.putExtra("message", 2);
+            intent.putExtra("userId", loginViewModel.getLoggedUser().getValue());
+            intent.putExtra("isNewUser", isNewUser);
             startActivity(intent);
+
+
         } else {
             loginViewModel.getLoggedClient().observe(this, new Observer<Client>() {
                 @Override
@@ -102,7 +108,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     startPreviewTasksActivity();
                 }
             });
-
         }
     }
 
@@ -119,7 +124,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return R.layout.activity_login;
     }
 
-    private void setupViewFragment(int frame) {
+    private void setupView(int frame) {
 
         switch (frame) {
             case CLIENT_LOGIN: {
@@ -131,15 +136,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             }
             case NURSE_LOGIN: {
-                LoginFragment loginFragment = LoginFragment.newInstance();
-                ActivityUtils.replaceFragmentInActivity(
-                        getSupportFragmentManager(), loginFragment, R.id.contentFrame);
-                switchButton.setText("Klient");
                 actualFragment = NURSE_LOGIN;
-                break;
-            }
-            case REGISTER: {
-
                 List<AuthUI.IdpConfig> providers = Arrays.asList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
@@ -149,36 +146,59 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 .setAvailableProviders(providers)
                                 .build(),
                         RC_SIGN_IN);
-            }
-            case FORGOTTEN_PASSWORD: {
-                Log.d("Ahoj","heslo");
+                break;
             }
         }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                loginViewModel.getNurseByEmail(user.getEmail());
+
+                loginViewModel.getLoggedNurse().observe(this, new Observer<Nurse>() {
+                    @Override
+                    public void onChanged(@Nullable Nurse nurse) {
+                        if (nurse == null) {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
+                                    .format(Calendar.getInstance().getTime());
+                            Nurse newNurse = new Nurse(user.getUid());
+                            newNurse.setEmail(user.getEmail());
+                            newNurse.setName(user.getDisplayName());
+                            newNurse.setCreatedDate(dateTime);
+                            loginViewModel.saveNurse(newNurse);
+                            loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                        } else {
+                            loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                        }
+                    }
+                });
+
+            } else if (response != null) {
+                Toast.makeText(this,
+                        "Authentication Failed: " + response.getError().toString(),
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-
-
-            case R.id.switch_fragment: {
-                if (actualFragment == CLIENT_LOGIN) {
-                    setupViewFragment(NURSE_LOGIN);
-                } else {
-                    setupViewFragment(CLIENT_LOGIN);
-                }
-                break;
-            }
-            case R.id.register: {
-                setupViewFragment(REGISTER);
-                break;
-            }
-            case R.id.forgetPassword: {
-                setupViewFragment(FORGOTTEN_PASSWORD);
-                break;
-            }
+        if (actualFragment == CLIENT_LOGIN) {
+            setupView(NURSE_LOGIN);
+        } else {
+            setupView(CLIENT_LOGIN);
         }
     }
 }
+
 

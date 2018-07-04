@@ -1,13 +1,6 @@
 package com.example.thomas.plan.data.Models;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
-import android.support.annotation.NonNull;
-
 import com.example.thomas.plan.Common.Enums;
-import com.example.thomas.plan.data.Local.Converters;
 
 import java.util.UUID;
 
@@ -17,33 +10,71 @@ import java.util.UUID;
 
 public class Nurse {
 
-    public final String uniqueID;
-    public String username;
-    public String password; //todo pridat nejaky hash
-    public String name;
-    public String surname;
+    private  String uniqueID;
+    private String email;
+    private String password; //todo pridat nejaky hash
+    private String name;
+    private String surname;
+    private Enums.Shift shift;
+    private String createdDate;
 
-    public Nurse(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
-        this.uniqueID = UUID.randomUUID().toString();
+    public Nurse(){
+
+    }
+
+    public Nurse(String uniqueID) {
+        this.uniqueID = uniqueID;
     }
 
     public String getUniqueID() {
         return uniqueID;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
+
     public String getSurname() {
         return surname;
     }
+
     public void setSurname(String surname) {
-        surname = surname;
+        this.surname = surname;
     }
 
+    public Enums.Shift getShift() {
+        return shift;
+    }
 
+    public void setShift(Enums.Shift shift) {
+        this.shift = shift;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
 }

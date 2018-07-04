@@ -39,9 +39,19 @@ public class Enums {
     }
 
     public enum Shift {
-        MORNING,
-        AFTERNOON,
-        NIGHT
+        MORNING(0),
+        AFTERNOON(1),
+        NIGHT(2);
+
+        private int code;
+
+        Shift(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
     }
 }
 

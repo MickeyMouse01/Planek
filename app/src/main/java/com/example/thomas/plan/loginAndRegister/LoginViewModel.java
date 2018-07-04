@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Repository;
 
 /**
@@ -21,6 +22,7 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<LoginState> loginState = new MutableLiveData<>();
     private MutableLiveData<Client> loggedClient = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
+    private MutableLiveData<Nurse> loggedNurse = new MutableLiveData<>();
 
     public MutableLiveData<String> getErrorMessage() {
         return errorMessage;
@@ -42,6 +44,9 @@ public class LoginViewModel extends ViewModel {
         return loggedClient;
     }
 
+    public MutableLiveData<Nurse> getLoggedNurse() {
+        return loggedNurse;
+    }
 
     //todo dostat tady apliakcnni kontext
     public void performLogin(String username, String password) {
@@ -60,6 +65,19 @@ public class LoginViewModel extends ViewModel {
                 } else {
                     loginState.setValue(LoginState.ERROR_CREDENTIALS);
                 }
+            }
+        });
+    }
+
+    public void saveNurse(Nurse nurse){
+        repository.saveNurse(nurse);
+    }
+
+    public void getNurseByEmail(String email){
+        repository.searchNurseByEmail(email, new DataSource.LoadNurseCallback() {
+            @Override
+            public void onNurseLoaded(Nurse nurse) {
+                loggedNurse.setValue(nurse);
             }
         });
     }

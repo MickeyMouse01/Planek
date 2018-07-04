@@ -26,6 +26,7 @@ import com.example.thomas.plan.plans.PlansFragment;
 import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class ClientsActivity extends BaseActivity
@@ -40,6 +41,9 @@ public class ClientsActivity extends BaseActivity
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         getContentView();
+
+        String userId = intent.getStringExtra("userId");
+        Boolean isNewUser = intent.getBooleanExtra("isNewUser",false);
 
         mViewModel = obtainViewModel(this);
         mViewModel.addNewClient().observe(this, new Observer<Void>() {
@@ -171,6 +175,7 @@ public class ClientsActivity extends BaseActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }

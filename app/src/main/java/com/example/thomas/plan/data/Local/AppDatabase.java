@@ -5,10 +5,6 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.example.thomas.plan.data.Models.Client;
-import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.data.Models.Plan;
-import com.example.thomas.plan.data.Models.Task;
 
 
 /**

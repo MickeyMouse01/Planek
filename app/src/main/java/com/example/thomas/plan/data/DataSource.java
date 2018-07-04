@@ -3,6 +3,7 @@ package com.example.thomas.plan.data;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 
@@ -13,6 +14,27 @@ import java.util.List;
  */
 
 public interface DataSource {
+
+    //nurse
+    interface LoadNursesCallback {
+        void onNursesLoaded(@NonNull List<Nurse> nurses);
+
+    }
+
+    interface LoadNurseCallback {
+        void onNurseLoaded(Nurse nurse);
+    }
+
+    void searchNurseByEmail(@NonNull String email, LoadNurseCallback callback);
+
+    void getNurses(@NonNull LoadNursesCallback callback);
+
+    void getNurse(@NonNull String nurseId, LoadNurseCallback callback);
+
+    void saveNurse(@NonNull Nurse nurse);
+    void deleteNurse(@NonNull String nurseId);
+
+
 
     //Clients
     interface LoadClientsCallback {
@@ -28,7 +50,7 @@ public interface DataSource {
     }
 
     void uploadImage(@NonNull String name, byte[] data);
-    void downloadImage(@NonNull String name, final LoadImageCallback callback);
+    void downloadImage(@NonNull String name, LoadImageCallback callback);
 
     void getClients(@NonNull LoadClientsCallback callback);
 

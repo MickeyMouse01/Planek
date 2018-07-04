@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,6 +55,86 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
+    public void searchNurseByEmail(@NonNull String email, final LoadNurseCallback callback) {
+        Query query = mDatabase.child("nurses").orderByChild("email").equalTo(email);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<Map<String, Nurse>> t = new GenericTypeIndicator<Map<String, Nurse>>() {
+                };
+                Map<String, Nurse> map = dataSnapshot.getValue(t);
+                if (map != null) {
+                    List<Nurse> nurses = new ArrayList<>(map.values());
+                    Nurse nurse = nurses.get(0);
+                    callback.onNurseLoaded(nurse);
+                } else {
+                    callback.onNurseLoaded(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getNurses(@NonNull final LoadNursesCallback callback) {
+        mDatabase.getDatabase().getReference("nurses")
+                .getRef().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                GenericTypeIndicator<Map<String, Nurse>> t = new GenericTypeIndicator<Map<String, Nurse>>() {
+                };
+                Map<String, Nurse> map = dataSnapshot.getValue(t);
+                if (map != null) {
+                    List<Nurse> nurses = new ArrayList<>(map.values());
+                    callback.onNursesLoaded(nurses);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void getNurse(@NonNull final String nurseId, final LoadNurseCallback callback) {
+        mDatabase.getDatabase().getReference("nurses")
+                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Nurse nurse = dataSnapshot.child(nurseId).getValue(Nurse.class);
+                callback.onNurseLoaded(nurse);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(ON_CANCELLED, "Failed to read app title value.", error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void saveNurse(@NonNull Nurse nurse) {
+        mDatabase.child("nurses")
+                .child(nurse.getUniqueID()).setValue(nurse);
+    }
+
+    @Override
+    public void deleteNurse(@NonNull String nurseId) {
+        mDatabase.child("nurses").child(nurseId).removeValue();
+    }
+
+    @Override
     public void uploadImage(@NonNull String name, byte[] data) {
         UploadTask uploadTask = mStorage.child(name).putBytes(data);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -64,7 +145,7 @@ public class RemoteDataSource implements DataSource {
         });
     }
 
-    public void downloadImage(@NonNull String name, final LoadImageCallback callback){
+    public void downloadImage(@NonNull String name, final LoadImageCallback callback) {
         StorageReference image = mStorage.child(name);
         final long SIZE = 256 * 256;
         image.getBytes(SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -166,9 +247,9 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>> () {
+                GenericTypeIndicator<Map<String, Plan>> t = new GenericTypeIndicator<Map<String, Plan>>() {
                 };
-                Map<String,Plan> map = dataSnapshot.getValue(t);
+                Map<String, Plan> map = dataSnapshot.getValue(t);
                 if (map != null) {
                     List<Plan> plans = new ArrayList<>(map.values());
                     callback.onPlansLoaded(plans);
@@ -254,9 +335,9 @@ public class RemoteDataSource implements DataSource {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                GenericTypeIndicator<Map<String,Task>> t = new GenericTypeIndicator<Map<String,Task>>() {
+                GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
                 };
-                Map<String,Task> map = dataSnapshot.child(planId)
+                Map<String, Task> map = dataSnapshot.child(planId)
                         .child(LIST_OF_RELATES_TASKS).getValue(t);
 
                 if (map != null) {

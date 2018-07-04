@@ -32,7 +32,6 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     private String relatesPlan = null;
     private static final int PICK_IMAGE = 1;
 
-
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
@@ -44,7 +43,6 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         relatesPlan = intent.getStringExtra("PlanId");
         save.setOnClickListener(this);
         imageView.setOnClickListener(this);
-
     }
 
     @Override
