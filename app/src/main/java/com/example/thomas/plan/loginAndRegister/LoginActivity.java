@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
             case NURSE_LOGIN: {
                 actualFragment = NURSE_LOGIN;
-                List<AuthUI.IdpConfig> providers = Arrays.asList(
+                /*List<AuthUI.IdpConfig> providers = Arrays.asList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
                 startActivityForResult(
@@ -145,7 +145,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);
+                        RC_SIGN_IN);*/
+                //todo jen abych se furt nemusel prihlasovat...
+                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
                 break;
             }
         }

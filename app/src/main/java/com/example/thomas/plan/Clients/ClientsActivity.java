@@ -15,12 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.thomas.plan.Activities.BaseActivity;
-import com.example.thomas.plan.addEditClient.AddEditClientActivity;
-import com.example.thomas.plan.loginAndRegister.LoginActivity;
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.addEditClient.AddEditClientActivity;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
+import com.example.thomas.plan.loginAndRegister.LoginActivity;
+import com.example.thomas.plan.nurseProfile.NurseProfileActivity;
 import com.example.thomas.plan.planForClient.PreviewClientActivity;
 import com.example.thomas.plan.plans.PlansFragment;
 import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
@@ -32,18 +33,22 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ClientsActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MainViewModel mViewModel;
-    private Toolbar toolbar;
     private final int VIEW_CLIENTS = 0;
     private final int VIEW_PLANS = 1;
+    private MainViewModel mViewModel;
+    private Toolbar toolbar;
+
+    public static MainViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        MainViewModel viewModel = ViewModelProviders.of(activity, factory).get(MainViewModel.class);
+        return viewModel;
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         getContentView();
-
-        String userId = intent.getStringExtra("userId");
-        Boolean isNewUser = intent.getBooleanExtra("isNewUser",false);
 
         mViewModel = obtainViewModel(this);
         mViewModel.addNewClient().observe(this, new Observer<Void>() {
@@ -81,6 +86,13 @@ public class ClientsActivity extends BaseActivity
             @Override
             public void onChanged(@Nullable String planId) {
                 previewPlan(planId);
+            }
+        });
+
+        mViewModel.previewNurseProfile().observe(this, new Observer<Void>() {
+            @Override
+            public void onChanged(@Nullable Void avoid) {
+                previewNurseProfile();
             }
         });
 
@@ -126,14 +138,6 @@ public class ClientsActivity extends BaseActivity
         }
     }
 
-    public static MainViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        MainViewModel viewModel = ViewModelProviders.of(activity, factory).get(MainViewModel.class);
-        return viewModel;
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -160,8 +164,9 @@ public class ClientsActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_add_client) {
+        if (id == R.id.nav_myprofile) {
+            mViewModel.previewNurseProfile().call();
+        } else if (id == R.id.nav_add_client) {
             mViewModel.addNewClient().call();
         } else if (id == R.id.nav_add_plan) {
             mViewModel.addNewPlan().call();
@@ -215,10 +220,15 @@ public class ClientsActivity extends BaseActivity
         startActivity(intent);
     }
 
-    private void previewPlan(String planId){
+    private void previewPlan(String planId) {
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
         Intent intent = new Intent(this, PreviewTasksActivity.class);
         intent.putExtra("PlanId", planId);
+        startActivity(intent);
+    }
+
+    private void previewNurseProfile(){
+        Intent intent = new Intent(this, NurseProfileActivity.class);
         startActivity(intent);
     }
 }

@@ -11,6 +11,7 @@ import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
 import com.example.thomas.plan.data.Injection;
 import com.example.thomas.plan.data.Repository;
 import com.example.thomas.plan.loginAndRegister.LoginViewModel;
+import com.example.thomas.plan.nurseProfile.NurseProfileViewModel;
 import com.example.thomas.plan.planForClient.PreviewClientViewModel;
 import com.example.thomas.plan.previewTasks.PreviewTasksViewModel;
 import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
@@ -65,6 +66,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new PreviewTasksViewModel(repository);
         } else if (modelClass.isAssignableFrom(PreviewClientViewModel.class)) {
             return (T) new PreviewClientViewModel(repository);
+        }else if (modelClass.isAssignableFrom(NurseProfileViewModel.class)) {
+            return (T) new NurseProfileViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

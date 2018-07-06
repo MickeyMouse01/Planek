@@ -40,6 +40,7 @@ public class PlansFragment extends Fragment
     }
 
     public static PlansFragment newInstance() {
+
         return new PlansFragment();
     }
 
@@ -59,6 +60,7 @@ public class PlansFragment extends Fragment
         mPlansFragmentBinding.setViewmodel(mMainViewModel);
         setHasOptionsMenu(true);
         setupListAdapter();
+
         return mPlansFragmentBinding.getRoot();
     }
 

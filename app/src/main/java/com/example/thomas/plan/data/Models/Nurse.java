@@ -17,6 +17,9 @@ public class Nurse {
     private String surname;
     private Enums.Shift shift;
     private String createdDate;
+    private Enums.TypeOfGroup typeOfGroup;
+    private boolean inWork;
+    private boolean superVisior;
 
     public Nurse(){
 
@@ -24,6 +27,30 @@ public class Nurse {
 
     public Nurse(String uniqueID) {
         this.uniqueID = uniqueID;
+    }
+
+    public Enums.TypeOfGroup getTypeOfGroup() {
+        return typeOfGroup;
+    }
+
+    public void setTypeOfGroup(Enums.TypeOfGroup typeOfGroup) {
+        this.typeOfGroup = typeOfGroup;
+    }
+
+    public boolean isInWork() {
+        return inWork;
+    }
+
+    public void setInWork(boolean inWork) {
+        this.inWork = inWork;
+    }
+
+    public boolean isSuperVisior() {
+        return superVisior;
+    }
+
+    public void setSuperVisior(boolean superVisior) {
+        this.superVisior = superVisior;
     }
 
     public String getUniqueID() {

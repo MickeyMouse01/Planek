@@ -30,6 +30,7 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<String> mPreviewClient = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mViewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mPreviewPlan = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> mNurseProfile = new SingleLiveEvent<>();
     private MutableLiveData<Integer> currentFragment;
 
     private Repository repository;
@@ -73,6 +74,9 @@ public class MainViewModel extends ViewModel {
     }
     public SingleLiveEvent<String> previewPlan() {
         return mPreviewPlan;
+    }
+    public SingleLiveEvent<Void> previewNurseProfile() {
+        return mNurseProfile;
     }
 
     private void loadClients() {

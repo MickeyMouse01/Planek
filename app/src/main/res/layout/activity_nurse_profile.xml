@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".nurseProfile.NurseProfileActivity">
+
+    <ImageView
+        android:id="@+id/nurse_image"
+        android:layout_width="246dp"
+        android:layout_height="245dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="41dp"
+        app:srcCompat="@drawable/ic_menu_camera"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="82dp" />
+
+    <TextView
+        android:id="@+id/nurse_mail"
+        android:layout_width="348dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="364dp"
+        android:layout_marginTop="84dp"
+        android:text="Email" />
+
+    <TextView
+        android:id="@+id/nurse_name"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/nurse_mail"
+        android:layout_marginTop="172dp"
+        android:text="Jmeno" />
+
+    <TextView
+        android:id="@+id/nurse_group"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/nurse_mail"
+        android:layout_marginTop="241dp"
+        android:text="Skupina" />
+
+    <TextView
+        android:id="@+id/nurse_shift"
+        android:layout_width="397dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/nurse_image"
+        android:layout_marginTop="412dp"
+        android:text="Smena" />
+
+    <TextView
+        android:id="@+id/nurse_supervisior"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/nurse_image"
+        android:layout_marginTop="503dp"
+        android:text="Vedouci" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nurse_image"
+        android:layout_alignStart="@+id/nurse_mail"
+        android:layout_marginBottom="-69dp"
+        android:text="Email"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="200dp"
+        android:layout_height="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/nurse_mail"
+        android:layout_marginTop="112dp"
+        android:text="Jméno a Příjmení"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="201dp"
+        android:text="Skupina"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/nurse_image"
+        android:layout_marginTop="363dp"
+        android:text="Směna"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+</RelativeLayout>

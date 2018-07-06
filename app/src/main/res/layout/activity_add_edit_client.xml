@@ -1,105 +1,116 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".addEditClient.AddEditClientActivity"
+    tools:showIn="@layout/activity_tutorial">
 
-    <LinearLayout
-        android:layout_width="778dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="33dp"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="jmeno" />
-
-        <EditText
-            android:id="@+id/add_firstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="778dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="94dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="prijmeni" />
-
-        <EditText
-            android:id="@+id/add_surname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-            android:minWidth="100dip" />
-    </LinearLayout>
-
-    <Spinner
-        android:id="@+id/type_of_group"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="154dp"
-        android:drawSelectorOnTop="true"
-        android:entries="@array/type_of_group" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="245dp"
-        android:text="Přihlašovací jméno" />
-
-    <EditText
-        android:id="@+id/add_username"
-        android:layout_width="253dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="273dp"
-        android:layout_marginTop="294dp"
-        android:background="@android:drawable/editbox_background"
-        android:minWidth="100dip" />
-
-    <TextView
-        android:id="@+id/add_password_pattern_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="378dp"
-        android:text="Heslo pro klienta" />
-
-    <com.andrognito.patternlockview.PatternLockView
-        android:id="@+id/add_pattern_lock_view"
-        android:layout_width="286dp"
-        android:layout_height="288dp"
-        android:layout_centerInParent="true"
-        app:correctStateColor="@color/colorAccent"
-        app:normalStateColor="@color/colorPrimary"
-        app:wrongStateColor="@color/pomegranate" />
-
-    <Button android:id="@+id/add_save_button"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="uložit" />
+        android:orientation="vertical">
 
 
+        <LinearLayout
+            android:layout_width="778dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="33dp"
+            android:orientation="horizontal">
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="jmeno" />
+
+            <EditText
+                android:id="@+id/add_firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="778dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="94dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="prijmeni" />
+
+            <EditText
+                android:id="@+id/add_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:minWidth="100dip" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/type_of_group"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="154dp"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/type_of_group" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="245dp"
+            android:text="Přihlašovací jméno" />
+
+        <EditText
+            android:id="@+id/add_username"
+            android:layout_width="253dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="273dp"
+            android:layout_marginTop="294dp"
+            android:background="@android:drawable/editbox_background"
+            android:minWidth="100dip" />
+
+        <TextView
+            android:id="@+id/add_password_pattern_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="378dp"
+            android:text="Heslo pro klienta" />
+
+        <com.andrognito.patternlockview.PatternLockView
+            android:id="@+id/add_pattern_lock_view"
+            android:layout_width="286dp"
+            android:layout_height="288dp"
+            android:layout_centerInParent="true"
+            app:correctStateColor="@color/colorAccent"
+            app:normalStateColor="@color/colorPrimary"
+            app:wrongStateColor="@color/pomegranate" />
+
+        <Button
+            android:id="@+id/add_save_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="uložit" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
