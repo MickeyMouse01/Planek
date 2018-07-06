@@ -64,7 +64,6 @@ public class ViewClientActivity extends BaseActivity {
         intent.putExtra("idClient", viewClientId);
         startActivity(intent);
         return super.onOptionsItemSelected(item);
-
     }
 
     private static ViewClientViewModel obtainViewModel(FragmentActivity activity) {

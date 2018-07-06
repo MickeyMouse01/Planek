@@ -181,8 +181,6 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         } else {
             editClient();
         }
-
-
         //todo validacka na empty inputs
         finish();
     }

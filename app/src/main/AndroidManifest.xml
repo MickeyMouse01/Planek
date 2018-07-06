@@ -55,6 +55,7 @@
             android:label="@string/preview_client"
             android:parentActivityName=".Clients.ClientsActivity" />
         <activity android:name=".nurseProfile.NurseProfileActivity" />
+        <activity android:name=".nurseProfileEdit.NurseProfileEditActivity"></activity>
     </application>
 
 </manifest>
