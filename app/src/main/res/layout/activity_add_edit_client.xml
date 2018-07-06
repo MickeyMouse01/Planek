@@ -1,11 +1,3 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".addEditClient.AddEditClientActivity"
-    tools:showIn="@layout/activity_tutorial">
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -112,5 +104,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="uložit" />
+
+        <Button
+            android:id="@+id/change_password"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="515dp"
+            android:visibility="gone"
+            android:text="Změnit heslo pro klienta" />
     </RelativeLayout>
-</android.support.constraint.ConstraintLayout>

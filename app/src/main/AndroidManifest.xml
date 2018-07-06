@@ -49,17 +49,12 @@
             android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity" />
         <activity
             android:name=".previewTasks.PreviewTasksActivity"
-            android:label="@string/title_activity_preview_plan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".planForClient.PreviewClientActivity"
             android:label="@string/preview_client"
             android:parentActivityName=".Clients.ClientsActivity" />
         <activity android:name=".nurseProfile.NurseProfileActivity" />
-        <activity
-            android:name=".TutorialActivity"
-            android:label="@string/title_activity_tutorial"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

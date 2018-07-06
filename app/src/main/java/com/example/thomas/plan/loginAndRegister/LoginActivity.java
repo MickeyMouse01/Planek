@@ -18,15 +18,12 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
-import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {

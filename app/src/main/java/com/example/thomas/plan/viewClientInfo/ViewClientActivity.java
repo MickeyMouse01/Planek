@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.addEditClient.AddEditClientActivity;
 import com.example.thomas.plan.data.Models.Client;
 
 public class ViewClientActivity extends BaseActivity {
@@ -47,6 +51,22 @@ public class ViewClientActivity extends BaseActivity {
         return R.layout.activity_view_client;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, AddEditClientActivity.class);
+        intent.putExtra("idClient", viewClientId);
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
+
+    }
+
     private static ViewClientViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         ViewClientViewModel viewModel = ViewModelProviders.of(activity, factory).get(ViewClientViewModel.class);
@@ -60,7 +80,7 @@ public class ViewClientActivity extends BaseActivity {
         } else {
             firstName.setText(client.getFirstName());
             surname.setText(client.getSurname());
-            typeOfGroup.setText(client.getTypeOfGroup());
+            typeOfGroup.setText(client.getTypeOfGroup().name());
             nurseId.setText(client.getNurseID());
         }
 

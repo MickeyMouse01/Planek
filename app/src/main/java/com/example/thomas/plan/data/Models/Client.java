@@ -96,8 +96,8 @@ public class Client {
         this.typeOfGroup = typeOfGroup;
     }
 
-    public String getTypeOfGroup() {
-        return typeOfGroup.name();
+    public TypeOfGroup getTypeOfGroup() {
+        return typeOfGroup;
     }
 
     public String getPlanId() {
