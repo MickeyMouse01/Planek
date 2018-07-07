@@ -107,7 +107,7 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void getNurse(@NonNull final String nurseId, final LoadNurseCallback callback) {
         mDatabase.getDatabase().getReference("nurses")
-                .getRef().addListenerForSingleValueEvent(new ValueEventListener() {
+                .getRef().addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

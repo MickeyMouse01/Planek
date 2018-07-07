@@ -12,14 +12,13 @@ public class Nurse {
 
     private  String uniqueID;
     private String email;
-    private String password; //todo pridat nejaky hash
     private String name;
     private String surname;
-    private Enums.Shift shift;
+    private Enums.Shift shift = Enums.Shift.UNDEFINED;
     private String createdDate;
-    private Enums.TypeOfGroup typeOfGroup;
-    private boolean inWork;
-    private boolean superVisior;
+    private Enums.TypeOfGroup typeOfGroup = Enums.TypeOfGroup.UNDEFINED;
+    private boolean inWork = false;
+    private boolean superVisior = false;
 
     public Nurse(){
 
@@ -63,14 +62,6 @@ public class Nurse {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {

@@ -7,7 +7,7 @@
     tools:context=".nurseProfile.NurseProfileActivity">
 
     <ImageView
-        android:id="@+id/nurse_edit_image"
+        android:id="@+id/nurse_image"
         android:layout_width="246dp"
         android:layout_height="245dp"
         android:layout_alignParentStart="true"
@@ -19,7 +19,7 @@
         tools:layout_editor_absoluteY="82dp" />
 
     <TextView
-        android:id="@+id/nurse_edit_mail"
+        android:id="@+id/nurse_mail"
         android:layout_width="348dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -29,29 +29,29 @@
         android:text="Email" />
 
     <TextView
-        android:id="@+id/nurse_edit_name"
+        android:id="@+id/nurse_name"
         android:layout_width="357dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_mail"
+        android:layout_alignStart="@+id/nurse_mail"
         android:layout_marginTop="172dp"
         android:text="Jmeno" />
 
     <TextView
-        android:id="@+id/nurse_edit_group"
+        android:id="@+id/nurse_group"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_mail"
+        android:layout_alignStart="@+id/nurse_mail"
         android:layout_marginTop="241dp"
         android:text="Skupina" />
 
     <TextView
-        android:id="@+id/nurse_edit_shift"
+        android:id="@+id/nurse_shift"
         android:layout_width="397dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_image"
+        android:layout_alignStart="@+id/nurse_image"
         android:layout_marginTop="412dp"
         android:text="Smena" />
 
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_image"
+        android:layout_alignStart="@+id/nurse_image"
         android:layout_marginTop="503dp"
         android:text="Vedouci" />
 
@@ -68,8 +68,8 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/nurse_edit_image"
-        android:layout_alignStart="@+id/nurse_edit_mail"
+        android:layout_above="@+id/nurse_image"
+        android:layout_alignStart="@+id/nurse_mail"
         android:layout_marginBottom="-69dp"
         android:text="Email"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -79,7 +79,7 @@
         android:layout_width="200dp"
         android:layout_height="42dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_mail"
+        android:layout_alignStart="@+id/nurse_mail"
         android:layout_marginTop="112dp"
         android:text="Jméno a Příjmení"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -99,7 +99,7 @@
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_image"
+        android:layout_alignStart="@+id/nurse_image"
         android:layout_marginTop="363dp"
         android:text="Směna"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />

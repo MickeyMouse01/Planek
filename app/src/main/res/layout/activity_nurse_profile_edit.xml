@@ -39,7 +39,8 @@
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/nurse_edit_mail"
-        android:layout_below="@+id/nurse_edit_image"/>
+        android:layout_below="@+id/nurse_edit_image"
+        android:entries="@array/type_of_group"/>
 
     <Spinner
         android:id="@+id/nurse_edit_shift"
@@ -48,7 +49,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/nurse_edit_image"
         android:layout_marginTop="412dp"
-        android:text="Smena" />
+        android:entries="@array/type_of_shift"/>
 
     <TextView
         android:id="@+id/nurse_supervisior"

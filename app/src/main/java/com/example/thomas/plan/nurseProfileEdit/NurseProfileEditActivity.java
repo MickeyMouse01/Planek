@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Nurse;
@@ -62,18 +63,24 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         editedNurse = nurse;
         email.setText(nurse.getEmail());
         nameAndSurname.setText(nurse.getName() + " " + nurse.getSurname());
+        typeOfGroup.setSelection(nurse.getTypeOfGroup().getCode());
+        shift.setSelection(nurse.getShift().getCode());
 
     }
 
     private void editNurse(){
         editedNurse.setEmail(email.getText().toString());
         String editedNameAndSurname = nameAndSurname.getText().toString();
-        String[] splited = editedNameAndSurname.split("\\s+");
-        String name = splited[0];
-        String surname = splited[1];
+        String[] split = editedNameAndSurname.split("\\s+");
+        String name = split[0];
+        String surname = split[1];
         editedNurse.setName(name);
         editedNurse.setSurname(surname);
+        editedNurse.setTypeOfGroup(Enums.TypeOfGroup.values()[typeOfGroup.getSelectedItemPosition()]);
+        editedNurse.setShift(Enums.Shift.values()[shift.getSelectedItemPosition()]);
         mViewModel.saveNurse(editedNurse);
+        finish();
+
     }
 
     @Override

@@ -20,6 +20,14 @@
         <item>Skupina A</item>
         <item>Skupina B</item>
         <item>Skupina C</item>
+        <item>Skupina není vybrána</item>
+    </string-array>
+
+    <string-array name="type_of_shift">
+        <item>Ranní služba</item>
+        <item>Odpolední služba</item>
+        <item>Noční služba</item>
+        <item>Služba není vybrána</item>
     </string-array>
 
 
