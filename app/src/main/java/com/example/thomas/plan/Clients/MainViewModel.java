@@ -9,8 +9,11 @@ import android.support.annotation.NonNull;
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Repository;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -32,11 +35,13 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<String> mPreviewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> mNurseProfile = new SingleLiveEvent<>();
     private MutableLiveData<Integer> currentFragment;
+    private MutableLiveData<Nurse> loggedNurse;
+    private FirebaseUser firebaseUser;
 
     private Repository repository;
 
     public MainViewModel(Repository mRepository) {
-
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         this.repository = mRepository;
     }
 
@@ -116,5 +121,22 @@ public class MainViewModel extends ViewModel {
     public void removePlan(String planId) {
         repository.deletePlan(planId);
         loadPlans();
+    }
+
+    public MutableLiveData<Nurse> getLoggedNurse() {
+        if(loggedNurse == null) {
+            loggedNurse = new MutableLiveData<>();
+            loadLoggedNurse();
+        }
+        return loggedNurse;
+    }
+
+    private void loadLoggedNurse(){
+        repository.getNurse(firebaseUser.getUid(), new DataSource.LoadNurseCallback() {
+            @Override
+            public void onNurseLoaded(Nurse nurse) {
+                loggedNurse.setValue(nurse);
+            }
+        });
     }
 }

@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
@@ -20,6 +21,7 @@ import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditClient.AddEditClientActivity;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
+import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.loginAndRegister.LoginActivity;
 import com.example.thomas.plan.nurseProfile.NurseProfileActivity;
 import com.example.thomas.plan.planForClient.PreviewClientActivity;
@@ -28,6 +30,7 @@ import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class ClientsActivity extends BaseActivity
@@ -37,6 +40,8 @@ public class ClientsActivity extends BaseActivity
     private final int VIEW_PLANS = 1;
     private MainViewModel mViewModel;
     private Toolbar toolbar;
+    private TextView txtMenuTypeOfGroup, txtMenuNameSurname;
+    private FirebaseUser firebaseUser;
 
     public static MainViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
@@ -121,8 +126,22 @@ public class ClientsActivity extends BaseActivity
     }
 
     private void setupNavigation() {
+        mViewModel.getLoggedNurse().observe(this, new Observer<Nurse>() {
+            @Override
+            public void onChanged(@Nullable Nurse nurse) {
+                initializeData(nurse);
+            }
+        });
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initializeData(Nurse nurse) {
+        txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
+        txtMenuNameSurname = findViewById(R.id.menu_name_surname);
+
+        txtMenuNameSurname.setText(nurse.getNameAndSurname());
+        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
     }
 
     private void setupViewFragment(int frame) {
@@ -227,7 +246,7 @@ public class ClientsActivity extends BaseActivity
         startActivity(intent);
     }
 
-    private void previewNurseProfile(){
+    private void previewNurseProfile() {
         Intent intent = new Intent(this, NurseProfileActivity.class);
         startActivity(intent);
     }

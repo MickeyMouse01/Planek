@@ -95,4 +95,8 @@ public class Nurse {
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
+
+    public String getNameAndSurname(){
+        return name + " " + surname;
+    }
 }
