@@ -13,12 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.thomas.plan.Activities.BaseActivity;
-import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -71,7 +68,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
 
         if (imageBitmap != null) {
             mViewModel.uploadImage(imageBitmap, newPlan.getUniqueID());
-            newPlan.setHasImage(true);
+            newPlan.setImageSet(true);
         }
 
         if (clientId != null) {

@@ -86,7 +86,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
         if(!mPlans.isEmpty()){
             nameOfPlan.setText(mPlans.get(position).getName());
 
-            if(mPlans.get(position).hasImage()) {
+            if(mPlans.get(position).isImageSet()) {
                 StorageReference ref = FirebaseStorage.getInstance()
                         .getReference().child(mPlans.get(position).getUniqueID());
                 GlideApp.with(planView)

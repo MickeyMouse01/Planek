@@ -1,12 +1,8 @@
 package com.example.thomas.plan.data.Models;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,8 +16,7 @@ public class Plan {
     private String name;
     private String createdDate;
     private Map<String, Task> listOfRelatesTasks;
-    private boolean hasImage = false;
-
+    private boolean imageSet = false;
 
     public Plan() {
         this.uniqueID = UUID.randomUUID().toString();
@@ -63,11 +58,11 @@ public class Plan {
         this.name = name;
     }
 
-    public boolean hasImage() {
-        return hasImage;
+    public boolean isImageSet() {
+        return imageSet;
     }
 
-    public void setHasImage(boolean hasImage) {
-        this.hasImage = hasImage;
+    public void setImageSet(boolean imageSet) {
+        this.imageSet = imageSet;
     }
 }
