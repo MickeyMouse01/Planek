@@ -5,12 +5,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
+import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Plan;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
     private ImageButton infoButton, deleteButton;
     private LinearLayout linearLayout;
     private ActionItemListener actionListener;
+    private ImageView imageView;
 
     private String NAME_OF_CLASS = getClass().getName();
 
@@ -71,6 +76,8 @@ public class ListOfPlansAdapter extends BaseAdapter {
 
         planView = inflater.inflate(R.layout.plan_item, null);
 
+
+        imageView = planView.findViewById(R.id.plan_imageview);
         nameOfPlan = planView.findViewById(R.id.plan_name);
         infoButton = planView.findViewById(R.id.infoButton);
         deleteButton = planView.findViewById(R.id.deleteButton);
@@ -78,6 +85,14 @@ public class ListOfPlansAdapter extends BaseAdapter {
 
         if(!mPlans.isEmpty()){
             nameOfPlan.setText(mPlans.get(position).getName());
+
+            if(mPlans.get(position).hasImage()) {
+                StorageReference ref = FirebaseStorage.getInstance()
+                        .getReference().child(mPlans.get(position).getUniqueID());
+                GlideApp.with(planView)
+                        .load(ref)
+                        .into(imageView);
+            }
 
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

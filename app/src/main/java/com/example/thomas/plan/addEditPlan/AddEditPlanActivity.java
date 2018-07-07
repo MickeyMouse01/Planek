@@ -13,28 +13,33 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
-import com.google.firebase.database.ServerValue;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 
 public class AddEditPlanActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final int PICK_IMAGE = 1;
     private EditText mName;
     private Button save;
     private ImageView imageView;
     private AddEditPlanViewModel mViewModel;
     private Bitmap imageBitmap;
     private String clientId;
-    private static final int PICK_IMAGE = 1;
+
+    private static AddEditPlanViewModel obtainViewModel(FragmentActivity activity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        AddEditPlanViewModel viewModel = ViewModelProviders.of(activity, factory).get(AddEditPlanViewModel.class);
+        return viewModel;
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -55,12 +60,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         return R.layout.activity_add_edit_plan;
     }
 
-    private static AddEditPlanViewModel obtainViewModel(FragmentActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        AddEditPlanViewModel viewModel = ViewModelProviders.of(activity, factory).get(AddEditPlanViewModel.class);
-        return viewModel;
-    }
-
     private void addOrEditPlan() {
         String name = mName.getText().toString();
         Plan newPlan = new Plan();
@@ -68,11 +67,17 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                 .format(Calendar.getInstance().getTime());
         newPlan.setName(name);
         newPlan.setCreatedDate(dateTime);
-        //newPlan.setImage(imageBitmap); todo upravit aby to ukladalo do storage databaze
         showDialog("Saving");
-        if(clientId != null){
-            mViewModel.savePlanToClient(newPlan,clientId);
+
+        if (imageBitmap != null) {
+            mViewModel.uploadImage(imageBitmap, newPlan.getUniqueID());
+            newPlan.setHasImage(true);
         }
+
+        if (clientId != null) {
+            mViewModel.savePlanToClient(newPlan, clientId);
+        }
+
         mViewModel.savePlan(newPlan);
         hideDialog();
     }
@@ -100,9 +105,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(imageBitmap);
-
-                mViewModel.uploadImage(imageBitmap, "obrazek");
-
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

@@ -14,10 +14,13 @@ import android.widget.TextView;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.nurseProfileEdit.NurseProfileEditActivity;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class NurseProfileActivity extends BaseActivity {
 
@@ -89,6 +92,12 @@ public class NurseProfileActivity extends BaseActivity {
         txtName.setText(nurse.getName() + " " + nurse.getSurname());
         txtGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
         txtShift.setText(nurse.getShift().getNameOfShift());
+
+        StorageReference ref = FirebaseStorage.getInstance().getReference().child("obrazek");
+
+        GlideApp.with(this)
+                .load(ref)
+                .into(imageOfNurse);
     }
 
 }

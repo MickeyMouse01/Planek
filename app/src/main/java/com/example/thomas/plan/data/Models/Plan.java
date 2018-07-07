@@ -20,7 +20,8 @@ public class Plan {
     private String name;
     private String createdDate;
     private Map<String, Task> listOfRelatesTasks;
-    //private Bitmap image;
+    private boolean hasImage = false;
+
 
     public Plan() {
         this.uniqueID = UUID.randomUUID().toString();
@@ -47,10 +48,6 @@ public class Plan {
         return listOfRelatesTasks;
     }
 
-    /*public void setListOfRelatesTasks(List<Task> listOfRelatesTasks) {
-        this.listOfRelatesTasks = listOfRelatesTasks;
-    }*/
-
     public void addToListOfRelatesTasks(Task task){
         if(listOfRelatesTasks == null){
             listOfRelatesTasks = new HashMap<>();;
@@ -66,11 +63,11 @@ public class Plan {
         this.name = name;
     }
 
-    /*public Bitmap getImage() {
-        return image;
+    public boolean hasImage() {
+        return hasImage;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }*/
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
+    }
 }
