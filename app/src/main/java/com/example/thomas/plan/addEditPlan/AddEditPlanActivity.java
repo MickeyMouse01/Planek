@@ -43,7 +43,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         super.onViewReady(savedInstanceState, intent);
 
         clientId = intent.getStringExtra("ClientId");
-
         mViewModel = obtainViewModel(this);
         mName = findViewById(R.id.add_name);
         imageView = findViewById(R.id.add_image);
@@ -97,7 +96,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
-
             Uri selectedImage = data.getData();
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -111,8 +109,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
             }
         }
     }
-
-
 }
 
 

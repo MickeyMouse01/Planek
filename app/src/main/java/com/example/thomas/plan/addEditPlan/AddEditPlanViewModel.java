@@ -37,8 +37,6 @@ public class AddEditPlanViewModel extends ViewModel {
     public void uploadImage(Bitmap bitmap, String name){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        String blag = stream.toString();
-
         byte[] data = stream.toByteArray();
 
         repository.uploadImage(name,data);

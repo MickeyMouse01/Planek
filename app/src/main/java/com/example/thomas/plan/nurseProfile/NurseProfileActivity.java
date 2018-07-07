@@ -93,11 +93,10 @@ public class NurseProfileActivity extends BaseActivity {
         txtGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
         txtShift.setText(nurse.getShift().getNameOfShift());
 
-        StorageReference ref = FirebaseStorage.getInstance().getReference().child("obrazek");
+        StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getUniqueID());
 
         GlideApp.with(this)
                 .load(ref)
                 .into(imageOfNurse);
     }
-
 }
