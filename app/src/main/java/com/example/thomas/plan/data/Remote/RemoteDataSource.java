@@ -216,7 +216,6 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void searchClientByUsername(@NonNull String username, final LoadClientCallback callback) {
         Query query = mDatabase.child("clients").orderByChild("username").equalTo(username);
-
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

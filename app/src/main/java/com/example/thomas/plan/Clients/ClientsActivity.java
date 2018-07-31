@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
@@ -98,6 +99,13 @@ public class ClientsActivity extends BaseActivity
             @Override
             public void onChanged(@Nullable Void avoid) {
                 previewNurseProfile();
+            }
+        });
+
+        mViewModel.showMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                Toast.makeText(ClientsActivity.this, s, Toast.LENGTH_SHORT).show();
             }
         });
 

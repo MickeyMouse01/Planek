@@ -18,17 +18,23 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
+import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    private static final String crUsername= "admin@admin.cz";
+    private static final String crPassword = "5YpA5EDEI7OdGpkZ";
+
     private static final int RC_SIGN_IN = 123;
     public static Client LOGGED_CLIENT;
     private final int NURSE_LOGIN = 1;
@@ -102,17 +108,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onChanged(@Nullable Client client) {
                     LOGGED_CLIENT = client;
-                    startPreviewTasksActivity();
+                    startPreviewTasksActivity(client.getPlanId());
                 }
             });
         }
     }
 
-    private void startPreviewTasksActivity() {
+    private void startPreviewTasksActivity(String planId) {
         Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, PreviewTasksActivity.class);
-        //todo predelat
-        intent.putExtra("PlanId", "aa6f7b62-6964-40b3-9616-396bf76b0f98");
+        intent.putExtra("PlanId", planId);
         startActivity(intent);
     }
 
@@ -134,7 +139,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
             case NURSE_LOGIN: {
                 actualFragment = NURSE_LOGIN;
-                /*List<AuthUI.IdpConfig> providers = Arrays.asList(
+                List<AuthUI.IdpConfig> providers = Arrays.asList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
                 startActivityForResult(
@@ -142,9 +147,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);*/
-                //todo jen abych se furt nemusel prihlasovat...
-                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                        RC_SIGN_IN);
+
+                //loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+
                 break;
             }
         }

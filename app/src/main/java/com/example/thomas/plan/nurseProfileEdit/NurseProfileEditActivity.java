@@ -83,6 +83,7 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         typeOfGroup.setSelection(nurse.getTypeOfGroup().getCode());
         shift.setSelection(nurse.getShift().getCode());
         StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getUniqueID());
+
         GlideApp.with(this)
                 .load(ref)
                 .into(imageOfNurse);

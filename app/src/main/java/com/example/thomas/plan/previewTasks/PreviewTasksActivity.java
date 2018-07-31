@@ -24,6 +24,7 @@ import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Task;
+import com.example.thomas.plan.loginAndRegister.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class PreviewTasksActivity extends BaseActivity {
 
         showDialog("Loading data");
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager =  findViewById(R.id.container);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mViewModel);
 
 
@@ -90,22 +91,14 @@ public class PreviewTasksActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_preview_plan, menu);
+        getMenuInflater().inflate(R.menu.logout, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent,3);
         return super.onOptionsItemSelected(item);
     }
 
@@ -191,7 +184,6 @@ public class PreviewTasksActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return mViewModel.getListOfTasks().getValue().size();
         }
     }

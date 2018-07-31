@@ -34,6 +34,7 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<String> mViewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mPreviewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> mNurseProfile = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mShowMessage = new SingleLiveEvent<>();
     private MutableLiveData<Integer> currentFragment;
     private MutableLiveData<Nurse> loggedNurse;
     private FirebaseUser firebaseUser;
@@ -83,6 +84,10 @@ public class MainViewModel extends ViewModel {
     public SingleLiveEvent<Void> previewNurseProfile() {
         return mNurseProfile;
     }
+    public SingleLiveEvent<String> showMessage() {
+        return mShowMessage;
+    }
+
 
     private void loadClients() {
         repository.getClients(new DataSource.LoadClientsCallback() {
@@ -132,11 +137,16 @@ public class MainViewModel extends ViewModel {
     }
 
     private void loadLoggedNurse(){
-        repository.getNurse(firebaseUser.getUid(), new DataSource.LoadNurseCallback() {
-            @Override
-            public void onNurseLoaded(Nurse nurse) {
-                loggedNurse.setValue(nurse);
-            }
-        });
+        if (firebaseUser != null) {
+            repository.getNurse(firebaseUser.getUid(), new DataSource.LoadNurseCallback() {
+                @Override
+                public void onNurseLoaded(Nurse nurse) {
+                    loggedNurse.setValue(nurse);
+                }
+            });
+        } else {
+            mShowMessage.setValue("Přístup do databáze odmítnut");
+        }
+
     }
 }
