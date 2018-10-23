@@ -2,6 +2,8 @@ package com.example.thomas.plan.data.Models;
 
 import android.support.annotation.NonNull;
 
+import com.example.thomas.plan.Common.Enums;
+
 import java.util.UUID;
 
 /**
@@ -12,10 +14,10 @@ public class Task {
 
     private final String uniqueID;
     private String name;
-    //public String pathToImg;
     private boolean passed;
     private String createdDate;
     private String idOfPlan;
+    private Enums.PartOfDay partOfDay = Enums.PartOfDay.UNDEFINED;
 
     public Task(String name) {
         this.name = name;
@@ -60,5 +62,13 @@ public class Task {
 
     public void setPassed(boolean passed) {
         this.passed = passed;
+    }
+
+    public Enums.PartOfDay getPartOfDay() {
+        return partOfDay;
+    }
+
+    public void setPartOfDay(Enums.PartOfDay partOfDay) {
+        this.partOfDay = partOfDay;
     }
 }

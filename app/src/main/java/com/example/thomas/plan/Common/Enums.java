@@ -48,14 +48,14 @@ public class Enums {
         }
     }
 
-    public enum Shift {
+    public enum PartOfDay {
         MORNING(0),
         AFTERNOON(1),
         NIGHT(2),
         UNDEFINED(3);
 
         private int code;
-        Shift(int code) {
+        PartOfDay(int code) {
             this.code = code;
         }
         public int getCode() {
@@ -72,6 +72,19 @@ public class Enums {
                     return "Noční služba";
                 default:
                     return "Služba nevybrána";
+            }
+        }
+
+        public String getPartOfDay(){
+            switch (getCode()) {
+                case 0:
+                    return "Dopoledne";
+                case 1:
+                    return "Odpoledne";
+                case 2:
+                    return "V noci";
+                default:
+                    return "Nevybráno";
             }
         }
     }

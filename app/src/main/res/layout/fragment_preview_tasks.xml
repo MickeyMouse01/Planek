@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".previewTasks.PreviewTasksActivity$PlaceholderFragment">
+    tools:context=".selectedTask.SelectedTaskActivity$PlaceholderFragment">
 
     <ImageView
         android:id="@+id/preview_image"

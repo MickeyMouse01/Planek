@@ -84,12 +84,12 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mSurname.setText(client.getSurname());
         sTypeOfGroup.setSelection(client.getTypeOfGroup().getCode());
         mUserName.setText(client.getUsername());
-        mPatternLockView.setVisibility(View.GONE);
+        mPatternLockView.setInputEnabled(false);
         changePassword.setVisibility(View.VISIBLE);
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPatternLockView.setVisibility(View.VISIBLE);
+                mPatternLockView.setInputEnabled(true);
                 changePassword.setVisibility(View.GONE);
             }
         });

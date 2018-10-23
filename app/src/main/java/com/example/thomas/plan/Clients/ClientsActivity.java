@@ -27,7 +27,7 @@ import com.example.thomas.plan.loginAndRegister.LoginActivity;
 import com.example.thomas.plan.nurseProfile.NurseProfileActivity;
 import com.example.thomas.plan.planForClient.PreviewClientActivity;
 import com.example.thomas.plan.plans.PlansFragment;
-import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
+import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +54,6 @@ public class ClientsActivity extends BaseActivity
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
-        getContentView();
 
         mViewModel = obtainViewModel(this);
         mViewModel.addNewClient().observe(this, new Observer<Void>() {
@@ -249,7 +248,7 @@ public class ClientsActivity extends BaseActivity
 
     private void previewPlan(String planId) {
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
-        Intent intent = new Intent(this, PreviewTasksActivity.class);
+        Intent intent = new Intent(this, SelectedTaskActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }

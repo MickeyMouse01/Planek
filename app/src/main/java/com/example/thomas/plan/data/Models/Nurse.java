@@ -2,19 +2,17 @@ package com.example.thomas.plan.data.Models;
 
 import com.example.thomas.plan.Common.Enums;
 
-import java.util.UUID;
-
 /**
  * Created by Tomas on 05-Mar-18.
  */
 
 public class Nurse {
 
-    private  String uniqueID;
+    private String uniqueID;
     private String email;
     private String name;
     private String surname;
-    private Enums.Shift shift = Enums.Shift.UNDEFINED;
+    private Enums.PartOfDay shift = Enums.PartOfDay.UNDEFINED;
     private String createdDate;
     private Enums.TypeOfGroup typeOfGroup = Enums.TypeOfGroup.UNDEFINED;
     private boolean inWork = false;
@@ -80,11 +78,11 @@ public class Nurse {
         this.surname = surname;
     }
 
-    public Enums.Shift getShift() {
+    public Enums.PartOfDay getShift() {
         return shift;
     }
 
-    public void setShift(Enums.Shift shift) {
+    public void setShift(Enums.PartOfDay shift) {
         this.shift = shift;
     }
 

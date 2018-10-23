@@ -17,7 +17,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"/>
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Část dne" />
+
+        <Spinner
+            android:id="@+id/spinner_part_of_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/part_of_day"/>
+
+    </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"

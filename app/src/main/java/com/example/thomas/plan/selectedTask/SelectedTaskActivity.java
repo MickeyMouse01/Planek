@@ -1,4 +1,4 @@
-package com.example.thomas.plan.previewTasks;
+package com.example.thomas.plan.selectedTask;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,7 @@ import com.example.thomas.plan.loginAndRegister.LoginActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreviewTasksActivity extends BaseActivity {
+public class SelectedTaskActivity extends BaseActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -40,7 +39,7 @@ public class PreviewTasksActivity extends BaseActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private PreviewTasksViewModel mViewModel;
+    private SelectedTaskVieModel mViewModel;
     private String viewPlanId;
     private String NAME_OF_CLASS = getClass().getName();
 
@@ -77,14 +76,14 @@ public class PreviewTasksActivity extends BaseActivity {
 
     }
 
-    private static PreviewTasksViewModel obtainViewModel(FragmentActivity activity) {
+    private static SelectedTaskVieModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(PreviewTasksViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(SelectedTaskVieModel.class);
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_preview_tasks;
+        return R.layout.activity_selected_task;
     }
 
 
@@ -115,7 +114,7 @@ public class PreviewTasksActivity extends BaseActivity {
         private String NAME_OF_CLASS = getClass().getName();
 
 
-        public PreviewTasksViewModel mViewModel;
+        public SelectedTaskVieModel mViewModel;
         private List<Task> listOfTasks = new ArrayList<>();
         private TextView textView;
 
@@ -140,7 +139,7 @@ public class PreviewTasksActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_preview_tasks, container, false);
 
 
-            mViewModel = PreviewTasksActivity.obtainViewModel(getActivity());
+            mViewModel = SelectedTaskActivity.obtainViewModel(getActivity());
             mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
                 @Override
                 public void onChanged(@Nullable List<Task> tasks) {
@@ -164,10 +163,10 @@ public class PreviewTasksActivity extends BaseActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private PreviewTasksViewModel tasks;
+        private SelectedTaskVieModel tasks;
         private int sizeOfList;
 
-        public SectionsPagerAdapter(FragmentManager fm, PreviewTasksViewModel tasks) {
+        public SectionsPagerAdapter(FragmentManager fm, SelectedTaskVieModel tasks) {
             super(fm);
             this.tasks = tasks;
         }

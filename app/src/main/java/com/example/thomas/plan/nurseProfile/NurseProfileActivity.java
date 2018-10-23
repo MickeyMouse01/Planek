@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.Activities.BaseActivity;
-import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;

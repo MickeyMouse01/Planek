@@ -17,7 +17,8 @@ import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.previewTasks.PreviewTasksActivity;
+import com.example.thomas.plan.previewTask.PreviewTaskActivity;
+import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,7 +75,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (loginState) {
             case RESULT_OK:
                 startActivity();
-                break;
+            break;
             case ERROR_VALIDATIONS:
                 loginValidations();
                 break;
@@ -116,7 +117,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void startPreviewTasksActivity(String planId) {
         Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, PreviewTasksActivity.class);
+        Intent intent = new Intent(this, PreviewTaskActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }
@@ -141,6 +142,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 actualFragment = NURSE_LOGIN;
                 List<AuthUI.IdpConfig> providers = Arrays.asList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
+
+
 
                 startActivityForResult(
                         AuthUI.getInstance()

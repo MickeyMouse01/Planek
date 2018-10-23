@@ -30,6 +30,13 @@
         <item>Služba není vybrána</item>
     </string-array>
 
+    <string-array name="part_of_day">
+        <item>Dopoledne</item>
+        <item>Odpoledne</item>
+        <item>V noci</item>
+        <item>Nevybráno</item>
+    </string-array>
+
 
     <!-- Ceska lokalizace pro firebase UI prihlasovani -->
     <string name="fui_progress_dialog_loading">Načítání…</string>
@@ -174,5 +181,10 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="title_activity_preview_task">PreviewTaskActivity</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="morning_activities">Dopolední aktivity</string>
+    <string name="all_activities">Všechny aktivity</string>
 
 </resources>

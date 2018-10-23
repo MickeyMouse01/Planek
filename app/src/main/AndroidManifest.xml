@@ -20,6 +20,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,15 +47,16 @@
             android:name=".addEditTask.AddEditTaskActivity"
             android:label="@string/add_task"
             android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity" />
-        <activity
-            android:name=".previewTasks.PreviewTasksActivity" />
+        <activity android:name=".selectedTask.SelectedTaskActivity" />
         <activity
             android:name=".planForClient.PreviewClientActivity"
             android:label="@string/preview_client"
             android:parentActivityName=".Clients.ClientsActivity" />
-
         <activity android:name=".nurseProfile.NurseProfileActivity" />
-        <activity android:name=".nurseProfileEdit.NurseProfileEditActivity"></activity>
+        <activity android:name=".nurseProfileEdit.NurseProfileEditActivity" />
+        <activity
+            android:name=".previewTask.PreviewTaskActivity"
+            android:label="@string/title_activity_preview_task"></activity>
     </application>
 
 </manifest>

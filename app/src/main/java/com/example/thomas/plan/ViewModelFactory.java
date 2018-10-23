@@ -14,7 +14,8 @@ import com.example.thomas.plan.loginAndRegister.LoginViewModel;
 import com.example.thomas.plan.nurseProfile.NurseProfileViewModel;
 import com.example.thomas.plan.nurseProfileEdit.NurseProfileEditViewModel;
 import com.example.thomas.plan.planForClient.PreviewClientViewModel;
-import com.example.thomas.plan.previewTasks.PreviewTasksViewModel;
+import com.example.thomas.plan.previewTask.PreviewTaskViewModel;
+import com.example.thomas.plan.selectedTask.SelectedTaskVieModel;
 import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
 
@@ -63,14 +64,16 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new ViewPlanInfoViewModel(repository);
         } else if (modelClass.isAssignableFrom(AddEditTaskViewModel.class)) {
             return (T) new AddEditTaskViewModel(repository);
-        } else if (modelClass.isAssignableFrom(PreviewTasksViewModel.class)) {
-            return (T) new PreviewTasksViewModel(repository);
+        } else if (modelClass.isAssignableFrom(SelectedTaskVieModel.class)) {
+            return (T) new SelectedTaskVieModel(repository);
         } else if (modelClass.isAssignableFrom(PreviewClientViewModel.class)) {
             return (T) new PreviewClientViewModel(repository);
-        }else if (modelClass.isAssignableFrom(NurseProfileViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(NurseProfileViewModel.class)) {
             return (T) new NurseProfileViewModel(repository);
-        }else if (modelClass.isAssignableFrom(NurseProfileEditViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(NurseProfileEditViewModel.class)) {
             return (T) new NurseProfileEditViewModel(repository);
+        } else if (modelClass.isAssignableFrom(PreviewTaskViewModel.class)) {
+        return (T) new PreviewTaskViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
