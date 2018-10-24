@@ -77,11 +77,17 @@ public class ListOfTasksAdapter extends BaseAdapter {
 
         if (tasks.get(position).isPassed()) {
             relativeLayout.setBackgroundColor(Color.GREEN);
+            checkBox.setChecked(true);
+            deleteImage.setVisibility(View.VISIBLE);
         }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean isPassed = tasks.get(position).isPassed();
+                tasks.get(position).setPassed(!isPassed);
+                taskItemListener.onCheckedClick(tasks.get(position));
+                notifyDataSetChanged();
 
             }
         });

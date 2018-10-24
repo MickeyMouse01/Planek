@@ -10,5 +10,9 @@
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/morning_activities" />
+    <item
+        android:id="@+id/navigation_afternoon"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/afternoon_activities" />
 
 </menu>

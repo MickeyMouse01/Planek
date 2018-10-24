@@ -91,6 +91,11 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     private void setupListAdapter(final Plan plan) {
         planActionItemListener = new ActionItemListener<Plan>() {
             @Override
+            public void onCheckedClick(Plan item) {
+
+            }
+
+            @Override
             public void onItemClick(Plan item) {
 
             }
@@ -114,6 +119,11 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
 
     private void setupTaskAdapter(final List<Task> tasks){
         taskActionItemListener = new ActionItemListener<Task>() {
+            @Override
+            public void onCheckedClick(Task item) {
+
+            }
+
             @Override
             public void onItemClick(Task item) {
 

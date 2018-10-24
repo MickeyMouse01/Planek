@@ -68,6 +68,11 @@ public class PlansFragment extends Fragment
         ListView listView = mPlansFragmentBinding.plansList;
         actionListener = new ActionItemListener<Plan>() {
             @Override
+            public void onCheckedClick(Plan item) {
+
+            }
+
+            @Override
             public void onItemClick(Plan item) {
                 mMainViewModel.previewPlan().setValue(item.getUniqueID());
             }

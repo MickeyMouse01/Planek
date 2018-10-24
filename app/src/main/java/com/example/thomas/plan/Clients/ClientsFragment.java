@@ -91,6 +91,11 @@ public class ClientsFragment extends Fragment
 
         actionItemListener = new ActionItemListener<Client>() {
             @Override
+            public void onCheckedClick(Client item) {
+
+            }
+
+            @Override
             public void onItemClick(Client item) {
                 mMainViewModel.previewClient().setValue(item.getUniqueID());
             }

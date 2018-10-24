@@ -185,6 +185,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="morning_activities">Dopolední aktivity</string>
+    <string name="afternoon_activities">Odpolední aktivity</string>
     <string name="all_activities">Všechny aktivity</string>
 
 </resources>

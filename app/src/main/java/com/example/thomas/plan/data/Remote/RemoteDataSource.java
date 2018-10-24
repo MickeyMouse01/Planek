@@ -372,7 +372,7 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void saveTask(@NonNull Task task, String planId) {
-        mDatabase.child("tasks")
+        mDatabase.child("plans").child(planId).child(LIST_OF_RELATES_TASKS)
                 .child(task.getUniqueID()).setValue(task);
     }
 

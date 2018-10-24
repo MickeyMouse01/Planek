@@ -97,6 +97,11 @@ public class ViewPlanInfoActivity extends BaseActivity {
         listViewTasks = findViewById(R.id.view_plan_list_tasks);
         taskItemListener = new ActionItemListener<Task>() {
             @Override
+            public void onCheckedClick(Task item) {
+
+            }
+
+            @Override
             public void onItemClick(Task item) {
 
             }

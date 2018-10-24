@@ -41,9 +41,18 @@ public class PreviewTaskActivity extends BaseActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mViewModel.getPartOfDay().setValue(null);
+                    mViewModel.getListOfTasks().setValue(mTasks);
+                    mTextMessage.setText(R.string.all_activities);
                     return true;
                 case R.id.navigation_dashboard:
+                    mViewModel.getPartOfDay().setValue(Enums.PartOfDay.MORNING);
+                    mViewModel.getListOfTasks().setValue(mTasks);
+                    mTextMessage.setText(R.string.morning_activities);
+                    return true;
+                case R.id.navigation_afternoon:
                     mViewModel.getPartOfDay().setValue(Enums.PartOfDay.AFTERNOON);
+                    mViewModel.getListOfTasks().setValue(mTasks);
+                    mTextMessage.setText(R.string.afternoon_activities);
                     return true;
             }
             return false;
@@ -61,6 +70,7 @@ public class PreviewTaskActivity extends BaseActivity {
         setupListAdapter();
 
         mTextMessage = findViewById(R.id.message);
+        mTextMessage.setText(R.string.all_activities);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -107,6 +117,11 @@ public class PreviewTaskActivity extends BaseActivity {
         lvListOfTasks = findViewById(R.id.list_of_tasks);
         taskItemListener = new ActionItemListener<Task>() {
             @Override
+            public void onCheckedClick(Task item) {
+                mViewModel.saveTask(item);
+            }
+
+            @Override
             public void onItemClick(Task item) {
 
             }
@@ -118,6 +133,7 @@ public class PreviewTaskActivity extends BaseActivity {
 
             @Override
             public void onItemDeleteClick(Task item) {
+                mViewModel.deleteTaskFromPlan(item);
             }
         };
     }

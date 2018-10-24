@@ -32,15 +32,16 @@ public class PreviewTaskViewModel extends ViewModel {
         if (partOfDay == null) {
             partOfDay = new MutableLiveData<>();
         }
-        getListOfTasks();
         return partOfDay;
     }
 
     public MutableLiveData<List<Task>> getListOfTasks() {
+        if (listOfTasks == null) {
+            listOfTasks = new MutableLiveData<>();
+        }
         loadTasks();
         return listOfTasks;
     }
-
 
     private void loadTasks() {
         repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
@@ -49,5 +50,13 @@ public class PreviewTaskViewModel extends ViewModel {
                 listOfTasks.setValue(tasks);
             }
         }, viewedPlanId.getValue());
+    }
+
+    public void saveTask(Task task){
+        repository.saveTask(task, viewedPlanId.getValue());
+    }
+
+    public void  deleteTaskFromPlan(Task task){
+        repository.deleteTaskFromPlan(viewedPlanId.getValue(),task.getUniqueID());
     }
 }
