@@ -3,22 +3,25 @@ package com.example.thomas.plan.selectedTask;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
@@ -30,22 +33,13 @@ import java.util.List;
 
 public class SelectedTaskActivity extends BaseActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private SelectedTaskVieModel mViewModel;
     private String viewPlanId;
-    private String NAME_OF_CLASS = getClass().getName();
+    private int positionOfSelectedTask;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+
     private ViewPager mViewPager;
 
     @Override
@@ -54,6 +48,7 @@ public class SelectedTaskActivity extends BaseActivity {
 
         mViewModel = obtainViewModel(this);
         viewPlanId = intent.getStringExtra("PlanId");
+        positionOfSelectedTask = intent.getIntExtra("positionOfTask", 0);
         mViewModel.setViewedPlanId(viewPlanId);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -62,13 +57,15 @@ public class SelectedTaskActivity extends BaseActivity {
         showDialog("Loading data");
         // Set up the ViewPager with the sections adapter.
         mViewPager =  findViewById(R.id.container);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mViewModel);
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 
         mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
                 mViewPager.setAdapter(mSectionsPagerAdapter);
+                mViewPager.setCurrentItem(positionOfSelectedTask);
                 hideDialog();
 
             }
@@ -110,13 +107,13 @@ public class SelectedTaskActivity extends BaseActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private static final String LIST_SIZE = "list_size";
-        private String NAME_OF_CLASS = getClass().getName();
-
 
         public SelectedTaskVieModel mViewModel;
         private List<Task> listOfTasks = new ArrayList<>();
         private TextView textView;
+        private ConstraintLayout constraintLayout;
+        private TextView txtIsDone;
+        private ActionItemListener actionItemListener;
 
         public PlaceholderFragment() {
         }
@@ -138,22 +135,70 @@ public class SelectedTaskActivity extends BaseActivity {
                                  final Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_preview_tasks, container, false);
 
-
             mViewModel = SelectedTaskActivity.obtainViewModel(getActivity());
+            final int position = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
+            actionItemListener = new ActionItemListener<Task>() {
+                @Override
+                public void onCheckedClick(Task item) {
+
+                }
+
+                @Override
+                public void onItemClick(Task item) {
+                    Task task = listOfTasks.get(position);
+                    boolean isPassed = !task.isPassed();
+                    task.setPassed(isPassed);
+                    mViewModel.saveTask(task);
+                }
+
+                @Override
+                public void onItemInfoClick(Task item) {
+
+                }
+
+                @Override
+                public void onItemDeleteClick(Task item) {
+
+                }
+
+            };
+
             mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
                 @Override
                 public void onChanged(@Nullable List<Task> tasks) {
                     listOfTasks = tasks;
-                    setText();
+                    int position = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
+                    setText(position);
+                    setPassed(position);
                 }
             });
 
             textView = rootView.findViewById(R.id.preview_name);
+            constraintLayout = rootView.findViewById(R.id.viewpager_ConstraintLayout);
+            txtIsDone = rootView.findViewById(R.id.preview_isDone);
+            txtIsDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    constraintLayout.setBackgroundColor(Color.GREEN);
+                    txtIsDone.setBackgroundColor(Color.GREEN);
+                    txtIsDone.setText("Splněno");
+                    actionItemListener.onItemClick(null);
+                }
+            });
             return rootView;
         }
 
-        private void setText() {
-            textView.setText(listOfTasks.get(getArguments().getInt(ARG_SECTION_NUMBER) - 1).getName());
+        private void setPassed(int position){
+            boolean isPassed = listOfTasks.get(position).isPassed();
+            if (isPassed) {
+                constraintLayout.setBackgroundColor(Color.GREEN);
+                txtIsDone.setBackgroundColor(Color.GREEN);
+                txtIsDone.setText("Splněno");
+            }
+        }
+
+        private void setText(int position) {
+            textView.setText(listOfTasks.get(position).getName());
         }
     }
 
@@ -163,15 +208,9 @@ public class SelectedTaskActivity extends BaseActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private SelectedTaskVieModel tasks;
-        private int sizeOfList;
-
-        public SectionsPagerAdapter(FragmentManager fm, SelectedTaskVieModel tasks) {
+        public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.tasks = tasks;
         }
-
-
 
         //musim pockat na nacteni
         @Override

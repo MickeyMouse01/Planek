@@ -44,4 +44,8 @@ public class SelectedTaskVieModel extends ViewModel {
             }
         },viewedPlanId.getValue());
     }
+
+    public void saveTask(Task task){
+        repository.saveTask(task, viewedPlanId.getValue());
+    }
 }

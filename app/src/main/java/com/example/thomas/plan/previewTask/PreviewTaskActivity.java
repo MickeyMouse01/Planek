@@ -18,6 +18,7 @@ import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Task;
+import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
 
 import java.util.ArrayList;
@@ -123,6 +124,7 @@ public class PreviewTaskActivity extends BaseActivity {
 
             @Override
             public void onItemClick(Task item) {
+                previewSelectedTask(item.getIdOfPlan(), mTasks.indexOf(item));
 
             }
 
@@ -136,6 +138,13 @@ public class PreviewTaskActivity extends BaseActivity {
                 mViewModel.deleteTaskFromPlan(item);
             }
         };
+    }
+
+    private void previewSelectedTask(String planId, int position){
+        Intent intent = new Intent(this, SelectedTaskActivity.class);
+        intent.putExtra("PlanId", planId);
+        intent.putExtra("positionOfTask",position);
+        startActivity(intent);
     }
 
     private void initializeAdapter(){

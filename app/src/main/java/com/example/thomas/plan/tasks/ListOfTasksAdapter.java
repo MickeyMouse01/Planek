@@ -92,6 +92,13 @@ public class ListOfTasksAdapter extends BaseAdapter {
             }
         });
 
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                taskItemListener.onItemClick(tasks.get(position));
+            }
+        });
+
         deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
