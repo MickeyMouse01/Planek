@@ -12,8 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
+import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ public class ListOfTasksAdapter extends BaseAdapter {
     private CheckBox checkBox;
     private RelativeLayout relativeLayout;
     private ActionItemListener taskItemListener;
+    private ImageView imageView;
 
 
     public ListOfTasksAdapter(List<Task> tasks, ActionItemListener taskListener) {
@@ -73,12 +77,21 @@ public class ListOfTasksAdapter extends BaseAdapter {
         deleteImage = viewTask.findViewById(R.id.view_plan_task_delete_image);
         relativeLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
         checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
+        imageView = viewTask.findViewById(R.id.view_plan_imageView);
         textViewName.setText(tasks.get(position).getName());
 
         if (tasks.get(position).isPassed()) {
             relativeLayout.setBackgroundColor(Color.GREEN);
             checkBox.setChecked(true);
             deleteImage.setVisibility(View.VISIBLE);
+        }
+
+        if(tasks.get(position).isImageSet()) {
+            StorageReference ref = FirebaseStorage.getInstance()
+                    .getReference().child(tasks.get(position).getUniqueID());
+            GlideApp.with(viewTask)
+                    .load(ref)
+                    .into(imageView);
         }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

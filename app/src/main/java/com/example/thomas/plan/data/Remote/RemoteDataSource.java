@@ -1,6 +1,7 @@
 package com.example.thomas.plan.data.Remote;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.thomas.plan.data.DataSource;
@@ -135,12 +136,12 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void uploadImage(@NonNull String name, byte[] data) {
+    public void uploadImage(@NonNull String name, byte[] data, final UploadImageCallback callback) {
         UploadTask uploadTask = mStorage.child(name).putBytes(data);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d("obrazek nahran", "img");
+                callback.onImageUploaded();
             }
         });
     }
@@ -285,16 +286,8 @@ public class RemoteDataSource implements DataSource {
     public void savePlan(@NonNull Plan plan) {
         mDatabase.child("plans")
                 .child(plan.getUniqueID()).setValue(plan);
-        /*if (!plan.getListOfRelatesTasks().isEmpty()){
-            mDatabase.child("plans").child(plan.getUniqueID())
-                    .child(LIST_OF_RELATES_TASKS).child(plan.getListOfRelatesTasks().get(0).getUniqueID())
-                    .setValue(plan.getListOfRelatesTasks().get(0));
-        }*/
-    }
 
-    /*private DatabaseReference getSpecificPlanReference(String planId) {
-        return mDatabase.child("plans").child(planId);
-    }*/
+    }
 
     public void deletePlan(@NonNull String planId) {
         mDatabase.child("plans").child(planId).removeValue();
@@ -373,7 +366,16 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void saveTask(@NonNull Task task, String planId) {
         mDatabase.child("plans").child(planId).child(LIST_OF_RELATES_TASKS)
-                .child(task.getUniqueID()).setValue(task);
+                .child(task.getUniqueID()).setValue(task, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Data could not be saved " + databaseError.getMessage());
+                } else {
+                    System.out.println("Data saved successfully.");
+                }
+            }
+        });
     }
 
     public void deleteTask(@NonNull String taskId) {

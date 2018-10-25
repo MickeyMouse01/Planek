@@ -22,7 +22,7 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/myImageView"
+            android:id="@+id/view_plan_imageView"
             android:layout_width="114dp"
             android:layout_height="87dp"
             android:layout_alignParentStart="true"

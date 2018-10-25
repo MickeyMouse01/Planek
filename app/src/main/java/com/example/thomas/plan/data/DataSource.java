@@ -1,6 +1,7 @@
 package com.example.thomas.plan.data;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
@@ -14,6 +15,10 @@ import java.util.List;
  */
 
 public interface DataSource {
+
+    interface SavedDataCallback {
+        void onSavedData(@NonNull String message);
+    }
 
     //nurse
     interface LoadNursesCallback {
@@ -45,11 +50,15 @@ public interface DataSource {
     interface LoadClientCallback {
         void onClientLoaded(Client client);
     }
-    interface  LoadImageCallback{
+    interface  LoadImageCallback {
         void onImageLoaded(byte[] bytes);
     }
 
-    void uploadImage(@NonNull String name, byte[] data);
+    interface UploadImageCallback {
+        void onImageUploaded();
+    }
+
+    void uploadImage(@NonNull String name, byte[] data, UploadImageCallback callback);
     void downloadImage(@NonNull String name, LoadImageCallback callback);
 
     void getClients(@NonNull LoadClientsCallback callback);
@@ -74,7 +83,7 @@ public interface DataSource {
 
     void getPlan(@NonNull String planId, LoadPlanCallback callback);
 
-    void savePlan(@NonNull Plan task);
+    void savePlan(@NonNull Plan plan);
 
     void deletePlan(@NonNull String planId);
 

@@ -1,11 +1,13 @@
 package com.example.thomas.plan.addEditTask;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +50,14 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         relatesPlan = intent.getStringExtra("PlanId");
         save.setOnClickListener(this);
         imageView.setOnClickListener(this);
+
+        viewModel.imageIsUploaded().observe(this, new Observer<Void>() {
+            @Override
+            public void onChanged(@Nullable Void aVoid) {
+                hideDialog();
+                finish();
+            }
+        });
     }
 
     @Override
@@ -67,12 +77,17 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         Task newTask = new Task(name);
         newTask.setCreatedDate(dateTime);
         newTask.setPartOfDay(Enums.PartOfDay.values()[partOfDay]);
+
+        if (imageBitmap != null) {
+            viewModel.uploadImage(imageBitmap, newTask.getUniqueID());
+            newTask.setImageSet(true);
+        }
+        showDialog("Uploading");
+
         if (relatesPlan != null){
             newTask.setIdOfPlan(relatesPlan);
             viewModel.saveTaskToPlan(relatesPlan, newTask);
         }
-        //newTask.setImage(imageBitmap); todo upravit aby to ukladalo do storage databaze
-
     }
 
     @Override
@@ -86,7 +101,6 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.add_save_task:
                 addOrEditTask();
-                finish();
         }
     }
 

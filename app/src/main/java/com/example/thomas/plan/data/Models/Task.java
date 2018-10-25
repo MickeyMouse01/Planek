@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.Common.Enums;
 
+import java.sql.Time;
 import java.util.UUID;
 
 /**
@@ -16,8 +17,10 @@ public class Task {
     private String name;
     private boolean passed;
     private String createdDate;
+    private boolean isImageSet = false;
     private String idOfPlan;
     private Enums.PartOfDay partOfDay = Enums.PartOfDay.UNDEFINED;
+    private Time time;
 
     public Task(String name) {
         this.name = name;
@@ -38,6 +41,14 @@ public class Task {
 
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public boolean isImageSet() {
+        return isImageSet;
+    }
+
+    public void setImageSet(boolean imageSet) {
+        isImageSet = imageSet;
     }
 
     public String getIdOfPlan() {
@@ -70,5 +81,13 @@ public class Task {
 
     public void setPartOfDay(Enums.PartOfDay partOfDay) {
         this.partOfDay = partOfDay;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 }

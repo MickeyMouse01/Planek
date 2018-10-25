@@ -51,6 +51,11 @@ public class NurseProfileEditViewModel extends ViewModel {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] data = stream.toByteArray();
 
-        repository.uploadImage(name,data);
+        repository.uploadImage(name, data, new DataSource.UploadImageCallback() {
+            @Override
+            public void onImageUploaded() {
+
+            }
+        });
     }
 }

@@ -93,8 +93,13 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public void uploadImage(@NonNull String name, byte[] data) {
-        remoteDataSource.uploadImage(name, data);
+    public void uploadImage(@NonNull String name, byte[] data, final UploadImageCallback callback) {
+        remoteDataSource.uploadImage(name, data, new UploadImageCallback() {
+            @Override
+            public void onImageUploaded() {
+                callback.onImageUploaded();
+            }
+        });
     }
 
     @Override
