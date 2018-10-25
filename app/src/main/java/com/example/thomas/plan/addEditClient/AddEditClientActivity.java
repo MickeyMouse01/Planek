@@ -92,13 +92,15 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mSurname.setText(client.getSurname());
         sTypeOfGroup.setSelection(client.getTypeOfGroup().getCode());
         mUserName.setText(client.getUsername());
-        mPatternLockView.setInputEnabled(false);
+        txtForPassword.setVisibility(View.INVISIBLE);
+        mPatternLockView.setVisibility(View.INVISIBLE);
         changePassword.setVisibility(View.VISIBLE);
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPatternLockView.setInputEnabled(true);
-                changePassword.setVisibility(View.GONE);
+                txtForPassword.setVisibility(View.VISIBLE);
+                mPatternLockView.setVisibility(View.VISIBLE);
+                changePassword.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -180,11 +182,29 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mViewModel.saveClient(editedClient);
     }
 
+    private boolean requiredFieldsAreFilled(){
+        boolean isFilled = true;
+        if(mFirstName.getText().toString().isEmpty()){
+            mFirstName.setError("Toto pole je povinné");
+            isFilled = false;
+        } else if (mSurname.getText().toString().isEmpty()){
+            mSurname.setError("Toto pole je povinné");
+            isFilled = false;
+        } else if (mUserName.getText().toString().isEmpty()) {
+            mUserName.setError("Toto pole je povinné");
+            isFilled = false;
+        }
+        return isFilled;
+    }
+
 
     @Override
     public void onClick(View v) {
         if (idOfClient == null) {
-            addClient();
+            if(requiredFieldsAreFilled()){
+                addClient();
+            }
+
         } else {
             editClient();
         }

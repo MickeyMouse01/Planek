@@ -31,7 +31,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     private AddEditTaskViewModel viewModel;
     private Spinner partOfDaySpinner;
     private EditText mName;
-    private Button save;
+    private Button save, changePicture;
     private ImageView imageView;
     private Bitmap imageBitmap;
     private String relatesPlan = null;
@@ -45,9 +45,11 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         mName = findViewById(R.id.add_task_name);
         imageView = findViewById(R.id.add_task_image);
         save = findViewById(R.id.add_save_task);
+        changePicture = findViewById(R.id.change_picture_task);
         partOfDaySpinner = findViewById(R.id.spinner_part_of_day);
         partOfDaySpinner.setSelection(Enums.PartOfDay.UNDEFINED.getCode());
         relatesPlan = intent.getStringExtra("PlanId");
+        changePicture.setOnClickListener(this);
         save.setOnClickListener(this);
         imageView.setOnClickListener(this);
 
@@ -90,18 +92,37 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private boolean requiredFieldsAreFilled() {
+        boolean isFilled = true;
+        if (mName.getText().toString().isEmpty()) {
+            mName.setError("Toto pole je povinné");
+            isFilled = false;
+        }
+        return isFilled;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.change_picture_task:
+                startActivityForSelectPicture();
+                break;
             case R.id.add_task_image:
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                startActivityForSelectPicture();
                 break;
             case R.id.add_save_task:
-                addOrEditTask();
+                if(requiredFieldsAreFilled()){
+                    addOrEditTask();
+                }
+                break;
         }
+    }
+
+    private void startActivityForSelectPicture(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -110,7 +131,8 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(imageBitmap);
-
+                imageView.setVisibility(View.VISIBLE);
+                changePicture.setVisibility(View.INVISIBLE);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

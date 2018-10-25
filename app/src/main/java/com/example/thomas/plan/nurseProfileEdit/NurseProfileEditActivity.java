@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -128,17 +129,33 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         }
     }
 
+    private boolean requiredFieldsAreFilled() {
+        boolean isFilled = true;
+        if (nameAndSurname.getText().toString().isEmpty()) {
+            nameAndSurname.setError("Toto pole je povinné");
+            isFilled = false;
+        } else if(email.getText().toString().isEmpty()){
+            email.setError("Toto pole je povinné");
+            isFilled = false;
+        } /*else if(!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()){
+            email.setError("Email musí být ve správném tvaru");
+            isFilled = false;
+        }*/
+        return isFilled;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.nurse_edit_save_button:{
-                editNurse();
+            case R.id.nurse_edit_save_button:
+                if(requiredFieldsAreFilled()){
+                    editNurse();
+                }
                 break;
-            }
-            case R.id.nurse_edit_upload_image:{
+
+            case R.id.nurse_edit_upload_image:
                 uploadImage();
                 break;
             }
         }
-    }
 }

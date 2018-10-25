@@ -28,7 +28,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
 
     private static final int PICK_IMAGE = 1;
     private EditText mName;
-    private Button save;
+    private Button save, changePicture;
     private ImageView imageView;
     private AddEditPlanViewModel mViewModel;
     private Bitmap imageBitmap;
@@ -49,6 +49,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         mName = findViewById(R.id.add_name);
         imageView = findViewById(R.id.add_image);
         save = findViewById(R.id.add_save_button);
+        changePicture = findViewById(R.id.change_picture_plan);
+        changePicture.setOnClickListener(this);
         save.setOnClickListener(this);
         imageView.setOnClickListener(this);
 
@@ -88,18 +90,36 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         mViewModel.savePlan(newPlan);
     }
 
+    private boolean requiredFieldsAreFilled() {
+        boolean isFilled = true;
+        if (mName.getText().toString().isEmpty()) {
+            mName.setError("Toto pole je povinné");
+            isFilled = false;
+        }
+        return isFilled;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.change_picture_plan:
+                startActivityForSelectPicture();
+                break;
             case R.id.add_image:
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                startActivityForSelectPicture();
                 break;
             case R.id.add_save_button:
-                addOrEditPlan();
+                if (requiredFieldsAreFilled()) {
+                    addOrEditPlan();
+                }
         }
+    }
+
+    private void startActivityForSelectPicture(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 
     @Override
@@ -109,6 +129,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageView.setImageBitmap(imageBitmap);
+                imageView.setVisibility(View.VISIBLE);
+                changePicture.setVisibility(View.INVISIBLE);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
