@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Tomas on 31-Mar-18.
  */
 
-public interface DataSource {
+public interface DataSource<T> {
 
     interface SavedDataCallback {
         void onSavedData(@NonNull String message);
@@ -65,7 +65,7 @@ public interface DataSource {
 
     void getClient(@NonNull String clientId, LoadClientCallback callback);
 
-    void saveClient(@NonNull Client client);
+    void saveClient(@NonNull Client client, SavedDataCallback callback);
     void deleteClient(@NonNull String clientId);
 
     void searchClientByUsername(@NonNull String username, LoadClientCallback callback);
@@ -103,7 +103,7 @@ public interface DataSource {
 
     void getTask(@NonNull String taskId, LoadTaskCallback callback);
 
-    void saveTask(@NonNull Task task, String planId);
+    void saveTask(@NonNull Task task, String planId, SavedDataCallback callback);
 
     void deleteTask(@NonNull String taskId);
 

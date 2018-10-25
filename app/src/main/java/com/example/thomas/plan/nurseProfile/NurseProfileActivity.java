@@ -46,8 +46,6 @@ public class NurseProfileActivity extends BaseActivity {
 
             }
         });
-
-
     }
     @Override
     protected int getContentView() {
@@ -61,7 +59,6 @@ public class NurseProfileActivity extends BaseActivity {
             @Override
             public void onChanged(@Nullable Nurse nurse) {
                 initializeNurse(nurse);
-                Log.d("Jmeno", nurse.getName());
             }
         });
     }

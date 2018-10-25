@@ -32,7 +32,13 @@ public class AddEditPlanViewModel extends ViewModel {
             @Override
             public void onClientLoaded(@NonNull Client client) {
                 client.setPlanId(newPlan.getUniqueID());
-                repository.saveClient(client);
+
+                repository.saveClient(client, new DataSource.SavedDataCallback() {
+                    @Override
+                    public void onSavedData(@NonNull String message) {
+
+                    }
+                });
             }
         });
     }

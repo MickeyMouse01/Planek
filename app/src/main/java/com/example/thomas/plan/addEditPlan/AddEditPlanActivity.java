@@ -1,11 +1,13 @@
 package com.example.thomas.plan.addEditPlan;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +51,14 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         save = findViewById(R.id.add_save_button);
         save.setOnClickListener(this);
         imageView.setOnClickListener(this);
+
+        mViewModel.imageIsUploaded().observe(this, new Observer<Void>() {
+            @Override
+            public void onChanged(@Nullable Void aVoid) {
+                hideDialog();
+                finish();
+            }
+        });
     }
 
     @Override
@@ -63,6 +73,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                 .format(Calendar.getInstance().getTime());
         newPlan.setName(name);
         newPlan.setCreatedDate(dateTime);
+
         showDialog("Saving");
 
         if (imageBitmap != null) {
@@ -75,7 +86,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         }
 
         mViewModel.savePlan(newPlan);
-        hideDialog();
     }
 
     @Override
@@ -89,7 +99,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.add_save_button:
                 addOrEditPlan();
-                finish();
         }
     }
 

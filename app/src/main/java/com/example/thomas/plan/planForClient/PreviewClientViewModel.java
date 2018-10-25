@@ -26,7 +26,6 @@ public class PreviewClientViewModel extends ViewModel {
     private MutableLiveData<Client> viewedClient;
     public MutableLiveData<Plan> selectedPlan;
     private MutableLiveData<List<Task>> listOfTasks;
-    private MutableLiveData<List<Plan>> listOfAllPlans;
 
     public PreviewClientViewModel(Repository repository) {
         this.repository = repository;
@@ -101,7 +100,12 @@ public class PreviewClientViewModel extends ViewModel {
         Client client = getViewedClient().getValue();
         client.setPlanId(null);
         getViewedClient().postValue(client);
-        repository.saveClient(client);
+        repository.saveClient(client, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
     }
 
     public void deleteTaskFromPlan(String planId, final Task task){

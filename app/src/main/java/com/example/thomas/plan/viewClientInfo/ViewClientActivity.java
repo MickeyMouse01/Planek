@@ -82,8 +82,5 @@ public class ViewClientActivity extends BaseActivity {
             typeOfGroup.setText(client.getTypeOfGroup().name());
             nurseId.setText(client.getNurseID());
         }
-
-
-
     }
 }

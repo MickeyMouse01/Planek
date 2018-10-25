@@ -20,7 +20,6 @@ import java.util.List;
 public class Repository implements DataSource {
 
     private static volatile Repository INSTANCE;
-
     private RemoteDataSource remoteDataSource;
 
     private Repository(RemoteDataSource remoteDataSource) {
@@ -37,20 +36,6 @@ public class Repository implements DataSource {
         }
         return INSTANCE;
     }
-
-
-    private Date getDate(String dateTime) {
-        String pattern = "dd.MM.yyyy_HH:mm:ss";
-        Date date = null;
-        try {
-            date = new SimpleDateFormat(pattern).parse(dateTime);
-        } catch (ParseException e) {
-            //throw parse exception ale musim se podivat jak
-        }
-
-        return date;
-    }
-
 
     @Override
     public void searchNurseByEmail(@NonNull String email, final LoadNurseCallback callback) {
@@ -113,15 +98,14 @@ public class Repository implements DataSource {
     }
 
     //Clients
-    public void saveClient(@NonNull Client client) {
-        remoteDataSource.saveClient(client);
+    public void saveClient(@NonNull Client client, SavedDataCallback callback) {
+        remoteDataSource.saveClient(client, callback);
     }
 
     public void getClients(@NonNull final LoadClientsCallback callback) {
         remoteDataSource.getClients(new LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
-
                 callback.onClientsLoaded(clients);
             }
 
@@ -191,11 +175,6 @@ public class Repository implements DataSource {
 
     //Tasks
     @Override
-    public void saveTask(@NonNull Task task, String planId) {
-        remoteDataSource.saveTask(task, planId);
-    }
-
-    @Override
     public void getTasks(@NonNull final LoadTasksCallback callback) {
         remoteDataSource.getTasks(new LoadTasksCallback() {
             @Override
@@ -225,6 +204,11 @@ public class Repository implements DataSource {
                 callback.onTaskLoaded(task);
             }
         });
+    }
+
+    @Override
+    public void saveTask(@NonNull Task task, String planId, SavedDataCallback callback) {
+        remoteDataSource.saveTask(task, planId, callback);
     }
 
     @Override

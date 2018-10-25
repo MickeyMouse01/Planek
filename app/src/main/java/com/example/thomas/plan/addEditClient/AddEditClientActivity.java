@@ -76,6 +76,14 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
 
         save.setOnClickListener(this);
 
+        mViewModel.onClientSaved().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                Toast.makeText(AddEditClientActivity.this, s, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
     }
 
     private void initializeClient(Client client) {
@@ -135,7 +143,6 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
                     actualLock = lock;
                     txtForPassword.setText("Heslo úspěšně vybráno!");
                 }
-
             }
 
             @Override
@@ -182,6 +189,6 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
             editClient();
         }
         //todo validacka na empty inputs
-        finish();
+
     }
 }

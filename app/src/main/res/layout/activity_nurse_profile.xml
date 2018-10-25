@@ -14,7 +14,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="62dp"
         android:layout_marginTop="41dp"
-        app:srcCompat="@drawable/ic_menu_camera"
         tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="82dp" />
 

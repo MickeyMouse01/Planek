@@ -55,6 +55,8 @@ public class RemoteDataSource implements DataSource {
         return INSTANCE;
     }
 
+
+
     @Override
     public void searchNurseByEmail(@NonNull String email, final LoadNurseCallback callback) {
         Query query = mDatabase.child("nurses").orderByChild("email").equalTo(email);
@@ -204,9 +206,18 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void saveClient(@NonNull Client client) {
+    public void saveClient(@NonNull Client client,final SavedDataCallback callback) {
         mDatabase.child("clients")
-                .child(client.getUniqueID()).setValue(client);
+                .child(client.getUniqueID()).setValue(client, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    callback.onSavedData("Data nemohla být uložena " + databaseError.getMessage());
+                } else {
+                    callback.onSavedData("Data byla úspěšně uložena");
+                }
+            }
+        });
     }
 
     @Override
@@ -364,15 +375,15 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void saveTask(@NonNull Task task, String planId) {
+    public void saveTask(@NonNull Task task, String planId, final SavedDataCallback callback) {
         mDatabase.child("plans").child(planId).child(LIST_OF_RELATES_TASKS)
                 .child(task.getUniqueID()).setValue(task, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 if (databaseError != null) {
-                    System.out.println("Data could not be saved " + databaseError.getMessage());
+                    callback.onSavedData("Data could not be saved " + databaseError.getMessage());
                 } else {
-                    System.out.println("Data saved successfully.");
+                    callback.onSavedData("Data saved successfully.");
                 }
             }
         });

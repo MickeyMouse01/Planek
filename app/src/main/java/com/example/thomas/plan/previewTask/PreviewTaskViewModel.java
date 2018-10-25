@@ -53,7 +53,12 @@ public class PreviewTaskViewModel extends ViewModel {
     }
 
     public void saveTask(Task task){
-        repository.saveTask(task, viewedPlanId.getValue());
+        repository.saveTask(task, viewedPlanId.getValue(), new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
     }
 
     public void  deleteTaskFromPlan(Task task){
