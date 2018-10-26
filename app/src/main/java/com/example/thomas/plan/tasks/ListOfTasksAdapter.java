@@ -1,6 +1,7 @@
 package com.example.thomas.plan.tasks;
 
 import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
@@ -18,7 +18,6 @@ import com.example.thomas.plan.data.Models.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfTasksAdapter extends BaseAdapter {
@@ -26,9 +25,9 @@ public class ListOfTasksAdapter extends BaseAdapter {
     private List<Task> tasks;
     private View viewTask;
     private TextView textViewName;
-    private ImageView infoImage, deleteImage;
+    private ImageView deleteImage;
     private CheckBox checkBox;
-    private RelativeLayout relativeLayout;
+    private ConstraintLayout constraintLayout;
     private ActionItemListener taskItemListener;
     private ImageView imageView;
 
@@ -69,13 +68,13 @@ public class ListOfTasksAdapter extends BaseAdapter {
         viewTask = inflater.inflate(R.layout.task_item, null);
         textViewName = viewTask.findViewById(R.id.view_plan_task_name);
         deleteImage = viewTask.findViewById(R.id.view_plan_task_delete_image);
-        relativeLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
+        constraintLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
         checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
         imageView = viewTask.findViewById(R.id.view_plan_imageView);
         textViewName.setText(tasks.get(position).getName());
 
         if (tasks.get(position).isPassed()) {
-            relativeLayout.setBackgroundColor(Color.GREEN);
+            constraintLayout.setBackgroundColor(Color.GREEN);
             checkBox.setChecked(true);
             deleteImage.setVisibility(View.VISIBLE);
         }
@@ -99,7 +98,7 @@ public class ListOfTasksAdapter extends BaseAdapter {
             }
         });
 
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 taskItemListener.onItemClick(tasks.get(position));

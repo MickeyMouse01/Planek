@@ -1,12 +1,12 @@
 package com.example.thomas.plan.plans;
 
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
@@ -28,8 +28,8 @@ public class ListOfPlansAdapter extends BaseAdapter {
     private List<Plan> mPlans;
     private TextView nameOfPlan;
     private View planView;
-    private ImageButton infoButton, deleteButton;
-    private LinearLayout linearLayout;
+    private ImageButton deleteButton;
+    private ConstraintLayout constraintLayout;
     private ActionItemListener actionListener;
     private ImageView imageView;
 
@@ -76,12 +76,10 @@ public class ListOfPlansAdapter extends BaseAdapter {
 
         planView = inflater.inflate(R.layout.plan_item, null);
 
-
         imageView = planView.findViewById(R.id.plan_imageview);
         nameOfPlan = planView.findViewById(R.id.plan_name);
-        infoButton = planView.findViewById(R.id.infoButton);
         deleteButton = planView.findViewById(R.id.deleteButton);
-        linearLayout = planView.findViewById(R.id.plan_item_linear);
+        constraintLayout = planView.findViewById(R.id.plan_item_linear);
 
         if(!mPlans.isEmpty()){
             nameOfPlan.setText(mPlans.get(position).getName());
@@ -94,14 +92,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
                         .into(imageView);
             }
 
-            linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    actionListener.onItemClick(mPlans.get(position));
-                }
-            });
-
-            infoButton.setOnClickListener(new View.OnClickListener() {
+            constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     actionListener.onItemInfoClick(mPlans.get(position));
