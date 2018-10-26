@@ -9,17 +9,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditTask.AddEditTaskActivity;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
     private List<Task> mTasks = new ArrayList<>();
     private String viewPlanId;
     private ActionItemListener<Task> taskItemListener;
+    private ImageView imageView;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -48,6 +53,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
         viewModel.setViewedPlanId(viewPlanId);
         viewModel.setViewedPlan(viewPlanId);
         nameOfPlan = findViewById(R.id.view_name_of_plan);
+        imageView = findViewById(R.id.preview_plan_image);
         fab = findViewById(R.id.fab);
 
         viewModel.getViewedPlan().observe(this, new Observer<Plan>() {
@@ -140,6 +146,12 @@ public class ViewPlanInfoActivity extends BaseActivity {
 
     private void initialize(Plan plan) {
         nameOfPlan.setText(plan.getName());
+        if(plan.isImageSet()) {
+            StorageReference ref = FirebaseStorage.getInstance()
+                    .getReference().child(plan.getUniqueID());
+            GlideApp.with(this)
+                    .load(ref)
+                    .into(imageView);
+        }
     }
-
 }

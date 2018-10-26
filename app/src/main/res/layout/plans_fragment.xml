@@ -55,6 +55,7 @@
                 app:plans="@{viewmodel.mListOfPlans}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/borderlines"
                 />
         </LinearLayout>
     </RelativeLayout>

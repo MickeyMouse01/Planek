@@ -53,7 +53,8 @@
         android:layout_height="561dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp" />
+        android:layout_marginTop="500dp"
+        android:background="@drawable/borderlines"/>
 
     <ListView
         android:id="@+id/plan_for_client_lv_plan"
@@ -61,7 +62,8 @@
         android:layout_height="77dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="307dp" />
+        android:layout_marginTop="307dp"
+        android:background="@drawable/borderlines"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/preview_client_fab"

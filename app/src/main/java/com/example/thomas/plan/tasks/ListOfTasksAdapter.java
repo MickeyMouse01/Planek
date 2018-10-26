@@ -38,12 +38,6 @@ public class ListOfTasksAdapter extends BaseAdapter {
         this.tasks = tasks;
     }
 
-    public ListOfTasksAdapter(Task task, ActionItemListener taskListener) {
-        taskItemListener = taskListener;
-        tasks = new ArrayList<>();
-        tasks.add(task);
-    }
-
     public void replaceData(List<Task> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();

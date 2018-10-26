@@ -22,7 +22,7 @@ public class ViewClientActivity extends BaseActivity {
 
     private String viewClientId;
     private ViewClientViewModel viewModel;
-    private TextView firstName, surname, typeOfGroup, nurseId;
+    private TextView firstName, surname, typeOfGroup, username, createdDate;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -35,7 +35,8 @@ public class ViewClientActivity extends BaseActivity {
         firstName = findViewById(R.id.view_firstname);
         surname = findViewById(R.id.view_surname);
         typeOfGroup = findViewById(R.id.view_type_of_group);
-        nurseId = findViewById(R.id.view_nurseid);
+        username = findViewById(R.id.view_username);
+        createdDate = findViewById(R.id.view_created_date);
 
         viewModel.getViewedClient().observe(this, new Observer<Client>() {
             @Override
@@ -80,7 +81,8 @@ public class ViewClientActivity extends BaseActivity {
             firstName.setText(client.getFirstName());
             surname.setText(client.getSurname());
             typeOfGroup.setText(client.getTypeOfGroup().name());
-            nurseId.setText(client.getNurseID());
+            username.setText(client.getUsername());
+            createdDate.setText(client.getCreatedDate());
         }
     }
 }

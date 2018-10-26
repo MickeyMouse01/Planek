@@ -145,14 +145,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
 
-                startActivityForResult(
+                /*startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);
+                        RC_SIGN_IN);*/
 
-               // loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
 
                 break;
             }
