@@ -18,6 +18,7 @@ public class AddEditPlanViewModel extends ViewModel {
     public ObservableField<Plan> newPlan = new ObservableField<>();
     private Repository repository;
     private SingleLiveEvent<Void> imageIsUploaded = new SingleLiveEvent<>();
+    public  MutableLiveData<Client> mutableClient = new MutableLiveData<>();
 
     public AddEditPlanViewModel(Repository mRepository) {
         this.repository = mRepository;
@@ -32,16 +33,20 @@ public class AddEditPlanViewModel extends ViewModel {
             @Override
             public void onClientLoaded(@NonNull Client client) {
                 client.setPlanId(newPlan.getUniqueID());
-
-                repository.saveClient(client, new DataSource.SavedDataCallback() {
-                    @Override
-                    public void onSavedData(@NonNull String message) {
-
-                    }
-                });
+                mutableClient.setValue(client);
             }
         });
     }
+
+    public void saveClientToRepository(Client client){
+        repository.saveClient(client, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
+    }
+
 
     public SingleLiveEvent<Void> imageIsUploaded() {
         return imageIsUploaded;

@@ -28,6 +28,7 @@ import java.util.Calendar;
 
 public class AddEditTaskActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final int PICK_IMAGE = 1;
     private AddEditTaskViewModel viewModel;
     private Spinner partOfDaySpinner;
     private EditText mName;
@@ -35,7 +36,11 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     private ImageView imageView;
     private Bitmap imageBitmap;
     private String relatesPlan = null;
-    private static final int PICK_IMAGE = 1;
+
+    private static AddEditTaskViewModel obtainViewModel(FragmentActivity activity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(AddEditTaskViewModel.class);
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -67,11 +72,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         return R.layout.activity_add_edit_task;
     }
 
-    private static AddEditTaskViewModel obtainViewModel(FragmentActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(AddEditTaskViewModel.class);
-    }
-    private void addOrEditTask(){
+    private void addOrEditTask() {
         String name = mName.getText().toString();
         String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
                 .format(Calendar.getInstance().getTime());
@@ -80,21 +81,26 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         newTask.setCreatedDate(dateTime);
         newTask.setPartOfDay(Enums.PartOfDay.values()[partOfDay]);
 
+        showDialog("Ukládání");
         if (imageBitmap != null) {
-            viewModel.uploadImage(imageBitmap, newTask.getUniqueID());
             newTask.setImageSet(true);
+            viewModel.uploadImage(imageBitmap, newTask.getUniqueID());
         }
-        showDialog("Uploading");
 
-        if (relatesPlan != null){
+
+        if (relatesPlan != null) {
             newTask.setIdOfPlan(relatesPlan);
             viewModel.saveTaskToPlan(relatesPlan, newTask);
+        }
+        if (!newTask.isImageSet()) {
+            hideDialog();
+            finish();
         }
     }
 
     private boolean requiredFieldsAreFilled() {
         boolean isFilled = true;
-        if (mName.getText().toString().isEmpty()) {
+        if (mName.getText().toString().trim().isEmpty()) {
             mName.setError("Toto pole je povinné");
             isFilled = false;
         }
@@ -103,7 +109,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.change_picture_task:
                 startActivityForSelectPicture();
                 break;
@@ -111,14 +117,14 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                 startActivityForSelectPicture();
                 break;
             case R.id.add_save_task:
-                if(requiredFieldsAreFilled()){
+                if (requiredFieldsAreFilled()) {
                     addOrEditTask();
                 }
                 break;
         }
     }
 
-    private void startActivityForSelectPicture(){
+    private void startActivityForSelectPicture() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -127,18 +133,20 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
-            Uri selectedImage = data.getData();
-            try {
-                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                imageView.setImageBitmap(imageBitmap);
-                imageView.setVisibility(View.VISIBLE);
-                changePicture.setVisibility(View.INVISIBLE);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            if (data != null) {
+                Uri selectedImage = data.getData();
+                try {
+                    imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    imageView.setImageBitmap(imageBitmap);
+                    imageView.setVisibility(View.VISIBLE);
+                    changePicture.setVisibility(View.INVISIBLE);
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }

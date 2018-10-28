@@ -163,7 +163,6 @@ public class RemoteDataSource implements DataSource {
     //Clients
     @Override
     public void getClients(@NonNull final LoadClientsCallback callback) {
-
         mDatabase.getDatabase().getReference("clients").orderByChild("createdDate")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -331,7 +330,6 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId) {
-
         mDatabase.getDatabase().getReference("plans")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override

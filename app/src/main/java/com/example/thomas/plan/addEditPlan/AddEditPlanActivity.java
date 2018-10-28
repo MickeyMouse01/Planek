@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 
 import java.io.FileNotFoundException;
@@ -61,6 +62,13 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                 finish();
             }
         });
+
+        mViewModel.mutableClient.observe(this, new Observer<Client>() {
+            @Override
+            public void onChanged(@Nullable Client client) {
+                mViewModel.saveClientToRepository(client);
+            }
+        });
     }
 
     @Override
@@ -76,23 +84,27 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         newPlan.setName(name);
         newPlan.setCreatedDate(dateTime);
 
-        showDialog("Saving");
+        showDialog("Ukládání");
 
         if (imageBitmap != null) {
-            mViewModel.uploadImage(imageBitmap, newPlan.getUniqueID());
             newPlan.setImageSet(true);
+            mViewModel.uploadImage(imageBitmap, newPlan.getUniqueID());
         }
 
         if (clientId != null) {
             mViewModel.savePlanToClient(newPlan, clientId);
         }
-
         mViewModel.savePlan(newPlan);
+
+        if (!newPlan.isImageSet()) {
+            hideDialog();
+            finish();
+        }
     }
 
     private boolean requiredFieldsAreFilled() {
         boolean isFilled = true;
-        if (mName.getText().toString().isEmpty()) {
+        if (mName.getText().toString().trim().isEmpty()) {
             mName.setError("Toto pole je povinné");
             isFilled = false;
         }
@@ -125,18 +137,20 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
-            Uri selectedImage = data.getData();
-            try {
-                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                imageView.setImageBitmap(imageBitmap);
-                imageView.setVisibility(View.VISIBLE);
-                changePicture.setVisibility(View.INVISIBLE);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            if (data != null) {
+                Uri selectedImage = data.getData();
+                try {
+                    imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    imageView.setImageBitmap(imageBitmap);
+                    imageView.setVisibility(View.VISIBLE);
+                    changePicture.setVisibility(View.INVISIBLE);
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }

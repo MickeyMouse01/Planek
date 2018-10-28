@@ -68,7 +68,7 @@ public class ListOfClientsAdapter extends BaseAdapter {
 
         nameOfClient.setText(mClients.get(position).getFirstName());
         surname.setText(mClients.get(position).getSurname());
-        typeOfGroup.setText(mClients.get(position).getTypeOfGroup().name());
+        typeOfGroup.setText(mClients.get(position).getTypeOfGroup().getNameOfGroup());
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.Activities.BaseActivity;
@@ -30,7 +29,6 @@ import java.util.List;
 
 public class PreviewClientActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView nameOfClient, surnameOfClient;
     private ImageButton addNewPlanBut;
     private ListView listViewOnePlan, listViewTasks;
     private String clientId;
@@ -43,7 +41,6 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     private FloatingActionButton fab;
 
     public static PreviewClientViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(PreviewClientViewModel.class);
     }
@@ -59,8 +56,6 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         mViewModel.setViewedClientId(clientId);
 
         listViewOnePlan = findViewById(R.id.plan_for_client_lv_plan);
-        nameOfClient = findViewById(R.id.plan_for_client_name);
-        surnameOfClient = findViewById(R.id.plan_for_client_surname);
         addNewPlanBut = findViewById(R.id.plan_for_client_button_for_add);
         listViewTasks = findViewById(R.id.plan_for_client_lv_tasks);
         fab = findViewById(R.id.preview_client_fab);
@@ -77,7 +72,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             public void onClick(View v) {
                 addEditTaskIntent.putExtra("PlanId", mViewModel.getViewedPlanId());
                 startActivity(addEditTaskIntent);
-                mViewModel.getViewedPlanId();
+                mViewModel.getViewedClient();
             }
         });
     }
@@ -107,10 +102,11 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onItemDeleteClick(Plan item) {
-                mViewModel.deleteSelectedPlan();
-                mViewModel.setViewedPlanId(null);
+                mViewModel.deletePlanFromClient();
                 planAdapter.clearData();
-                taskAdapter.clearData();
+                if(taskAdapter !=null) {
+                    taskAdapter.clearData();
+                }
             }
         };
             planAdapter = new ListOfPlansAdapter(plan, planActionItemListener);
@@ -146,17 +142,12 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initializeClient(Client client) {
-
-        nameOfClient.setText(client.getFirstName());
-        surnameOfClient.setText(client.getSurname());
         mViewModel.setViewedPlanId(client.getPlanId());
-
         if (client.getPlanId() == null) {
             fab.setVisibility(View.GONE);
             addNewPlanBut.setVisibility(View.VISIBLE);
             listViewOnePlan.setVisibility(View.GONE);
         } else {
-
             mViewModel.getSelectedPlan().observe(this, new Observer<Plan>() {
                 @Override
                 public void onChanged(@Nullable Plan plan) {

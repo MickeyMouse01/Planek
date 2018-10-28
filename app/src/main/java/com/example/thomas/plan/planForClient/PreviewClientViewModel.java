@@ -13,18 +13,15 @@ import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 public class PreviewClientViewModel extends ViewModel {
 
-    Repository repository;
-
     public ObservableList<Plan> mListOfPlans;
-
+    public MutableLiveData<Plan> selectedPlan;
+    Repository repository;
     private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<Client> viewedClient;
-    public MutableLiveData<Plan> selectedPlan;
     private MutableLiveData<List<Task>> listOfTasks;
 
     public PreviewClientViewModel(Repository repository) {
@@ -63,6 +60,7 @@ public class PreviewClientViewModel extends ViewModel {
     public MutableLiveData<Plan> getSelectedPlan() {
         if (selectedPlan == null) {
             selectedPlan = new MutableLiveData<>();
+
         }
         loadPlan();
         return selectedPlan;
@@ -73,7 +71,12 @@ public class PreviewClientViewModel extends ViewModel {
             repository.getPlan(viewedPlanId.getValue(), new DataSource.LoadPlanCallback() {
                 @Override
                 public void onPlanLoaded(@NonNull Plan plan) {
-                    selectedPlan.setValue(plan);
+                    if (plan != null) {
+                        selectedPlan.setValue(plan);
+                    } else {
+                        deletePlanFromClient();
+                    }
+
                 }
             });
         }
@@ -87,36 +90,33 @@ public class PreviewClientViewModel extends ViewModel {
         return listOfTasks;
     }
 
-    private void loadTasks(){
+    private void loadTasks() {
         repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 listOfTasks.setValue(tasks);
             }
-        },viewedPlanId.getValue());
+        }, viewedPlanId.getValue());
     }
 
-    public void deleteSelectedPlan(){
+    public void deletePlanFromClient() {
         Client client = getViewedClient().getValue();
         client.setPlanId(null);
-        getViewedClient().postValue(client);
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
-
             }
         });
     }
 
-    public void deleteTaskFromPlan(String planId, final Task task){
-
-            repository.getPlan(planId, new DataSource.LoadPlanCallback() {
-                @Override
-                public void onPlanLoaded(@NonNull Plan plan) {
-                    repository.deleteTaskFromPlan(plan.getUniqueID(),task.getUniqueID());
-                }
-            });
-        }
+    public void deleteTaskFromPlan(String planId, final Task task) {
+        repository.getPlan(planId, new DataSource.LoadPlanCallback() {
+            @Override
+            public void onPlanLoaded(@NonNull Plan plan) {
+                repository.deleteTaskFromPlan(plan.getUniqueID(), task.getUniqueID());
+            }
+        });
     }
+}
 
 
