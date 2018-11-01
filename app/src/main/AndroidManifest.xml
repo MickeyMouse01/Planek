@@ -56,7 +56,8 @@
         <activity android:name=".nurseProfileEdit.NurseProfileEditActivity" />
         <activity
             android:name=".previewTask.PreviewTaskActivity"
-            android:label="@string/title_activity_preview_task"></activity>
+            android:label="@string/title_activity_preview_task" />
+        <activity android:name=".ui.previewplans.PreviewPlansActivity"></activity>
     </application>
 
 </manifest>

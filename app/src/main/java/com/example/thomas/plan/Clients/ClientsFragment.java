@@ -3,10 +3,7 @@ package com.example.thomas.plan.Clients;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +22,7 @@ import java.util.ArrayList;
  */
 
 
-
-public class ClientsFragment extends Fragment
-         {
+public class ClientsFragment extends Fragment {
 
     private MainViewModel mMainViewModel;
     private ListOfClientsAdapter mClientsAdapter;
@@ -63,6 +58,7 @@ public class ClientsFragment extends Fragment
 
         return mClientsFragmentBinding.getRoot();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -78,8 +74,6 @@ public class ClientsFragment extends Fragment
     }
 
 
-
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -87,7 +81,7 @@ public class ClientsFragment extends Fragment
     }
 
     private void setupListAdapter() {
-        ListView listView =  mClientsFragmentBinding.clientsList;
+        ListView listView = mClientsFragmentBinding.clientsList;
 
         actionItemListener = new ActionItemListener<Client>() {
             @Override
@@ -110,8 +104,8 @@ public class ClientsFragment extends Fragment
                 mMainViewModel.removeClient(item.getUniqueID());
             }
         };
-       mClientsAdapter = new ListOfClientsAdapter(
-                new ArrayList<Client>(0),actionItemListener
+        mClientsAdapter = new ListOfClientsAdapter(
+                new ArrayList<Client>(0), actionItemListener
         );
         listView.setAdapter(mClientsAdapter);
     }

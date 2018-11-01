@@ -33,14 +33,12 @@ public class PlansFragment extends Fragment
     private ListOfPlansAdapter mPlansAdapter;
     private PlansFragmentBinding mPlansFragmentBinding;
     private ActionItemListener actionListener;
-    private String NAME_OF_CLASS = getClass().getName();
 
     public PlansFragment() {
         // Requires empty public constructor
     }
 
     public static PlansFragment newInstance() {
-
         return new PlansFragment();
     }
 
@@ -74,12 +72,12 @@ public class PlansFragment extends Fragment
 
             @Override
             public void onItemClick(Plan item) {
-                mMainViewModel.previewPlan().setValue(item.getUniqueID());
+                mMainViewModel.viewPlan().setValue(item.getUniqueID());
             }
 
             @Override
             public void onItemInfoClick(Plan item) {
-                mMainViewModel.viewPlan().setValue(item.getUniqueID());
+
             }
 
             @Override

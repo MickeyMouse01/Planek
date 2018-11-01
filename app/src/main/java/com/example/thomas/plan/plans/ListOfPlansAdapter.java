@@ -33,13 +33,11 @@ public class ListOfPlansAdapter extends BaseAdapter {
     private ActionItemListener actionListener;
     private ImageView imageView;
 
-    private String NAME_OF_CLASS = getClass().getName();
-
-
     public ListOfPlansAdapter(List<Plan> plans, ActionItemListener actionItemListener) {
         actionListener = actionItemListener;
         mPlans = plans;
     }
+
     public ListOfPlansAdapter(Plan plan, ActionItemListener actionItemListener){
         actionListener = actionItemListener;
         mPlans = new ArrayList<>();
@@ -50,6 +48,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
         mPlans = plans;
         notifyDataSetChanged();
     }
+
     public void clearData(){
         mPlans.clear();
         notifyDataSetChanged();
@@ -95,7 +94,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
             constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    actionListener.onItemInfoClick(mPlans.get(position));
+                    actionListener.onItemClick(mPlans.get(position));
                 }
             });
 

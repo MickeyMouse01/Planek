@@ -24,6 +24,7 @@ import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
+import com.example.thomas.plan.ui.previewplans.PreviewPlansActivity;
 
 import java.util.List;
 
@@ -181,7 +182,9 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         builderSingle.setNegativeButton("Pridat vytvoreny", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                Intent intent = new Intent(PreviewClientActivity.this, PreviewPlansActivity.class);
+                intent.putExtra("ClientId", clientId);
+                startActivityForResult(intent, 0);
             }
 
         });
@@ -195,5 +198,13 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             }
         });
         builderSingle.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0 && data != null){
+           String selectedPlanId = data.getStringExtra("planId");
+        }
     }
 }
