@@ -117,6 +117,16 @@ public class PreviewClientViewModel extends ViewModel {
             }
         });
     }
+
+
+    public void saveUpdatedClient(Client client){
+        repository.saveClient(client, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
+    }
 }
 
 

@@ -51,7 +51,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         super.onViewReady(savedInstanceState, intent);
 
 
-        addEditTaskIntent = new Intent(this,AddEditTaskActivity.class);
+        addEditTaskIntent = new Intent(this, AddEditTaskActivity.class);
         mViewModel = obtainViewModel(this);
         clientId = intent.getStringExtra("ClientId");
         mViewModel.setViewedClientId(clientId);
@@ -105,16 +105,16 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             public void onItemDeleteClick(Plan item) {
                 mViewModel.deletePlanFromClient();
                 planAdapter.clearData();
-                if(taskAdapter !=null) {
+                if (taskAdapter != null) {
                     taskAdapter.clearData();
                 }
             }
         };
-            planAdapter = new ListOfPlansAdapter(plan, planActionItemListener);
-            listViewOnePlan.setAdapter(planAdapter);
+        planAdapter = new ListOfPlansAdapter(plan, planActionItemListener);
+        listViewOnePlan.setAdapter(planAdapter);
     }
 
-    private void setupTaskAdapter(final List<Task> tasks){
+    private void setupTaskAdapter(final List<Task> tasks) {
         taskActionItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
@@ -135,7 +135,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             public void onItemDeleteClick(Task item) {
                 tasks.remove(item);
                 taskAdapter.replaceData(tasks);
-                mViewModel.deleteTaskFromPlan(mViewModel.getViewedPlanId(),item);
+                mViewModel.deleteTaskFromPlan(mViewModel.getViewedPlanId(), item);
             }
         };
         taskAdapter = new ListOfTasksAdapter(tasks, taskActionItemListener);
@@ -166,6 +166,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             addNewPlanBut.setVisibility(View.GONE);
             listViewOnePlan.setVisibility(View.VISIBLE);
         }
+        hideDialog();
     }
 
     @Override
@@ -203,8 +204,12 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 0 && data != null){
-           String selectedPlanId = data.getStringExtra("planId");
+        if (requestCode == 0 && data != null) {
+            showDialog("Ukládání");
+            String selectedPlanId = data.getStringExtra("planId");
+            Client client = mViewModel.getViewedClient().getValue();
+            client.setPlanId(selectedPlanId);
+            mViewModel.saveUpdatedClient(client);
         }
     }
 }

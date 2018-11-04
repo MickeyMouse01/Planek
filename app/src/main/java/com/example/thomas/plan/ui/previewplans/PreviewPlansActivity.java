@@ -13,6 +13,7 @@ import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 
 import java.util.ArrayList;
@@ -21,12 +22,12 @@ import java.util.List;
 public class PreviewPlansActivity extends BaseActivity {
 
     private PreviewPlansViewModel mViewModel;
-
-    private PreviewPlansViewModel previewPlansViewModel;
     private ListOfPlansAdapter mPlansAdapter;
     private ActionItemListener actionListener;
     private ListView listViewPlans;
     private String clientId;
+    private Settings settings;
+
 
     public static PreviewPlansViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -37,11 +38,14 @@ public class PreviewPlansActivity extends BaseActivity {
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        previewPlansViewModel = PreviewPlansActivity.obtainViewModel(this);
-        clientId = intent.getStringExtra("ClientId");
-        previewPlansViewModel.getClientId().setValue(clientId);
+        settings = new Settings();
+        settings.setDisableDeleteButton(true);
 
-        previewPlansViewModel.getPlans().observe(this, new Observer<List<Plan>>() {
+        mViewModel = PreviewPlansActivity.obtainViewModel(this);
+        clientId = intent.getStringExtra("ClientId");
+        mViewModel.getClientId().setValue(clientId);
+
+        mViewModel.getPlans().observe(this, new Observer<List<Plan>>() {
             @Override
             public void onChanged(@Nullable List<Plan> plans) {
                 if (mPlansAdapter == null) {
@@ -51,13 +55,13 @@ public class PreviewPlansActivity extends BaseActivity {
             }
         });
 
-        previewPlansViewModel.selectPlan().observe(this, new Observer<String>() {
+        mViewModel.selectPlan().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String planId) {
                 Intent output = new Intent();
                 output.putExtra("planId", planId);
                 setResult(RESULT_OK, output);
-                finishActivity(0);
+                finish();
             }
         });
 
@@ -73,7 +77,7 @@ public class PreviewPlansActivity extends BaseActivity {
 
             @Override
             public void onItemClick(Plan item) {
-                previewPlansViewModel.selectPlan().setValue(item.getUniqueID());
+                mViewModel.selectPlan().setValue(item.getUniqueID());
             }
 
             @Override
@@ -86,7 +90,7 @@ public class PreviewPlansActivity extends BaseActivity {
         };
 
         mPlansAdapter = new ListOfPlansAdapter(
-                new ArrayList<Plan>(0), actionListener
+                new ArrayList<Plan>(0), actionListener, settings
         );
         listViewPlans.setAdapter(mPlansAdapter);
     }

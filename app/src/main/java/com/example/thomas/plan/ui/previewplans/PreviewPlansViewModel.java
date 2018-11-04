@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Repository;
 
@@ -49,4 +50,5 @@ public class PreviewPlansViewModel extends ViewModel {
             }
         });
     }
+
 }

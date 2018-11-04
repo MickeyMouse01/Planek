@@ -1,6 +1,7 @@
 package com.example.thomas.plan.plans;
 
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Settings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,10 +34,17 @@ public class ListOfPlansAdapter extends BaseAdapter {
     private ConstraintLayout constraintLayout;
     private ActionItemListener actionListener;
     private ImageView imageView;
+    private Settings settings = new Settings();
 
     public ListOfPlansAdapter(List<Plan> plans, ActionItemListener actionItemListener) {
         actionListener = actionItemListener;
         mPlans = plans;
+    }
+
+    public ListOfPlansAdapter(List<Plan> plans, ActionItemListener actionItemListener, Settings set) {
+        actionListener = actionItemListener;
+        mPlans = plans;
+        settings = set;
     }
 
     public ListOfPlansAdapter(Plan plan, ActionItemListener actionItemListener){
@@ -79,6 +88,13 @@ public class ListOfPlansAdapter extends BaseAdapter {
         nameOfPlan = planView.findViewById(R.id.plan_name);
         deleteButton = planView.findViewById(R.id.deleteButton);
         constraintLayout = planView.findViewById(R.id.plan_item_linear);
+
+        if (settings != null) {
+            if (settings.isDisableDeleteButton()){
+                deleteButton.setVisibility(View.INVISIBLE);
+            }
+        }
+
 
         if(!mPlans.isEmpty()){
             nameOfPlan.setText(mPlans.get(position).getName());
