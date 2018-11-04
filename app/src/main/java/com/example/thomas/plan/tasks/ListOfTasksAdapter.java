@@ -92,8 +92,8 @@ public class ListOfTasksAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 boolean isPassed = tasks.get(position).isPassed();
                 tasks.get(position).setPassed(!isPassed);
-                taskItemListener.onCheckedClick(tasks.get(position));
                 notifyDataSetChanged();
+                taskItemListener.onCheckedClick(tasks.get(position));
 
             }
         });

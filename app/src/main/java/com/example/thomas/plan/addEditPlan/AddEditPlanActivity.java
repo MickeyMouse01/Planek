@@ -58,8 +58,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         mViewModel.imageIsUploaded().observe(this, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
-                hideDialog();
-                finish();
+                finishThisActivity();
+
             }
         });
 
@@ -69,6 +69,12 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                 mViewModel.saveClientToRepository(client);
             }
         });
+    }
+
+    private void finishThisActivity(){
+        hideDialog();
+        showSuccessToast("Plán byl úspěšně uložen");
+        finish();
     }
 
     @Override
@@ -97,8 +103,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         mViewModel.savePlan(newPlan);
 
         if (!newPlan.isImageSet()) {
-            hideDialog();
-            finish();
+            finishThisActivity();
         }
     }
 

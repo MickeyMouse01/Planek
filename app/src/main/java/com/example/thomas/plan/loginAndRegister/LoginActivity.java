@@ -97,7 +97,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void startActivity() {
         if (actualFragment == NURSE_LOGIN) {
-            Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, ClientsActivity.class);
             intent.putExtra("userId", loginViewModel.getLoggedUser().getValue());
             intent.putExtra("isNewUser", isNewUser);

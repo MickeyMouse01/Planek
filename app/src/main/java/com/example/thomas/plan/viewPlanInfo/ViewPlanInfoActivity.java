@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,7 +30,7 @@ import java.util.List;
 
 public class ViewPlanInfoActivity extends BaseActivity {
 
-    private ViewPlanInfoViewModel viewModel;
+    private ViewPlanInfoViewModel mViewModel;
     private TextView nameOfPlan;
     private ListView listViewTasks;
     private ListOfTasksAdapter listOfTasksAdapter;
@@ -45,25 +44,25 @@ public class ViewPlanInfoActivity extends BaseActivity {
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        viewModel = obtainViewModel(this);
+        mViewModel = obtainViewModel(this);
 
         setupListAdapter();
 
         viewPlanId = intent.getStringExtra("PlanId");
-        viewModel.setViewedPlanId(viewPlanId);
-        viewModel.setViewedPlan(viewPlanId);
+        mViewModel.setViewedPlanId(viewPlanId);
+        mViewModel.setViewedPlan(viewPlanId);
         nameOfPlan = findViewById(R.id.view_name_of_plan);
         imageView = findViewById(R.id.preview_plan_image);
         fab = findViewById(R.id.fab);
 
-        viewModel.getViewedPlan().observe(this, new Observer<Plan>() {
+        mViewModel.getViewedPlan().observe(this, new Observer<Plan>() {
             @Override
             public void onChanged(@Nullable Plan plan) {
                 initialize(plan);
             }
         });
 
-        viewModel.getTasks().observe(this, new Observer<List<Task>>() {
+        mViewModel.getTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
                 if (tasks != null) {
@@ -71,6 +70,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
                 }
             }
         });
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +105,8 @@ public class ViewPlanInfoActivity extends BaseActivity {
         taskItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
-
+            mTasks.get(mTasks.indexOf(item)).setPassed(item.isPassed());
+            mViewModel.updateTask(viewPlanId, item);
             }
 
             @Override
@@ -122,7 +123,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
             public void onItemDeleteClick(Task item) {
                 mTasks.remove(item);
                 listOfTasksAdapter.replaceData(mTasks);
-                viewModel.deleteTaskFromPlan(viewPlanId,item);
+                mViewModel.deleteTaskFromPlan(viewPlanId,item);
             }
         };
 

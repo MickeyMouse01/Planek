@@ -79,11 +79,16 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mViewModel.onClientSaved().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                Toast.makeText(AddEditClientActivity.this, s, Toast.LENGTH_SHORT).show();
-                finish();
+                finishThisActivity();
             }
         });
 
+    }
+
+    private void finishThisActivity(){
+        hideDialog();
+        showSuccessToast("Klient byl úspěšně uložen");
+        finish();
     }
 
     private void initializeClient(Client client) {
@@ -154,6 +159,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void addClient() {
+        showDialog("Ukládání");
         String firstName = mFirstName.getText().toString();
         String surname = mSurname.getText().toString();
         int typeOfGroup = sTypeOfGroup.getSelectedItemPosition();
@@ -204,11 +210,8 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
             if(requiredFieldsAreFilled()){
                 addClient();
             }
-
         } else {
             editClient();
         }
-        //todo validacka na empty inputs
-
     }
 }

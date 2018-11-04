@@ -127,6 +127,15 @@ public class PreviewClientViewModel extends ViewModel {
             }
         });
     }
+
+    public void updateTask(Task task){
+        repository.saveTask(task, viewedPlanId.getValue(), new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
+    }
 }
 
 

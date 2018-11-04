@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.example.thomas.plan.Common.Enums;
 
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -20,7 +21,7 @@ public class Task {
     private boolean isImageSet = false;
     private String idOfPlan;
     private Enums.PartOfDay partOfDay = Enums.PartOfDay.UNDEFINED;
-    private Time time;
+    private String time;
 
     public Task(String name) {
         this.name = name;
@@ -83,11 +84,11 @@ public class Task {
         this.partOfDay = partOfDay;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

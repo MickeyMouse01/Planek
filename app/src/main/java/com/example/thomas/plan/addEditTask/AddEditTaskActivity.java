@@ -1,5 +1,6 @@
 package com.example.thomas.plan.addEditTask;
 
+import android.app.TimePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums;
@@ -25,17 +27,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class AddEditTaskActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int PICK_IMAGE = 1;
     private AddEditTaskViewModel viewModel;
     private Spinner partOfDaySpinner;
-    private EditText mName;
+    private EditText mName,timeInput;
     private Button save, changePicture;
     private ImageView imageView;
     private Bitmap imageBitmap;
     private String relatesPlan = null;
+    private boolean timeForTaskIsSet = false;
+    private int mHour, mMinute;
 
     private static AddEditTaskViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -52,19 +57,27 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         save = findViewById(R.id.add_save_task);
         changePicture = findViewById(R.id.change_picture_task);
         partOfDaySpinner = findViewById(R.id.spinner_part_of_day);
+        timeInput = findViewById(R.id.task_input_time);
         partOfDaySpinner.setSelection(Enums.PartOfDay.UNDEFINED.getCode());
         relatesPlan = intent.getStringExtra("PlanId");
         changePicture.setOnClickListener(this);
         save.setOnClickListener(this);
         imageView.setOnClickListener(this);
+        timeInput.setOnClickListener(this);
 
         viewModel.imageIsUploaded().observe(this, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
-                hideDialog();
-                finish();
+                finishThisActivity();
             }
         });
+    }
+
+
+    private void finishThisActivity(){
+        hideDialog();
+        showSuccessToast("Aktivita byla úspěšně uložena");
+        finish();
     }
 
     @Override
@@ -78,6 +91,9 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                 .format(Calendar.getInstance().getTime());
         int partOfDay = partOfDaySpinner.getSelectedItemPosition();
         Task newTask = new Task(name);
+        if(timeForTaskIsSet){
+            newTask.setTime(mHour + ":" + mMinute);
+        }
         newTask.setCreatedDate(dateTime);
         newTask.setPartOfDay(Enums.PartOfDay.values()[partOfDay]);
 
@@ -93,8 +109,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
             viewModel.saveTaskToPlan(relatesPlan, newTask);
         }
         if (!newTask.isImageSet()) {
-            hideDialog();
-            finish();
+            finishThisActivity();
         }
     }
 
@@ -117,11 +132,27 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                 startActivityForSelectPicture();
                 break;
             case R.id.add_save_task:
-                if (requiredFieldsAreFilled()) {
+                if (requiredFieldsAreFilled())
                     addOrEditTask();
-                }
                 break;
+            case R.id.task_input_time:
+                showPickerForTime();
         }
+    }
+
+    private void showPickerForTime(){
+        final Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+01:00"));
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                timeForTaskIsSet = true;
+                timeInput.setText(hourOfDay + " : " + minute);
+            }
+        },mHour, mMinute, true);
+        timePickerDialog.show();
     }
 
     private void startActivityForSelectPicture() {
@@ -141,10 +172,8 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                     imageView.setVisibility(View.VISIBLE);
                     changePicture.setVisibility(View.INVISIBLE);
                 } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }

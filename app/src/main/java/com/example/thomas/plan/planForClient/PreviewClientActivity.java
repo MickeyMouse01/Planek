@@ -78,7 +78,6 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-
     @Override
     protected int getContentView() {
         return R.layout.activity_plan_for_client;
@@ -118,7 +117,8 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         taskActionItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
-
+                tasks.get(tasks.indexOf(item)).setPassed(item.isPassed());
+                mViewModel.updateTask(item);
             }
 
             @Override

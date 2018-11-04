@@ -76,4 +76,13 @@ public class ViewPlanInfoViewModel extends ViewModel {
             }
         });
     }
+
+    public void updateTask(String planId, Task task){
+        repository.saveTask(task, planId, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
+    }
 }
