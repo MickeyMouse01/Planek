@@ -1,7 +1,8 @@
 package com.example.thomas.plan.tasks;
 
-import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,7 @@ import java.util.List;
 public class ListOfTasksAdapter extends BaseAdapter {
 
     private List<Task> tasks;
-    private View viewTask;
-    private TextView textViewName;
-    private ImageView deleteImage;
-    private CheckBox checkBox;
-    private ConstraintLayout constraintLayout;
     private ActionItemListener taskItemListener;
-    private ImageView imageView;
-
 
     public ListOfTasksAdapter(List<Task> tasks, ActionItemListener taskListener) {
         taskItemListener = taskListener;
@@ -65,17 +59,18 @@ public class ListOfTasksAdapter extends BaseAdapter {
     public View getView(final int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        viewTask = inflater.inflate(R.layout.task_item, null);
-        textViewName = viewTask.findViewById(R.id.view_plan_task_name);
-        deleteImage = viewTask.findViewById(R.id.view_plan_task_delete_image);
-        constraintLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
-        checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
-        imageView = viewTask.findViewById(R.id.view_plan_imageView);
+        View viewTask = inflater.inflate(R.layout.task_item, null);
+        TextView textViewName = viewTask.findViewById(R.id.view_plan_task_name);
+        ImageView deleteImage = viewTask.findViewById(R.id.view_plan_task_delete_image);
+        ConstraintLayout constraintLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
+        CheckBox checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
+        ImageView imageView = viewTask.findViewById(R.id.view_plan_imageView);
         textViewName.setText(tasks.get(position).getName());
 
         if (tasks.get(position).isPassed()) {
-            constraintLayout.setBackgroundColor(Color.GREEN);
+            constraintLayout.setBackgroundColor(ContextCompat.getColor(viewTask.getContext(), R.color.isPassed));
             checkBox.setChecked(true);
+            checkBox.setButtonDrawable(R.drawable.scaled_passed_checkbox);
             deleteImage.setVisibility(View.VISIBLE);
         }
 
@@ -102,6 +97,14 @@ public class ListOfTasksAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 taskItemListener.onItemClick(tasks.get(position));
+            }
+        });
+
+        constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d("podrzel", "podrzel");
+                return true;
             }
         });
 

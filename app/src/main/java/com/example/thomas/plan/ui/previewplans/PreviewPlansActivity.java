@@ -23,11 +23,7 @@ public class PreviewPlansActivity extends BaseActivity {
 
     private PreviewPlansViewModel mViewModel;
     private ListOfPlansAdapter mPlansAdapter;
-    private ActionItemListener actionListener;
-    private ListView listViewPlans;
-    private String clientId;
     private Settings settings;
-
 
     public static PreviewPlansViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -42,7 +38,7 @@ public class PreviewPlansActivity extends BaseActivity {
         settings.setDisableDeleteButton(true);
 
         mViewModel = PreviewPlansActivity.obtainViewModel(this);
-        clientId = intent.getStringExtra("ClientId");
+        String clientId = intent.getStringExtra("ClientId");
         mViewModel.getClientId().setValue(clientId);
 
         mViewModel.getPlans().observe(this, new Observer<List<Plan>>() {
@@ -68,8 +64,8 @@ public class PreviewPlansActivity extends BaseActivity {
     }
 
     private void setupListAdapter() {
-        listViewPlans = findViewById(R.id.preview_plans);
-        actionListener = new ActionItemListener<Plan>() {
+        ListView listViewPlans = findViewById(R.id.preview_plans);
+        ActionItemListener actionListener = new ActionItemListener<Plan>() {
             @Override
             public void onCheckedClick(Plan item) {
 

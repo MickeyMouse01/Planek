@@ -31,7 +31,6 @@ import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 public class ClientsActivity extends BaseActivity
@@ -41,14 +40,11 @@ public class ClientsActivity extends BaseActivity
     private final int VIEW_PLANS = 1;
     private MainViewModel mViewModel;
     private Toolbar toolbar;
-    private TextView txtMenuTypeOfGroup, txtMenuNameSurname;
-    private FirebaseUser firebaseUser;
 
     public static MainViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        MainViewModel viewModel = ViewModelProviders.of(activity, factory).get(MainViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(MainViewModel.class);
     }
 
     @Override
@@ -144,8 +140,8 @@ public class ClientsActivity extends BaseActivity
     }
 
     private void initializeData(Nurse nurse) {
-        txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
-        txtMenuNameSurname = findViewById(R.id.menu_name_surname);
+        TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
+        TextView txtMenuNameSurname = findViewById(R.id.menu_name_surname);
 
         txtMenuNameSurname.setText(nurse.getNameAndSurname());
         txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());

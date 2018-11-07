@@ -32,12 +32,9 @@ public class ViewPlanInfoActivity extends BaseActivity {
 
     private ViewPlanInfoViewModel mViewModel;
     private TextView nameOfPlan;
-    private ListView listViewTasks;
     private ListOfTasksAdapter listOfTasksAdapter;
-    private FloatingActionButton fab;
     private List<Task> mTasks = new ArrayList<>();
     private String viewPlanId;
-    private ActionItemListener<Task> taskItemListener;
     private ImageView imageView;
 
     @Override
@@ -53,12 +50,15 @@ public class ViewPlanInfoActivity extends BaseActivity {
         mViewModel.setViewedPlan(viewPlanId);
         nameOfPlan = findViewById(R.id.view_name_of_plan);
         imageView = findViewById(R.id.preview_plan_image);
-        fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         mViewModel.getViewedPlan().observe(this, new Observer<Plan>() {
             @Override
             public void onChanged(@Nullable Plan plan) {
-                initialize(plan);
+                if(plan !=null){
+                    initialize(plan);
+                }
+
             }
         });
 
@@ -101,12 +101,12 @@ public class ViewPlanInfoActivity extends BaseActivity {
     }
 
     private void setupListAdapter() {
-        listViewTasks = findViewById(R.id.view_plan_list_tasks);
-        taskItemListener = new ActionItemListener<Task>() {
+        ListView listViewTasks = findViewById(R.id.view_plan_list_tasks);
+        ActionItemListener<Task> taskItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
-            mTasks.get(mTasks.indexOf(item)).setPassed(item.isPassed());
-            mViewModel.updateTask(viewPlanId, item);
+                mTasks.get(mTasks.indexOf(item)).setPassed(item.isPassed());
+                mViewModel.updateTask(viewPlanId, item);
             }
 
             @Override
@@ -123,7 +123,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
             public void onItemDeleteClick(Task item) {
                 mTasks.remove(item);
                 listOfTasksAdapter.replaceData(mTasks);
-                mViewModel.deleteTaskFromPlan(viewPlanId,item);
+                mViewModel.deleteTaskFromPlan(viewPlanId, item);
             }
         };
 
@@ -141,8 +141,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
     public static ViewPlanInfoViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        ViewPlanInfoViewModel viewModel = ViewModelProviders.of(activity, factory).get(ViewPlanInfoViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(ViewPlanInfoViewModel.class);
     }
 
     private void initialize(Plan plan) {
