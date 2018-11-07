@@ -24,7 +24,7 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private MutableLiveData<Nurse> loggedNurse = new MutableLiveData<>();
 
-    public MutableLiveData<String> getErrorMessage() {
+    MutableLiveData<String> getErrorMessage() {
         return errorMessage;
     }
 
@@ -32,34 +32,34 @@ public class LoginViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public MutableLiveData<String> getLoggedUser() {
+    MutableLiveData<String> getLoggedUser() {
         return loggedUser;
     }
 
-    public MutableLiveData<LoginState> getLoginState() {
+    MutableLiveData<LoginState> getLoginState() {
         return loginState;
     }
 
-    public MutableLiveData<Client> getLoggedClient() {
+    MutableLiveData<Client> getLoggedClient() {
         return loggedClient;
     }
 
-    public MutableLiveData<Nurse> getLoggedNurse() {
+    MutableLiveData<Nurse> getLoggedNurse() {
         return loggedNurse;
     }
 
     //todo dostat tady apliakcnni kontext
-    public void performLogin(String username, String password) {
+    void performLogin(String username, String password) {
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
             loginState.setValue(LoginState.ERROR_VALIDATIONS);
         }
     }
 
-    public void performLoginClient(String username, final String code){
+    void performLoginClient(String username, final String code){
         repository.searchClientByUsername(username, new DataSource.LoadClientCallback() {
             @Override
             public void onClientLoaded(@NonNull Client client) {
-                if (client != null && client.getPassword().equals(code)){
+                if (client.getPassword().equals(code)){
                    loginState.setValue(LoginState.RESULT_OK);
                    loggedClient.setValue(client);
                 } else {
@@ -69,11 +69,11 @@ public class LoginViewModel extends ViewModel {
         });
     }
 
-    public void saveNurse(Nurse nurse){
+    void saveNurse(Nurse nurse){
         repository.saveNurse(nurse);
     }
 
-    public void getNurseByEmail(String email){
+    void getNurseByEmail(String email){
         repository.searchNurseByEmail(email, new DataSource.LoadNurseCallback() {
             @Override
             public void onNurseLoaded(Nurse nurse) {

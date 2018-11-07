@@ -54,7 +54,7 @@ public class MainViewModel extends ViewModel {
         return mListOfClients;
     }
 
-    public MutableLiveData<Integer> getCurrentFragment() {
+    MutableLiveData<Integer> getCurrentFragment() {
         if (currentFragment == null){
             currentFragment = new MutableLiveData<>();
             currentFragment.setValue(VIEW_CLIENTS);
@@ -62,29 +62,29 @@ public class MainViewModel extends ViewModel {
         return currentFragment;
     }
 
-    public SingleLiveEvent<Void> addNewClient() {
+    SingleLiveEvent<Void> addNewClient() {
         return mAddNewClient;
     }
 
-    public SingleLiveEvent<Void> addNewPlan() {
+    SingleLiveEvent<Void> addNewPlan() {
         return mAddNewPlan;
     }
-    public SingleLiveEvent<String> viewClient() {
+    SingleLiveEvent<String> viewClient() {
         return mViewInfoClient;
     }
-    public SingleLiveEvent<String> previewClient() {
+    SingleLiveEvent<String> previewClient() {
         return mPreviewClient;
     }
     public SingleLiveEvent<String> viewPlan() {
         return mViewPlan;
     }
-    public SingleLiveEvent<String> previewPlan() {
+    SingleLiveEvent<String> previewPlan() {
         return mPreviewPlan;
     }
-    public SingleLiveEvent<Void> previewNurseProfile() {
+    SingleLiveEvent<Void> previewNurseProfile() {
         return mNurseProfile;
     }
-    public SingleLiveEvent<String> showMessage() {
+    SingleLiveEvent<String> showMessage() {
         return mShowMessage;
     }
 
@@ -99,7 +99,7 @@ public class MainViewModel extends ViewModel {
         });
     }
 
-    public void removeClient(String clientId) {
+    void removeClient(String clientId) {
         repository.deleteClient(clientId);
         loadClients();
     }
@@ -128,7 +128,7 @@ public class MainViewModel extends ViewModel {
         loadPlans();
     }
 
-    public MutableLiveData<Nurse> getLoggedNurse() {
+    MutableLiveData<Nurse> getLoggedNurse() {
         if(loggedNurse == null) {
             loggedNurse = new MutableLiveData<>();
             loadLoggedNurse();

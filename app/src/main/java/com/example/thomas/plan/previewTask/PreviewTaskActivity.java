@@ -72,7 +72,7 @@ public class PreviewTaskActivity extends BaseActivity {
 
         mTextMessage = findViewById(R.id.message);
         mTextMessage.setText(R.string.all_activities);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mViewModel.getPartOfDay().observe(this, new Observer<Enums.PartOfDay>() {

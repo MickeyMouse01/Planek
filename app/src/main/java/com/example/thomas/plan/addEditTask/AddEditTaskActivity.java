@@ -35,7 +35,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     private AddEditTaskViewModel viewModel;
     private Spinner partOfDaySpinner;
     private EditText mName,timeInput;
-    private Button save, changePicture;
+    private Button changePicture;
     private ImageView imageView;
     private Bitmap imageBitmap;
     private String relatesPlan = null;
@@ -54,7 +54,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         viewModel = obtainViewModel(this);
         mName = findViewById(R.id.add_task_name);
         imageView = findViewById(R.id.add_task_image);
-        save = findViewById(R.id.add_save_task);
+        Button save = findViewById(R.id.add_save_task);
         changePicture = findViewById(R.id.change_picture_task);
         partOfDaySpinner = findViewById(R.id.spinner_part_of_day);
         timeInput = findViewById(R.id.task_input_time);
@@ -171,8 +171,6 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                     imageView.setImageBitmap(imageBitmap);
                     imageView.setVisibility(View.VISIBLE);
                     changePicture.setVisibility(View.INVISIBLE);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -7,10 +7,6 @@ import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Remote.RemoteDataSource;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -162,15 +158,6 @@ public class Repository implements DataSource {
     //todo bug, kdyz zbyde posledni plan/klienta, tak se odstrani z databaze ale ne z view
     public void deletePlan(@NonNull String planId) {
         remoteDataSource.deletePlan(planId);
-    }
-
-    public void updatePlan(String planId, Plan plan) {
-        remoteDataSource.getPlan(planId, new LoadPlanCallback() {
-            @Override
-            public void onPlanLoaded(@NonNull Plan plan) {
-
-            }
-        });
     }
 
     //Tasks

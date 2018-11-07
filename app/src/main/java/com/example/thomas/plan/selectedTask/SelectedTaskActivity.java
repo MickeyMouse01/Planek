@@ -12,13 +12,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
@@ -36,9 +34,7 @@ public class SelectedTaskActivity extends BaseActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private SelectedTaskVieModel mViewModel;
-    private String viewPlanId;
     private int positionOfSelectedTask;
-
 
     private ViewPager mViewPager;
 
@@ -47,7 +43,7 @@ public class SelectedTaskActivity extends BaseActivity {
         super.onViewReady(savedInstanceState, intent);
 
         mViewModel = obtainViewModel(this);
-        viewPlanId = intent.getStringExtra("PlanId");
+        String viewPlanId = intent.getStringExtra("PlanId");
         positionOfSelectedTask = intent.getIntExtra("positionOfTask", 0);
         mViewModel.setViewedPlanId(viewPlanId);
         // Create the adapter that will return a fragment for each of the three
@@ -208,7 +204,7 @@ public class SelectedTaskActivity extends BaseActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

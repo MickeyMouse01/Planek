@@ -36,8 +36,6 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     private PreviewClientViewModel mViewModel;
     private ListOfPlansAdapter planAdapter;
     private ListOfTasksAdapter taskAdapter;
-    private ActionItemListener<Plan> planActionItemListener;
-    private ActionItemListener<Task> taskActionItemListener;
     private Intent addEditTaskIntent;
     private FloatingActionButton fab;
 
@@ -84,7 +82,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void setupListAdapter(final Plan plan) {
-        planActionItemListener = new ActionItemListener<Plan>() {
+        ActionItemListener<Plan> planActionItemListener = new ActionItemListener<Plan>() {
             @Override
             public void onCheckedClick(Plan item) {
 
@@ -114,7 +112,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void setupTaskAdapter(final List<Task> tasks) {
-        taskActionItemListener = new ActionItemListener<Task>() {
+        ActionItemListener<Task> taskActionItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
                 tasks.get(tasks.indexOf(item)).setPassed(item.isPassed());

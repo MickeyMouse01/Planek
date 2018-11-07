@@ -18,24 +18,23 @@ public class PreviewTaskViewModel extends ViewModel {
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<Enums.PartOfDay> partOfDay;
     private MutableLiveData<List<Task>> listOfTasks = new MutableLiveData<>();
-    ;
 
     public PreviewTaskViewModel(Repository repository) {
         this.repository = repository;
     }
 
-    public void setViewedPlanId(String viewedPlanId) {
+    void setViewedPlanId(String viewedPlanId) {
         this.viewedPlanId.setValue(viewedPlanId);
     }
 
-    public MutableLiveData<Enums.PartOfDay> getPartOfDay() {
+    MutableLiveData<Enums.PartOfDay> getPartOfDay() {
         if (partOfDay == null) {
             partOfDay = new MutableLiveData<>();
         }
         return partOfDay;
     }
 
-    public MutableLiveData<List<Task>> getListOfTasks() {
+    MutableLiveData<List<Task>> getListOfTasks() {
         if (listOfTasks == null) {
             listOfTasks = new MutableLiveData<>();
         }
@@ -52,7 +51,7 @@ public class PreviewTaskViewModel extends ViewModel {
         }, viewedPlanId.getValue());
     }
 
-    public void saveTask(Task task){
+    void saveTask(Task task){
         repository.saveTask(task, viewedPlanId.getValue(), new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -61,7 +60,7 @@ public class PreviewTaskViewModel extends ViewModel {
         });
     }
 
-    public void  deleteTaskFromPlan(Task task){
+    void  deleteTaskFromPlan(Task task){
         repository.deleteTaskFromPlan(viewedPlanId.getValue(),task.getUniqueID());
     }
 }

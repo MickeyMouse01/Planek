@@ -5,11 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,12 +32,10 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
     private NurseProfileEditViewModel mViewModel;
     private static final int PICK_IMAGE = 1;
 
-    private Button save, uploadNewImage;
     private EditText email,nameAndSurname;
     private Spinner typeOfGroup, shift;
     private ImageView imageOfNurse;
     private Nurse editedNurse;
-    private Bitmap imageBitmap;
 
     @Override
     protected int getContentView() {
@@ -55,8 +52,8 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         nameAndSurname = findViewById(R.id.nurse_edit_name);
         typeOfGroup = findViewById(R.id.nurse_edit_group);
         shift = findViewById(R.id.nurse_edit_shift);
-        save = findViewById(R.id.nurse_edit_save_button);
-        uploadNewImage = findViewById(R.id.nurse_edit_upload_image);
+        Button save = findViewById(R.id.nurse_edit_save_button);
+        Button uploadNewImage = findViewById(R.id.nurse_edit_upload_image);
         imageOfNurse = findViewById(R.id.nurse_edit_image);
 
         mViewModel.getEditedNurse().observe(this, new Observer<Nurse>() {
@@ -117,12 +114,10 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         if (requestCode == PICK_IMAGE) {
             Uri selectedImage = data.getData();
             try {
-                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageOfNurse.setImageBitmap(imageBitmap);
                 mViewModel.uploadImage(imageBitmap, editedNurse.getUniqueID());
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -30,9 +30,7 @@ public class PlansFragment extends Fragment
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MainViewModel mMainViewModel;
-    private ListOfPlansAdapter mPlansAdapter;
     private PlansFragmentBinding mPlansFragmentBinding;
-    private ActionItemListener actionListener;
 
     public PlansFragment() {
         // Requires empty public constructor
@@ -64,7 +62,7 @@ public class PlansFragment extends Fragment
 
     private void setupListAdapter() {
         ListView listView = mPlansFragmentBinding.plansList;
-        actionListener = new ActionItemListener<Plan>() {
+        ActionItemListener actionListener = new ActionItemListener<Plan>() {
             @Override
             public void onCheckedClick(Plan item) {
 
@@ -86,7 +84,7 @@ public class PlansFragment extends Fragment
             }
         };
 
-        mPlansAdapter = new ListOfPlansAdapter(
+        ListOfPlansAdapter mPlansAdapter = new ListOfPlansAdapter(
                 new ArrayList<Plan>(0), actionListener
         );
         listView.setAdapter(mPlansAdapter);

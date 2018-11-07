@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
-import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Repository;
 
@@ -16,7 +15,7 @@ public class PreviewPlansViewModel extends ViewModel {
     private Repository repository;
     private MutableLiveData<List<Plan>> mListOfPlans;
     private MutableLiveData<String> clientId;
-    private SingleLiveEvent<String> selectedPlanId = new SingleLiveEvent<>();;
+    private SingleLiveEvent<String> selectedPlanId = new SingleLiveEvent<>();
 
     public PreviewPlansViewModel(Repository repository) {
         this.repository = repository;
@@ -29,7 +28,7 @@ public class PreviewPlansViewModel extends ViewModel {
         return clientId;
     }
 
-    public SingleLiveEvent<String> selectPlan() {
+    SingleLiveEvent<String> selectPlan() {
         return selectedPlanId;
     }
 

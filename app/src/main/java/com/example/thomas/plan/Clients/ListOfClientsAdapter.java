@@ -21,20 +21,16 @@ import java.util.List;
 public class ListOfClientsAdapter extends BaseAdapter {
 
     private List<Client> mClients;
-    private View clientView;
-    private ImageButton infoButton, deleteButton;
-    private ConstraintLayout constraintLayout;
-    private TextView nameOfClient,surname,typeOfGroup;
     private ActionItemListener actionItemListener;
 
-    public ListOfClientsAdapter(List<Client> clients,
-                                ActionItemListener actionListener) {
+    ListOfClientsAdapter(List<Client> clients,
+                         ActionItemListener actionListener) {
         this.actionItemListener = actionListener;
         mClients = clients;
 
     }
 
-    public void replaceData(List<Client> clients) {
+    void replaceData(List<Client> clients) {
         mClients = clients;
         notifyDataSetChanged();
     }
@@ -57,14 +53,14 @@ public class ListOfClientsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, final View view, final ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        clientView = inflater.inflate(R.layout.client_item, null);
+        View clientView = inflater.inflate(R.layout.client_item, null);
 
-        nameOfClient = clientView.findViewById(R.id.client_item_name);
-        surname = clientView.findViewById(R.id.client_item_surname);
-        typeOfGroup = clientView.findViewById(R.id.client_item_typeOfgroup);
-        infoButton = clientView.findViewById(R.id.client_item_info_button);
-        deleteButton = clientView.findViewById(R.id.client_item_delete_button);
-        constraintLayout = clientView.findViewById(R.id.client_item_linear);
+        TextView nameOfClient = clientView.findViewById(R.id.client_item_name);
+        TextView surname = clientView.findViewById(R.id.client_item_surname);
+        TextView typeOfGroup = clientView.findViewById(R.id.client_item_typeOfgroup);
+        ImageButton infoButton = clientView.findViewById(R.id.client_item_info_button);
+        ImageButton deleteButton = clientView.findViewById(R.id.client_item_delete_button);
+        ConstraintLayout constraintLayout = clientView.findViewById(R.id.client_item_linear);
 
         nameOfClient.setText(mClients.get(position).getFirstName());
         surname.setText(mClients.get(position).getSurname());

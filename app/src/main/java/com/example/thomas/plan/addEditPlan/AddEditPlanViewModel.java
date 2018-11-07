@@ -2,7 +2,6 @@ package com.example.thomas.plan.addEditPlan;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableField;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
@@ -15,20 +14,19 @@ import com.example.thomas.plan.data.Repository;
 import java.io.ByteArrayOutputStream;
 
 public class AddEditPlanViewModel extends ViewModel {
-    public ObservableField<Plan> newPlan = new ObservableField<>();
+    MutableLiveData<Client> mutableClient = new MutableLiveData<>();
     private Repository repository;
     private SingleLiveEvent<Void> imageIsUploaded = new SingleLiveEvent<>();
-    public  MutableLiveData<Client> mutableClient = new MutableLiveData<>();
 
     public AddEditPlanViewModel(Repository mRepository) {
         this.repository = mRepository;
     }
 
-    public void savePlan(Plan newPlan) {
+    void savePlan(Plan newPlan) {
         repository.savePlan(newPlan);
     }
 
-    public void savePlanToClient(final Plan newPlan, String clientId){
+    void savePlanToClient(final Plan newPlan, String clientId) {
         repository.getClient(clientId, new DataSource.LoadClientCallback() {
             @Override
             public void onClientLoaded(@NonNull Client client) {
@@ -38,7 +36,7 @@ public class AddEditPlanViewModel extends ViewModel {
         });
     }
 
-    public void saveClientToRepository(Client client){
+    void saveClientToRepository(Client client) {
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -47,12 +45,11 @@ public class AddEditPlanViewModel extends ViewModel {
         });
     }
 
-
-    public SingleLiveEvent<Void> imageIsUploaded() {
+    SingleLiveEvent<Void> imageIsUploaded() {
         return imageIsUploaded;
     }
 
-    public void uploadImage(Bitmap bitmap, String name){
+    void uploadImage(Bitmap bitmap, String name) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] data = stream.toByteArray();

@@ -1,11 +1,7 @@
 package com.example.thomas.plan.data.Models;
 
 import android.support.annotation.NonNull;
-
 import com.example.thomas.plan.Common.Enums;
-
-import java.sql.Time;
-import java.util.Calendar;
 import java.util.UUID;
 
 /**

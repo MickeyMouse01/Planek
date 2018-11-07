@@ -21,7 +21,7 @@ public class AddEditTaskViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public void saveTaskToPlan(String planId, final Task task){
+    void saveTaskToPlan(String planId, final Task task){
         repository.getPlan(planId, new DataSource.LoadPlanCallback() {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
@@ -32,11 +32,11 @@ public class AddEditTaskViewModel extends ViewModel {
         });
     }
 
-    public SingleLiveEvent<Void> imageIsUploaded() {
+    SingleLiveEvent<Void> imageIsUploaded() {
         return imageIsUploaded;
     }
 
-    public void uploadImage(Bitmap bitmap, String name){
+    void uploadImage(Bitmap bitmap, String name){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] data = stream.toByteArray();

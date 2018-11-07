@@ -28,12 +28,7 @@ import java.util.List;
 public class ListOfPlansAdapter extends BaseAdapter {
 
     private List<Plan> mPlans;
-    private TextView nameOfPlan;
-    private View planView;
-    private ImageButton deleteButton;
-    private ConstraintLayout constraintLayout;
     private ActionItemListener actionListener;
-    private ImageView imageView;
     private Settings settings = new Settings();
 
     public ListOfPlansAdapter(List<Plan> plans, ActionItemListener actionItemListener) {
@@ -82,12 +77,12 @@ public class ListOfPlansAdapter extends BaseAdapter {
     public View getView(final int position, View view, final ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        planView = inflater.inflate(R.layout.plan_item, null);
+        View planView = inflater.inflate(R.layout.plan_item, null);
 
-        imageView = planView.findViewById(R.id.plan_imageview);
-        nameOfPlan = planView.findViewById(R.id.plan_name);
-        deleteButton = planView.findViewById(R.id.deleteButton);
-        constraintLayout = planView.findViewById(R.id.plan_item_linear);
+        ImageView imageView = planView.findViewById(R.id.plan_imageview);
+        TextView nameOfPlan = planView.findViewById(R.id.plan_name);
+        ImageButton deleteButton = planView.findViewById(R.id.deleteButton);
+        ConstraintLayout constraintLayout = planView.findViewById(R.id.plan_item_linear);
 
         if (settings != null) {
             if (settings.isDisableDeleteButton()){

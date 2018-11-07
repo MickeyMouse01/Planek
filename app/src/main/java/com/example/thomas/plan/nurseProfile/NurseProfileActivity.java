@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -65,8 +64,7 @@ public class NurseProfileActivity extends BaseActivity {
 
     private static NurseProfileViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        NurseProfileViewModel viewModel = ViewModelProviders.of(activity, factory).get(NurseProfileViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(NurseProfileViewModel.class);
     }
 
     @Override

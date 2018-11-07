@@ -29,7 +29,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
 
     private static final int PICK_IMAGE = 1;
     private EditText mName;
-    private Button save, changePicture;
+    private Button changePicture;
     private ImageView imageView;
     private AddEditPlanViewModel mViewModel;
     private Bitmap imageBitmap;
@@ -37,8 +37,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
 
     private static AddEditPlanViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        AddEditPlanViewModel viewModel = ViewModelProviders.of(activity, factory).get(AddEditPlanViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(AddEditPlanViewModel.class);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         mViewModel = obtainViewModel(this);
         mName = findViewById(R.id.add_name);
         imageView = findViewById(R.id.add_image);
-        save = findViewById(R.id.add_save_button);
+        Button save = findViewById(R.id.add_save_button);
         changePicture = findViewById(R.id.change_picture_plan);
         changePicture.setOnClickListener(this);
         save.setOnClickListener(this);
@@ -149,9 +148,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                     imageView.setImageBitmap(imageBitmap);
                     imageView.setVisibility(View.VISIBLE);
                     changePicture.setVisibility(View.INVISIBLE);
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

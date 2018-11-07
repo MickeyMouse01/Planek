@@ -1,8 +1,6 @@
 package com.example.thomas.plan.data;
 
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
@@ -14,7 +12,7 @@ import java.util.List;
  * Created by Tomas on 31-Mar-18.
  */
 
-public interface DataSource<T> {
+public interface DataSource {
 
     interface SavedDataCallback {
         void onSavedData(@NonNull String message);

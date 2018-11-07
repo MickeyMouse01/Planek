@@ -22,11 +22,11 @@ public class ViewClientViewModel extends ViewModel {
         this.repository = mRepository;
     }
 
-    public MutableLiveData<Client> getViewedClient() {
+    MutableLiveData<Client> getViewedClient() {
         return viewedClient;
     }
 
-    public void setViewedClient (String clientId){
+    void setViewedClient(String clientId){
         repository.getClient(clientId,new DataSource.LoadClientCallback() {
             @Override
             public void onClientLoaded(@NonNull Client client) {

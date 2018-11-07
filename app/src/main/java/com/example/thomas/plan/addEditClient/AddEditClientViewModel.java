@@ -2,7 +2,6 @@ package com.example.thomas.plan.addEditClient;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.SingleLiveEvent;
@@ -15,7 +14,7 @@ import com.example.thomas.plan.data.Repository;
  */
 
 public class AddEditClientViewModel extends ViewModel {
-    public MutableLiveData<Client> editedClient;
+    private MutableLiveData<Client> editedClient;
     private Repository repository;
     private SingleLiveEvent<String> onClientSaved = new SingleLiveEvent<>();
 
@@ -23,7 +22,7 @@ public class AddEditClientViewModel extends ViewModel {
         this.repository = mRepository;
     }
 
-    public void saveClient(Client newClient) {
+    void saveClient(Client newClient) {
         repository.saveClient(newClient, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -32,7 +31,7 @@ public class AddEditClientViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<Client> getEditedClient(String clientId) {
+    MutableLiveData<Client> getEditedClient(String clientId) {
         if (editedClient == null) {
             editedClient  = new MutableLiveData<>();
             loadClient(clientId);
@@ -50,7 +49,7 @@ public class AddEditClientViewModel extends ViewModel {
         });
     }
 
-    public SingleLiveEvent<String> onClientSaved(){
+    SingleLiveEvent<String> onClientSaved(){
         return onClientSaved;
     }
 }

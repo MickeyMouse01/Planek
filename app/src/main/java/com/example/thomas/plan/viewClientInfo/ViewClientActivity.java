@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,14 +20,13 @@ import com.example.thomas.plan.data.Models.Client;
 public class ViewClientActivity extends BaseActivity {
 
     private String viewClientId;
-    private ViewClientViewModel viewModel;
     private TextView firstName, surname, typeOfGroup, username, createdDate;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        viewModel = obtainViewModel(this);
+        ViewClientViewModel viewModel = obtainViewModel(this);
         viewClientId = intent.getStringExtra("ClientId");
         viewModel.setViewedClient(viewClientId);
 
@@ -69,8 +67,7 @@ public class ViewClientActivity extends BaseActivity {
 
     private static ViewClientViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        ViewClientViewModel viewModel = ViewModelProviders.of(activity, factory).get(ViewClientViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(ViewClientViewModel.class);
     }
 
     private void initialize(Client client){

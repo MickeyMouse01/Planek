@@ -3,14 +3,12 @@ package com.example.thomas.plan.viewPlanInfo;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPlanInfoViewModel extends ViewModel {
@@ -42,15 +40,15 @@ public class ViewPlanInfoViewModel extends ViewModel {
         },viewedPlanId.getValue());
     }
 
-    public void setViewedPlanId(String viewedPlanId) {
+    void setViewedPlanId(String viewedPlanId) {
         this.viewedPlanId.setValue(viewedPlanId);
     }
 
-    public MutableLiveData<Plan> getViewedPlan() {
+    MutableLiveData<Plan> getViewedPlan() {
         return viewedPlan;
     }
 
-    public void setViewedPlan (String planId){
+    void setViewedPlan(String planId){
         repository.getPlan(planId,new DataSource.LoadPlanCallback() {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
@@ -59,15 +57,7 @@ public class ViewPlanInfoViewModel extends ViewModel {
         });
     }
 
-    public void deleteTask(String taskId){
-        repository.deleteTask(taskId);
-    }
-
-    public void taskChecked(String taskId) {
-        Log.d("TaskChecked","TaskChecked");
-    }
-
-    public void deleteTaskFromPlan(String planId, final Task task){
+    void deleteTaskFromPlan(String planId, final Task task){
 
         repository.getPlan(planId, new DataSource.LoadPlanCallback() {
             @Override
@@ -77,7 +67,7 @@ public class ViewPlanInfoViewModel extends ViewModel {
         });
     }
 
-    public void updateTask(String planId, Task task){
+    void updateTask(String planId, Task task){
         repository.saveTask(task, planId, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {

@@ -4,7 +4,7 @@ public class Settings {
 
     private boolean disableDeleteButton = false;
 
-    public Settings(){
+    public Settings() {
 
     }
 

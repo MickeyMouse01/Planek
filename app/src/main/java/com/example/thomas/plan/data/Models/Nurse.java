@@ -16,7 +16,6 @@ public class Nurse {
     private String createdDate;
     private Enums.TypeOfGroup typeOfGroup = Enums.TypeOfGroup.UNDEFINED;
     private boolean inWork = false;
-    private boolean superVisior = false;
 
     public Nurse(){
 
@@ -40,14 +39,6 @@ public class Nurse {
 
     public void setInWork(boolean inWork) {
         this.inWork = inWork;
-    }
-
-    public boolean isSuperVisior() {
-        return superVisior;
-    }
-
-    public void setSuperVisior(boolean superVisior) {
-        this.superVisior = superVisior;
     }
 
     public String getUniqueID() {

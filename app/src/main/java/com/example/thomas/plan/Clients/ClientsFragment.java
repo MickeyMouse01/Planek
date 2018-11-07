@@ -25,9 +25,7 @@ import java.util.ArrayList;
 public class ClientsFragment extends Fragment {
 
     private MainViewModel mMainViewModel;
-    private ListOfClientsAdapter mClientsAdapter;
     private ClientsFragmentBinding mClientsFragmentBinding;
-    private ActionItemListener<Client> actionItemListener;
 
     public ClientsFragment() {
         // Requires empty public constructor
@@ -83,7 +81,7 @@ public class ClientsFragment extends Fragment {
     private void setupListAdapter() {
         ListView listView = mClientsFragmentBinding.clientsList;
 
-        actionItemListener = new ActionItemListener<Client>() {
+        ActionItemListener<Client> actionItemListener = new ActionItemListener<Client>() {
             @Override
             public void onCheckedClick(Client item) {
 
@@ -104,7 +102,7 @@ public class ClientsFragment extends Fragment {
                 mMainViewModel.removeClient(item.getUniqueID());
             }
         };
-        mClientsAdapter = new ListOfClientsAdapter(
+        ListOfClientsAdapter mClientsAdapter = new ListOfClientsAdapter(
                 new ArrayList<Client>(0), actionItemListener
         );
         listView.setAdapter(mClientsAdapter);

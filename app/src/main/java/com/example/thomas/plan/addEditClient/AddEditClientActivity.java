@@ -32,7 +32,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     private EditText mFirstName, mUserName;
     private EditText mSurname;
     private Spinner sTypeOfGroup;
-    private Button save, changePassword;
+    private Button changePassword;
     private String actualLock = "";
     private TextView txtForPassword;
     private String idOfClient;
@@ -44,8 +44,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
 
     private static AddEditClientViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        AddEditClientViewModel viewModel = ViewModelProviders.of(activity, factory).get(AddEditClientViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(AddEditClientViewModel.class);
     }
 
     @Override
@@ -55,7 +54,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mFirstName = findViewById(R.id.add_firstName);
         mSurname = findViewById(R.id.add_surname);
         sTypeOfGroup = findViewById(R.id.type_of_group);
-        save = findViewById(R.id.add_save_button);
+        Button save = findViewById(R.id.add_save_button);
         txtForPassword = findViewById(R.id.add_password_pattern_text);
         mPatternLockView = findViewById(R.id.add_pattern_lock_view);
         changePassword = findViewById(R.id.change_password);

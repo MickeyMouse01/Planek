@@ -1,10 +1,8 @@
 package com.example.thomas.plan.data.Local;
 
-import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-
 
 
 /**
@@ -15,7 +13,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
-    public abstract ClientDao clientDao();
+    abstract ClientDao clientDao();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {

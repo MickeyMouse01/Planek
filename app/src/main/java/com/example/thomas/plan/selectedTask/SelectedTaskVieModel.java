@@ -15,13 +15,12 @@ public class SelectedTaskVieModel extends ViewModel {
     private Repository repository;
     private MutableLiveData<List<Task>> mListOfTasks;
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
-        private String NAME_OF_CLASS = getClass().getName();
 
     public SelectedTaskVieModel(Repository repository){
         this.repository = repository;
     }
 
-    public MutableLiveData<List<Task>> getListOfTasks() {
+    MutableLiveData<List<Task>> getListOfTasks() {
         if (mListOfTasks == null) {
             mListOfTasks = new MutableLiveData<>();
             loadTasks();
@@ -31,7 +30,7 @@ public class SelectedTaskVieModel extends ViewModel {
     }
 
 
-    public void setViewedPlanId(String viewedPlanId) {
+    void setViewedPlanId(String viewedPlanId) {
         this.viewedPlanId.setValue(viewedPlanId);
     }
 
@@ -45,7 +44,7 @@ public class SelectedTaskVieModel extends ViewModel {
         },viewedPlanId.getValue());
     }
 
-    public void saveTask(Task task){
+    void saveTask(Task task){
         repository.saveTask(task, viewedPlanId.getValue(), new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {

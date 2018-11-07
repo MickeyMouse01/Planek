@@ -18,7 +18,6 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.previewTask.PreviewTaskActivity;
-import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,14 +26,11 @@ import com.google.firebase.auth.FirebaseUser;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private static final String crUsername= "admin@admin.cz";
-    private static final String crPassword = "5YpA5EDEI7OdGpkZ";
 
     private static final int RC_SIGN_IN = 123;
     public static Client LOGGED_CLIENT;
@@ -44,12 +40,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private Button switchButton;
     private LoginViewModel loginViewModel;
-    private Boolean isNewUser = false;
 
     public static LoginViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        LoginViewModel viewModel = ViewModelProviders.of(activity, factory).get(LoginViewModel.class);
-        return viewModel;
+        return ViewModelProviders.of(activity, factory).get(LoginViewModel.class);
     }
 
     @Override
@@ -99,6 +93,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (actualFragment == NURSE_LOGIN) {
             Intent intent = new Intent(this, ClientsActivity.class);
             intent.putExtra("userId", loginViewModel.getLoggedUser().getValue());
+            Boolean isNewUser = false;
             intent.putExtra("isNewUser", isNewUser);
             startActivity(intent);
 
@@ -139,7 +134,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
             case NURSE_LOGIN: {
                 actualFragment = NURSE_LOGIN;
-                List<AuthUI.IdpConfig> providers = Arrays.asList(
+                List<AuthUI.IdpConfig> providers = Collections.singletonList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
 
