@@ -9,6 +9,7 @@ import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ViewPlanInfoViewModel extends ViewModel {
@@ -35,6 +36,7 @@ public class ViewPlanInfoViewModel extends ViewModel {
         repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
+                Collections.sort(tasks);
                 listOfTasks.setValue(tasks);
             }
         },viewedPlanId.getValue());

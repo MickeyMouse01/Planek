@@ -6,6 +6,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
+import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
@@ -15,6 +16,7 @@ import com.example.thomas.plan.data.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel {
 
-    public final int VIEW_CLIENTS = 0;
+    private final int VIEW_CLIENTS = 0;
     public final int VIEW_PLANS = 1;
     public ObservableList<Client> mListOfClients;
     public ObservableList<Plan> mListOfPlans;
@@ -94,6 +96,7 @@ public class MainViewModel extends ViewModel {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
                 mListOfClients.clear();
+                Collections.sort(clients);
                 mListOfClients.addAll(clients);
             }
         });
@@ -118,6 +121,7 @@ public class MainViewModel extends ViewModel {
             @Override
             public void onPlansLoaded(@NonNull List<Plan> plans) {
                 mListOfPlans.clear();
+                Collections.sort(plans);
                 mListOfPlans.addAll(plans);
             }
         });
@@ -147,6 +151,5 @@ public class MainViewModel extends ViewModel {
         } else {
             mShowMessage.setValue("Přístup do databáze odmítnut");
         }
-
     }
 }

@@ -8,7 +8,7 @@ import java.util.UUID;
  * Created by Tomas on 05-Mar-18.
  */
 
-public class Task {
+public class Task implements Comparable<Task>{
 
     private final String uniqueID;
     private String name;
@@ -24,6 +24,7 @@ public class Task {
         this.uniqueID = UUID.randomUUID().toString();
     }
     public Task() {
+
         this.uniqueID = UUID.randomUUID().toString();
     }
 
@@ -86,5 +87,10 @@ public class Task {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public int compareTo(@NonNull Task task) {
+        return Integer.compare(this.getPartOfDay().getCode(), task.getPartOfDay().getCode());
     }
 }

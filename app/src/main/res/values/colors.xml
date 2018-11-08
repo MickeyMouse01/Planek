@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#657aee</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="greenColor">#00cc00</color>
     <drawable name="touchFeedback">#CFD8DC</drawable>
-    <color name="isPassed">#993FBF3F</color>
+    <color name="isPassed">#B3EA93</color>
 </resources>

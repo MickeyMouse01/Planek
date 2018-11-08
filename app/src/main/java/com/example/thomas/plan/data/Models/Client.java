@@ -1,12 +1,14 @@
 package com.example.thomas.plan.data.Models;
 
+import android.support.annotation.NonNull;
+
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class Client {
+public class Client implements Comparable<Client>{
 
     private final String uniqueID;
     private TypeOfGroup typeOfGroup;
@@ -93,5 +95,10 @@ public class Client {
 
     public void setPlanId(String planId) {
         this.planId = planId;
+    }
+
+    @Override
+    public int compareTo(@NonNull Client o) {
+        return this.getSurname().compareToIgnoreCase(o.getSurname());
     }
 }

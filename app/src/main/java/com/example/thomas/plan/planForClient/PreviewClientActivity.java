@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -72,6 +73,13 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
                 addEditTaskIntent.putExtra("PlanId", mViewModel.getViewedPlanId());
                 startActivity(addEditTaskIntent);
                 mViewModel.getViewedClient();
+            }
+        });
+
+        mViewModel.showToastWithMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                showSuccessToast(s);
             }
         });
     }
@@ -208,6 +216,8 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             Client client = mViewModel.getViewedClient().getValue();
             client.setPlanId(selectedPlanId);
             mViewModel.saveUpdatedClient(client);
+        } else if (requestCode == 1){
+
         }
     }
 }

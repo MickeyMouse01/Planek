@@ -213,7 +213,7 @@ public class RemoteDataSource implements DataSource {
                 if (databaseError != null) {
                     callback.onSavedData("Data nemohla být uložena " + databaseError.getMessage());
                 } else {
-                    callback.onSavedData("Data byla úspěšně uložena");
+                    callback.onSavedData("Klient byl úspěšně uložen");
                 }
             }
         });
@@ -334,8 +334,6 @@ public class RemoteDataSource implements DataSource {
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-
                 GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
                 };
                 Map<String, Task> map = dataSnapshot.child(planId)
@@ -379,9 +377,9 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 if (databaseError != null) {
-                    callback.onSavedData("Data could not be saved " + databaseError.getMessage());
+                    callback.onSavedData("Data nemohla být uložena " + databaseError.getMessage());
                 } else {
-                    callback.onSavedData("Data saved successfully.");
+                    callback.onSavedData("Aktivita byla úspěšně uložena.");
                 }
             }
         });

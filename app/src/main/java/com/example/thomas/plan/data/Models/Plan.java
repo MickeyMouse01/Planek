@@ -10,7 +10,7 @@ import java.util.UUID;
  * Created by Tomas on 05-Mar-18.
  */
 
-public class Plan {
+public class Plan implements Comparable<Plan>{
 
     private final String uniqueID;
     private String name;
@@ -45,7 +45,7 @@ public class Plan {
 
     public void addToListOfRelatesTasks(Task task){
         if(listOfRelatesTasks == null){
-            listOfRelatesTasks = new HashMap<>();;
+            listOfRelatesTasks = new HashMap<>();
         }
         listOfRelatesTasks.put(task.getUniqueID(), task);
     }
@@ -64,5 +64,10 @@ public class Plan {
 
     public void setImageSet(boolean imageSet) {
         this.imageSet = imageSet;
+    }
+
+    @Override
+    public int compareTo(@NonNull Plan o) {
+        return this.getName().compareToIgnoreCase(o.getName());
     }
 }

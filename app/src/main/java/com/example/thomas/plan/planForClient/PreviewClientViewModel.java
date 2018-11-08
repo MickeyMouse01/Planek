@@ -6,12 +6,14 @@ import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PreviewClientViewModel extends ViewModel {
@@ -23,6 +25,7 @@ public class PreviewClientViewModel extends ViewModel {
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<Client> viewedClient;
     private MutableLiveData<List<Task>> listOfTasks;
+    private SingleLiveEvent<String> mShowToastWithMessage = new SingleLiveEvent<>();
 
     public PreviewClientViewModel(Repository repository) {
         this.repository = repository;
@@ -34,6 +37,10 @@ public class PreviewClientViewModel extends ViewModel {
 
     void setViewedPlanId(String planId) {
         this.viewedPlanId.setValue(planId);
+    }
+
+    SingleLiveEvent<String> showToastWithMessage(){
+        return mShowToastWithMessage;
     }
 
     void setViewedClientId(String viewedClientId) {
@@ -85,8 +92,8 @@ public class PreviewClientViewModel extends ViewModel {
     public MutableLiveData<List<Task>> getTasks() {
         if (listOfTasks == null) {
             listOfTasks = new MutableLiveData<>();
-            loadTasks();
         }
+        loadTasks();
         return listOfTasks;
     }
 
@@ -94,6 +101,7 @@ public class PreviewClientViewModel extends ViewModel {
         repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
+                Collections.sort(tasks);
                 listOfTasks.setValue(tasks);
             }
         }, viewedPlanId.getValue());
@@ -105,6 +113,7 @@ public class PreviewClientViewModel extends ViewModel {
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
+                showToastWithMessage().setValue(message);
             }
         });
     }
@@ -123,7 +132,7 @@ public class PreviewClientViewModel extends ViewModel {
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
-
+                showToastWithMessage().setValue(message);
             }
         });
     }

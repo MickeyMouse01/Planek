@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@android:drawable/ic_delete"
-        android:height="80dp"
-        android:width="80dp"/>
+        android:width="45dp"
+        android:height="45dp">
+        <shape>
+            <corners android:radius="10dp" />
+            <solid android:color="#FFFFFF" />
+            <stroke
+                android:width="1dp"
+                android:color="#000000" />
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
 
-</layer-list >
+</layer-list>
