@@ -1,17 +1,18 @@
 package com.example.thomas.plan.Activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.thomas.plan.R;
 
 /**
@@ -54,7 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void showToast(String message) {
-        View toastLayout = getLayoutInflater().inflate(R.layout.toast_layout, null);
+        View toastLayout = getLayoutInflater().inflate(R.layout.toast_layout,null);
 
         TextView text = toastLayout.findViewById(R.id.text_of_toast);
         text.setText(message);
@@ -82,4 +83,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         toast.show();
     }
 
+    public AlertDialog.Builder createConfirmDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.confirm_dialog_message);
+        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        return builder;
+    }
 }

@@ -2,11 +2,8 @@ package com.example.thomas.plan.Clients;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
-import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
@@ -27,8 +24,8 @@ public class MainViewModel extends ViewModel {
 
     private final int VIEW_CLIENTS = 0;
     public final int VIEW_PLANS = 1;
-    public ObservableList<Client> mListOfClients;
-    public ObservableList<Plan> mListOfPlans;
+    private MutableLiveData<List<Client>> mListOfClients;
+    private MutableLiveData<List<Plan>> mListOfPlans;
     private final SingleLiveEvent<Void> mAddNewClient = new SingleLiveEvent<>();
     private final SingleLiveEvent<Void> mAddNewPlan = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mViewInfoClient = new SingleLiveEvent<>();
@@ -48,9 +45,9 @@ public class MainViewModel extends ViewModel {
         this.repository = mRepository;
     }
 
-    public ObservableList<Client> getClients() {
+    public  MutableLiveData<List<Client>> getClients() {
         if (mListOfClients == null) {
-            mListOfClients = new ObservableArrayList<>();
+            mListOfClients = new  MutableLiveData<>();
             loadClients();
         }
         return mListOfClients;
@@ -90,14 +87,12 @@ public class MainViewModel extends ViewModel {
         return mShowMessage;
     }
 
-
     private void loadClients() {
         repository.getClients(new DataSource.LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
-                mListOfClients.clear();
                 Collections.sort(clients);
-                mListOfClients.addAll(clients);
+                mListOfClients.setValue(clients);
             }
         });
     }
@@ -107,9 +102,9 @@ public class MainViewModel extends ViewModel {
         loadClients();
     }
 
-    public ObservableList<Plan> getPlans() {
+    public MutableLiveData<List<Plan>> getPlans() {
         if (mListOfPlans == null) {
-            mListOfPlans = new ObservableArrayList<>();
+            mListOfPlans = new MutableLiveData<>();
             loadPlans();
         }
         return mListOfPlans;
@@ -120,9 +115,8 @@ public class MainViewModel extends ViewModel {
         repository.getPlans(new DataSource.LoadPlansCallback() {
             @Override
             public void onPlansLoaded(@NonNull List<Plan> plans) {
-                mListOfPlans.clear();
                 Collections.sort(plans);
-                mListOfPlans.addAll(plans);
+                mListOfPlans.setValue(plans);
             }
         });
     }

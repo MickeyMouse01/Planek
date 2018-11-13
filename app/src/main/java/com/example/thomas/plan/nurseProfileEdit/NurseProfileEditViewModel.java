@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
 
+import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Repository;
@@ -17,6 +18,7 @@ public class NurseProfileEditViewModel extends ViewModel {
     private Repository repository;
     private MutableLiveData<Nurse> editedNurse;
     private FirebaseUser firebaseUser;
+    private SingleLiveEvent<Void> imageIsUploaded = new SingleLiveEvent<>();
 
     public NurseProfileEditViewModel(Repository repository){
         this.repository = repository;
@@ -44,6 +46,9 @@ public class NurseProfileEditViewModel extends ViewModel {
         repository.saveNurse(nurse);
     }
 
+    SingleLiveEvent<Void> getImageIsUploaded(){
+        return imageIsUploaded;
+    }
 
     void uploadImage(Bitmap bitmap, String name){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -53,7 +58,7 @@ public class NurseProfileEditViewModel extends ViewModel {
         repository.uploadImage(name, data, new DataSource.UploadImageCallback() {
             @Override
             public void onImageUploaded() {
-
+                imageIsUploaded.call();
             }
         });
     }

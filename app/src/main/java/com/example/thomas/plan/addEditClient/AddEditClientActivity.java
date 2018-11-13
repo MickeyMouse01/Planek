@@ -26,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-//todo seradit podle jmena
 public class AddEditClientActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText mFirstName, mUserName;
@@ -84,7 +83,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    private void finishThisActivity(){
+    private void finishThisActivity() {
         hideDialog();
         showSuccessToast("Klient byl úspěšně uložen");
         finish();
@@ -187,12 +186,12 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mViewModel.saveClient(editedClient);
     }
 
-    private boolean requiredFieldsAreFilled(){
+    private boolean requiredFieldsAreFilled() {
         boolean isFilled = true;
-        if(mFirstName.getText().toString().isEmpty()){
+        if (mFirstName.getText().toString().isEmpty()) {
             mFirstName.setError("Toto pole je povinné");
             isFilled = false;
-        } else if (mSurname.getText().toString().isEmpty()){
+        } else if (mSurname.getText().toString().isEmpty()) {
             mSurname.setError("Toto pole je povinné");
             isFilled = false;
         } else if (mUserName.getText().toString().isEmpty()) {
@@ -206,7 +205,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (idOfClient == null) {
-            if(requiredFieldsAreFilled()){
+            if (requiredFieldsAreFilled()) {
                 addClient();
             }
         } else {

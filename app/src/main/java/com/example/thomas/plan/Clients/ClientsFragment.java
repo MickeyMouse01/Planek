@@ -1,9 +1,12 @@
 package com.example.thomas.plan.Clients;
 
-import android.databinding.DataBindingUtil;
+import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +16,9 @@ import android.widget.ListView;
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Client;
-import com.example.thomas.plan.databinding.ClientsFragmentBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pospe on 15.02.2018.
@@ -25,7 +28,9 @@ import java.util.ArrayList;
 public class ClientsFragment extends Fragment {
 
     private MainViewModel mMainViewModel;
-    private ClientsFragmentBinding mClientsFragmentBinding;
+    private ListOfClientsAdapter mClientsAdapter;
+    private AlertDialog.Builder alertDialog;
+    private ListView listView;
 
     public ClientsFragment() {
         // Requires empty public constructor
@@ -44,17 +49,23 @@ public class ClientsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mClientsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.clients_fragment, container, false);
+
+        View view  = inflater.inflate(R.layout.clients_fragment, null);
+        listView = view.findViewById(R.id.clients_list);
 
         mMainViewModel = ClientsActivity.obtainViewModel(getActivity());
+        mMainViewModel.getClients().observe(this, new Observer<List<Client>>() {
+            @Override
+            public void onChanged(@Nullable List<Client> clients) {
+                if (mClientsAdapter != null) {
+                    mClientsAdapter.replaceData(clients);
+                }
+            }
+        });
 
-        mClientsFragmentBinding.setViewmodel(mMainViewModel);
-
-        setHasOptionsMenu(true);
-
-        return mClientsFragmentBinding.getRoot();
+        return view;
     }
 
     @Override
@@ -76,11 +87,22 @@ public class ClientsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupListAdapter();
+        alertDialog = createConfirmDialog();
+    }
+
+    private AlertDialog.Builder createConfirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.confirm_dialog_message);
+        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        return builder;
     }
 
     private void setupListAdapter() {
-        ListView listView = mClientsFragmentBinding.clientsList;
-
         ActionItemListener<Client> actionItemListener = new ActionItemListener<Client>() {
             @Override
             public void onCheckedClick(Client item) {
@@ -98,11 +120,17 @@ public class ClientsFragment extends Fragment {
             }
 
             @Override
-            public void onItemDeleteClick(Client item) {
-                mMainViewModel.removeClient(item.getUniqueID());
+            public void onItemDeleteClick(final Client item) {
+                alertDialog.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mMainViewModel.removeClient(item.getUniqueID());
+                    }
+                }).show();
+
             }
         };
-        ListOfClientsAdapter mClientsAdapter = new ListOfClientsAdapter(
+        mClientsAdapter = new ListOfClientsAdapter(
                 new ArrayList<Client>(0), actionItemListener
         );
         listView.setAdapter(mClientsAdapter);

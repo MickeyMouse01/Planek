@@ -24,18 +24,22 @@ import com.example.thomas.plan.data.Models.Nurse;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class NurseProfileEditActivity extends BaseActivity implements View.OnClickListener {
 
-    private NurseProfileEditViewModel mViewModel;
     private static final int PICK_IMAGE = 1;
-
-    private EditText email,nameAndSurname;
+    private NurseProfileEditViewModel mViewModel;
+    private EditText email, nameAndSurname;
     private Spinner typeOfGroup, shift;
     private ImageView imageOfNurse;
     private Nurse editedNurse;
+    private Bitmap imageBitmap;
+
+    private static NurseProfileEditViewModel obtainViewModel(FragmentActivity activity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(NurseProfileEditViewModel.class);
+    }
 
     @Override
     protected int getContentView() {
@@ -55,6 +59,8 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         Button save = findViewById(R.id.nurse_edit_save_button);
         Button uploadNewImage = findViewById(R.id.nurse_edit_upload_image);
         imageOfNurse = findViewById(R.id.nurse_edit_image);
+        save.setOnClickListener(this);
+        uploadNewImage.setOnClickListener(this);
 
         mViewModel.getEditedNurse().observe(this, new Observer<Nurse>() {
             @Override
@@ -62,16 +68,17 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
                 initializeNurse(nurse);
             }
         });
-        save.setOnClickListener(this);
-        uploadNewImage.setOnClickListener(this);
+
+        mViewModel.getImageIsUploaded().observe(this, new Observer<Void>() {
+            @Override
+            public void onChanged(@Nullable Void aVoid) {
+                hideDialog();
+            }
+        });
+
     }
 
-    private static NurseProfileEditViewModel obtainViewModel(FragmentActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(NurseProfileEditViewModel.class);
-    }
-
-    private void initializeNurse(Nurse nurse){
+    private void initializeNurse(Nurse nurse) {
         editedNurse = nurse;
         email.setText(nurse.getEmail());
         nameAndSurname.setText(nurse.getName() + " " + nurse.getSurname());
@@ -85,7 +92,7 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
 
     }
 
-    private void editNurse(){
+    private void editNurse() {
         editedNurse.setEmail(email.getText().toString());
         String editedNameAndSurname = nameAndSurname.getText().toString();
         String[] split = editedNameAndSurname.split("\\s+");
@@ -95,12 +102,18 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         editedNurse.setSurname(surname);
         editedNurse.setTypeOfGroup(Enums.TypeOfGroup.values()[typeOfGroup.getSelectedItemPosition()]);
         editedNurse.setShift(Enums.PartOfDay.values()[shift.getSelectedItemPosition()]);
+
+        if (imageBitmap != null) {
+            showDialog("Nahrávání obrázku ");
+            mViewModel.uploadImage(imageBitmap, editedNurse.getUniqueID());
+        }
+
         mViewModel.saveNurse(editedNurse);
         finish();
 
     }
 
-    private void uploadImage(){
+    private void uploadImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -114,10 +127,8 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         if (requestCode == PICK_IMAGE) {
             Uri selectedImage = data.getData();
             try {
-                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageOfNurse.setImageBitmap(imageBitmap);
-                mViewModel.uploadImage(imageBitmap, editedNurse.getUniqueID());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -129,7 +140,7 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         if (nameAndSurname.getText().toString().isEmpty()) {
             nameAndSurname.setError("Toto pole je povinné");
             isFilled = false;
-        } else if(email.getText().toString().isEmpty()){
+        } else if (email.getText().toString().isEmpty()) {
             email.setError("Toto pole je povinné");
             isFilled = false;
         } /*else if(!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()){
@@ -141,9 +152,9 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.nurse_edit_save_button:
-                if(requiredFieldsAreFilled()){
+                if (requiredFieldsAreFilled()) {
                     editNurse();
                 }
                 break;
@@ -151,6 +162,6 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
             case R.id.nurse_edit_upload_image:
                 uploadImage();
                 break;
-            }
         }
+    }
 }

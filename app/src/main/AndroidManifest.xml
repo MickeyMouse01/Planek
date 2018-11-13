@@ -57,7 +57,7 @@
         <activity
             android:name=".previewTask.PreviewTaskActivity"
             android:label="@string/title_activity_preview_task" />
-        <activity android:name=".ui.previewplans.PreviewPlansActivity"></activity>
+        <activity android:name=".ui.previewplans.PreviewPlansActivity" />
     </application>
 
 </manifest>

@@ -2,11 +2,13 @@ package com.example.thomas.plan.viewPlanInfo;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,6 +38,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
     private List<Task> mTasks = new ArrayList<>();
     private String viewPlanId;
     private ImageView imageView;
+    private AlertDialog.Builder confirmDialog;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -44,7 +47,6 @@ public class ViewPlanInfoActivity extends BaseActivity {
         mViewModel = obtainViewModel(this);
 
         setupListAdapter();
-
         viewPlanId = intent.getStringExtra("PlanId");
         mViewModel.setViewedPlanId(viewPlanId);
         mViewModel.setViewedPlan(viewPlanId);
@@ -71,13 +73,13 @@ public class ViewPlanInfoActivity extends BaseActivity {
             }
         });
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 runActivity();
             }
         });
+        confirmDialog = createConfirmDialog();
     }
 
     private List<Task> getSpecificTasks(List<Task> tasks) {
@@ -121,9 +123,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
 
             @Override
             public void onItemDeleteClick(Task item) {
-                mTasks.remove(item);
-                listOfTasksAdapter.replaceData(mTasks);
-                mViewModel.deleteTaskFromPlan(viewPlanId, item);
+                deleteItemWithConfirmation(item);
             }
         };
 
@@ -131,6 +131,17 @@ public class ViewPlanInfoActivity extends BaseActivity {
                 mTasks, taskItemListener
         );
         listViewTasks.setAdapter(listOfTasksAdapter);
+    }
+
+    private void deleteItemWithConfirmation(final Task task){
+        confirmDialog.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mTasks.remove(task);
+                listOfTasksAdapter.replaceData(mTasks);
+                mViewModel.deleteTaskFromPlan(viewPlanId, task);
+            }
+        }).show();
     }
 
     @Override

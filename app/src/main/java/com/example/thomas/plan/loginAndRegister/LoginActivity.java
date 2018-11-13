@@ -174,8 +174,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
                                     .format(Calendar.getInstance().getTime());
                             Nurse newNurse = new Nurse(user.getUid());
+                            String editedNameAndSurname = user.getDisplayName();
+                            String[] split = editedNameAndSurname.split("\\s+");
+                            String name = split[0];
+                            String surname = split[1];
                             newNurse.setEmail(user.getEmail());
-                            newNurse.setName(user.getDisplayName());
+                            newNurse.setName(name);
+                            newNurse.setSurname(surname);
                             newNurse.setCreatedDate(dateTime);
                             loginViewModel.saveNurse(newNurse);
                             loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);

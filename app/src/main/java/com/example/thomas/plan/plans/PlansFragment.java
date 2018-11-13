@@ -1,5 +1,8 @@
 package com.example.thomas.plan.plans;
 
+import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +23,7 @@ import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.databinding.PlansFragmentBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,7 +34,9 @@ public class PlansFragment extends Fragment
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MainViewModel mMainViewModel;
-    private PlansFragmentBinding mPlansFragmentBinding;
+    private ListOfPlansAdapter mPlansAdapter;
+    private ListView listView;
+    private AlertDialog.Builder alertDialog;
 
     public PlansFragment() {
         // Requires empty public constructor
@@ -48,20 +54,43 @@ public class PlansFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mPlansFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.plans_fragment, container, false);
+        View view  = inflater.inflate(R.layout.plans_fragment, null);
+        listView = view.findViewById(R.id.plans_list);
 
         mMainViewModel = ClientsActivity.obtainViewModel(getActivity());
-        mPlansFragmentBinding.setViewmodel(mMainViewModel);
-        setHasOptionsMenu(true);
-        setupListAdapter();
+        mMainViewModel.getPlans().observe(this, new Observer<List<Plan>>() {
+            @Override
+            public void onChanged(@Nullable List<Plan> plans) {
+                if (mPlansAdapter != null) {
+                    mPlansAdapter.replaceData(plans);
+                }
+            }
+        });
+        return view;
+    }
 
-        return mPlansFragmentBinding.getRoot();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setupListAdapter();
+        alertDialog = createConfirmDialog();
+    }
+
+    private AlertDialog.Builder createConfirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.confirm_dialog_message);
+        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        return builder;
     }
 
     private void setupListAdapter() {
-        ListView listView = mPlansFragmentBinding.plansList;
         ActionItemListener actionListener = new ActionItemListener<Plan>() {
             @Override
             public void onCheckedClick(Plan item) {
@@ -79,12 +108,18 @@ public class PlansFragment extends Fragment
             }
 
             @Override
-            public void onItemDeleteClick(Plan item) {
-                mMainViewModel.removePlan(item.getUniqueID());
+            public void onItemDeleteClick(final Plan item) {
+                alertDialog.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mMainViewModel.removePlan(item.getUniqueID());
+                    }
+                }).show();
+
             }
         };
 
-        ListOfPlansAdapter mPlansAdapter = new ListOfPlansAdapter(
+        mPlansAdapter = new ListOfPlansAdapter(
                 new ArrayList<Plan>(0), actionListener
         );
         listView.setAdapter(mPlansAdapter);
