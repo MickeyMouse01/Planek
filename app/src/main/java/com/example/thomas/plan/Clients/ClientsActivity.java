@@ -141,11 +141,11 @@ public class ClientsActivity extends BaseActivity
     }
 
     private void initializeData(Nurse nurse) {
-        TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
+        /*TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
         TextView txtMenuNameSurname = findViewById(R.id.menu_name_surname);
 
         txtMenuNameSurname.setText(nurse.getNameAndSurname());
-        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
+        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());*/
     }
 
     private void setupViewFragment(int frame) {

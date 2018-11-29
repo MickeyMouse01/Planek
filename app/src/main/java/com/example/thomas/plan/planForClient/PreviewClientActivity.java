@@ -26,6 +26,7 @@ import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
 import com.example.thomas.plan.ui.previewplans.PreviewPlansActivity;
+import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
 
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onItemClick(Plan item) {
-
+                viewPlan(item.getUniqueID());
             }
 
             @Override
@@ -219,5 +220,11 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         } else if (requestCode == 1){
 
         }
+    }
+
+    private void viewPlan(String planId) {
+        Intent intent = new Intent(this, ViewPlanInfoActivity.class);
+        intent.putExtra("PlanId", planId);
+        startActivity(intent);
     }
 }

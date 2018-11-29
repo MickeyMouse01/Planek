@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/preview_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -18,12 +18,13 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
-        android:src="@drawable/common_google_signin_btn_icon_dark"
+        android:src="@drawable/activity_image"
         app:layout_constraintBottom_toTopOf="@+id/preview_isDone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preview_name" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_name"
+        app:layout_constraintVertical_bias="0.456" />
 
     <TextView
         android:id="@+id/preview_name"
@@ -32,7 +33,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="Ukol"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:focusable="true" />
 
 
 </android.support.constraint.ConstraintLayout>

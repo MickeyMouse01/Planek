@@ -19,6 +19,8 @@ import com.example.thomas.plan.data.Models.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class ListOfTasksAdapter extends BaseAdapter {
@@ -65,30 +67,38 @@ public class ListOfTasksAdapter extends BaseAdapter {
         ConstraintLayout constraintLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
         CheckBox checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
         ImageView imageView = viewTask.findViewById(R.id.view_plan_imageView);
+        TextView time = viewTask.findViewById(R.id.task_item_time);
         textViewName.setText(tasks.get(position).getName());
 
-        if (tasks.get(position).isPassed()) {
+        final Task actualTask = tasks.get(position);
+
+        if (!actualTask.getTime().isEmpty()){
+            time.setText(actualTask.getTime());
+            time.setVisibility(View.VISIBLE);
+        }
+
+        if(actualTask.isImageSet()) {
+            StorageReference ref = FirebaseStorage.getInstance()
+                    .getReference().child(actualTask.getUniqueID());
+            GlideApp.with(viewTask)
+                    .load(ref)
+                    .into(imageView);
+        }
+
+        if (actualTask.isPassed()) {
             constraintLayout.setBackgroundColor(ContextCompat.getColor(viewTask.getContext(), R.color.isPassed));
             checkBox.setChecked(true);
             checkBox.setButtonDrawable(R.drawable.scaled_passed_checkbox);
             deleteImage.setVisibility(View.VISIBLE);
         }
 
-        if(tasks.get(position).isImageSet()) {
-            StorageReference ref = FirebaseStorage.getInstance()
-                    .getReference().child(tasks.get(position).getUniqueID());
-            GlideApp.with(viewTask)
-                    .load(ref)
-                    .into(imageView);
-        }
-
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                boolean isPassed = tasks.get(position).isPassed();
-                tasks.get(position).setPassed(!isPassed);
+                boolean isPassed = actualTask.isPassed();
+                actualTask.setPassed(!isPassed);
                 notifyDataSetChanged();
-                taskItemListener.onCheckedClick(tasks.get(position));
+                taskItemListener.onCheckedClick(actualTask);
 
             }
         });
@@ -96,22 +106,22 @@ public class ListOfTasksAdapter extends BaseAdapter {
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskItemListener.onItemClick(tasks.get(position));
+                taskItemListener.onItemClick(actualTask);
             }
         });
 
-        constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
+        /*constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Log.d("podrzel", "podrzel");
                 return true;
             }
-        });
+        });*/
 
         deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskItemListener.onItemDeleteClick(tasks.get(position));
+                taskItemListener.onItemDeleteClick(actualTask);
             }
         });
 

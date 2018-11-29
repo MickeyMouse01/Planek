@@ -2,6 +2,11 @@ package com.example.thomas.plan.data.Models;
 
 import android.support.annotation.NonNull;
 import com.example.thomas.plan.Common.Enums;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -17,7 +22,7 @@ public class Task implements Comparable<Task>{
     private boolean isImageSet = false;
     private String idOfPlan;
     private Enums.PartOfDay partOfDay = Enums.PartOfDay.UNDEFINED;
-    private String time;
+    private String time = "";
 
     public Task(String name) {
         this.name = name;
@@ -91,6 +96,21 @@ public class Task implements Comparable<Task>{
 
     @Override
     public int compareTo(@NonNull Task task) {
-        return Integer.compare(this.getPartOfDay().getCode(), task.getPartOfDay().getCode());
+        if (!this.getTime().isEmpty()){
+            return timeInMillis(this.getTime()) - timeInMillis(task.getTime());
+        } else {
+            return Integer.compare(this.getPartOfDay().getCode(), task.getPartOfDay().getCode());
+        }
+    }
+
+    private int timeInMillis(String time){
+        DateFormat secondaryFormat = new SimpleDateFormat("H:mm");
+        Date date = null;
+        try {
+            date = secondaryFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (int)date.getTime();
     }
 }

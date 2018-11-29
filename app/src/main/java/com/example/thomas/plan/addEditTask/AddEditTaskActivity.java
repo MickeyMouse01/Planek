@@ -25,8 +25,11 @@ import com.example.thomas.plan.data.Models.Task;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 public class AddEditTaskActivity extends BaseActivity implements View.OnClickListener {
@@ -40,7 +43,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     private Bitmap imageBitmap;
     private String relatesPlan = null;
     private boolean timeForTaskIsSet = false;
-    private int mHour, mMinute;
+    private String time;
 
     private static AddEditTaskViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -89,13 +92,14 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         String name = mName.getText().toString();
         String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
                 .format(Calendar.getInstance().getTime());
-        int partOfDay = partOfDaySpinner.getSelectedItemPosition();
+        //int partOfDay = partOfDaySpinner.getSelectedItemPosition();
         Task newTask = new Task(name);
         if(timeForTaskIsSet){
-            newTask.setTime(mHour + ":" + mMinute);
+            newTask.setTime(time);
+            newTask.setPartOfDay(Enums.PartOfDay.values()[getPartOfTheDay(time)]);
         }
         newTask.setCreatedDate(dateTime);
-        newTask.setPartOfDay(Enums.PartOfDay.values()[partOfDay]);
+
 
         showDialog("Ukládání");
         if (imageBitmap != null) {
@@ -141,15 +145,15 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void showPickerForTime(){
-        final Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+01:00"));
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        int mHour = 0;
+        int mMinute = 0;
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 timeForTaskIsSet = true;
-                timeInput.setText(hourOfDay + " : " + minute);
+                time = String.format("%02d:%02d", hourOfDay, minute);
+                timeInput.setText(time);
             }
         },mHour, mMinute, true);
         timePickerDialog.show();
@@ -176,5 +180,21 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                 }
             }
         }
+    }
+
+    private int getPartOfTheDay(String time){
+        DateFormat format = new SimpleDateFormat("H:mm");
+        try {
+            Date date = format.parse(time);
+            Date noon = format.parse("12:00");
+            if (date.before(noon)){
+                return 0; //morning
+            } else if(date.after(noon)){
+                return 1; //afternoon
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 3;
     }
 }

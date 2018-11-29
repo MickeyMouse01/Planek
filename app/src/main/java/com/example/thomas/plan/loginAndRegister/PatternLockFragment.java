@@ -23,7 +23,7 @@ import java.util.List;
 
 public class PatternLockFragment extends Fragment {
 
-    private static final String crUsername= "admin@admin.cz";
+    private static final String crUsername= "client@client.com";
     private static final String crPassword = "5YpA5EDEI7OdGpkZ";
 
     private LoginViewModel loginViewModel;
@@ -40,7 +40,7 @@ public class PatternLockFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
@@ -86,14 +86,13 @@ public class PatternLockFragment extends Fragment {
     }
 
     private void tryToSignIn(String email, String password, final String lock) {
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             loginViewModel.getLoginState().setValue(LoginState.ERROR_UNKNOWN);
-                            loginViewModel.getErrorMessage().setValue(task.getException().getMessage());
+                            loginViewModel.getErrorMessage().setValue("Není nastaven admin účet");
                         }
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
@@ -103,9 +102,7 @@ public class PatternLockFragment extends Fragment {
                             // If sign in fails, display a message to the user.
                             loginViewModel.getLoginState().setValue(LoginState.ERROR_CREDENTIALS);
                         }
-                        //hideDialog();
                     }
-
                 });
     }
 }

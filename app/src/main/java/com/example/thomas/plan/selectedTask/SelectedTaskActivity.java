@@ -3,7 +3,6 @@ package com.example.thomas.plan.selectedTask;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -17,14 +16,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.loginAndRegister.LoginActivity;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +112,7 @@ public class SelectedTaskActivity extends BaseActivity {
         private TextView textView;
         private ConstraintLayout constraintLayout;
         private TextView txtIsDone;
+        private ImageView previewImage;
         private ActionItemListener actionItemListener;
 
         public PlaceholderFragment() {
@@ -166,17 +170,19 @@ public class SelectedTaskActivity extends BaseActivity {
                     int position = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
                     setText(position);
                     setPassed(position);
+                    setImageOfTask(position);
                 }
             });
 
             textView = rootView.findViewById(R.id.preview_name);
+            previewImage = rootView.findViewById(R.id.preview_image);
             constraintLayout = rootView.findViewById(R.id.viewpager_ConstraintLayout);
             txtIsDone = rootView.findViewById(R.id.preview_isDone);
             txtIsDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    constraintLayout.setBackgroundColor(Color.GREEN);
-                    txtIsDone.setBackgroundColor(Color.GREEN);
+                    //constraintLayout.setBackgroundResource(R.color.isPassed);
+                    txtIsDone.setBackgroundResource(R.color.isPassed);
                     txtIsDone.setText("Splněno");
                     actionItemListener.onItemClick(null);
                 }
@@ -187,14 +193,26 @@ public class SelectedTaskActivity extends BaseActivity {
         private void setPassed(int position){
             boolean isPassed = listOfTasks.get(position).isPassed();
             if (isPassed) {
-                constraintLayout.setBackgroundColor(Color.GREEN);
-                txtIsDone.setBackgroundColor(Color.GREEN);
+                constraintLayout.setBackgroundResource(R.color.isPassed);
+                txtIsDone.setBackgroundResource(R.color.isPassed);
                 txtIsDone.setText("Splněno");
             }
         }
 
         private void setText(int position) {
             textView.setText(listOfTasks.get(position).getName());
+        }
+
+        private void setImageOfTask(int position){
+            if (listOfTasks.get(position).isImageSet()){
+                StorageReference ref = FirebaseStorage.getInstance()
+                        .getReference()
+                        .child(listOfTasks.get(position).getUniqueID());
+
+                GlideApp.with(this)
+                        .load(ref)
+                        .into(previewImage);
+            }
         }
     }
 

@@ -394,6 +394,4 @@ public class RemoteDataSource implements DataSource {
         mDatabase.child("plans").child(planId)
                 .child(LIST_OF_RELATES_TASKS).child(taskId).removeValue();
     }
-
-
 }

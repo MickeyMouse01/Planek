@@ -48,12 +48,6 @@ public class LoginViewModel extends ViewModel {
         return loggedNurse;
     }
 
-    //todo dostat tady apliakcnni kontext
-    void performLogin(String username, String password) {
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-            loginState.setValue(LoginState.ERROR_VALIDATIONS);
-        }
-    }
 
     void performLoginClient(String username, final String code){
         repository.searchClientByUsername(username, new DataSource.LoadClientCallback() {

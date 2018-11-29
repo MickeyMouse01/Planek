@@ -6,4 +6,6 @@
     <color name="greenColor">#00cc00</color>
     <drawable name="touchFeedback">#CFD8DC</drawable>
     <color name="isPassed">#B3EA93</color>
+    <color name="deleteButton">#32353a</color>
+    <color name="infoButton">#08a035</color>
 </resources>
