@@ -5,6 +5,8 @@ import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
@@ -23,14 +25,20 @@ public class AddEditPlanViewModel extends ViewModel {
     }
 
     void savePlan(Plan newPlan) {
-        repository.savePlan(newPlan);
+        repository.savePlan(newPlan, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
     }
 
-    void savePlanToClient(final Plan newPlan, String clientId) {
+    void savePlanToClient(final Plan newPlan, String clientId, final int day) {
         repository.getClient(clientId, new DataSource.LoadClientCallback() {
             @Override
             public void onClientLoaded(@NonNull Client client) {
-                client.setPlanId(newPlan.getUniqueID());
+                client .getPlansForDate()
+                        .put(Day.values()[day].getNameOfDay(), newPlan.getUniqueID());
                 mutableClient.setValue(client);
             }
         });

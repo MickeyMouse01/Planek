@@ -16,7 +16,9 @@ import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class PreviewPlansActivity extends BaseActivity {
@@ -24,6 +26,7 @@ public class PreviewPlansActivity extends BaseActivity {
     private PreviewPlansViewModel mViewModel;
     private ListOfPlansAdapter mPlansAdapter;
     private Settings settings;
+    private String planId;
 
     public static PreviewPlansViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -51,16 +54,40 @@ public class PreviewPlansActivity extends BaseActivity {
             }
         });
 
-        mViewModel.selectPlan().observe(this, new Observer<String>() {
+        mViewModel.selectPlan().observe(this, new Observer<Plan>() {
             @Override
-            public void onChanged(@Nullable String planId) {
-                Intent output = new Intent();
-                output.putExtra("planId", planId);
-                setResult(RESULT_OK, output);
-                finish();
+            public void onChanged(@Nullable Plan plan) {
+                createCopyOfPlan(plan);
             }
         });
 
+        mViewModel.onSavePlan().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                hideDialog();
+                showSuccessToast(s);
+                finishThisActivity(planId);
+            }
+        });
+    }
+
+    private void createCopyOfPlan(Plan plan){
+        showDialog("Ukládání");
+        String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
+                .format(Calendar.getInstance().getTime());
+        Plan newPlan = new Plan();
+        newPlan.setListOfRelatesTasks(plan.getListOfRelatesTasks());
+        newPlan.setName(plan.getName() + " - kopie");
+        newPlan.setCreatedDate(dateTime);
+        planId = newPlan.getUniqueID();
+        mViewModel.savePlan(newPlan);
+    }
+
+    private void finishThisActivity(String planId){
+        Intent output = new Intent();
+        output.putExtra("planId", planId);
+        setResult(RESULT_OK, output);
+        finish();
     }
 
     private void setupListAdapter() {
@@ -73,7 +100,7 @@ public class PreviewPlansActivity extends BaseActivity {
 
             @Override
             public void onItemClick(Plan item) {
-                mViewModel.selectPlan().setValue(item.getUniqueID());
+                mViewModel.selectPlan().setValue(item);
             }
 
             @Override

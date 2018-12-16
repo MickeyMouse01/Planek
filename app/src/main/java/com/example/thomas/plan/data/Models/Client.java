@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class Client implements Comparable<Client>{
     private String createdDate;
     private String password;
     private String username;
+    private HashMap<String,String> plansForDate = new HashMap<>();
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -95,6 +97,14 @@ public class Client implements Comparable<Client>{
 
     public void setPlanId(String planId) {
         this.planId = planId;
+    }
+
+    public HashMap<String, String> getPlansForDate() {
+        return plansForDate;
+    }
+
+    public void setPlansForDate(HashMap<String, String> plansForDate) {
+        this.plansForDate = plansForDate;
     }
 
     @Override

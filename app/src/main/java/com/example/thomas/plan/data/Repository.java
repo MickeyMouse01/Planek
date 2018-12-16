@@ -132,8 +132,8 @@ public class Repository implements DataSource {
     }
 
     //Plans
-    public void savePlan(@NonNull Plan plan) {
-        remoteDataSource.savePlan(plan);
+    public void savePlan(@NonNull Plan plan, SavedDataCallback callback) {
+        remoteDataSource.savePlan(plan, callback);
     }
 
     public void getPlans(@NonNull final LoadPlansCallback callback) {

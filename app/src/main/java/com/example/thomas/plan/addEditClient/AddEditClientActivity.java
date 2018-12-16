@@ -21,9 +21,11 @@ import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.data.Models.Plan;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AddEditClientActivity extends BaseActivity implements View.OnClickListener {

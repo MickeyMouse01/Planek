@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class Plan implements Comparable<Plan>{
 
-    private final String uniqueID;
+    private String uniqueID;
     private String name;
     private String createdDate;
     private Map<String, Task> listOfRelatesTasks;

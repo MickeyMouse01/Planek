@@ -18,14 +18,14 @@ import java.util.List;
 
 public class PreviewClientViewModel extends ViewModel {
 
-    public ObservableList<Plan> mListOfPlans;
-    private MutableLiveData<Plan> selectedPlan;
-    private Repository repository;
-    private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
-    private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
-    private MutableLiveData<Client> viewedClient;
-    private MutableLiveData<List<Task>> listOfTasks;
-    private SingleLiveEvent<String> mShowToastWithMessage = new SingleLiveEvent<>();
+   private MutableLiveData<Plan> selectedPlan;
+   private Repository repository;
+   private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
+   private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
+   private MutableLiveData<String> nameOfDay = new MutableLiveData<>();
+   private MutableLiveData<Client> viewedClient;
+   private MutableLiveData<List<Task>> listOfTasks;
+   private SingleLiveEvent<String> mShowToastWithMessage = new SingleLiveEvent<>();
 
     public PreviewClientViewModel(Repository repository) {
         this.repository = repository;
@@ -45,6 +45,10 @@ public class PreviewClientViewModel extends ViewModel {
 
     void setViewedClientId(String viewedClientId) {
         this.viewedClientId.setValue(viewedClientId);
+    }
+
+    void setNameOfDay(String nameOfDay) {
+        this.nameOfDay.setValue(nameOfDay);
     }
 
     MutableLiveData<Client> getViewedClient() {
@@ -81,7 +85,7 @@ public class PreviewClientViewModel extends ViewModel {
                     if (plan != null) {
                         selectedPlan.setValue(plan);
                     } else {
-                        deletePlanFromClient();
+                        deletePlanFromClient(nameOfDay.getValue());
                     }
 
                 }
@@ -107,9 +111,9 @@ public class PreviewClientViewModel extends ViewModel {
         }, viewedPlanId.getValue());
     }
 
-    void deletePlanFromClient() {
+    void deletePlanFromClient(String nameOfDay) {
         Client client = getViewedClient().getValue();
-        client.setPlanId(null);
+        client.getPlansForDate().remove(nameOfDay);
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {

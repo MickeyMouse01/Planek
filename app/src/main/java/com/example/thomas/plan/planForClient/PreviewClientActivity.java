@@ -9,13 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
@@ -32,14 +32,16 @@ import java.util.List;
 
 public class PreviewClientActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageButton addNewPlanBut;
-    private ListView listViewOnePlan, listViewTasks;
-    private String clientId;
-    private PreviewClientViewModel mViewModel;
-    private ListOfPlansAdapter planAdapter;
-    private ListOfTasksAdapter taskAdapter;
-    private Intent addEditTaskIntent;
-    private FloatingActionButton fab;
+    ImageButton addNewPlanBut;
+    ListView listViewOnePlan, listViewTasks;
+    String clientId;
+    String nameOfDay;
+    int day;
+    PreviewClientViewModel mViewModel;
+    ListOfPlansAdapter planAdapter;
+    ListOfTasksAdapter taskAdapter;
+    Intent addEditTaskIntent;
+    FloatingActionButton fab;
 
     public static PreviewClientViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -54,6 +56,9 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         addEditTaskIntent = new Intent(this, AddEditTaskActivity.class);
         mViewModel = obtainViewModel(this);
         clientId = intent.getStringExtra("ClientId");
+        day = intent.getIntExtra("position", 0);
+        nameOfDay = Day.values()[day].getNameOfDay();
+        mViewModel.setNameOfDay(nameOfDay);
         mViewModel.setViewedClientId(clientId);
 
         listViewOnePlan = findViewById(R.id.plan_for_client_lv_plan);
@@ -80,6 +85,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         mViewModel.showToastWithMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+                hideDialog();
                 showSuccessToast(s);
             }
         });
@@ -90,7 +96,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         return R.layout.activity_plan_for_client;
     }
 
-    private void setupListAdapter(final Plan plan) {
+    private void setupPlanAdapter(final Plan plan) {
         ActionItemListener<Plan> planActionItemListener = new ActionItemListener<Plan>() {
             @Override
             public void onCheckedClick(Plan item) {
@@ -109,7 +115,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onItemDeleteClick(Plan item) {
-                mViewModel.deletePlanFromClient();
+                mViewModel.deletePlanFromClient(nameOfDay);
                 planAdapter.clearData();
                 if (taskAdapter != null) {
                     taskAdapter.clearData();
@@ -150,8 +156,9 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initializeClient(Client client) {
-        mViewModel.setViewedPlanId(client.getPlanId());
-        if (client.getPlanId() == null) {
+        String viewedPlanId = client.getPlansForDate().get(nameOfDay);
+        mViewModel.setViewedPlanId(viewedPlanId);
+        if (viewedPlanId == null) {
             fab.setVisibility(View.GONE);
             addNewPlanBut.setVisibility(View.VISIBLE);
             listViewOnePlan.setVisibility(View.GONE);
@@ -159,7 +166,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             mViewModel.getSelectedPlan().observe(this, new Observer<Plan>() {
                 @Override
                 public void onChanged(@Nullable Plan plan) {
-                    setupListAdapter(plan);
+                    setupPlanAdapter(plan);
                 }
             });
 
@@ -202,6 +209,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(PreviewClientActivity.this, AddEditPlanActivity.class);
                 intent.putExtra("ClientId", clientId);
+                intent.putExtra("position", day);
                 startActivityForResult(intent, 1);
             }
         });
@@ -215,10 +223,14 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
             showDialog("Ukládání");
             String selectedPlanId = data.getStringExtra("planId");
             Client client = mViewModel.getViewedClient().getValue();
-            client.setPlanId(selectedPlanId);
+            client.getPlansForDate().put(nameOfDay, selectedPlanId);
             mViewModel.saveUpdatedClient(client);
-        } else if (requestCode == 1){
-
+        } else if (requestCode == 1 && data != null){
+            showDialog("Ukládání");
+            String selectedPlanId = data.getStringExtra("planId");
+            Client client = mViewModel.getViewedClient().getValue();
+            client.getPlansForDate().put(nameOfDay, selectedPlanId);
+            mViewModel.saveUpdatedClient(client);
         }
     }
 

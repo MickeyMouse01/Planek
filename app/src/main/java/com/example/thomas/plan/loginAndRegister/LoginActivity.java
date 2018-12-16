@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Clients.ClientsActivity;
+import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
@@ -103,7 +105,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onChanged(@Nullable Client client) {
                     LOGGED_CLIENT = client;
-                    startPreviewTasksActivity(client.getPlanId());
+                    if (client != null){
+                        int day = ActivityUtils.getActualDay();
+                        startPreviewTasksActivity(client
+                                .getPlansForDate()
+                                .get(Day.values()[day]));
+                    }
                 }
             });
         }
@@ -138,14 +145,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
 
-                startActivityForResult(
+                /*startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);
+                        RC_SIGN_IN);*/
 
-                //loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
 
                 break;
             }

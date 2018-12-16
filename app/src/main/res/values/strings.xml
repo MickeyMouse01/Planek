@@ -182,8 +182,9 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
-    <string name="title_activity_preview_task">PreviewTaskActivity</string>
+    <string name="title_activity_preview_task">Denní plán</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="title_activity_listOfDays">Vyberte plán pro den v týdnu</string>
     <string name="title_notifications">Notifications</string>
     <string name="morning_activities">Dopolední aktivity</string>
     <string name="afternoon_activities">Odpolední aktivity</string>

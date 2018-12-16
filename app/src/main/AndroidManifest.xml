@@ -58,6 +58,9 @@
             android:name=".previewTask.PreviewTaskActivity"
             android:label="@string/title_activity_preview_task" />
         <activity android:name=".ui.previewplans.PreviewPlansActivity" />
+
+        <activity android:name=".listOfDays.ListOfDaysActivity"
+            android:label="@string/title_activity_listOfDays"></activity>
     </application>
 
 </manifest>

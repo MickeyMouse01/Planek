@@ -27,13 +27,14 @@ import java.util.Calendar;
 
 public class AddEditPlanActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final int PICK_IMAGE = 1;
-    private EditText mName;
-    private Button changePicture;
-    private ImageView imageView;
-    private AddEditPlanViewModel mViewModel;
-    private Bitmap imageBitmap;
-    private String clientId;
+   static final int PICK_IMAGE = 1;
+   EditText mName;
+   Button changePicture;
+   ImageView imageView;
+   AddEditPlanViewModel mViewModel;
+   Bitmap imageBitmap;
+   String clientId;
+   int day;
 
     private static AddEditPlanViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -45,6 +46,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         super.onViewReady(savedInstanceState, intent);
 
         clientId = intent.getStringExtra("ClientId");
+        day = intent.getIntExtra("position", 0);
         mViewModel = obtainViewModel(this);
         mName = findViewById(R.id.add_name);
         imageView = findViewById(R.id.add_image);
@@ -97,7 +99,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         }
 
         if (clientId != null) {
-            mViewModel.savePlanToClient(newPlan, clientId);
+            mViewModel.savePlanToClient(newPlan, clientId, day);
         }
         mViewModel.savePlan(newPlan);
 

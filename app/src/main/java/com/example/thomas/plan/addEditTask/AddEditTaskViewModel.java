@@ -26,7 +26,12 @@ public class AddEditTaskViewModel extends ViewModel {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
                 plan.addToListOfRelatesTasks(task);
-                repository.savePlan(plan);
+                repository.savePlan(plan, new DataSource.SavedDataCallback() {
+                    @Override
+                    public void onSavedData(@NonNull String message) {
+
+                    }
+                });
 
             }
         });

@@ -24,6 +24,7 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.addEditClient.AddEditClientActivity;
 import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.data.Models.Nurse;
+import com.example.thomas.plan.listOfDays.ListOfDaysActivity;
 import com.example.thomas.plan.loginAndRegister.LoginActivity;
 import com.example.thomas.plan.nurseProfile.NurseProfileActivity;
 import com.example.thomas.plan.planForClient.PreviewClientActivity;
@@ -74,7 +75,7 @@ public class ClientsActivity extends BaseActivity
         mViewModel.previewClient().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String clientId) {
-                previewClient(clientId);
+                selectDay(clientId);
             }
         });
         mViewModel.viewPlan().observe(this, new Observer<String>() {
@@ -141,11 +142,11 @@ public class ClientsActivity extends BaseActivity
     }
 
     private void initializeData(Nurse nurse) {
-        /*TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
+        TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
         TextView txtMenuNameSurname = findViewById(R.id.menu_name_surname);
 
         txtMenuNameSurname.setText(nurse.getNameAndSurname());
-        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());*/
+        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
     }
 
     private void setupViewFragment(int frame) {
@@ -199,8 +200,6 @@ public class ClientsActivity extends BaseActivity
         } else if (id == R.id.nav_list_plans) {
             setupViewFragment(1);
 
-        } else if (id == R.id.nav_settings) {
-
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, LoginActivity.class);
@@ -228,12 +227,18 @@ public class ClientsActivity extends BaseActivity
         startActivity(intent);
     }
 
-    private void previewClient(String clientId) {
+    void selectDay(String clientId){
+        Intent intent = new Intent(this, ListOfDaysActivity.class);
+        intent.putExtra("ClientId", clientId);
+        startActivity(intent);
+    }
+
+    /*private void previewClient(String clientId) {
         mViewModel.getCurrentFragment().setValue(VIEW_CLIENTS);
         Intent intent = new Intent(this, PreviewClientActivity.class);
         intent.putExtra("ClientId", clientId);
         startActivity(intent);
-    }
+    }*/
 
     private void viewPlan(String planId) {
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);

@@ -88,6 +88,45 @@ public class Enums {
             }
         }
     }
+
+    public enum Day {
+        MONDAY(0),
+        TUESDAY(1),
+        WEDNESDAY(2),
+        THURSDAY(3),
+        FRIDAY(4),
+        SATURDAY(5),
+        SUNDAY(6);
+
+        private int code;
+        Day(int code) {
+            this.code = code;
+        }
+        public int getCode() {
+            return code;
+        }
+
+        public String getNameOfDay() {
+            switch (getCode()) {
+                case 0:
+                    return "Pondělí";
+                case 1:
+                    return "Úterý";
+                case 2:
+                    return "Středa";
+                case 3:
+                    return "Čtvrtek";
+                case 4:
+                    return "Pátek";
+                case 5:
+                    return "Sobota";
+                case 6:
+                    return "Neděle";
+                default:
+                    return "Nevybráno";
+            }
+        }
+    }
 }
 
 

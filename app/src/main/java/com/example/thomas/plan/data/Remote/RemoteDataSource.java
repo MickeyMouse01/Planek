@@ -293,9 +293,18 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void savePlan(@NonNull Plan plan) {
+    public void savePlan(@NonNull Plan plan, final SavedDataCallback callback) {
         mDatabase.child("plans")
-                .child(plan.getUniqueID()).setValue(plan);
+                .child(plan.getUniqueID()).setValue(plan, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    callback.onSavedData("Data nemohla být uložena " + databaseError.getMessage());
+                } else {
+                    callback.onSavedData("Plán byl úspěšně uložen.");
+                }
+            }
+        });
 
     }
 
@@ -336,13 +345,21 @@ public class RemoteDataSource implements DataSource {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
                 };
-                Map<String, Task> map = dataSnapshot.child(planId)
-                        .child(LIST_OF_RELATES_TASKS).getValue(t);
-
-                if (map != null) {
-                    List<Task> tasks = new ArrayList<>(map.values());
-                    callback.onTasksLoaded(tasks);
+                try{
+                    Map<String, Task> map = dataSnapshot.child(planId)
+                            .child(LIST_OF_RELATES_TASKS).getValue(t);
+                    if (map != null) {
+                        List<Task> tasks = new ArrayList<>(map.values());
+                        callback.onTasksLoaded(tasks);
+                    }
+                } catch (NullPointerException e){
+                    if (e.getMessage().contains("Can't pass null for argument")){
+                        callback.onTasksLoaded(null);
+                    }
                 }
+
+
+
             }
 
             @Override

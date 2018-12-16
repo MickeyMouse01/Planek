@@ -84,9 +84,19 @@ public class PreviewTaskActivity extends BaseActivity {
         mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
-                updateData(tasks);
+                if(tasks != null) {
+                    if (!tasks.isEmpty()){
+                        updateData(tasks);
+                    }
+                } else {
+                    noDataDisplayed();
+                }
             }
         });
+
+    }
+
+    private void noDataDisplayed(){
 
     }
 

@@ -81,7 +81,7 @@ public interface DataSource {
 
     void getPlan(@NonNull String planId, LoadPlanCallback callback);
 
-    void savePlan(@NonNull Plan plan);
+    void savePlan(@NonNull Plan plan, SavedDataCallback callback);
 
     void deletePlan(@NonNull String planId);
 

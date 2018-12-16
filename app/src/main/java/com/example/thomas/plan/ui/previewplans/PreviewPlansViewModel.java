@@ -15,7 +15,8 @@ public class PreviewPlansViewModel extends ViewModel {
     private Repository repository;
     private MutableLiveData<List<Plan>> mListOfPlans;
     private MutableLiveData<String> clientId;
-    private SingleLiveEvent<String> selectedPlanId = new SingleLiveEvent<>();
+    private SingleLiveEvent<Plan> selectedPlan = new SingleLiveEvent<>();
+    private SingleLiveEvent<String> onSavePlan = new SingleLiveEvent<>();
 
     public PreviewPlansViewModel(Repository repository) {
         this.repository = repository;
@@ -28,8 +29,21 @@ public class PreviewPlansViewModel extends ViewModel {
         return clientId;
     }
 
-    SingleLiveEvent<String> selectPlan() {
-        return selectedPlanId;
+    SingleLiveEvent<Plan> selectPlan() {
+        return selectedPlan;
+    }
+
+    void savePlan(Plan newPlan){
+        repository.savePlan(newPlan, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+                onSavePlan.setValue(message);
+            }
+        });
+    }
+
+    public SingleLiveEvent<String> onSavePlan() {
+        return onSavePlan;
     }
 
     public MutableLiveData<List<Plan>> getPlans() {
@@ -39,7 +53,6 @@ public class PreviewPlansViewModel extends ViewModel {
         }
         return mListOfPlans;
     }
-
 
     private void loadPlans() {
         repository.getPlans(new DataSource.LoadPlansCallback() {

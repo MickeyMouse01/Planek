@@ -10,6 +10,7 @@ import com.example.thomas.plan.addEditPlan.AddEditPlanViewModel;
 import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
 import com.example.thomas.plan.data.Injection;
 import com.example.thomas.plan.data.Repository;
+import com.example.thomas.plan.listOfDays.ListOfDaysViewModel;
 import com.example.thomas.plan.loginAndRegister.LoginViewModel;
 import com.example.thomas.plan.nurseProfile.NurseProfileViewModel;
 import com.example.thomas.plan.nurseProfileEdit.NurseProfileEditViewModel;
@@ -77,6 +78,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new PreviewTaskViewModel(repository);
         } else if (modelClass.isAssignableFrom(PreviewPlansViewModel.class)) {
             return (T) new PreviewPlansViewModel(repository);
+        } else if(modelClass.isAssignableFrom(ListOfDaysViewModel.class)){
+            return (T) new ListOfDaysViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

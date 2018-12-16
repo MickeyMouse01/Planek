@@ -36,7 +36,6 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
 
     private static final int PICK_IMAGE = 1;
     private AddEditTaskViewModel viewModel;
-    private Spinner partOfDaySpinner;
     private EditText mName,timeInput;
     private Button changePicture;
     private ImageView imageView;
@@ -59,9 +58,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         imageView = findViewById(R.id.add_task_image);
         Button save = findViewById(R.id.add_save_task);
         changePicture = findViewById(R.id.change_picture_task);
-        partOfDaySpinner = findViewById(R.id.spinner_part_of_day);
         timeInput = findViewById(R.id.task_input_time);
-        partOfDaySpinner.setSelection(Enums.PartOfDay.UNDEFINED.getCode());
         relatesPlan = intent.getStringExtra("PlanId");
         changePicture.setOnClickListener(this);
         save.setOnClickListener(this);
@@ -191,6 +188,8 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                 return 0; //morning
             } else if(date.after(noon)){
                 return 1; //afternoon
+            } else if(date.getTime() == noon.getTime()){
+                return 1;
             }
         } catch (ParseException e) {
             e.printStackTrace();
