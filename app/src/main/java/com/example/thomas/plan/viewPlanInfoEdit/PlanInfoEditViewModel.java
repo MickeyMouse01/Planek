@@ -1,4 +1,4 @@
-package com.example.thomas.plan.viewPlanInfo;
+package com.example.thomas.plan.viewPlanInfoEdit;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
@@ -12,16 +12,16 @@ import com.example.thomas.plan.data.Repository;
 import java.util.Collections;
 import java.util.List;
 
-public class ViewPlanInfoViewModel extends ViewModel {
+public class PlanInfoEditViewModel extends ViewModel {
 
     private Repository repository;
     private MutableLiveData<Plan> viewedPlan;
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<List<Task>> listOfTasks;
 
-    public ViewPlanInfoViewModel(Repository mRepository) {
+    public PlanInfoEditViewModel(Repository repository) {
         this.viewedPlan = new MutableLiveData<>();
-        this.repository = mRepository;
+        this.repository = repository;
     }
 
     public MutableLiveData<List<Task>> getTasks() {

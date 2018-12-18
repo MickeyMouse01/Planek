@@ -145,8 +145,8 @@ public class ClientsActivity extends BaseActivity
         TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
         TextView txtMenuNameSurname = findViewById(R.id.menu_name_surname);
 
-        txtMenuNameSurname.setText(nurse.getNameAndSurname());
-        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
+        //txtMenuNameSurname.setText(nurse.getNameAndSurname());
+        //txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
     }
 
     private void setupViewFragment(int frame) {

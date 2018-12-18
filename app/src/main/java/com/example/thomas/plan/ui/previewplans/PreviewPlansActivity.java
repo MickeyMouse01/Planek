@@ -14,12 +14,14 @@ import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
+import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 public class PreviewPlansActivity extends BaseActivity {
 
@@ -38,7 +40,7 @@ public class PreviewPlansActivity extends BaseActivity {
         super.onViewReady(savedInstanceState, intent);
 
         settings = new Settings();
-        settings.setDisableDeleteButton(true);
+        settings.setDisabledDeleteButton(true);
 
         mViewModel = PreviewPlansActivity.obtainViewModel(this);
         String clientId = intent.getStringExtra("ClientId");
@@ -76,10 +78,15 @@ public class PreviewPlansActivity extends BaseActivity {
         String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
                 .format(Calendar.getInstance().getTime());
         Plan newPlan = new Plan();
+        planId = newPlan.getUniqueID();
+        Map<String, Task> mapWithTasks = plan.getListOfRelatesTasks();
+
+        for (Task task: mapWithTasks.values()) {
+            task.setIdOfPlan(planId);
+        }
         newPlan.setListOfRelatesTasks(plan.getListOfRelatesTasks());
         newPlan.setName(plan.getName() + " - kopie");
         newPlan.setCreatedDate(dateTime);
-        planId = newPlan.getUniqueID();
         mViewModel.savePlan(newPlan);
     }
 

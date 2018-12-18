@@ -76,8 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 loginValidations();
                 break;
             case ERROR_CREDENTIALS:
-                Toast.makeText(this, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show();
+                showErrorToast("Přihlášení se nezdařilo. Špatné jméno nebo heslo");
                 break;
             case ERROR_UNKNOWN:
                 Toast.makeText(this, loginViewModel.getErrorMessage().getValue(),
@@ -109,7 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         int day = ActivityUtils.getActualDay();
                         startPreviewTasksActivity(client
                                 .getPlansForDate()
-                                .get(Day.values()[day]));
+                                .get(Day.values()[day].getNameOfDay()));
                     }
                 }
             });
@@ -117,7 +116,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void startPreviewTasksActivity(String planId) {
-        Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
+        showSuccessToast("Přihlášen");
         Intent intent = new Intent(this, PreviewTaskActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);

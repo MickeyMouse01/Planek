@@ -1,4 +1,4 @@
-package com.example.thomas.plan.viewPlanInfo;
+package com.example.thomas.plan.viewPlanInfoEdit;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -6,12 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,29 +17,31 @@ import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.addEditTask.AddEditTaskActivity;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.nurseProfileEdit.NurseProfileEditActivity;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
-import com.example.thomas.plan.viewPlanInfoEdit.PlanInfoEditActivity;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
+public class PlanInfoEditActivity extends BaseActivity {
 
-public class ViewPlanInfoActivity extends BaseActivity {
-
-    private ViewPlanInfoViewModel mViewModel;
+    private PlanInfoEditViewModel mViewModel;
+    private String viewPlanId;
     private TextView nameOfPlan;
+    private ImageView imageView;
     private ListOfTasksAdapter listOfTasksAdapter;
     private List<Task> mTasks = new ArrayList<>();
-    private String viewPlanId;
-    private ImageView imageView;
     private AlertDialog.Builder confirmDialog;
+
+    public static PlanInfoEditViewModel obtainViewModel(FragmentActivity activity) {
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(PlanInfoEditViewModel.class);
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -53,11 +51,10 @@ public class ViewPlanInfoActivity extends BaseActivity {
 
         setupListAdapter();
         viewPlanId = intent.getStringExtra("PlanId");
+        nameOfPlan = findViewById(R.id.edit_name_of_plan);
+        imageView = findViewById(R.id.edit_plan_image);
         mViewModel.setViewedPlanId(viewPlanId);
-        mViewModel.setViewedPlan(viewPlanId); //wtf
-        nameOfPlan = findViewById(R.id.view_name_of_plan);
-        imageView = findViewById(R.id.preview_plan_image);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        mViewModel.setViewedPlan(viewPlanId);
 
         mViewModel.getViewedPlan().observe(this, new Observer<Plan>() {
             @Override
@@ -65,7 +62,6 @@ public class ViewPlanInfoActivity extends BaseActivity {
                 if(plan !=null){
                     initialize(plan);
                 }
-
             }
         });
 
@@ -75,13 +71,6 @@ public class ViewPlanInfoActivity extends BaseActivity {
                 if (tasks != null) {
                     listOfTasksAdapter.replaceData(getSpecificTasks(tasks));
                 }
-            }
-        });
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                runActivity();
             }
         });
         confirmDialog = createConfirmDialog();
@@ -101,29 +90,8 @@ public class ViewPlanInfoActivity extends BaseActivity {
         return taskList;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.edit, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, PlanInfoEditActivity.class);
-        intent.putExtra("PlanId", viewPlanId);
-        startActivityForResult(intent,3);
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void runActivity() {
-        Intent intent = new Intent(this, AddEditTaskActivity.class);
-        intent.putExtra("PlanId", viewPlanId);
-        startActivity(intent);
-    }
-
     private void setupListAdapter() {
-        ListView listViewTasks = findViewById(R.id.view_plan_list_tasks);
+        ListView listViewTasks = findViewById(R.id.edit_plan_list_tasks);
         ActionItemListener<Task> taskItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
@@ -147,7 +115,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
             }
         };
         Settings settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDisabledDeleteButton(false);
         listOfTasksAdapter = new ListOfTasksAdapter(
                 mTasks,
                 taskItemListener,
@@ -167,17 +135,6 @@ public class ViewPlanInfoActivity extends BaseActivity {
         }).show();
     }
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_view_plan_info;
-    }
-
-    public static ViewPlanInfoViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(ViewPlanInfoViewModel.class);
-    }
-
     private void initialize(Plan plan) {
         nameOfPlan.setText(plan.getName());
         if(plan.isImageSet()) {
@@ -187,5 +144,10 @@ public class ViewPlanInfoActivity extends BaseActivity {
                     .load(ref)
                     .into(imageView);
         }
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_plan_info_edit;
     }
 }

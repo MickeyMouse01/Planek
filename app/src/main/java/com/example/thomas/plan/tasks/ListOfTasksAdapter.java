@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -27,10 +28,14 @@ public class ListOfTasksAdapter extends BaseAdapter {
 
     private List<Task> tasks;
     private ActionItemListener taskItemListener;
+    private Settings settings;
 
-    public ListOfTasksAdapter(List<Task> tasks, ActionItemListener taskListener) {
+    public ListOfTasksAdapter(List<Task> tasks,
+                              ActionItemListener taskListener,
+                              Settings settings) {
         taskItemListener = taskListener;
         this.tasks = tasks;
+        this.settings = settings;
     }
 
     public void replaceData(List<Task> tasks) {
@@ -91,6 +96,9 @@ public class ListOfTasksAdapter extends BaseAdapter {
             checkBox.setButtonDrawable(R.drawable.scaled_passed_checkbox);
             deleteImage.setVisibility(View.VISIBLE);
         }
+        if(!settings.isDisabledDeleteButton()){
+            deleteImage.setVisibility(View.VISIBLE);
+        }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -109,14 +117,6 @@ public class ListOfTasksAdapter extends BaseAdapter {
                 taskItemListener.onItemClick(actualTask);
             }
         });
-
-        /*constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.d("podrzel", "podrzel");
-                return true;
-            }
-        });*/
 
         deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override

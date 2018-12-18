@@ -20,6 +20,7 @@ import com.example.thomas.plan.selectedTask.SelectedTaskVieModel;
 import com.example.thomas.plan.ui.previewplans.PreviewPlansViewModel;
 import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
 import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
+import com.example.thomas.plan.viewPlanInfoEdit.PlanInfoEditViewModel;
 
 /**
  * Created by Tomas on 14-Mar-18.
@@ -80,6 +81,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new PreviewPlansViewModel(repository);
         } else if(modelClass.isAssignableFrom(ListOfDaysViewModel.class)){
             return (T) new ListOfDaysViewModel(repository);
+        } else if(modelClass.isAssignableFrom(PlanInfoEditViewModel.class)){
+            return (T) new PlanInfoEditViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

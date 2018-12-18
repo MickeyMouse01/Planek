@@ -22,6 +22,7 @@ import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.addEditTask.AddEditTaskActivity;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
+import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
@@ -151,7 +152,9 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
                 mViewModel.deleteTaskFromPlan(mViewModel.getViewedPlanId(), item);
             }
         };
-        taskAdapter = new ListOfTasksAdapter(tasks, taskActionItemListener);
+        Settings settings = new Settings();
+        settings.setDisabledDeleteButton(true);
+        taskAdapter = new ListOfTasksAdapter(tasks, taskActionItemListener, settings);
         listViewTasks.setAdapter(taskAdapter);
     }
 

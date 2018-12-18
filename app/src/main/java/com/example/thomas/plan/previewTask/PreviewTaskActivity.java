@@ -17,6 +17,7 @@ import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
@@ -159,8 +160,12 @@ public class PreviewTaskActivity extends BaseActivity {
 
     private void initializeAdapter(){
         if (!mTasks.isEmpty()) {
+            Settings settings = new Settings();
+            settings.setDisabledDeleteButton(true);
             listOfTasksAdapter = new ListOfTasksAdapter(
-                    mTasks, taskItemListener
+                    mTasks,
+                    taskItemListener,
+                    settings
             );
             lvListOfTasks.setAdapter(listOfTasksAdapter);
         }

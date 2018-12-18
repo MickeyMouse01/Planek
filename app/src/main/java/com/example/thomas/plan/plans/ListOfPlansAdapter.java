@@ -1,7 +1,6 @@
 package com.example.thomas.plan.plans;
 
 import android.support.constraint.ConstraintLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +84,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
         ConstraintLayout constraintLayout = planView.findViewById(R.id.plan_item_linear);
 
         if (settings != null) {
-            if (settings.isDisableDeleteButton()){
+            if (settings.isDisabledDeleteButton()){
                 deleteButton.setVisibility(View.INVISIBLE);
             }
         }
