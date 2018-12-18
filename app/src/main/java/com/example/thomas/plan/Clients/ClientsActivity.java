@@ -102,7 +102,7 @@ public class ClientsActivity extends BaseActivity
         mViewModel.showMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                Toast.makeText(ClientsActivity.this, s, Toast.LENGTH_SHORT).show();
+                showErrorToast(s);
             }
         });
 
@@ -155,7 +155,6 @@ public class ClientsActivity extends BaseActivity
             ActivityUtils.replaceFragmentInActivity(
                     getSupportFragmentManager(), clientsFragment, R.id.contentFrame);
         } else {
-
             PlansFragment plansFragment = PlansFragment.newInstance();
             ActivityUtils.replaceFragmentInActivity(
                     getSupportFragmentManager(), plansFragment, R.id.contentFrame);

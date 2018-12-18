@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
+import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
@@ -18,6 +19,7 @@ public class PlanInfoEditViewModel extends ViewModel {
     private MutableLiveData<Plan> viewedPlan;
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<List<Task>> listOfTasks;
+    private SingleLiveEvent<String> onPlanSaved = new SingleLiveEvent<>();
 
     public PlanInfoEditViewModel(Repository repository) {
         this.viewedPlan = new MutableLiveData<>();
@@ -32,14 +34,18 @@ public class PlanInfoEditViewModel extends ViewModel {
         return listOfTasks;
     }
 
-    private void loadTasks(){
+    private void loadTasks() {
         repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 Collections.sort(tasks);
                 listOfTasks.setValue(tasks);
             }
-        },viewedPlanId.getValue());
+        }, viewedPlanId.getValue());
+    }
+
+    public SingleLiveEvent<String> getOnPlanSaved() {
+        return onPlanSaved;
     }
 
     void setViewedPlanId(String viewedPlanId) {
@@ -50,8 +56,8 @@ public class PlanInfoEditViewModel extends ViewModel {
         return viewedPlan;
     }
 
-    void setViewedPlan(String planId){
-        repository.getPlan(planId,new DataSource.LoadPlanCallback() {
+    void setViewedPlan(String planId) {
+        repository.getPlan(planId, new DataSource.LoadPlanCallback() {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
                 viewedPlan.setValue(plan);
@@ -59,20 +65,29 @@ public class PlanInfoEditViewModel extends ViewModel {
         });
     }
 
-    void deleteTaskFromPlan(String planId, final Task task){
+    void deleteTaskFromPlan(String planId, final Task task) {
         repository.getPlan(planId, new DataSource.LoadPlanCallback() {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
-                repository.deleteTaskFromPlan(plan.getUniqueID(),task.getUniqueID());
+                repository.deleteTaskFromPlan(plan.getUniqueID(), task.getUniqueID());
             }
         });
     }
 
-    void updateTask(String planId, Task task){
+    void updateTask(String planId, Task task) {
         repository.saveTask(task, planId, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
 
+            }
+        });
+    }
+
+    void updatePlan(Plan plan) {
+        repository.savePlan(plan, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+                onPlanSaved.setValue(message);
             }
         });
     }

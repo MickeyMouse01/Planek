@@ -142,18 +142,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 List<AuthUI.IdpConfig> providers = Collections.singletonList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
-
-
-                /*startActivityForResult(
+                startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);*/
-
-                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
-
-                break;
+                        RC_SIGN_IN);
+               break;
             }
         }
     }

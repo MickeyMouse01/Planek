@@ -34,11 +34,9 @@ import java.util.List;
 
 public class SelectedTaskActivity extends BaseActivity {
 
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private SelectedTaskVieModel mViewModel;
     private int positionOfSelectedTask;
-
     private ViewPager mViewPager;
 
     @Override
@@ -49,16 +47,9 @@ public class SelectedTaskActivity extends BaseActivity {
         String viewPlanId = intent.getStringExtra("PlanId");
         positionOfSelectedTask = intent.getIntExtra("positionOfTask", 0);
         mViewModel.setViewedPlanId(viewPlanId);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-
-
         showDialog("Loading data");
-        // Set up the ViewPager with the sections adapter.
         mViewPager =  findViewById(R.id.container);
-
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
 
         mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
             @Override
@@ -66,7 +57,6 @@ public class SelectedTaskActivity extends BaseActivity {
                 mViewPager.setAdapter(mSectionsPagerAdapter);
                 mViewPager.setCurrentItem(positionOfSelectedTask);
                 hideDialog();
-
             }
         });
 
@@ -160,7 +150,6 @@ public class SelectedTaskActivity extends BaseActivity {
                 public void onItemDeleteClick(Task item) {
 
                 }
-
             };
 
             mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
@@ -181,7 +170,6 @@ public class SelectedTaskActivity extends BaseActivity {
             txtIsDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //constraintLayout.setBackgroundResource(R.color.isPassed);
                     txtIsDone.setBackgroundResource(R.color.isPassed);
                     txtIsDone.setText("Splněno");
                     actionItemListener.onItemClick(null);

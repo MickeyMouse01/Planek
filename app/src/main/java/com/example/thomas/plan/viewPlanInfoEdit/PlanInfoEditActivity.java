@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ public class PlanInfoEditActivity extends BaseActivity {
 
     private PlanInfoEditViewModel mViewModel;
     private String viewPlanId;
+    private Button saveButton;
     private TextView nameOfPlan;
     private ImageView imageView;
     private ListOfTasksAdapter listOfTasksAdapter;
@@ -53,6 +56,7 @@ public class PlanInfoEditActivity extends BaseActivity {
         viewPlanId = intent.getStringExtra("PlanId");
         nameOfPlan = findViewById(R.id.edit_name_of_plan);
         imageView = findViewById(R.id.edit_plan_image);
+        saveButton = findViewById(R.id.save_edit_button);
         mViewModel.setViewedPlanId(viewPlanId);
         mViewModel.setViewedPlan(viewPlanId);
 
@@ -73,7 +77,30 @@ public class PlanInfoEditActivity extends BaseActivity {
                 }
             }
         });
+
+        mViewModel.getOnPlanSaved().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                hideDialog();
+                showSuccessToast(s);
+                finish();
+            }
+        });
         confirmDialog = createConfirmDialog();
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveEditedPlan();
+            }
+        });
+    }
+
+    private void saveEditedPlan(){
+        showDialog("Ukládání");
+       Plan editedPlan = mViewModel.getViewedPlan().getValue();
+       String editedName = nameOfPlan.getText().toString();
+       editedPlan.setName(editedName);
+       mViewModel.updatePlan(editedPlan);
     }
 
     private List<Task> getSpecificTasks(List<Task> tasks) {

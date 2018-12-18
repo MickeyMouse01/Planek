@@ -54,7 +54,6 @@ public class ViewPlanInfoActivity extends BaseActivity {
         setupListAdapter();
         viewPlanId = intent.getStringExtra("PlanId");
         mViewModel.setViewedPlanId(viewPlanId);
-        mViewModel.setViewedPlan(viewPlanId); //wtf
         nameOfPlan = findViewById(R.id.view_name_of_plan);
         imageView = findViewById(R.id.preview_plan_image);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -62,7 +61,7 @@ public class ViewPlanInfoActivity extends BaseActivity {
         mViewModel.getViewedPlan().observe(this, new Observer<Plan>() {
             @Override
             public void onChanged(@Nullable Plan plan) {
-                if(plan !=null){
+                if(plan != null){
                     initialize(plan);
                 }
 
@@ -187,5 +186,11 @@ public class ViewPlanInfoActivity extends BaseActivity {
                     .load(ref)
                     .into(imageView);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mViewModel.getViewedPlan();
     }
 }

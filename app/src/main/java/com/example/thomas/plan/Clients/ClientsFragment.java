@@ -1,5 +1,6 @@
 package com.example.thomas.plan.Clients;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class ClientsFragment extends Fragment {
     private ListOfClientsAdapter mClientsAdapter;
     private AlertDialog.Builder alertDialog;
     private ListView listView;
+    private ProgressDialog mProgressDialog;
 
     public ClientsFragment() {
         // Requires empty public constructor
@@ -134,5 +136,21 @@ public class ClientsFragment extends Fragment {
                 new ArrayList<Client>(0), actionItemListener
         );
         listView.setAdapter(mClientsAdapter);
+    }
+
+    private void showDialog(String message) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.setCancelable(true);
+        }
+        mProgressDialog.setMessage(message);
+        mProgressDialog.show();
+    }
+
+    private void hideDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 }

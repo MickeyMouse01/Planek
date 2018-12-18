@@ -38,12 +38,12 @@
         <ImageView
             android:id="@+id/preview_plan_image"
             android:layout_width="174dp"
-            android:layout_height="111dp"
-            android:layout_marginTop="24dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/borderlines" />
+            app:srcCompat="@drawable/plan_image" />
 
         <TextView
             android:id="@+id/textView13"

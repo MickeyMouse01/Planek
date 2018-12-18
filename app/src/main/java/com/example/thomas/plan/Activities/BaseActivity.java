@@ -1,6 +1,7 @@
 package com.example.thomas.plan.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;

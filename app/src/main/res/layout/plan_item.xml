@@ -27,12 +27,12 @@
 
         <TextView
             android:id="@+id/plan_name"
-            android:layout_width="164dp"
+            android:layout_width="472dp"
             android:layout_height="37dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="80dp"
             android:text="Jmeno planu"
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/plan_imageview"

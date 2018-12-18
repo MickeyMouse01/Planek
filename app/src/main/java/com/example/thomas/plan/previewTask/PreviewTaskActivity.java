@@ -23,6 +23,7 @@ import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PreviewTaskActivity extends BaseActivity {
@@ -130,11 +131,13 @@ public class PreviewTaskActivity extends BaseActivity {
         taskItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
+
                 mViewModel.saveTask(item);
             }
 
             @Override
             public void onItemClick(Task item) {
+                Collections.sort(mTasks);
                 previewSelectedTask(item.getIdOfPlan(), mTasks.indexOf(item));
 
             }

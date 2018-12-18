@@ -1,6 +1,7 @@
 package com.example.thomas.plan.plans;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
@@ -37,6 +38,7 @@ public class PlansFragment extends Fragment
     private ListOfPlansAdapter mPlansAdapter;
     private ListView listView;
     private AlertDialog.Builder alertDialog;
+    private ProgressDialog mProgressDialog;
 
     public PlansFragment() {
         // Requires empty public constructor
@@ -128,5 +130,21 @@ public class PlansFragment extends Fragment
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
+    }
+
+    private void showDialog(String message) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.setCancelable(true);
+        }
+        mProgressDialog.setMessage(message);
+        mProgressDialog.show();
+    }
+
+    private void hideDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 }
