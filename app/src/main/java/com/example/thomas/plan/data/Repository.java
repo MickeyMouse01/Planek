@@ -2,6 +2,7 @@ package com.example.thomas.plan.data;
 
 import android.support.annotation.NonNull;
 
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
@@ -173,13 +174,23 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, String planId) {
-        remoteDataSource.getSpecificTasksForPlan(new LoadTasksCallback() {
+    public void getTasksForPlan(@NonNull final LoadTasksCallback callback, String planId) {
+        remoteDataSource.getTasksForPlan(new LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 callback.onTasksLoaded(tasks);
             }
         }, planId);
+    }
+
+    @Override
+    public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, String planId, Enums.PartOfDay partOfDay) {
+        remoteDataSource.getSpecificTasksForPlan(new LoadTasksCallback() {
+            @Override
+            public void onTasksLoaded(@NonNull List<Task> tasks) {
+                callback.onTasksLoaded(tasks);
+            }
+        }, planId , partOfDay);
     }
 
 

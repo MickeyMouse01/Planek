@@ -187,9 +187,9 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
             if (date.before(noon)){
                 return 0; //morning
             } else if(date.after(noon)){
-                return 1; //afternoon
+                return 2; //afternoon
             } else if(date.getTime() == noon.getTime()){
-                return 1;
+                return 2;
             }
         } catch (ParseException e) {
             e.printStackTrace();

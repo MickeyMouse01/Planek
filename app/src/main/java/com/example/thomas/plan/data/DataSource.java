@@ -1,6 +1,8 @@
 package com.example.thomas.plan.data;
 
 import android.support.annotation.NonNull;
+
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
@@ -97,7 +99,11 @@ public interface DataSource {
 
     void getTasks(@NonNull LoadTasksCallback callback);
 
-    void getSpecificTasksForPlan(@NonNull LoadTasksCallback callback, String planId);
+    void getTasksForPlan(@NonNull LoadTasksCallback callback, String planId);
+
+    void getSpecificTasksForPlan(@NonNull LoadTasksCallback callback,
+                                 String planId,
+                                 Enums.PartOfDay partOfDay);
 
     void getTask(@NonNull String taskId, LoadTaskCallback callback);
 

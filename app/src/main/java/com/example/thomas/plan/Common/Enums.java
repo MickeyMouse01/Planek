@@ -50,9 +50,11 @@ public class Enums {
 
     public enum PartOfDay {
         MORNING(0),
-        AFTERNOON(1),
-        NIGHT(2),
-        UNDEFINED(3);
+        LUNCH(1),
+        AFTERNOON(2),
+        DINNER(3),
+        NIGHT(4),
+        UNDEFINED(5);
 
         private int code;
         PartOfDay(int code) {
@@ -80,8 +82,12 @@ public class Enums {
                 case 0:
                     return "Dopoledne";
                 case 1:
-                    return "Odpoledne";
+                    return "Oběd";
                 case 2:
+                    return "Odpoledne";
+                case 3:
+                    return "Večeře";
+                case 4:
                     return "V noci";
                 default:
                     return "Nevybráno";

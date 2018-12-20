@@ -35,7 +35,7 @@ public class PlanInfoEditViewModel extends ViewModel {
     }
 
     private void loadTasks() {
-        repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
+        repository.getTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 Collections.sort(tasks);

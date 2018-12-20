@@ -2,9 +2,7 @@ package com.example.thomas.plan.planForClient;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
@@ -102,7 +100,7 @@ public class PreviewClientViewModel extends ViewModel {
     }
 
     private void loadTasks() {
-        repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
+        repository.getTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
                 Collections.sort(tasks);

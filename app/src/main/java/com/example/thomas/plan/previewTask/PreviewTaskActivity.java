@@ -31,8 +31,11 @@ public class PreviewTaskActivity extends BaseActivity {
     private TextView mTextMessage;
     private PreviewTaskViewModel mViewModel;
     private String viewPlanId;
-    private ListView lvListOfTasks;
-    private ListOfTasksAdapter listOfTasksAdapter;
+    private ListView lvMorningActivities, lvAfternoonActivities,lvDinner,lvLunch;
+    private ListOfTasksAdapter morningActivitesAdapter;
+    private ListOfTasksAdapter afternoonActivitesAdapter;
+    private ListOfTasksAdapter lunchAdapter;
+    private ListOfTasksAdapter dinnerAdapter;
     private ActionItemListener<Task> taskItemListener;
     private List<Task> mTasks = new ArrayList<>();
 
@@ -44,17 +47,17 @@ public class PreviewTaskActivity extends BaseActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mViewModel.getPartOfDay().setValue(null);
-                    mViewModel.getListOfTasks().setValue(mTasks);
+                    //mViewModel.getListOfTasks().setValue(mTasks);
                     mTextMessage.setText(R.string.all_activities);
                     return true;
                 case R.id.navigation_dashboard:
                     mViewModel.getPartOfDay().setValue(Enums.PartOfDay.MORNING);
-                    mViewModel.getListOfTasks().setValue(mTasks);
+                    //mViewModel.getListOfTasks().setValue(mTasks);
                     mTextMessage.setText(R.string.morning_activities);
                     return true;
                 case R.id.navigation_afternoon:
                     mViewModel.getPartOfDay().setValue(Enums.PartOfDay.AFTERNOON);
-                    mViewModel.getListOfTasks().setValue(mTasks);
+                    //mViewModel.getListOfTasks().setValue(mTasks);
                     mTextMessage.setText(R.string.afternoon_activities);
                     return true;
             }
@@ -70,6 +73,10 @@ public class PreviewTaskActivity extends BaseActivity {
         viewPlanId = intent.getStringExtra("PlanId");
         mViewModel.setViewedPlanId(viewPlanId);
 
+        lvMorningActivities = findViewById(R.id.list_of_morning_tasks);
+        lvLunch = findViewById(R.id.preview_task_lunch);
+        lvAfternoonActivities = findViewById(R.id.list_of_afternoon_tasks);
+        lvDinner = findViewById(R.id.preview_task_dinner);
         setupListAdapter();
 
         mTextMessage = findViewById(R.id.message);
@@ -83,12 +90,52 @@ public class PreviewTaskActivity extends BaseActivity {
             }
         });
 
-        mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
+
+        mViewModel.getMorningActivites().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
                 if(tasks != null) {
                     if (!tasks.isEmpty()){
-                        updateData(tasks);
+                        updateMorningTasks(tasks);
+                    }
+                } else {
+                    noDataDisplayed();
+                }
+            }
+        });
+
+        mViewModel.getAfternoonActivites().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable List<Task> tasks) {
+                if(tasks != null) {
+                    if (!tasks.isEmpty()){
+                        updateAfternoonTasks(tasks);
+                    }
+                } else {
+                    noDataDisplayed();
+                }
+            }
+        });
+
+        mViewModel.getLunch().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable List<Task> tasks) {
+                if(tasks != null) {
+                    if (!tasks.isEmpty()){
+                        updateLunch(tasks);
+                    }
+                } else {
+                    noDataDisplayed();
+                }
+            }
+        });
+
+        mViewModel.getDinner().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable List<Task> tasks) {
+                if(tasks != null) {
+                    if (!tasks.isEmpty()){
+                        updateDinner(tasks);
                     }
                 } else {
                     noDataDisplayed();
@@ -127,11 +174,9 @@ public class PreviewTaskActivity extends BaseActivity {
     }
 
     private void setupListAdapter() {
-        lvListOfTasks = findViewById(R.id.list_of_tasks);
         taskItemListener = new ActionItemListener<Task>() {
             @Override
             public void onCheckedClick(Task item) {
-
                 mViewModel.saveTask(item);
             }
 
@@ -161,30 +206,76 @@ public class PreviewTaskActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void initializeAdapter(){
-        if (!mTasks.isEmpty()) {
-            Settings settings = new Settings();
-            settings.setDisabledDeleteButton(true);
-            listOfTasksAdapter = new ListOfTasksAdapter(
-                    mTasks,
-                    taskItemListener,
-                    settings
-            );
-            lvListOfTasks.setAdapter(listOfTasksAdapter);
-        }
+    private void initializeMorningActivitiesAdapter(List<Task> tasks){
+        Settings settings = new Settings();
+        settings.setDisabledDeleteButton(true);
+        morningActivitesAdapter = new ListOfTasksAdapter(
+                tasks,
+                taskItemListener,
+                settings
+        );
+        lvMorningActivities.setAdapter(morningActivitesAdapter);
     }
 
-
-    private void updateData(List<Task> tasks){
-        if (mViewModel.getPartOfDay().getValue() == null) {
-           mTasks = tasks;
-        } else {
-            mTasks = getSpecificTasks(tasks, mViewModel.getPartOfDay().getValue());
+    private void updateMorningTasks(List<Task> tasks){
+        if (morningActivitesAdapter == null){
+            initializeMorningActivitiesAdapter(tasks);
         }
+        morningActivitesAdapter.replaceData(tasks);
+    }
 
-        if (listOfTasksAdapter == null){
-            initializeAdapter();
+    private void initializeLunchAdapter(List<Task> tasks){
+        Settings settings = new Settings();
+        settings.setDisabledDeleteButton(true);
+        lunchAdapter = new ListOfTasksAdapter(
+                tasks,
+                taskItemListener,
+                settings
+        );
+        lvLunch.setAdapter(lunchAdapter);
+    }
+
+    private void updateLunch(List<Task> tasks){
+        if (lunchAdapter == null){
+            initializeLunchAdapter(tasks);
         }
-        listOfTasksAdapter.replaceData(mTasks);
+        lunchAdapter.replaceData(tasks);
+    }
+
+    private void initializeAfternoonActivitiesAdapter(List<Task> tasks){
+        Settings settings = new Settings();
+        settings.setDisabledDeleteButton(true);
+        afternoonActivitesAdapter = new ListOfTasksAdapter(
+                tasks,
+                taskItemListener,
+                settings
+        );
+        lvAfternoonActivities.setAdapter(afternoonActivitesAdapter);
+    }
+
+    private void updateAfternoonTasks(List<Task> tasks){
+        if (afternoonActivitesAdapter == null){
+            initializeAfternoonActivitiesAdapter(tasks);
+        }
+        afternoonActivitesAdapter.replaceData(tasks);
+
+    }
+
+    private void initializeDinnerAdapter(List<Task> tasks){
+        Settings settings = new Settings();
+        settings.setDisabledDeleteButton(true);
+        dinnerAdapter = new ListOfTasksAdapter(
+                tasks,
+                taskItemListener,
+                settings
+        );
+        lvDinner.setAdapter(dinnerAdapter);
+    }
+
+    private void updateDinner(List<Task> tasks){
+        if (dinnerAdapter == null){
+            initializeDinnerAdapter(tasks);
+        }
+        dinnerAdapter.replaceData(tasks);
     }
 }

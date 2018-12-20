@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
@@ -338,7 +339,7 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId) {
+    public void getTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId) {
         mDatabase.getDatabase().getReference("plans")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -357,9 +358,6 @@ public class RemoteDataSource implements DataSource {
                         callback.onTasksLoaded(null);
                     }
                 }
-
-
-
             }
 
             @Override
@@ -368,6 +366,31 @@ public class RemoteDataSource implements DataSource {
             }
         });
     }
+
+    @Override
+    public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId, Enums.PartOfDay partOfDay) {
+        Query query = mDatabase.child("plans").child(planId).child(LIST_OF_RELATES_TASKS)
+                .orderByChild("partOfDay").equalTo(partOfDay.toString());
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
+                };
+                Map<String, Task> map = dataSnapshot.getValue(t);
+                if (map != null) {
+                    List<Task> tasks = new ArrayList<>(map.values());
+                    callback.onTasksLoaded(tasks);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     @Override
     public void getTask(@NonNull final String taskId, final LoadTaskCallback callback) {
