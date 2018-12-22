@@ -1,4 +1,4 @@
-package com.example.thomas.plan.planForClient;
+package com.example.thomas.plan.previewPlanForClient;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
@@ -14,7 +14,7 @@ import com.example.thomas.plan.data.Repository;
 import java.util.Collections;
 import java.util.List;
 
-public class PreviewClientViewModel extends ViewModel {
+public class PreviewPlanForClientViewModel extends ViewModel {
 
    private MutableLiveData<Plan> selectedPlan;
    private Repository repository;
@@ -25,7 +25,7 @@ public class PreviewClientViewModel extends ViewModel {
    private MutableLiveData<List<Task>> listOfTasks;
    private SingleLiveEvent<String> mShowToastWithMessage = new SingleLiveEvent<>();
 
-    public PreviewClientViewModel(Repository repository) {
+    public PreviewPlanForClientViewModel(Repository repository) {
         this.repository = repository;
     }
 

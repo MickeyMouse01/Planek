@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
@@ -27,7 +26,6 @@ import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.listOfDays.ListOfDaysActivity;
 import com.example.thomas.plan.loginAndRegister.LoginActivity;
 import com.example.thomas.plan.nurseProfile.NurseProfileActivity;
-import com.example.thomas.plan.planForClient.PreviewClientActivity;
 import com.example.thomas.plan.plans.PlansFragment;
 import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
@@ -234,7 +232,7 @@ public class ClientsActivity extends BaseActivity
 
     /*private void previewClient(String clientId) {
         mViewModel.getCurrentFragment().setValue(VIEW_CLIENTS);
-        Intent intent = new Intent(this, PreviewClientActivity.class);
+        Intent intent = new Intent(this, PreviewPlanForClientActivity.class);
         intent.putExtra("ClientId", clientId);
         startActivity(intent);
     }*/

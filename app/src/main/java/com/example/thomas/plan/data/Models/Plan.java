@@ -15,6 +15,7 @@ public class Plan implements Comparable<Plan>{
     private String uniqueID;
     private String name;
     private String createdDate;
+    private String nameOfImage;
     private Map<String, Task> listOfRelatesTasks;
     private boolean imageSet = false;
 
@@ -64,6 +65,14 @@ public class Plan implements Comparable<Plan>{
 
     public void setImageSet(boolean imageSet) {
         this.imageSet = imageSet;
+    }
+
+    public String getNameOfImage() {
+        return nameOfImage;
+    }
+
+    public void setNameOfImage(String nameOfImage) {
+        this.nameOfImage = nameOfImage;
     }
 
     @Override

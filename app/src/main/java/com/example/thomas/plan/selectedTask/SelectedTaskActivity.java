@@ -195,7 +195,7 @@ public class SelectedTaskActivity extends BaseActivity {
             if (listOfTasks.get(position).isImageSet()){
                 StorageReference ref = FirebaseStorage.getInstance()
                         .getReference()
-                        .child(listOfTasks.get(position).getUniqueID());
+                        .child(listOfTasks.get(position).getNameOfImage());
 
                 GlideApp.with(this)
                         .load(ref)

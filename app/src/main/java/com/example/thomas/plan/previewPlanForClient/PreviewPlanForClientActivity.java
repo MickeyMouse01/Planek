@@ -1,4 +1,4 @@
-package com.example.thomas.plan.planForClient;
+package com.example.thomas.plan.previewPlanForClient;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -31,22 +31,22 @@ import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
 
 import java.util.List;
 
-public class PreviewClientActivity extends BaseActivity implements View.OnClickListener {
+public class PreviewPlanForClientActivity extends BaseActivity implements View.OnClickListener {
 
     ImageButton addNewPlanBut;
     ListView listViewOnePlan, listViewTasks;
     String clientId;
     String nameOfDay;
     int day;
-    PreviewClientViewModel mViewModel;
+    PreviewPlanForClientViewModel mViewModel;
     ListOfPlansAdapter planAdapter;
     ListOfTasksAdapter taskAdapter;
     Intent addEditTaskIntent;
     FloatingActionButton fab;
 
-    public static PreviewClientViewModel obtainViewModel(FragmentActivity activity) {
+    public static PreviewPlanForClientViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(PreviewClientViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(PreviewPlanForClientViewModel.class);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(PreviewClientActivity.this);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(PreviewPlanForClientActivity.this);
         builderSingle.setCancelable(true);
         builderSingle.setNeutralButton("Zrusit", new DialogInterface.OnClickListener() {
             @Override
@@ -200,7 +200,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         builderSingle.setNegativeButton("Pridat vytvoreny", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(PreviewClientActivity.this, PreviewPlansActivity.class);
+                Intent intent = new Intent(PreviewPlanForClientActivity.this, PreviewPlansActivity.class);
                 intent.putExtra("ClientId", clientId);
                 startActivityForResult(intent, 0);
             }
@@ -210,7 +210,7 @@ public class PreviewClientActivity extends BaseActivity implements View.OnClickL
         builderSingle.setPositiveButton("Vytvorit novy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(PreviewClientActivity.this, AddEditPlanActivity.class);
+                Intent intent = new Intent(PreviewPlanForClientActivity.this, AddEditPlanActivity.class);
                 intent.putExtra("ClientId", clientId);
                 intent.putExtra("position", day);
                 startActivityForResult(intent, 1);

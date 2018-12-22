@@ -16,6 +16,7 @@ public class Nurse {
     private String createdDate;
     private Enums.TypeOfGroup typeOfGroup = Enums.TypeOfGroup.UNDEFINED;
     private boolean inWork = false;
+    private String nameOfImage;
 
     public Nurse(){
 
@@ -87,5 +88,13 @@ public class Nurse {
 
     public String getNameAndSurname(){
         return name + " " + surname;
+    }
+
+    public String getNameOfImage() {
+        return nameOfImage;
+    }
+
+    public void setNameOfImage(String nameOfImage) {
+        this.nameOfImage = nameOfImage;
     }
 }

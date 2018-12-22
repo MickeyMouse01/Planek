@@ -1,5 +1,6 @@
 package com.example.thomas.plan.data.Remote;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,6 +11,7 @@ import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -137,10 +139,34 @@ public class RemoteDataSource implements DataSource {
     public void deleteNurse(@NonNull String nurseId) {
         mDatabase.child("nurses").child(nurseId).removeValue();
     }
+    private boolean returnFalse(){
+        return false;
+    }
+
+    private boolean returnTrue(){
+        return true;
+    }
+
+    /*private boolean fileExists(String name){
+        boolean fileExists;
+        mStorage.child(name).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                returnTrue();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                returnFalse();
+            }
+        });
+    }*/
 
     @Override
     public void uploadImage(@NonNull String name, byte[] data, final UploadImageCallback callback) {
         UploadTask uploadTask = mStorage.child(name).putBytes(data);
+
+
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -340,15 +366,14 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void getTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId) {
-        mDatabase.getDatabase().getReference("plans")
+        mDatabase.getDatabase().getReference("plans").child(planId)
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
                 };
                 try{
-                    Map<String, Task> map = dataSnapshot.child(planId)
-                            .child(LIST_OF_RELATES_TASKS).getValue(t);
+                    Map<String, Task> map = dataSnapshot.child(LIST_OF_RELATES_TASKS).getValue(t);
                     if (map != null) {
                         List<Task> tasks = new ArrayList<>(map.values());
                         callback.onTasksLoaded(tasks);

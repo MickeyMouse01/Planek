@@ -149,20 +149,6 @@ public class PreviewTaskActivity extends BaseActivity {
 
     }
 
-    private List<Task> getSpecificTasks(List<Task> tasks, Enums.PartOfDay partOfDay) {
-        List<Task> taskList = new ArrayList<>();
-
-        for (Task x : tasks) {
-            if(x != null){
-                if (x.getIdOfPlan().equals(viewPlanId)
-                        && x.getPartOfDay().equals(partOfDay)) {
-                    taskList.add(x);
-                }
-            }
-        }
-        return taskList;
-    }
-
     private static PreviewTaskViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(PreviewTaskViewModel.class);

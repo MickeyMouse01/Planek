@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
@@ -35,6 +36,7 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
     private ImageView imageOfNurse;
     private Nurse editedNurse;
     private Bitmap imageBitmap;
+    private String nameOfPicture;
 
     private static NurseProfileEditViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -105,7 +107,8 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
 
         if (imageBitmap != null) {
             showDialog("Nahrávání obrázku ");
-            mViewModel.uploadImage(imageBitmap, editedNurse.getUniqueID());
+            editedNurse.setNameOfImage(nameOfPicture);
+            mViewModel.uploadImage(imageBitmap, nameOfPicture);
         }
 
         mViewModel.saveNurse(editedNurse);
@@ -129,6 +132,7 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 imageOfNurse.setImageBitmap(imageBitmap);
+                nameOfPicture = ActivityUtils.getNameOfFile(this, selectedImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }

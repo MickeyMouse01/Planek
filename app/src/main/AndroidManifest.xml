@@ -49,7 +49,7 @@
             android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity" />
         <activity android:name=".selectedTask.SelectedTaskActivity" />
         <activity
-            android:name=".planForClient.PreviewClientActivity"
+            android:name=".previewPlanForClient.PreviewPlanForClientActivity"
             android:label="@string/preview_client"
             android:parentActivityName=".Clients.ClientsActivity" />
         <activity android:name=".nurseProfile.NurseProfileActivity" />
@@ -61,7 +61,8 @@
         <activity
             android:name=".listOfDays.ListOfDaysActivity"
             android:label="@string/title_activity_listOfDays" />
-        <activity android:name=".viewPlanInfoEdit.PlanInfoEditActivity"></activity>
+        <activity android:name=".viewPlanInfoEdit.PlanInfoEditActivity" />
+        <activity android:name=".previewFoodForClient.PreviewFoodForClientActivity"></activity>
     </application>
 
 </manifest>

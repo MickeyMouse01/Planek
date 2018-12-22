@@ -16,10 +16,11 @@ import java.util.UUID;
 public class Task implements Comparable<Task>{
 
     private final String uniqueID;
-    private String name;
+    private String name = "";
     private boolean passed;
     private String createdDate;
     private boolean isImageSet = false;
+    private String nameOfImage;
     private String idOfPlan;
     private Enums.PartOfDay partOfDay = Enums.PartOfDay.UNDEFINED;
     private String time = "";
@@ -92,6 +93,14 @@ public class Task implements Comparable<Task>{
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getNameOfImage() {
+        return nameOfImage;
+    }
+
+    public void setNameOfImage(String nameOfImage) {
+        this.nameOfImage = nameOfImage;
     }
 
     @Override

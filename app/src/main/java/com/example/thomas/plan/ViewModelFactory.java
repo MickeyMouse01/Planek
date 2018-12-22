@@ -14,7 +14,8 @@ import com.example.thomas.plan.listOfDays.ListOfDaysViewModel;
 import com.example.thomas.plan.loginAndRegister.LoginViewModel;
 import com.example.thomas.plan.nurseProfile.NurseProfileViewModel;
 import com.example.thomas.plan.nurseProfileEdit.NurseProfileEditViewModel;
-import com.example.thomas.plan.planForClient.PreviewClientViewModel;
+import com.example.thomas.plan.previewFoodForClient.PreviewFoodForClientViewModel;
+import com.example.thomas.plan.previewPlanForClient.PreviewPlanForClientViewModel;
 import com.example.thomas.plan.previewTask.PreviewTaskViewModel;
 import com.example.thomas.plan.selectedTask.SelectedTaskVieModel;
 import com.example.thomas.plan.ui.previewplans.PreviewPlansViewModel;
@@ -69,8 +70,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new AddEditTaskViewModel(repository);
         } else if (modelClass.isAssignableFrom(SelectedTaskVieModel.class)) {
             return (T) new SelectedTaskVieModel(repository);
-        } else if (modelClass.isAssignableFrom(PreviewClientViewModel.class)) {
-            return (T) new PreviewClientViewModel(repository);
+        } else if (modelClass.isAssignableFrom(PreviewPlanForClientViewModel.class)) {
+            return (T) new PreviewPlanForClientViewModel(repository);
         } else if (modelClass.isAssignableFrom(NurseProfileViewModel.class)) {
             return (T) new NurseProfileViewModel(repository);
         } else if (modelClass.isAssignableFrom(NurseProfileEditViewModel.class)) {
@@ -83,6 +84,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new ListOfDaysViewModel(repository);
         } else if(modelClass.isAssignableFrom(PlanInfoEditViewModel.class)){
             return (T) new PlanInfoEditViewModel(repository);
+        } else if(modelClass.isAssignableFrom(PreviewFoodForClientViewModel.class)){
+            return (T) new PreviewFoodForClientViewModel(repository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

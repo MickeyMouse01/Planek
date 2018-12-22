@@ -73,9 +73,12 @@ public class ListOfTasksAdapter extends BaseAdapter {
         CheckBox checkBox = viewTask.findViewById(R.id.view_plan_ispassed);
         ImageView imageView = viewTask.findViewById(R.id.view_plan_imageView);
         TextView time = viewTask.findViewById(R.id.task_item_time);
-        textViewName.setText(tasks.get(position).getName());
 
         final Task actualTask = tasks.get(position);
+
+        if(!actualTask.getName().isEmpty()){
+            textViewName.setText(actualTask.getName());
+        }
 
         if (!actualTask.getTime().isEmpty()){
             time.setText(actualTask.getTime());
@@ -84,7 +87,7 @@ public class ListOfTasksAdapter extends BaseAdapter {
 
         if(actualTask.isImageSet()) {
             StorageReference ref = FirebaseStorage.getInstance()
-                    .getReference().child(actualTask.getUniqueID());
+                    .getReference().child(actualTask.getNameOfImage());
             GlideApp.with(viewTask)
                     .load(ref)
                     .into(imageView);

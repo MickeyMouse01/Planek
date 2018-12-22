@@ -2,17 +2,20 @@ package com.example.thomas.plan.listOfDays;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.planForClient.PreviewClientActivity;
+import com.example.thomas.plan.previewPlanForClient.PreviewPlanForClientActivity;
+import com.example.thomas.plan.previewFoodForClient.PreviewFoodForClientActivity;
 
 import java.util.List;
 
@@ -21,6 +24,11 @@ public class ListOfDaysActivity extends BaseActivity {
     ListView listViewDays;
     ListOfDaysViewModel mViewModel;
     String clientId;
+
+    private static ListOfDaysViewModel obtainViewModel(FragmentActivity activity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(ListOfDaysViewModel.class);
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -39,14 +47,14 @@ public class ListOfDaysActivity extends BaseActivity {
         });
     }
 
-    void previewPlanForClient(int position){
-        Intent intent = new Intent(this, PreviewClientActivity.class);
+    void previewPlanForClient(int position) {
+        Intent intent = new Intent(this, PreviewPlanForClientActivity.class);
         intent.putExtra("ClientId", clientId);
         intent.putExtra("position", position);
         startActivity(intent);
     }
 
-    void setupListAdapter(final List<String> items){
+    void setupListAdapter(final List<String> items) {
         ActionItemListener<String> actionItemListener = new ActionItemListener<String>() {
             @Override
             public void onCheckedClick(String item) {
@@ -55,7 +63,7 @@ public class ListOfDaysActivity extends BaseActivity {
 
             @Override
             public void onItemClick(String item) {
-                previewPlanForClient(items.indexOf(item));
+                selectPlanOrFood(items.indexOf(item));
             }
 
             @Override
@@ -69,13 +77,37 @@ public class ListOfDaysActivity extends BaseActivity {
             }
         };
         ListOfDaysAdapter daysAdapter =
-                new ListOfDaysAdapter(items,actionItemListener );
+                new ListOfDaysAdapter(items, actionItemListener);
         listViewDays.setAdapter(daysAdapter);
     }
 
-    private static ListOfDaysViewModel obtainViewModel(FragmentActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(ListOfDaysViewModel.class);
+    private void previewFoodForClient(int position){
+        Intent intent = new Intent(this, PreviewFoodForClientActivity.class);
+        intent.putExtra("ClientId", clientId);
+        intent.putExtra("position", position);
+        startActivity(intent);
+    }
+
+    private void selectPlanOrFood(final int position) {
+        CharSequence items[] = {"Plán", "Strava"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Vyberte");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        previewPlanForClient(position);
+                        break;
+                    case 1:
+                        previewFoodForClient(position);
+                        break;
+                }
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
     @Override

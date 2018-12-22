@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
@@ -34,6 +35,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
    AddEditPlanViewModel mViewModel;
    Bitmap imageBitmap;
    String clientId;
+   String nameOfPicture;
+
    int day;
 
     private static AddEditPlanViewModel obtainViewModel(FragmentActivity activity) {
@@ -95,7 +98,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
 
         if (imageBitmap != null) {
             newPlan.setImageSet(true);
-            mViewModel.uploadImage(imageBitmap, newPlan.getUniqueID());
+            newPlan.setNameOfImage(nameOfPicture);
+            mViewModel.uploadImage(imageBitmap, nameOfPicture);
         }
 
         if (clientId != null) {
@@ -150,6 +154,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                     imageView.setImageBitmap(imageBitmap);
                     imageView.setVisibility(View.VISIBLE);
                     changePicture.setVisibility(View.INVISIBLE);
+                    nameOfPicture = ActivityUtils.getNameOfFile(this, selectedImage);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

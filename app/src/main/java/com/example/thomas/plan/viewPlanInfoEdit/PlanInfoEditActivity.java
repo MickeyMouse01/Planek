@@ -166,7 +166,7 @@ public class PlanInfoEditActivity extends BaseActivity {
         nameOfPlan.setText(plan.getName());
         if(plan.isImageSet()) {
             StorageReference ref = FirebaseStorage.getInstance()
-                    .getReference().child(plan.getUniqueID());
+                    .getReference().child(plan.getNameOfImage());
             GlideApp.with(this)
                     .load(ref)
                     .into(imageView);

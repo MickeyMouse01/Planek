@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
@@ -43,6 +44,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
     private String relatesPlan = null;
     private boolean timeForTaskIsSet = false;
     private String time;
+    private String nameOfPicture;
 
     private static AddEditTaskViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -89,7 +91,6 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         String name = mName.getText().toString();
         String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
                 .format(Calendar.getInstance().getTime());
-        //int partOfDay = partOfDaySpinner.getSelectedItemPosition();
         Task newTask = new Task(name);
         if(timeForTaskIsSet){
             newTask.setTime(time);
@@ -101,7 +102,8 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
         showDialog("Ukládání");
         if (imageBitmap != null) {
             newTask.setImageSet(true);
-            viewModel.uploadImage(imageBitmap, newTask.getUniqueID());
+            newTask.setNameOfImage(nameOfPicture);
+            viewModel.uploadImage(imageBitmap, nameOfPicture);
         }
 
 
@@ -172,6 +174,7 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
                     imageView.setImageBitmap(imageBitmap);
                     imageView.setVisibility(View.VISIBLE);
                     changePicture.setVisibility(View.INVISIBLE);
+                    nameOfPicture = ActivityUtils.getNameOfFile(this, selectedImage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
