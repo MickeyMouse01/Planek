@@ -16,15 +16,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.GlideApp;
+import com.example.thomas.plan.interfaces.ActionItemListener;
+import com.example.thomas.plan.glide.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.planInfo.PlanInfoViewModel;
-import com.example.thomas.plan.tasks.ListOfTasksAdapter;
+import com.example.thomas.plan.viewmodels.PlanInfoViewModel;
+import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

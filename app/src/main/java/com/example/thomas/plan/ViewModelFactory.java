@@ -4,24 +4,24 @@ import android.app.Application;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.example.thomas.plan.Clients.MainViewModel;
-import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
-import com.example.thomas.plan.addEditPlan.AddEditPlanViewModel;
-import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
+import com.example.thomas.plan.viewmodels.MainViewModel;
+import com.example.thomas.plan.viewmodels.AddEditClientViewModel;
+import com.example.thomas.plan.viewmodels.AddEditPlanViewModel;
+import com.example.thomas.plan.viewmodels.AddEditTaskViewModel;
 import com.example.thomas.plan.data.Injection;
 import com.example.thomas.plan.data.Repository;
-import com.example.thomas.plan.listOfDays.ListOfDaysViewModel;
-import com.example.thomas.plan.loginAndRegister.LoginViewModel;
-import com.example.thomas.plan.nurseProfile.NurseInfoViewModel;
-import com.example.thomas.plan.nurseProfileEdit.NurseInfoEditViewModel;
-import com.example.thomas.plan.previewFoodForClient.PreviewFoodForClientViewModel;
-import com.example.thomas.plan.previewPlanForClient.PreviewPlanForClientViewModel;
-import com.example.thomas.plan.clientScreen.ClientScreenViewModel;
-import com.example.thomas.plan.previewSelectedTask.PreviewSelectedTaskVieModel;
-import com.example.thomas.plan.ui.previewplans.PreviewPlansViewModel;
-import com.example.thomas.plan.clientInfo.ClientInfoViewModel;
-import com.example.thomas.plan.planInfo.PlanInfoViewModel;
-import com.example.thomas.plan.planInfoEdit.PlanInfoEditViewModel;
+import com.example.thomas.plan.viewmodels.ListOfDaysViewModel;
+import com.example.thomas.plan.viewmodels.LoginViewModel;
+import com.example.thomas.plan.viewmodels.NurseInfoViewModel;
+import com.example.thomas.plan.viewmodels.NurseInfoEditViewModel;
+import com.example.thomas.plan.viewmodels.PreviewFoodForClientViewModel;
+import com.example.thomas.plan.viewmodels.PreviewPlanForClientViewModel;
+import com.example.thomas.plan.viewmodels.ClientScreenViewModel;
+import com.example.thomas.plan.viewmodels.PreviewSelectedTaskVieModel;
+import com.example.thomas.plan.viewmodels.PreviewPlansViewModel;
+import com.example.thomas.plan.viewmodels.ClientInfoViewModel;
+import com.example.thomas.plan.viewmodels.PlanInfoViewModel;
+import com.example.thomas.plan.viewmodels.PlanInfoEditViewModel;
 
 /**
  * Created by Tomas on 14-Mar-18.

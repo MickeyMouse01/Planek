@@ -16,12 +16,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 
-import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
+import com.example.thomas.plan.viewmodels.AddEditTaskViewModel;
 import com.example.thomas.plan.data.Models.Task;
 
 import java.io.IOException;

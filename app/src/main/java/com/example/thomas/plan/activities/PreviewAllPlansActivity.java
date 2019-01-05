@@ -8,14 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
 
-import com.example.thomas.plan.ActionItemListener;
+import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.plans.ListOfPlansAdapter;
-import com.example.thomas.plan.ui.previewplans.PreviewPlansViewModel;
+import com.example.thomas.plan.adapters.ListOfPlansAdapter;
+import com.example.thomas.plan.viewmodels.PreviewPlansViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

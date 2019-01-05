@@ -11,11 +11,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.activities.AddEditClientActivity;
-import com.example.thomas.plan.clientInfo.ClientInfoViewModel;
+import com.example.thomas.plan.viewmodels.ClientInfoViewModel;
 import com.example.thomas.plan.data.Models.Client;
 
 public class ClientInfoActivity extends BaseActivity {

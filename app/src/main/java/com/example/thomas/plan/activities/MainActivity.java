@@ -16,13 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.thomas.plan.Clients.ClientsFragment;
-import com.example.thomas.plan.Clients.MainViewModel;
+import com.example.thomas.plan.fragments.ClientsFragment;
+import com.example.thomas.plan.viewmodels.MainViewModel;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.plans.PlansFragment;
+import com.example.thomas.plan.fragments.PlansFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 

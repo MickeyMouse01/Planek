@@ -10,11 +10,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 
-import com.example.thomas.plan.ActionItemListener;
+import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.listOfDays.ListOfDaysAdapter;
-import com.example.thomas.plan.listOfDays.ListOfDaysViewModel;
+import com.example.thomas.plan.adapters.ListOfDaysAdapter;
+import com.example.thomas.plan.viewmodels.ListOfDaysViewModel;
 
 import java.util.List;
 

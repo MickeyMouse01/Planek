@@ -12,14 +12,14 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.thomas.plan.ActionItemListener;
+import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.clientScreen.ClientScreenViewModel;
+import com.example.thomas.plan.viewmodels.ClientScreenViewModel;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.tasks.ListOfTasksAdapter;
+import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

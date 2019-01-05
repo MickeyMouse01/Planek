@@ -11,11 +11,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.thomas.plan.GlideApp;
+import com.example.thomas.plan.glide.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.nurseProfile.NurseInfoViewModel;
+import com.example.thomas.plan.viewmodels.NurseInfoViewModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

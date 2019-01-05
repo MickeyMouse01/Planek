@@ -19,7 +19,7 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
+import com.example.thomas.plan.viewmodels.AddEditClientViewModel;
 import com.example.thomas.plan.data.Models.Client;
 
 import java.text.SimpleDateFormat;

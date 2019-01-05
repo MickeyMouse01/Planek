@@ -23,7 +23,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.thomas.plan.Clients.MainViewModel" />
+            type="com.example.thomas.plan.viewmodels.MainViewModel" />
 
     </data>
     <android.support.constraint.ConstraintLayout

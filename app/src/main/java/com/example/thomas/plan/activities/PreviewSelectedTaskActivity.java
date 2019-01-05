@@ -19,12 +19,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.GlideApp;
+import com.example.thomas.plan.interfaces.ActionItemListener;
+import com.example.thomas.plan.glide.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.previewSelectedTask.PreviewSelectedTaskVieModel;
+import com.example.thomas.plan.viewmodels.PreviewSelectedTaskVieModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

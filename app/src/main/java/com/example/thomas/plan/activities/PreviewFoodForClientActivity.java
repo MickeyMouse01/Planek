@@ -16,16 +16,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 
-import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums;
-import com.example.thomas.plan.GlideApp;
+import com.example.thomas.plan.glide.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.previewFoodForClient.PreviewFoodForClientViewModel;
+import com.example.thomas.plan.viewmodels.PreviewFoodForClientViewModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
