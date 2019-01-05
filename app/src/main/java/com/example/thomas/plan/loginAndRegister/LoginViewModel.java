@@ -64,7 +64,12 @@ public class LoginViewModel extends ViewModel {
     }
 
     void saveNurse(Nurse nurse) {
-        repository.saveNurse(nurse);
+        repository.saveNurse(nurse, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+
+            }
+        });
     }
 
     void getNurseByEmail(String email) {

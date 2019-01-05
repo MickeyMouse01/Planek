@@ -11,120 +11,139 @@
         android:id="@+id/view_firstname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="113dp"
         android:text="firstname"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/view_surname"
-        app:layout_constraintStart_toEndOf="@+id/textView15" />
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/barrier4"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/view_surname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="293dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
         android:text="surname"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/view_username"
-        app:layout_constraintStart_toEndOf="@+id/textView16" />
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/barrier4"
+        app:layout_constraintTop_toBottomOf="@+id/view_firstname" />
 
     <TextView
         android:id="@+id/view_type_of_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="381dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
         android:text="type of group"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/view_created_date"
-        app:layout_constraintStart_toEndOf="@+id/textView18" />
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/barrier4"
+        app:layout_constraintTop_toBottomOf="@+id/view_username" />
 
     <TextView
         android:id="@+id/view_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="181dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
         android:text="username"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/view_type_of_group"
-        app:layout_constraintStart_toEndOf="@+id/textView17" />
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/barrier4"
+        app:layout_constraintTop_toBottomOf="@+id/view_surname" />
 
     <TextView
         android:id="@+id/view_created_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="208dp"
-        android:layout_marginBottom="796dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
         android:text="createdDate"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView19" />
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/barrier4"
+        app:layout_constraintTop_toBottomOf="@+id/view_type_of_group" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="113dp"
         android:text="Jméno uživatele :"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
         android:text="Příjmení uživatele :"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView17"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
         android:text="Přihlašovací jméno uživatele : "
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView18"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
         android:text="Skupina : "
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView19"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="800dp"
+        android:layout_marginTop="32dp"
         android:text="Datum vytvoření uživatele : "
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="right"
+        app:constraint_referenced_ids="textView16,textView15,textView18,textView19,textView17"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="429dp" />
 
 </android.support.constraint.ConstraintLayout>

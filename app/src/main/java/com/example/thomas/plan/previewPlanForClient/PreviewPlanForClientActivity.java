@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
@@ -26,8 +26,8 @@ import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
-import com.example.thomas.plan.ui.previewplans.PreviewPlansActivity;
-import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
+import com.example.thomas.plan.ui.previewplans.PreviewAllPlansActivity;
+import com.example.thomas.plan.planInfo.PlanInfoActivity;
 
 import java.util.List;
 
@@ -200,7 +200,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
         builderSingle.setNegativeButton("Pridat vytvoreny", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(PreviewPlanForClientActivity.this, PreviewPlansActivity.class);
+                Intent intent = new Intent(PreviewPlanForClientActivity.this, PreviewAllPlansActivity.class);
                 intent.putExtra("ClientId", clientId);
                 startActivityForResult(intent, 0);
             }
@@ -238,7 +238,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
     }
 
     private void viewPlan(String planId) {
-        Intent intent = new Intent(this, ViewPlanInfoActivity.class);
+        Intent intent = new Intent(this, PlanInfoActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }

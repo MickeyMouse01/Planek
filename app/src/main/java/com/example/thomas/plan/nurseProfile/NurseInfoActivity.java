@@ -11,18 +11,18 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.nurseProfileEdit.NurseProfileEditActivity;
+import com.example.thomas.plan.nurseProfileEdit.NurseInfoEditActivity;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class NurseProfileActivity extends BaseActivity {
+public class NurseInfoActivity extends BaseActivity {
 
-   private NurseProfileViewModel mViewModel;
+   private NurseInfoViewModel mViewModel;
 
    private ImageView imageOfNurse;
    private TextView txtEmail,txtName,txtGroup,txtShift;
@@ -36,7 +36,6 @@ public class NurseProfileActivity extends BaseActivity {
         txtEmail = findViewById(R.id.nurse_mail);
         txtName = findViewById(R.id.nurse_name);
         txtGroup = findViewById(R.id.nurse_group);
-        txtShift = findViewById(R.id.nurse_shift);
 
         mViewModel.getViewedNurse().observe(this, new Observer<Nurse>() {
             @Override
@@ -62,9 +61,9 @@ public class NurseProfileActivity extends BaseActivity {
         });
     }
 
-    private static NurseProfileViewModel obtainViewModel(FragmentActivity activity) {
+    private static NurseInfoViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(NurseProfileViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(NurseInfoViewModel.class);
     }
 
     @Override
@@ -76,7 +75,7 @@ public class NurseProfileActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, NurseProfileEditActivity.class);
+        Intent intent = new Intent(this, NurseInfoEditActivity.class);
         startActivityForResult(intent,3);
         return super.onOptionsItemSelected(item);
     }
@@ -85,12 +84,13 @@ public class NurseProfileActivity extends BaseActivity {
         txtEmail.setText(nurse.getEmail());
         txtName.setText(nurse.getName() + " " + nurse.getSurname());
         txtGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
-        txtShift.setText(nurse.getShift().getNameOfShift());
 
-        StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getNameOfImage());
+        if (nurse.getNameOfImage() != null){
+            StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getNameOfImage());
 
-        GlideApp.with(this)
-                .load(ref)
-                .into(imageOfNurse);
+            GlideApp.with(this)
+                    .load(ref)
+                    .into(imageOfNurse);
+        }
     }
 }

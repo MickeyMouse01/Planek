@@ -57,7 +57,7 @@ public class ClientsFragment extends Fragment {
         View view  = inflater.inflate(R.layout.clients_fragment, null);
         listView = view.findViewById(R.id.clients_list);
 
-        mMainViewModel = ClientsActivity.obtainViewModel(getActivity());
+        mMainViewModel = MainActivity.obtainViewModel(getActivity());
         mMainViewModel.getClients().observe(this, new Observer<List<Client>>() {
             @Override
             public void onChanged(@Nullable List<Client> clients) {

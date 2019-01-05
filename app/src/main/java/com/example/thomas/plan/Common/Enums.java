@@ -112,6 +112,28 @@ public class Enums {
             return code;
         }
 
+        @Override
+        public String toString() {
+            switch (getCode()) {
+                case 0:
+                    return "Pondělí";
+                case 1:
+                    return "Úterý";
+                case 2:
+                    return "Středa";
+                case 3:
+                    return "Čtvrtek";
+                case 4:
+                    return "Pátek";
+                case 5:
+                    return "Sobota";
+                case 6:
+                    return "Neděle";
+                default:
+                    return "Nevybráno";
+            }
+        }
+
         public String getNameOfDay() {
             switch (getCode()) {
                 case 0:

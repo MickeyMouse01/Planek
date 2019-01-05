@@ -10,13 +10,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class NurseProfileViewModel extends ViewModel {
+public class NurseInfoViewModel extends ViewModel {
 
     private Repository repository;
     private MutableLiveData<Nurse> viewedNurse;
     private FirebaseUser user;
 
-    public NurseProfileViewModel(Repository repository) {
+    public NurseInfoViewModel(Repository repository) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         this.repository = repository;
     }

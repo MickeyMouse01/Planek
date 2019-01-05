@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Plan;
@@ -23,7 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class PreviewPlansActivity extends BaseActivity {
+public class PreviewAllPlansActivity extends BaseActivity {
 
     private PreviewPlansViewModel mViewModel;
     private ListOfPlansAdapter mPlansAdapter;
@@ -42,7 +42,7 @@ public class PreviewPlansActivity extends BaseActivity {
         settings = new Settings();
         settings.setDisabledDeleteButton(true);
 
-        mViewModel = PreviewPlansActivity.obtainViewModel(this);
+        mViewModel = PreviewAllPlansActivity.obtainViewModel(this);
         String clientId = intent.getStringExtra("ClientId");
         mViewModel.getClientId().setValue(clientId);
 

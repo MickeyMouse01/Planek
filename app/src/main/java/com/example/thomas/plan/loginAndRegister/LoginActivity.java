@@ -10,23 +10,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.Clients.ClientsActivity;
-import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.Clients.MainActivity;
 import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.previewTask.PreviewTaskActivity;
+import com.example.thomas.plan.clientScreen.ClientScreenActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -71,7 +69,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (loginState) {
             case RESULT_OK:
                 startActivity();
-            break;
+                break;
             case ERROR_VALIDATIONS:
                 loginValidations();
                 break;
@@ -92,7 +90,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void startActivity() {
         if (actualFragment == NURSE_LOGIN) {
-            Intent intent = new Intent(this, ClientsActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("userId", loginViewModel.getLoggedUser().getValue());
             Boolean isNewUser = false;
             intent.putExtra("isNewUser", isNewUser);
@@ -104,7 +102,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onChanged(@Nullable Client client) {
                     LOGGED_CLIENT = client;
-                    if (client != null){
+                    if (client != null) {
                         int day = ActivityUtils.getActualDay();
                         startPreviewTasksActivity(client
                                 .getPlansForDate()
@@ -117,7 +115,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void startPreviewTasksActivity(String planId) {
         showSuccessToast("Přihlášen");
-        Intent intent = new Intent(this, PreviewTaskActivity.class);
+        Intent intent = new Intent(this, ClientScreenActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }
@@ -142,14 +140,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 List<AuthUI.IdpConfig> providers = Collections.singletonList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
-                /*startActivityForResult(
+                startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);*/
-                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
-               break;
+                        RC_SIGN_IN);
+                //loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                break;
             }
         }
     }

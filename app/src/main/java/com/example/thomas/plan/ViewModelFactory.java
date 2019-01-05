@@ -12,16 +12,16 @@ import com.example.thomas.plan.data.Injection;
 import com.example.thomas.plan.data.Repository;
 import com.example.thomas.plan.listOfDays.ListOfDaysViewModel;
 import com.example.thomas.plan.loginAndRegister.LoginViewModel;
-import com.example.thomas.plan.nurseProfile.NurseProfileViewModel;
-import com.example.thomas.plan.nurseProfileEdit.NurseProfileEditViewModel;
+import com.example.thomas.plan.nurseProfile.NurseInfoViewModel;
+import com.example.thomas.plan.nurseProfileEdit.NurseInfoEditViewModel;
 import com.example.thomas.plan.previewFoodForClient.PreviewFoodForClientViewModel;
 import com.example.thomas.plan.previewPlanForClient.PreviewPlanForClientViewModel;
-import com.example.thomas.plan.previewTask.PreviewTaskViewModel;
-import com.example.thomas.plan.selectedTask.SelectedTaskVieModel;
+import com.example.thomas.plan.clientScreen.ClientScreenViewModel;
+import com.example.thomas.plan.previewSelectedTask.PreviewSelectedTaskVieModel;
 import com.example.thomas.plan.ui.previewplans.PreviewPlansViewModel;
-import com.example.thomas.plan.viewClientInfo.ViewClientViewModel;
-import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoViewModel;
-import com.example.thomas.plan.viewPlanInfoEdit.PlanInfoEditViewModel;
+import com.example.thomas.plan.clientInfo.ClientInfoViewModel;
+import com.example.thomas.plan.planInfo.PlanInfoViewModel;
+import com.example.thomas.plan.planInfoEdit.PlanInfoEditViewModel;
 
 /**
  * Created by Tomas on 14-Mar-18.
@@ -62,22 +62,22 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new AddEditClientViewModel(repository);
         } else if (modelClass.isAssignableFrom(AddEditPlanViewModel.class)) {
             return (T) new AddEditPlanViewModel(repository);
-        } else if (modelClass.isAssignableFrom(ViewClientViewModel.class)) {
-            return (T) new ViewClientViewModel(repository);
-        } else if (modelClass.isAssignableFrom(ViewPlanInfoViewModel.class)) {
-            return (T) new ViewPlanInfoViewModel(repository);
+        } else if (modelClass.isAssignableFrom(ClientInfoViewModel.class)) {
+            return (T) new ClientInfoViewModel(repository);
+        } else if (modelClass.isAssignableFrom(PlanInfoViewModel.class)) {
+            return (T) new PlanInfoViewModel(repository);
         } else if (modelClass.isAssignableFrom(AddEditTaskViewModel.class)) {
             return (T) new AddEditTaskViewModel(repository);
-        } else if (modelClass.isAssignableFrom(SelectedTaskVieModel.class)) {
-            return (T) new SelectedTaskVieModel(repository);
+        } else if (modelClass.isAssignableFrom(PreviewSelectedTaskVieModel.class)) {
+            return (T) new PreviewSelectedTaskVieModel(repository);
         } else if (modelClass.isAssignableFrom(PreviewPlanForClientViewModel.class)) {
             return (T) new PreviewPlanForClientViewModel(repository);
-        } else if (modelClass.isAssignableFrom(NurseProfileViewModel.class)) {
-            return (T) new NurseProfileViewModel(repository);
-        } else if (modelClass.isAssignableFrom(NurseProfileEditViewModel.class)) {
-            return (T) new NurseProfileEditViewModel(repository);
-        } else if (modelClass.isAssignableFrom(PreviewTaskViewModel.class)) {
-            return (T) new PreviewTaskViewModel(repository);
+        } else if (modelClass.isAssignableFrom(NurseInfoViewModel.class)) {
+            return (T) new NurseInfoViewModel(repository);
+        } else if (modelClass.isAssignableFrom(NurseInfoEditViewModel.class)) {
+            return (T) new NurseInfoEditViewModel(repository);
+        } else if (modelClass.isAssignableFrom(ClientScreenViewModel.class)) {
+            return (T) new ClientScreenViewModel(repository);
         } else if (modelClass.isAssignableFrom(PreviewPlansViewModel.class)) {
             return (T) new PreviewPlansViewModel(repository);
         } else if(modelClass.isAssignableFrom(ListOfDaysViewModel.class)){

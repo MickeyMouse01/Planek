@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.GlideApp;

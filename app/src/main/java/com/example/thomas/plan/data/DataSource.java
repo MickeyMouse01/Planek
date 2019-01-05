@@ -36,7 +36,7 @@ public interface DataSource {
 
     void getNurse(@NonNull String nurseId, LoadNurseCallback callback);
 
-    void saveNurse(@NonNull Nurse nurse);
+    void saveNurse(@NonNull Nurse nurse, SavedDataCallback callback);
     void deleteNurse(@NonNull String nurseId);
 
 

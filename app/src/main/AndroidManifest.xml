@@ -25,44 +25,50 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Clients.ClientsActivity"
+            android:name=".Clients.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".addEditClient.AddEditClientActivity"
             android:label="@string/add_client"
-            android:parentActivityName=".Clients.ClientsActivity" />
+            android:parentActivityName=".Clients.MainActivity" />
         <activity
-            android:name=".viewClientInfo.ViewClientActivity"
+            android:name=".clientInfo.ClientInfoActivity"
             android:label="@string/client_info"
-            android:parentActivityName=".Clients.ClientsActivity" />
+            android:parentActivityName=".Clients.MainActivity" />
         <activity
             android:name=".addEditPlan.AddEditPlanActivity"
             android:label="@string/add_plan" />
         <activity
-            android:name=".viewPlanInfo.ViewPlanInfoActivity"
+            android:name=".planInfo.PlanInfoActivity"
             android:label="@string/plan_info"
-            android:parentActivityName=".Clients.ClientsActivity" />
+            android:parentActivityName=".Clients.MainActivity" />
         <activity
             android:name=".addEditTask.AddEditTaskActivity"
             android:label="@string/add_task"
-            android:parentActivityName=".viewPlanInfo.ViewPlanInfoActivity" />
-        <activity android:name=".selectedTask.SelectedTaskActivity" />
+            android:parentActivityName=".planInfo.PlanInfoActivity" />
+        <activity android:name=".previewSelectedTask.PreviewSelectedTaskActivity" />
         <activity
             android:name=".previewPlanForClient.PreviewPlanForClientActivity"
             android:label="@string/preview_client"
-            android:parentActivityName=".Clients.ClientsActivity" />
-        <activity android:name=".nurseProfile.NurseProfileActivity" />
-        <activity android:name=".nurseProfileEdit.NurseProfileEditActivity" />
+            android:parentActivityName=".Clients.MainActivity" />
+        <activity android:name=".nurseProfile.NurseInfoActivity"
+            android:label="@string/title_activity_preview_nurse"/>
+        <activity android:name=".nurseProfileEdit.NurseInfoEditActivity"
+            android:label="@string/title_activity_edit_nurse"/>
         <activity
-            android:name=".previewTask.PreviewTaskActivity"
+            android:name=".clientScreen.ClientScreenActivity"
             android:label="@string/title_activity_preview_task" />
-        <activity android:name=".ui.previewplans.PreviewPlansActivity" />
+        <activity android:name=".ui.previewplans.PreviewAllPlansActivity" />
         <activity
             android:name=".listOfDays.ListOfDaysActivity"
             android:label="@string/title_activity_listOfDays" />
-        <activity android:name=".viewPlanInfoEdit.PlanInfoEditActivity" />
-        <activity android:name=".previewFoodForClient.PreviewFoodForClientActivity"></activity>
+        <activity
+            android:name=".planInfoEdit.PlanInfoEditActivity"
+            android:label="@string/title_activity_editPlan" />
+        <activity
+            android:name=".previewFoodForClient.PreviewFoodForClientActivity"
+            android:label="@string/title_activity_previewFoodForClient"></activity>
     </application>
 
 </manifest>

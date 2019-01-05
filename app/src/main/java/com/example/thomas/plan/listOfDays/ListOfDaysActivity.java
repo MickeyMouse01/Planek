@@ -11,7 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.previewPlanForClient.PreviewPlanForClientActivity;

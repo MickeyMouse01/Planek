@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
@@ -25,15 +25,15 @@ import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.listOfDays.ListOfDaysActivity;
 import com.example.thomas.plan.loginAndRegister.LoginActivity;
-import com.example.thomas.plan.nurseProfile.NurseProfileActivity;
+import com.example.thomas.plan.nurseProfile.NurseInfoActivity;
 import com.example.thomas.plan.plans.PlansFragment;
-import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
-import com.example.thomas.plan.viewClientInfo.ViewClientActivity;
-import com.example.thomas.plan.viewPlanInfo.ViewPlanInfoActivity;
+import com.example.thomas.plan.previewSelectedTask.PreviewSelectedTaskActivity;
+import com.example.thomas.plan.clientInfo.ClientInfoActivity;
+import com.example.thomas.plan.planInfo.PlanInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class ClientsActivity extends BaseActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final int VIEW_CLIENTS = 0;
@@ -143,8 +143,8 @@ public class ClientsActivity extends BaseActivity
         TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
         TextView txtMenuNameSurname = findViewById(R.id.menu_name_surname);
 
-        //txtMenuNameSurname.setText(nurse.getNameAndSurname());
-        //txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
+        txtMenuNameSurname.setText(nurse.getNameAndSurname());
+        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
     }
 
     private void setupViewFragment(int frame) {
@@ -219,7 +219,7 @@ public class ClientsActivity extends BaseActivity
 
     private void viewClient(String clientId) {
         mViewModel.getCurrentFragment().setValue(VIEW_CLIENTS);
-        Intent intent = new Intent(this, ViewClientActivity.class);
+        Intent intent = new Intent(this, ClientInfoActivity.class);
         intent.putExtra("ClientId", clientId);
         startActivity(intent);
     }
@@ -239,20 +239,20 @@ public class ClientsActivity extends BaseActivity
 
     private void viewPlan(String planId) {
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
-        Intent intent = new Intent(this, ViewPlanInfoActivity.class);
+        Intent intent = new Intent(this, PlanInfoActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }
 
     private void previewPlan(String planId) {
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);
-        Intent intent = new Intent(this, SelectedTaskActivity.class);
+        Intent intent = new Intent(this, PreviewSelectedTaskActivity.class);
         intent.putExtra("PlanId", planId);
         startActivity(intent);
     }
 
     private void previewNurseProfile() {
-        Intent intent = new Intent(this, NurseProfileActivity.class);
+        Intent intent = new Intent(this, NurseInfoActivity.class);
         startActivity(intent);
     }
 }

@@ -8,8 +8,8 @@
     <string name="title_activity_main">Seznam</string>
     <string name="add_client">Přidat klienta</string>
     <string name="add_plan">Přidat plán</string>
-    <string name="client_info">Info o klientovi</string>
-    <string name="plan_info">Info o plánu</string>
+    <string name="client_info">Informace o klientovi</string>
+    <string name="plan_info">Informace o plánu</string>
     <string name="add_task">Přidat task</string>
     <string name="title_activity_preview_plan">PreviewPlanActivity</string>
     <string name="preview_client">Prohlížení klienta</string>
@@ -185,7 +185,11 @@
     <string name="title_activity_preview_task">Denní plán</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_activity_listOfDays">Vyberte plán pro den v týdnu</string>
+    <string name="title_activity_editPlan">Editace plánu</string>
+    <string name="title_activity_preview_nurse">Informace o vychovateli</string>
+    <string name="title_activity_edit_nurse">Editace vychovatele</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_previewFoodForClient">Selekce stravy</string>
     <string name="morning_activities">Dopolední aktivity</string>
     <string name="afternoon_activities">Odpolední aktivity</string>
     <string name="all_activities">Všechny aktivity</string>

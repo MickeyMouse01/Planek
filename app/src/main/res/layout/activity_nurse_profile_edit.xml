@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".nurseProfileEdit.NurseProfileEditActivity">
+    tools:context=".nurseProfileEdit.NurseInfoEditActivity">
 
     <ImageView
         android:id="@+id/nurse_edit_image"
@@ -12,52 +12,49 @@
         android:layout_height="245dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="41dp"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="82dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/borderlines"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/nurse_edit_mail"
         android:layout_width="348dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textView10"
-        android:layout_marginTop="79dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
         android:id="@+id/nurse_edit_name"
         android:layout_width="357dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/nurse_edit_mail"
-        android:layout_marginTop="172dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <Spinner
         android:id="@+id/nurse_edit_group"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/nurse_edit_mail"
         android:layout_below="@+id/nurse_edit_image"
-        android:entries="@array/type_of_group"/>
-
-    <Spinner
-        android:id="@+id/nurse_edit_shift"
-        android:layout_width="397dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_image"
-        android:layout_marginTop="412dp"
-        android:entries="@array/type_of_shift"/>
-
-    <TextView
-        android:id="@+id/nurse_supervisior"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_image"
-        android:layout_marginTop="503dp"
-        android:text="Vedouci" />
+        android:layout_alignStart="@+id/nurse_edit_mail"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/type_of_group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/textView8"
@@ -65,18 +62,29 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/nurse_edit_image"
         android:layout_alignStart="@+id/nurse_edit_mail"
-        android:layout_marginBottom="-69dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="32dp"
         android:text="Email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nurse_edit_name" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="200dp"
-        android:layout_height="42dp"
-        android:layout_alignStart="@+id/nurse_edit_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/nurse_edit_mail"
+        android:layout_alignStart="@+id/nurse_edit_mail"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="80dp"
         android:text="Jméno a Příjmení"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nurse_edit_upload_image" />
 
     <TextView
         android:id="@+id/textView10"
@@ -84,33 +92,40 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="234dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="32dp"
         android:text="Skupina"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nurse_edit_mail" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="118dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nurse_edit_image"
-        android:layout_marginTop="363dp"
-        android:text="Směna"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     <Button
         android:id="@+id/nurse_edit_save_button"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Uložit" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Uložit"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/nurse_edit_upload_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/nurse_edit_image"
-        android:layout_marginStart="97dp"
-        android:text="Nahrát nový obrázek" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:text="Nahrát nový obrázek"
+        app:layout_constraintEnd_toEndOf="@+id/nurse_edit_image"
+        app:layout_constraintStart_toStartOf="@+id/nurse_edit_image"
+        app:layout_constraintTop_toBottomOf="@+id/nurse_edit_image" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

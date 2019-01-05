@@ -3,6 +3,7 @@ package com.example.thomas.plan.nurseProfileEdit;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
@@ -13,14 +14,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.io.ByteArrayOutputStream;
 
-public class NurseProfileEditViewModel extends ViewModel {
+public class NurseInfoEditViewModel extends ViewModel {
 
     private Repository repository;
     private MutableLiveData<Nurse> editedNurse;
     private FirebaseUser firebaseUser;
     private SingleLiveEvent<Void> imageIsUploaded = new SingleLiveEvent<>();
+    private SingleLiveEvent<String> onSavedNurse = new SingleLiveEvent<>();
 
-    public NurseProfileEditViewModel(Repository repository){
+    public NurseInfoEditViewModel(Repository repository){
         this.repository = repository;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
@@ -33,6 +35,10 @@ public class NurseProfileEditViewModel extends ViewModel {
         return editedNurse;
     }
 
+    public SingleLiveEvent<String> getOnSavedNurse() {
+        return onSavedNurse;
+    }
+
     private void loadNurse(){
         repository.getNurse(firebaseUser.getUid(), new DataSource.LoadNurseCallback() {
             @Override
@@ -43,7 +49,12 @@ public class NurseProfileEditViewModel extends ViewModel {
     }
 
     void saveNurse(Nurse nurse){
-        repository.saveNurse(nurse);
+        repository.saveNurse(nurse, new DataSource.SavedDataCallback() {
+            @Override
+            public void onSavedData(@NonNull String message) {
+                onSavedNurse.setValue(message);
+            }
+        });
     }
 
     SingleLiveEvent<Void> getImageIsUploaded(){

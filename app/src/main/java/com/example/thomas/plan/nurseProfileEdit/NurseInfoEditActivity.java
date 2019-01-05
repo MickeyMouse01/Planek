@@ -14,8 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.example.thomas.plan.Activities.BaseActivity;
+import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.GlideApp;
@@ -27,20 +28,21 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 
-public class NurseProfileEditActivity extends BaseActivity implements View.OnClickListener {
+public class NurseInfoEditActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int PICK_IMAGE = 1;
-    private NurseProfileEditViewModel mViewModel;
-    private EditText email, nameAndSurname;
+    private NurseInfoEditViewModel mViewModel;
+    private EditText nameAndSurname;
+    private TextView email;
     private Spinner typeOfGroup, shift;
     private ImageView imageOfNurse;
     private Nurse editedNurse;
     private Bitmap imageBitmap;
     private String nameOfPicture;
 
-    private static NurseProfileEditViewModel obtainViewModel(FragmentActivity activity) {
+    private static NurseInfoEditViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(NurseProfileEditViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(NurseInfoEditViewModel.class);
     }
 
     @Override
@@ -57,7 +59,6 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         email = findViewById(R.id.nurse_edit_mail);
         nameAndSurname = findViewById(R.id.nurse_edit_name);
         typeOfGroup = findViewById(R.id.nurse_edit_group);
-        shift = findViewById(R.id.nurse_edit_shift);
         Button save = findViewById(R.id.nurse_edit_save_button);
         Button uploadNewImage = findViewById(R.id.nurse_edit_upload_image);
         imageOfNurse = findViewById(R.id.nurse_edit_image);
@@ -74,7 +75,15 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         mViewModel.getImageIsUploaded().observe(this, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
+                mViewModel.saveNurse(editedNurse);
+            }
+        });
+
+        mViewModel.getOnSavedNurse().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
                 hideDialog();
+                finish();
             }
         });
 
@@ -85,17 +94,18 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         email.setText(nurse.getEmail());
         nameAndSurname.setText(nurse.getName() + " " + nurse.getSurname());
         typeOfGroup.setSelection(nurse.getTypeOfGroup().getCode());
-        shift.setSelection(nurse.getShift().getCode());
-        StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getUniqueID());
 
-        GlideApp.with(this)
-                .load(ref)
-                .into(imageOfNurse);
+        if (nurse.getNameOfImage() != null) {
+            StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getNameOfImage());
+
+            GlideApp.with(this)
+                    .load(ref)
+                    .into(imageOfNurse);
+        }
 
     }
 
     private void editNurse() {
-        editedNurse.setEmail(email.getText().toString());
         String editedNameAndSurname = nameAndSurname.getText().toString();
         String[] split = editedNameAndSurname.split("\\s+");
         String name = split[0];
@@ -103,17 +113,14 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         editedNurse.setName(name);
         editedNurse.setSurname(surname);
         editedNurse.setTypeOfGroup(Enums.TypeOfGroup.values()[typeOfGroup.getSelectedItemPosition()]);
-        editedNurse.setShift(Enums.PartOfDay.values()[shift.getSelectedItemPosition()]);
 
         if (imageBitmap != null) {
             showDialog("Nahrávání obrázku ");
             editedNurse.setNameOfImage(nameOfPicture);
             mViewModel.uploadImage(imageBitmap, nameOfPicture);
+        } else {
+            mViewModel.saveNurse(editedNurse);
         }
-
-        mViewModel.saveNurse(editedNurse);
-        finish();
-
     }
 
     private void uploadImage() {
@@ -127,7 +134,7 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE) {
+        if (requestCode == PICK_IMAGE && data != null) {
             Uri selectedImage = data.getData();
             try {
                 imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -147,10 +154,7 @@ public class NurseProfileEditActivity extends BaseActivity implements View.OnCli
         } else if (email.getText().toString().isEmpty()) {
             email.setError("Toto pole je povinné");
             isFilled = false;
-        } /*else if(!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()){
-            email.setError("Email musí být ve správném tvaru");
-            isFilled = false;
-        }*/
+        }
         return isFilled;
     }
 

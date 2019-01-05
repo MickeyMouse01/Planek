@@ -65,8 +65,8 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public void saveNurse(@NonNull Nurse nurse) {
-        remoteDataSource.saveNurse(nurse);
+    public void saveNurse(@NonNull Nurse nurse, SavedDataCallback callback) {
+        remoteDataSource.saveNurse(nurse, callback);
     }
 
     @Override

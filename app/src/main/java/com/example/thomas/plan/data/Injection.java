@@ -13,5 +13,4 @@ public class Injection {
     public static Repository provideClientsRepository(@NonNull Context context) {
         return Repository.getInstance(RemoteDataSource.getInstance());
     }
-
 }

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,11 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.Clients.ClientsActivity;
+import com.example.thomas.plan.Clients.MainActivity;
 import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Plan;
-import com.example.thomas.plan.databinding.PlansFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +59,7 @@ public class PlansFragment extends Fragment
         View view  = inflater.inflate(R.layout.plans_fragment, null);
         listView = view.findViewById(R.id.plans_list);
 
-        mMainViewModel = ClientsActivity.obtainViewModel(getActivity());
+        mMainViewModel = MainActivity.obtainViewModel(getActivity());
         mMainViewModel.getPlans().observe(this, new Observer<List<Plan>>() {
             @Override
             public void onChanged(@Nullable List<Plan> plans) {

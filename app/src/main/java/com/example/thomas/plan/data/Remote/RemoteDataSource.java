@@ -130,37 +130,24 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void saveNurse(@NonNull Nurse nurse) {
+    public void saveNurse(@NonNull Nurse nurse, final SavedDataCallback callback) {
         mDatabase.child("nurses")
-                .child(nurse.getUniqueID()).setValue(nurse);
+                .child(nurse.getUniqueID()).setValue(nurse, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    callback.onSavedData("Data nemohla být uložena " + databaseError.getMessage());
+                } else {
+                    callback.onSavedData("Vychovatel úspěšně uložen");
+                }
+            }
+        });
     }
 
     @Override
     public void deleteNurse(@NonNull String nurseId) {
         mDatabase.child("nurses").child(nurseId).removeValue();
     }
-    private boolean returnFalse(){
-        return false;
-    }
-
-    private boolean returnTrue(){
-        return true;
-    }
-
-    /*private boolean fileExists(String name){
-        boolean fileExists;
-        mStorage.child(name).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                returnTrue();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                returnFalse();
-            }
-        });
-    }*/
 
     @Override
     public void uploadImage(@NonNull String name, byte[] data, final UploadImageCallback callback) {

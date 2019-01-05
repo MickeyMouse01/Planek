@@ -2,10 +2,13 @@ package com.example.thomas.plan.data.Models;
 
 import android.support.annotation.NonNull;
 
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.Common.Enums.TypeOfGroup;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -21,6 +24,7 @@ public class Client implements Comparable<Client>{
     private String password;
     private String username;
     private HashMap<String,String> plansForDate = new HashMap<>();
+    private HashMap<String, HashMap<String, String>> dating = new HashMap<>();
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -29,6 +33,7 @@ public class Client implements Comparable<Client>{
         this.typeOfGroup = typeOfGroup;
         this.uniqueID = UUID.randomUUID().toString();
         this.nurseID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+        dating = new HashMap<>();
     }
 
     public String getPassword() {
@@ -105,6 +110,14 @@ public class Client implements Comparable<Client>{
 
     public void setPlansForDate(HashMap<String, String> plansForDate) {
         this.plansForDate = plansForDate;
+    }
+
+    public HashMap<String, HashMap<String, String>> getDating() {
+        return dating;
+    }
+
+    public void setDating(HashMap<String, HashMap<String, String>> dating) {
+        this.dating = dating;
     }
 
     @Override
