@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ public class ClientScreenActivity extends BaseActivity {
     private TextView mTextMessage;
     private ClientScreenViewModel mViewModel;
     private String viewPlanId;
+    private TextView tvLunch, tvDinner;
     private ListView lvMorningActivities, lvAfternoonActivities,lvDinner,lvLunch;
     private ListOfTasksAdapter morningActivitesAdapter;
     private ListOfTasksAdapter afternoonActivitesAdapter;
@@ -44,19 +47,34 @@ public class ClientScreenActivity extends BaseActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_all:
                     mViewModel.getPartOfDay().setValue(null);
-                    //mViewModel.getListOfTasks().setValue(mTasks);
+                    lvMorningActivities.setVisibility(View.VISIBLE);
+                    lvLunch.setVisibility(View.VISIBLE);
+                    lvAfternoonActivities.setVisibility(View.VISIBLE);
+                    lvDinner.setVisibility(View.VISIBLE);
+                    tvLunch.setVisibility(View.VISIBLE);
+                    tvDinner.setVisibility(View.VISIBLE);
                     mTextMessage.setText(R.string.all_activities);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_morning:
                     mViewModel.getPartOfDay().setValue(Enums.PartOfDay.MORNING);
-                    //mViewModel.getListOfTasks().setValue(mTasks);
+                    lvMorningActivities.setVisibility(View.VISIBLE);
+                    lvLunch.setVisibility(View.VISIBLE);
+                    lvAfternoonActivities.setVisibility(View.INVISIBLE);
+                    lvDinner.setVisibility(View.INVISIBLE);
+                    tvLunch.setVisibility(View.VISIBLE);
+                    tvDinner.setVisibility(View.INVISIBLE);
                     mTextMessage.setText(R.string.morning_activities);
                     return true;
                 case R.id.navigation_afternoon:
                     mViewModel.getPartOfDay().setValue(Enums.PartOfDay.AFTERNOON);
-                    //mViewModel.getListOfTasks().setValue(mTasks);
+                    lvMorningActivities.setVisibility(View.INVISIBLE);
+                    lvLunch.setVisibility(View.INVISIBLE);
+                    lvAfternoonActivities.setVisibility(View.VISIBLE);
+                    lvDinner.setVisibility(View.VISIBLE);
+                    tvLunch.setVisibility(View.INVISIBLE);
+                    tvDinner.setVisibility(View.VISIBLE);
                     mTextMessage.setText(R.string.afternoon_activities);
                     return true;
             }
@@ -76,6 +94,9 @@ public class ClientScreenActivity extends BaseActivity {
         lvLunch = findViewById(R.id.preview_task_lunch);
         lvAfternoonActivities = findViewById(R.id.list_of_afternoon_tasks);
         lvDinner = findViewById(R.id.preview_task_dinner);
+        tvLunch = findViewById(R.id.tv_lunch);
+        tvDinner = findViewById(R.id.tv_dinner);
+
         setupListAdapter();
 
         mTextMessage = findViewById(R.id.message);
