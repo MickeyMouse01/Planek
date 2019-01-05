@@ -29,6 +29,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
         onViewReady(savedInstanceState, getIntent());
+
+
     }
 
     protected abstract int getContentView();

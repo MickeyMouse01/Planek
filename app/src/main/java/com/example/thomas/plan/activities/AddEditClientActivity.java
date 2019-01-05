@@ -35,7 +35,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     private String actualLock = "";
     private TextView txtForPassword;
     private String idOfClient;
-    private Client editedClient;
+    private Client client;
     private int countForSave = 0;
 
     private PatternLockView mPatternLockView;
@@ -81,6 +81,17 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
             }
         });
 
+        mViewModel.getIsThereSameUsername().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean thereIsSameUsername) {
+                if (!thereIsSameUsername.booleanValue()){
+                    mViewModel.saveClient(client);
+                } else {
+                    hideDialog();
+                    showErrorToast("Uživatel s takovým přihlašovacím jménem už existuje");
+                }
+            }
+        });
     }
 
     private void finishThisActivity() {
@@ -90,7 +101,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initializeClient(Client client) {
-        editedClient = client;
+        this.client = client;
         mFirstName.setText(client.getFirstName());
         mSurname.setText(client.getSurname());
         sTypeOfGroup.setSelection(client.getTypeOfGroup().getCode());
@@ -165,32 +176,32 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         String userName = mUserName.getText().toString();
         String dateTime = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss")
                 .format(Calendar.getInstance().getTime());
-        Client newClient = new Client(firstName, surname, Enums.TypeOfGroup.values()[typeOfGroup]);
-        newClient.setCreatedDate(dateTime);
-        newClient.setUsername(userName);
-        newClient.setPassword(actualLock);
+        client = new Client(firstName, surname, Enums.TypeOfGroup.values()[typeOfGroup]);
+        client.setCreatedDate(dateTime);
+        client.setUsername(userName);
+        client.setPassword(actualLock);
         /*HashMap<String,String> weeks = new HashMap<>();
         weeks.put(Enums.Day.MONDAY.toString(), "idplabu");
         newClient.getDating().put("tyden 1",weeks);
         newClient.getDating().put("tyden 2",weeks);
         String planId =  newClient.getDating().get("tyden 1").get(Enums.Day.values()[0].toString());
         new DateFormatSymbols().get*/
-        mViewModel.saveClient(newClient);
+        mViewModel.searchUsername(userName);
     }
 
     private void editClient() {
+        showDialog("Ukládání");
         String firstName = mFirstName.getText().toString();
         String surname = mSurname.getText().toString();
         int typeOfGroup = sTypeOfGroup.getSelectedItemPosition();
         String userName = mUserName.getText().toString();
 
-        editedClient.setFirstName(firstName);
-
-        editedClient.setSurname(surname);
-        editedClient.setTypeOfGroup(Enums.TypeOfGroup.values()[typeOfGroup]);
-        editedClient.setUsername(userName);
-        editedClient.setPassword(actualLock);
-        mViewModel.saveClient(editedClient);
+        client.setFirstName(firstName);
+        client.setSurname(surname);
+        client.setTypeOfGroup(Enums.TypeOfGroup.values()[typeOfGroup]);
+        client.setUsername(userName);
+        client.setPassword(actualLock);
+        mViewModel.searchUsername(userName);
     }
 
     private boolean requiredFieldsAreFilled() {
@@ -216,7 +227,9 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
                 addClient();
             }
         } else {
-            editClient();
+            if (requiredFieldsAreFilled()) {
+                editClient();
+            }
         }
     }
 }

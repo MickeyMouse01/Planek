@@ -2,6 +2,7 @@ package com.example.thomas.plan.viewmodels;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.SingleLiveEvent;
@@ -10,6 +11,7 @@ import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class PlanInfoEditViewModel extends ViewModel {
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<List<Task>> listOfTasks;
     private SingleLiveEvent<String> onPlanSaved = new SingleLiveEvent<>();
+    private SingleLiveEvent<String> imageIsUploaded = new SingleLiveEvent<>();
 
     public PlanInfoEditViewModel(Repository repository) {
         this.viewedPlan = new MutableLiveData<>();
@@ -46,6 +49,9 @@ public class PlanInfoEditViewModel extends ViewModel {
 
     public SingleLiveEvent<String> getOnPlanSaved() {
         return onPlanSaved;
+    }
+    public SingleLiveEvent<String> getOnImageIsUploaded() {
+        return imageIsUploaded;
     }
 
     public void setViewedPlanId(String viewedPlanId) {
@@ -88,6 +94,20 @@ public class PlanInfoEditViewModel extends ViewModel {
             @Override
             public void onSavedData(@NonNull String message) {
                 onPlanSaved.setValue(message);
+            }
+        });
+    }
+
+
+    public void uploadImage(Bitmap bitmap, String name) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] data = stream.toByteArray();
+
+        repository.uploadImage(name, data, new DataSource.UploadImageCallback() {
+            @Override
+            public void onImageUploaded() {
+                imageIsUploaded.call();
             }
         });
     }

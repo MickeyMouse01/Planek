@@ -4,7 +4,10 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
@@ -14,20 +17,24 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.thomas.plan.interfaces.ActionItemListener;
-import com.example.thomas.plan.glide.GlideApp;
+import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
+import com.example.thomas.plan.glide.GlideApp;
+import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.viewmodels.PlanInfoEditViewModel;
-import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.thomas.plan.activities.AddEditPlanActivity.PICK_IMAGE;
 
 public class PlanInfoEditActivity extends BaseActivity {
 
@@ -35,6 +42,9 @@ public class PlanInfoEditActivity extends BaseActivity {
     private String viewPlanId;
     private Button saveButton;
     private TextView nameOfPlan;
+    private Bitmap imageBitmap;
+    private Plan editedPlan;
+    private String nameOfPicture;
     private ImageView imageView;
     private ListOfTasksAdapter listOfTasksAdapter;
     private List<Task> mTasks = new ArrayList<>();
@@ -63,7 +73,7 @@ public class PlanInfoEditActivity extends BaseActivity {
         mViewModel.getViewedPlan().observe(this, new Observer<Plan>() {
             @Override
             public void onChanged(@Nullable Plan plan) {
-                if(plan !=null){
+                if (plan != null) {
                     initialize(plan);
                 }
             }
@@ -86,6 +96,14 @@ public class PlanInfoEditActivity extends BaseActivity {
                 finish();
             }
         });
+
+        mViewModel.getOnImageIsUploaded().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                mViewModel.updatePlan(editedPlan);
+            }
+        });
+
         confirmDialog = createConfirmDialog();
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,21 +113,59 @@ public class PlanInfoEditActivity extends BaseActivity {
                 }
             }
         });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForSelectPicture();
+            }
+        });
     }
 
-    private void saveEditedPlan(){
+    private void startActivityForSelectPicture() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGE) {
+            if (data != null) {
+                Uri selectedImage = data.getData();
+                try {
+                    imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    imageView.setImageBitmap(imageBitmap);
+                    imageView.setVisibility(View.VISIBLE);
+                    nameOfPicture = ActivityUtils.getNameOfFile(this, selectedImage);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void saveEditedPlan() {
         showDialog("Ukládání");
-       Plan editedPlan = mViewModel.getViewedPlan().getValue();
-       String editedName = nameOfPlan.getText().toString();
-       editedPlan.setName(editedName);
-       mViewModel.updatePlan(editedPlan);
+        editedPlan = mViewModel.getViewedPlan().getValue();
+        String editedName = nameOfPlan.getText().toString();
+        editedPlan.setName(editedName);
+        if (nameOfPicture == null) {
+            mViewModel.updatePlan(editedPlan);
+        } else {
+            editedPlan.setNameOfImage(nameOfPicture);
+            editedPlan.setImageSet(true);
+            mViewModel.uploadImage(imageBitmap,nameOfPicture);
+        }
     }
 
     private List<Task> getSpecificTasks(List<Task> tasks) {
         List<Task> taskList = new ArrayList<>();
 
         for (Task x : tasks) {
-            if(x != null){
+            if (x != null) {
                 if (x.getIdOfPlan().equals(viewPlanId)) {
                     taskList.add(x);
                 }
@@ -153,7 +209,7 @@ public class PlanInfoEditActivity extends BaseActivity {
         listViewTasks.setAdapter(listOfTasksAdapter);
     }
 
-    private void deleteItemWithConfirmation(final Task task){
+    private void deleteItemWithConfirmation(final Task task) {
         confirmDialog.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -166,7 +222,7 @@ public class PlanInfoEditActivity extends BaseActivity {
 
     private void initialize(Plan plan) {
         nameOfPlan.setText(plan.getName());
-        if(plan.isImageSet()) {
+        if (plan.isImageSet()) {
             StorageReference ref = FirebaseStorage.getInstance()
                     .getReference().child(plan.getNameOfImage());
             GlideApp.with(this)

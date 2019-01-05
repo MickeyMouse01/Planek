@@ -17,6 +17,7 @@ public class AddEditClientViewModel extends ViewModel {
     private MutableLiveData<Client> editedClient;
     private Repository repository;
     private SingleLiveEvent<String> onClientSaved = new SingleLiveEvent<>();
+    private SingleLiveEvent<Boolean> onStatusOfUsername= new SingleLiveEvent<>();
 
     public AddEditClientViewModel(Repository mRepository) {
         this.repository = mRepository;
@@ -51,5 +52,32 @@ public class AddEditClientViewModel extends ViewModel {
 
     public SingleLiveEvent<String> onClientSaved(){
         return onClientSaved;
+    }
+
+    public SingleLiveEvent<Boolean> getIsThereSameUsername() {
+        return onStatusOfUsername;
+    }
+
+    public void searchUsername(String username){
+        repository.searchClientByUsername(username, new DataSource.LoadClientCallback() {
+            @Override
+            public void onClientLoaded(Client client) {
+                if (client == null){
+                    onStatusOfUsername.setValue(false);
+                } else {
+                    if (editedClient != null){
+                        if (client.getUniqueID().equals(editedClient.getValue().getUniqueID())){
+                            onStatusOfUsername.setValue(false);
+                        } else {
+                            onStatusOfUsername.setValue(true);
+                        }
+                    } else {
+                        onStatusOfUsername.setValue(true);
+                    }
+
+
+                }
+            }
+        });
     }
 }
