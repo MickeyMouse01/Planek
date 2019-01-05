@@ -1,4 +1,4 @@
-package com.example.thomas.plan.previewPlanForClient;
+package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -14,20 +14,16 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
-import com.example.thomas.plan.addEditTask.AddEditTaskActivity;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.plans.ListOfPlansAdapter;
+import com.example.thomas.plan.previewPlanForClient.PreviewPlanForClientViewModel;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
-import com.example.thomas.plan.ui.previewplans.PreviewAllPlansActivity;
-import com.example.thomas.plan.planInfo.PlanInfoActivity;
 
 import java.util.List;
 

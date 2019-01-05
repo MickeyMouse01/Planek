@@ -105,7 +105,7 @@ public class PreviewFoodForClientViewModel extends ViewModel {
         }, selectedPlan.getValue().getUniqueID(), partOfDay);
     }
 
-    void updateTask(Task task){
+    public void updateTask(Task task){
         repository.saveTask(task, getPlanId(), new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -115,7 +115,7 @@ public class PreviewFoodForClientViewModel extends ViewModel {
     }
 
 
-    void saveTaskToPlan(Task newTask) {
+    public void saveTaskToPlan(Task newTask) {
         Plan plan = selectedPlan.getValue();
         if(plan.getListOfRelatesTasks() != null){
             for (Task task: plan.getListOfRelatesTasks().values()) {
@@ -134,7 +134,7 @@ public class PreviewFoodForClientViewModel extends ViewModel {
         });
     }
 
-    void uploadImage(Bitmap bitmap, String name){
+    public void uploadImage(Bitmap bitmap, String name){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] data = stream.toByteArray();

@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.activities.MainActivity;
 import com.example.thomas.plan.data.Models.Client;
 
 import java.util.ArrayList;

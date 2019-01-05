@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.Clients.MainActivity;
+import com.example.thomas.plan.activities.MainActivity;
 import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.data.Models.Plan;

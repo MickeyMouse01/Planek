@@ -1,4 +1,4 @@
-package com.example.thomas.plan.nurseProfile;
+package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -11,12 +11,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.nurseProfileEdit.NurseInfoEditActivity;
+import com.example.thomas.plan.nurseProfile.NurseInfoViewModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

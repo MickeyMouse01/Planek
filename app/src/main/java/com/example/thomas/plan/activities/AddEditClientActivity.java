@@ -1,4 +1,4 @@
-package com.example.thomas.plan.addEditClient;
+package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -16,10 +16,10 @@ import android.widget.Toast;
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
-import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.addEditClient.AddEditClientViewModel;
 import com.example.thomas.plan.data.Models.Client;
 
 import java.text.SimpleDateFormat;

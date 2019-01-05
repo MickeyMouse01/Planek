@@ -22,7 +22,7 @@ public class AddEditClientViewModel extends ViewModel {
         this.repository = mRepository;
     }
 
-    void saveClient(Client newClient) {
+    public void saveClient(Client newClient) {
         repository.saveClient(newClient, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -31,7 +31,7 @@ public class AddEditClientViewModel extends ViewModel {
         });
     }
 
-    MutableLiveData<Client> getEditedClient(String clientId) {
+    public MutableLiveData<Client> getEditedClient(String clientId) {
         if (editedClient == null) {
             editedClient  = new MutableLiveData<>();
             loadClient(clientId);
@@ -49,7 +49,7 @@ public class AddEditClientViewModel extends ViewModel {
         });
     }
 
-    SingleLiveEvent<String> onClientSaved(){
+    public SingleLiveEvent<String> onClientSaved(){
         return onClientSaved;
     }
 }

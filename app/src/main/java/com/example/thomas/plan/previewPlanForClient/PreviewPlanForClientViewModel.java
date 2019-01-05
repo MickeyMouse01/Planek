@@ -29,27 +29,27 @@ public class PreviewPlanForClientViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    String getViewedPlanId() {
+    public String getViewedPlanId() {
         return viewedPlanId.getValue();
     }
 
-    void setViewedPlanId(String planId) {
+    public void setViewedPlanId(String planId) {
         this.viewedPlanId.setValue(planId);
     }
 
-    SingleLiveEvent<String> showToastWithMessage(){
+    public SingleLiveEvent<String> showToastWithMessage(){
         return mShowToastWithMessage;
     }
 
-    void setViewedClientId(String viewedClientId) {
+    public void setViewedClientId(String viewedClientId) {
         this.viewedClientId.setValue(viewedClientId);
     }
 
-    void setNameOfDay(String nameOfDay) {
+    public void setNameOfDay(String nameOfDay) {
         this.nameOfDay.setValue(nameOfDay);
     }
 
-    MutableLiveData<Client> getViewedClient() {
+    public MutableLiveData<Client> getViewedClient() {
         if (viewedClient == null) {
             viewedClient = new MutableLiveData<>();
             loadClient();
@@ -66,7 +66,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
         });
     }
 
-    MutableLiveData<Plan> getSelectedPlan() {
+    public MutableLiveData<Plan> getSelectedPlan() {
         if (selectedPlan == null) {
             selectedPlan = new MutableLiveData<>();
 
@@ -109,7 +109,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
         }, viewedPlanId.getValue());
     }
 
-    void deletePlanFromClient(String nameOfDay) {
+    public void deletePlanFromClient(String nameOfDay) {
         Client client = getViewedClient().getValue();
         client.getPlansForDate().remove(nameOfDay);
         repository.saveClient(client, new DataSource.SavedDataCallback() {
@@ -120,7 +120,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
         });
     }
 
-    void deleteTaskFromPlan(String planId, final Task task) {
+    public void deleteTaskFromPlan(String planId, final Task task) {
         repository.getPlan(planId, new DataSource.LoadPlanCallback() {
             @Override
             public void onPlanLoaded(@NonNull Plan plan) {
@@ -130,7 +130,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
     }
 
 
-    void saveUpdatedClient(Client client){
+    public void saveUpdatedClient(Client client){
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -139,7 +139,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
         });
     }
 
-    void updateTask(Task task){
+    public void updateTask(Task task){
         repository.saveTask(task, viewedPlanId.getValue(), new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {

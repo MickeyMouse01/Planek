@@ -21,7 +21,7 @@ public class NurseInfoViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    MutableLiveData<Nurse> getViewedNurse() {
+    public MutableLiveData<Nurse> getViewedNurse() {
         if(viewedNurse == null) {
             viewedNurse = new MutableLiveData<>();
             loadViewedNurse();

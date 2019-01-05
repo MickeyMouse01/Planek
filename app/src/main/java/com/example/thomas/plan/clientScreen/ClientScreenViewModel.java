@@ -1,11 +1,10 @@
-package com.example.thomas.plan.previewTask;
+package com.example.thomas.plan.clientScreen;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.Common.Enums;
-import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.data.DataSource;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
@@ -13,7 +12,7 @@ import com.example.thomas.plan.data.Repository;
 import java.util.Collections;
 import java.util.List;
 
-public class PreviewTaskViewModel extends ViewModel {
+public class ClientScreenViewModel extends ViewModel {
 
     private Repository repository;
 
@@ -25,15 +24,15 @@ public class PreviewTaskViewModel extends ViewModel {
     private MutableLiveData<List<Task>> afternoonActivites;
     private MutableLiveData<List<Task>> dinner;
 
-    public PreviewTaskViewModel(Repository repository) {
+    public ClientScreenViewModel(Repository repository) {
         this.repository = repository;
     }
 
-    void setViewedPlanId(String viewedPlanId) {
+    public void setViewedPlanId(String viewedPlanId) {
         this.viewedPlanId.setValue(viewedPlanId);
     }
 
-    MutableLiveData<List<Task>> getMorningActivites() {
+    public MutableLiveData<List<Task>> getMorningActivites() {
         if (morningActivites == null) {
             morningActivites = new MutableLiveData<>();
         }
@@ -112,7 +111,7 @@ public class PreviewTaskViewModel extends ViewModel {
         }, viewedPlanId.getValue(), Enums.PartOfDay.DINNER);
     }
 
-    MutableLiveData<Enums.PartOfDay> getPartOfDay() {
+    public MutableLiveData<Enums.PartOfDay> getPartOfDay() {
         if (partOfDay == null) {
             partOfDay = new MutableLiveData<>();
         }
@@ -139,7 +138,7 @@ public class PreviewTaskViewModel extends ViewModel {
         }, viewedPlanId.getValue());
     }*/
 
-    void saveTask(Task task){
+    public void saveTask(Task task){
         repository.saveTask(task, viewedPlanId.getValue(), new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -148,7 +147,7 @@ public class PreviewTaskViewModel extends ViewModel {
         });
     }
 
-    void  deleteTaskFromPlan(Task task){
+    public void  deleteTaskFromPlan(Task task){
         repository.deleteTaskFromPlan(viewedPlanId.getValue(),task.getUniqueID());
     }
 }

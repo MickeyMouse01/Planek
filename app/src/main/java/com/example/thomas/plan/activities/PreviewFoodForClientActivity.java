@@ -1,4 +1,4 @@
-package com.example.thomas.plan.previewFoodForClient;
+package com.example.thomas.plan.activities;
 
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.Observer;
@@ -25,6 +25,7 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
+import com.example.thomas.plan.previewFoodForClient.PreviewFoodForClientViewModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

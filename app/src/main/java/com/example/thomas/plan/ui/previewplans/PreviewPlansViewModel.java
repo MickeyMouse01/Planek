@@ -29,11 +29,11 @@ public class PreviewPlansViewModel extends ViewModel {
         return clientId;
     }
 
-    SingleLiveEvent<Plan> selectPlan() {
+    public SingleLiveEvent<Plan> selectPlan() {
         return selectedPlan;
     }
 
-    void savePlan(Plan newPlan){
+    public void savePlan(Plan newPlan){
         repository.savePlan(newPlan, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {

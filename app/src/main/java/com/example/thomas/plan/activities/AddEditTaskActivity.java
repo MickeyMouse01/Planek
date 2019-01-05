@@ -1,4 +1,4 @@
-package com.example.thomas.plan.addEditTask;
+package com.example.thomas.plan.activities;
 
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.Observer;
@@ -21,6 +21,7 @@ import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.addEditTask.AddEditTaskViewModel;
 import com.example.thomas.plan.data.Models.Task;
 
 import java.io.IOException;

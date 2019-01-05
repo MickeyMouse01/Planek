@@ -16,7 +16,7 @@ import com.example.thomas.plan.data.Repository;
 import java.io.ByteArrayOutputStream;
 
 public class AddEditPlanViewModel extends ViewModel {
-    MutableLiveData<Client> mutableClient = new MutableLiveData<>();
+    public MutableLiveData<Client> mutableClient = new MutableLiveData<>();
     private Repository repository;
     private SingleLiveEvent<Void> imageIsUploaded = new SingleLiveEvent<>();
 
@@ -24,7 +24,7 @@ public class AddEditPlanViewModel extends ViewModel {
         this.repository = mRepository;
     }
 
-    void savePlan(Plan newPlan) {
+    public void savePlan(Plan newPlan) {
         repository.savePlan(newPlan, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -33,7 +33,7 @@ public class AddEditPlanViewModel extends ViewModel {
         });
     }
 
-    void savePlanToClient(final Plan newPlan, String clientId, final int day) {
+    public void savePlanToClient(final Plan newPlan, String clientId, final int day) {
         repository.getClient(clientId, new DataSource.LoadClientCallback() {
             @Override
             public void onClientLoaded(@NonNull Client client) {
@@ -44,7 +44,7 @@ public class AddEditPlanViewModel extends ViewModel {
         });
     }
 
-    void saveClientToRepository(Client client) {
+    public void saveClientToRepository(Client client) {
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -53,11 +53,11 @@ public class AddEditPlanViewModel extends ViewModel {
         });
     }
 
-    SingleLiveEvent<Void> imageIsUploaded() {
+    public SingleLiveEvent<Void> imageIsUploaded() {
         return imageIsUploaded;
     }
 
-    void uploadImage(Bitmap bitmap, String name) {
+    public void uploadImage(Bitmap bitmap, String name) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] data = stream.toByteArray();

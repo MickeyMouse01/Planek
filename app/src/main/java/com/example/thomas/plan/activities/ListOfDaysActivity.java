@@ -1,4 +1,4 @@
-package com.example.thomas.plan.listOfDays;
+package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -11,11 +11,10 @@ import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.activities.BaseActivity;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.previewPlanForClient.PreviewPlanForClientActivity;
-import com.example.thomas.plan.previewFoodForClient.PreviewFoodForClientActivity;
+import com.example.thomas.plan.listOfDays.ListOfDaysAdapter;
+import com.example.thomas.plan.listOfDays.ListOfDaysViewModel;
 
 import java.util.List;
 

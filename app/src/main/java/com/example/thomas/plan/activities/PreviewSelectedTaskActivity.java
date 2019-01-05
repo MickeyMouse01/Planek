@@ -1,4 +1,4 @@
-package com.example.thomas.plan.selectedTask;
+package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -20,22 +20,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.GlideApp;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.loginAndRegister.LoginActivity;
+import com.example.thomas.plan.previewSelectedTask.PreviewSelectedTaskVieModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectedTaskActivity extends BaseActivity {
+public class PreviewSelectedTaskActivity extends BaseActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private SelectedTaskVieModel mViewModel;
+    private PreviewSelectedTaskVieModel mViewModel;
     private int positionOfSelectedTask;
     private ViewPager mViewPager;
 
@@ -62,9 +61,9 @@ public class SelectedTaskActivity extends BaseActivity {
 
     }
 
-    private static SelectedTaskVieModel obtainViewModel(FragmentActivity activity) {
+    private static PreviewSelectedTaskVieModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(SelectedTaskVieModel.class);
+        return ViewModelProviders.of(activity, factory).get(PreviewSelectedTaskVieModel.class);
     }
 
     @Override
@@ -97,7 +96,7 @@ public class SelectedTaskActivity extends BaseActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public SelectedTaskVieModel mViewModel;
+        public PreviewSelectedTaskVieModel mViewModel;
         private List<Task> listOfTasks = new ArrayList<>();
         private TextView textView;
         private ConstraintLayout constraintLayout;
@@ -125,7 +124,7 @@ public class SelectedTaskActivity extends BaseActivity {
                                  final Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_preview_tasks, container, false);
 
-            mViewModel = SelectedTaskActivity.obtainViewModel(getActivity());
+            mViewModel = PreviewSelectedTaskActivity.obtainViewModel(getActivity());
             final int position = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
             actionItemListener = new ActionItemListener<Task>() {
                 @Override

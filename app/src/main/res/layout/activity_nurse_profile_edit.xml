@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".nurseProfileEdit.NurseInfoEditActivity">
+    tools:context=".activities.NurseInfoEditActivity">
 
     <ImageView
         android:id="@+id/nurse_edit_image"

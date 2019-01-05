@@ -1,4 +1,4 @@
-package com.example.thomas.plan.Clients;
+package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -16,20 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.thomas.plan.activities.BaseActivity;
+import com.example.thomas.plan.Clients.ClientsFragment;
+import com.example.thomas.plan.Clients.MainViewModel;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.addEditClient.AddEditClientActivity;
-import com.example.thomas.plan.addEditPlan.AddEditPlanActivity;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.listOfDays.ListOfDaysActivity;
-import com.example.thomas.plan.loginAndRegister.LoginActivity;
-import com.example.thomas.plan.nurseProfile.NurseInfoActivity;
 import com.example.thomas.plan.plans.PlansFragment;
-import com.example.thomas.plan.previewSelectedTask.PreviewSelectedTaskActivity;
-import com.example.thomas.plan.clientInfo.ClientInfoActivity;
-import com.example.thomas.plan.planInfo.PlanInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 

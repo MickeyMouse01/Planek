@@ -26,23 +26,23 @@ public class LoginViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    MutableLiveData<String> getErrorMessage() {
+    public MutableLiveData<String> getErrorMessage() {
         return errorMessage;
     }
 
-    MutableLiveData<String> getLoggedUser() {
+    public MutableLiveData<String> getLoggedUser() {
         return loggedUser;
     }
 
-    MutableLiveData<LoginState> getLoginState() {
+    public MutableLiveData<LoginState> getLoginState() {
         return loginState;
     }
 
-    MutableLiveData<Client> getLoggedClient() {
+    public MutableLiveData<Client> getLoggedClient() {
         return loggedClient;
     }
 
-    MutableLiveData<Nurse> getLoggedNurse() {
+    public MutableLiveData<Nurse> getLoggedNurse() {
         return loggedNurse;
     }
 
@@ -63,7 +63,7 @@ public class LoginViewModel extends ViewModel {
         });
     }
 
-    void saveNurse(Nurse nurse) {
+    public void saveNurse(Nurse nurse) {
         repository.saveNurse(nurse, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -72,7 +72,7 @@ public class LoginViewModel extends ViewModel {
         });
     }
 
-    void getNurseByEmail(String email) {
+    public void getNurseByEmail(String email) {
         repository.searchNurseByEmail(email, new DataSource.LoadNurseCallback() {
             @Override
             public void onNurseLoaded(Nurse nurse) {

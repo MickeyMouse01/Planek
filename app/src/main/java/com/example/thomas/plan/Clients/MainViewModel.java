@@ -53,7 +53,7 @@ public class MainViewModel extends ViewModel {
         return mListOfClients;
     }
 
-    MutableLiveData<Integer> getCurrentFragment() {
+    public MutableLiveData<Integer> getCurrentFragment() {
         if (currentFragment == null){
             currentFragment = new MutableLiveData<>();
             currentFragment.setValue(VIEW_CLIENTS);
@@ -61,29 +61,29 @@ public class MainViewModel extends ViewModel {
         return currentFragment;
     }
 
-    SingleLiveEvent<Void> addNewClient() {
+    public SingleLiveEvent<Void> addNewClient() {
         return mAddNewClient;
     }
 
-    SingleLiveEvent<Void> addNewPlan() {
+    public SingleLiveEvent<Void> addNewPlan() {
         return mAddNewPlan;
     }
-    SingleLiveEvent<String> viewClient() {
+    public SingleLiveEvent<String> viewClient() {
         return mViewInfoClient;
     }
-    SingleLiveEvent<String> previewClient() {
+    public SingleLiveEvent<String> previewClient() {
         return mPreviewClient;
     }
     public SingleLiveEvent<String> viewPlan() {
         return mViewPlan;
     }
-    SingleLiveEvent<String> previewPlan() {
+    public SingleLiveEvent<String> previewPlan() {
         return mPreviewPlan;
     }
-    SingleLiveEvent<Void> previewNurseProfile() {
+    public SingleLiveEvent<Void> previewNurseProfile() {
         return mNurseProfile;
     }
-    SingleLiveEvent<String> showMessage() {
+    public SingleLiveEvent<String> showMessage() {
         return mShowMessage;
     }
 
@@ -126,7 +126,7 @@ public class MainViewModel extends ViewModel {
         loadPlans();
     }
 
-    MutableLiveData<Nurse> getLoggedNurse() {
+    public MutableLiveData<Nurse> getLoggedNurse() {
         if(loggedNurse == null) {
             loggedNurse = new MutableLiveData<>();
             loadLoggedNurse();

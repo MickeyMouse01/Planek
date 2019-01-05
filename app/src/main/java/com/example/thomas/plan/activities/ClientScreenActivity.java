@@ -1,4 +1,4 @@
-package com.example.thomas.plan.previewTask;
+package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -13,23 +13,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActionItemListener;
-import com.example.thomas.plan.Activities.BaseActivity;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.clientScreen.ClientScreenViewModel;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.selectedTask.SelectedTaskActivity;
 import com.example.thomas.plan.tasks.ListOfTasksAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PreviewTaskActivity extends BaseActivity {
+public class ClientScreenActivity extends BaseActivity {
 
     private TextView mTextMessage;
-    private PreviewTaskViewModel mViewModel;
+    private ClientScreenViewModel mViewModel;
     private String viewPlanId;
     private ListView lvMorningActivities, lvAfternoonActivities,lvDinner,lvLunch;
     private ListOfTasksAdapter morningActivitesAdapter;
@@ -149,9 +148,9 @@ public class PreviewTaskActivity extends BaseActivity {
 
     }
 
-    private static PreviewTaskViewModel obtainViewModel(FragmentActivity activity) {
+    private static ClientScreenViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-        return ViewModelProviders.of(activity, factory).get(PreviewTaskViewModel.class);
+        return ViewModelProviders.of(activity, factory).get(ClientScreenViewModel.class);
     }
 
     @Override
@@ -186,7 +185,7 @@ public class PreviewTaskActivity extends BaseActivity {
     }
 
     private void previewSelectedTask(String planId, int position){
-        Intent intent = new Intent(this, SelectedTaskActivity.class);
+        Intent intent = new Intent(this, PreviewSelectedTaskActivity.class);
         intent.putExtra("PlanId", planId);
         intent.putExtra("positionOfTask",position);
         startActivity(intent);

@@ -27,7 +27,7 @@ public class NurseInfoEditViewModel extends ViewModel {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    MutableLiveData<Nurse> getEditedNurse() {
+    public MutableLiveData<Nurse> getEditedNurse() {
         if(editedNurse == null){
             editedNurse = new MutableLiveData<>();
             loadNurse();
@@ -48,7 +48,7 @@ public class NurseInfoEditViewModel extends ViewModel {
         });
     }
 
-    void saveNurse(Nurse nurse){
+    public void saveNurse(Nurse nurse){
         repository.saveNurse(nurse, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {
@@ -57,11 +57,11 @@ public class NurseInfoEditViewModel extends ViewModel {
         });
     }
 
-    SingleLiveEvent<Void> getImageIsUploaded(){
+    public SingleLiveEvent<Void> getImageIsUploaded(){
         return imageIsUploaded;
     }
 
-    void uploadImage(Bitmap bitmap, String name){
+    public void uploadImage(Bitmap bitmap, String name){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] data = stream.toByteArray();
