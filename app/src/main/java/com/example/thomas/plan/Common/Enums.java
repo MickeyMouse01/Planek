@@ -95,6 +95,51 @@ public class Enums {
         }
     }
 
+    public enum Week {
+        WEEK1(0),
+        WEEK2(1),
+        WEEK3(2),
+        WEEK4(3),
+        WEEK5(4),
+        WEEK6(5),
+        WEEK7(6),
+        WEEK8(7);
+
+        private int code;
+
+        Week(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        @Override
+        public String toString() {
+            switch (getCode()) {
+                case 0:
+                    return "Týden 1";
+                case 1:
+                    return "Týden 2";
+                case 2:
+                    return "Týden 3";
+                case 3:
+                    return "Týden 4";
+                case 4:
+                    return "Týden 5";
+                case 5:
+                    return "Týden 6";
+                case 6:
+                    return "Týden 7";
+                case 7:
+                    return "Týden 8";
+                default:
+                    return "Nevybráno";
+            }
+        }
+    }
+
     public enum Day {
         MONDAY(0),
         TUESDAY(1),

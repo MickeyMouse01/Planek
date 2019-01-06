@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.R;
@@ -32,8 +33,9 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
     ImageButton addNewPlanBut;
     ListView listViewOnePlan, listViewTasks;
     String clientId;
-    String nameOfDay;
+    String nameOfDay, nameOfWeek;
     int day;
+    int week;
     PreviewPlanForClientViewModel mViewModel;
     ListOfPlansAdapter planAdapter;
     ListOfTasksAdapter taskAdapter;
@@ -53,8 +55,10 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
         addEditTaskIntent = new Intent(this, AddEditTaskActivity.class);
         mViewModel = obtainViewModel(this);
         clientId = intent.getStringExtra("ClientId");
-        day = intent.getIntExtra("position", 0);
-        nameOfDay = Day.values()[day].getNameOfDay();
+        week = intent.getIntExtra("positionOfWeek", 0);
+        day = intent.getIntExtra("positionOfDay", 0);
+        nameOfDay = Day.values()[day].toString();
+        nameOfWeek = Enums.Week.values()[week].toString();
         mViewModel.setNameOfDay(nameOfDay);
         mViewModel.setViewedClientId(clientId);
 
@@ -155,9 +159,9 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
     }
 
     private void initializeClient(Client client) {
-        String viewedPlanId = client.getPlansForDate().get(nameOfDay);
+        String viewedPlanId = client.getDating().get(nameOfWeek).get(nameOfDay);
         mViewModel.setViewedPlanId(viewedPlanId);
-        if (viewedPlanId == null) {
+        if (viewedPlanId.isEmpty() ) {
             fab.setVisibility(View.GONE);
             addNewPlanBut.setVisibility(View.VISIBLE);
             listViewOnePlan.setVisibility(View.GONE);
@@ -222,13 +226,13 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             showDialog("Ukládání");
             String selectedPlanId = data.getStringExtra("planId");
             Client client = mViewModel.getViewedClient().getValue();
-            client.getPlansForDate().put(nameOfDay, selectedPlanId);
+            client.getDating().get(nameOfWeek).put(nameOfDay,selectedPlanId);
             mViewModel.saveUpdatedClient(client);
         } else if (requestCode == 1 && data != null){
             showDialog("Ukládání");
             String selectedPlanId = data.getStringExtra("planId");
             Client client = mViewModel.getViewedClient().getValue();
-            client.getPlansForDate().put(nameOfDay, selectedPlanId);
+            client.getDating().get(nameOfWeek).put(nameOfDay,selectedPlanId);
             mViewModel.saveUpdatedClient(client);
         }
     }

@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.Date;
 
 import static android.support.v4.util.Preconditions.checkNotNull;
 
@@ -30,6 +31,19 @@ public class ActivityUtils {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(frameId, fragment);
         transaction.commitAllowingStateLoss();
+    }
+
+    public static Integer GetActualNumberOfWeek(){
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int week = calendar.get(Calendar.WEEK_OF_MONTH);
+        if (month % 2 == 0){
+            if (week > 4){
+                return 1;
+            }
+            week = week + 4;
+        }
+        return week;
     }
 
     public static int getActualDay(){

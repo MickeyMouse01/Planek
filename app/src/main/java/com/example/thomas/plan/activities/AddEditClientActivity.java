@@ -19,11 +19,12 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
-import com.example.thomas.plan.viewmodels.AddEditClientViewModel;
 import com.example.thomas.plan.data.Models.Client;
+import com.example.thomas.plan.viewmodels.AddEditClientViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddEditClientActivity extends BaseActivity implements View.OnClickListener {
@@ -84,7 +85,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mViewModel.getIsThereSameUsername().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean thereIsSameUsername) {
-                if (!thereIsSameUsername.booleanValue()){
+                if (!thereIsSameUsername.booleanValue()) {
                     mViewModel.saveClient(client);
                 } else {
                     hideDialog();
@@ -180,12 +181,18 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         client.setCreatedDate(dateTime);
         client.setUsername(userName);
         client.setPassword(actualLock);
-        /*HashMap<String,String> weeks = new HashMap<>();
-        weeks.put(Enums.Day.MONDAY.toString(), "idplabu");
-        newClient.getDating().put("tyden 1",weeks);
-        newClient.getDating().put("tyden 2",weeks);
-        String planId =  newClient.getDating().get("tyden 1").get(Enums.Day.values()[0].toString());
-        new DateFormatSymbols().get*/
+
+        HashMap<String, String> days = new HashMap<>();
+        for (int j = 0; j < Enums.Day.values().length; j++){
+            days.put(Enums.Day.values()[j].toString(), "");
+        }
+
+        HashMap<String, HashMap<String, String>> weeks = new HashMap<>();
+        for (int i = 0; i < Enums.Week.values().length; i++) {
+            weeks.put(Enums.Week.values()[i].toString(), days);
+        }
+        client.setDating(weeks);
+
         mViewModel.searchUsername(userName);
     }
 

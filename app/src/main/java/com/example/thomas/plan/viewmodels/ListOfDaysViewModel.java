@@ -13,6 +13,7 @@ public class ListOfDaysViewModel extends ViewModel {
 
     private Repository repository;
     private MutableLiveData<List<String>> listOfDays;
+    private MutableLiveData<List<String>> listOfWeeks;
 
     public ListOfDaysViewModel(Repository repository){
         this.repository = repository;
@@ -37,6 +38,28 @@ public class ListOfDaysViewModel extends ViewModel {
                 Enums.Day.SUNDAY.getNameOfDay()
         );
         listOfDays.setValue(days);
+    }
+
+    public MutableLiveData<List<String>> getListOfWeeks(){
+        if(listOfWeeks == null){
+            listOfWeeks = new MutableLiveData<>();
+            loadWeeks();
+        }
+        return listOfWeeks;
+    }
+
+    private void loadWeeks(){
+        List<String> days = Arrays.asList(
+                Enums.Week.WEEK1.toString(),
+                Enums.Week.WEEK2.toString(),
+                Enums.Week.WEEK3.toString(),
+                Enums.Week.WEEK4.toString(),
+                Enums.Week.WEEK5.toString(),
+                Enums.Week.WEEK6.toString(),
+                Enums.Week.WEEK7.toString(),
+                Enums.Week.WEEK8.toString()
+        );
+        listOfWeeks.setValue(days);
     }
 
 

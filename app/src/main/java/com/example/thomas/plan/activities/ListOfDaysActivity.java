@@ -10,12 +10,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 
-import com.example.thomas.plan.interfaces.ActionItemListener;
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.adapters.ListOfDaysAdapter;
+import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.viewmodels.ListOfDaysViewModel;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ListOfDaysActivity extends BaseActivity {
@@ -23,6 +25,8 @@ public class ListOfDaysActivity extends BaseActivity {
     ListView listViewDays;
     ListOfDaysViewModel mViewModel;
     String clientId;
+    private ListOfDaysAdapter listOfDaysAdapter;
+    private int positionOfWeek;
 
     private static ListOfDaysViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -38,18 +42,19 @@ public class ListOfDaysActivity extends BaseActivity {
 
         clientId = intent.getStringExtra("ClientId");
 
-        mViewModel.getListOfDays().observe(this, new Observer<List<String>>() {
+        mViewModel.getListOfWeeks().observe(this, new Observer<List<String>>() {
             @Override
-            public void onChanged(@Nullable List<String> days) {
-                setupListAdapter(days);
+            public void onChanged(@Nullable List<String> weeks) {
+                setupListAdapter(weeks);
             }
         });
     }
 
-    void previewPlanForClient(int position) {
+    void previewPlanForClient(int positionOfDay, int positionOfWeek) {
         Intent intent = new Intent(this, PreviewPlanForClientActivity.class);
         intent.putExtra("ClientId", clientId);
-        intent.putExtra("position", position);
+        intent.putExtra("positionOfDay", positionOfDay);
+        intent.putExtra("positionOfWeek", positionOfWeek);
         startActivity(intent);
     }
 
@@ -62,7 +67,14 @@ public class ListOfDaysActivity extends BaseActivity {
 
             @Override
             public void onItemClick(String item) {
-                selectPlanOrFood(items.indexOf(item));
+                List<String> weeks = mViewModel.getListOfWeeks().getValue();
+                if (weeks.contains(item)) {
+                    positionOfWeek = weeks.indexOf(item);
+                    listOfDaysAdapter.replaceData(mViewModel.getListOfDays().getValue());
+                } else {
+                    List<String> days = mViewModel.getListOfDays().getValue();
+                    selectPlanOrFood(days.indexOf(item), positionOfWeek);
+                }
             }
 
             @Override
@@ -75,19 +87,20 @@ public class ListOfDaysActivity extends BaseActivity {
 
             }
         };
-        ListOfDaysAdapter daysAdapter =
+        listOfDaysAdapter =
                 new ListOfDaysAdapter(items, actionItemListener);
-        listViewDays.setAdapter(daysAdapter);
+        listViewDays.setAdapter(listOfDaysAdapter);
     }
 
-    private void previewFoodForClient(int position){
+    private void previewFoodForClient(int positionOfDay, int positionOfWeek) {
         Intent intent = new Intent(this, PreviewFoodForClientActivity.class);
         intent.putExtra("ClientId", clientId);
-        intent.putExtra("position", position);
+        intent.putExtra("positionOfDay", positionOfDay);
+        intent.putExtra("positionOfWeek", positionOfWeek);
         startActivity(intent);
     }
 
-    private void selectPlanOrFood(final int position) {
+    private void selectPlanOrFood(final int positionOfDay, final int positionOfWeek) {
         CharSequence items[] = {"Plán", "Strava"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -97,10 +110,10 @@ public class ListOfDaysActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        previewPlanForClient(position);
+                        previewPlanForClient(positionOfDay, positionOfWeek);
                         break;
                     case 1:
-                        previewFoodForClient(position);
+                        previewFoodForClient(positionOfDay, positionOfWeek);
                         break;
                 }
             }

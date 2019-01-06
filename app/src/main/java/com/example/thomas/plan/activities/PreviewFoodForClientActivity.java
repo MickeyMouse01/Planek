@@ -46,7 +46,7 @@ public class PreviewFoodForClientActivity extends BaseActivity {
     private ImageView ivLunch, ivDinner;
     private Button saveButton;
     private String clientId;
-    private int day;
+    private int day,week;
     private Boolean noPlanIsCreated = false;
     private Task taskLunch, taskDinner;
 
@@ -69,7 +69,8 @@ public class PreviewFoodForClientActivity extends BaseActivity {
         saveButton = findViewById(R.id.food_save_button);
 
         clientId = intent.getStringExtra("ClientId");
-        day = intent.getIntExtra("position", 0);
+        day = intent.getIntExtra("positionOfDay", 0);
+        week = intent.getIntExtra("positionOfWeek", 0);
 
         mViewModel.getClientId().setValue(clientId);
 

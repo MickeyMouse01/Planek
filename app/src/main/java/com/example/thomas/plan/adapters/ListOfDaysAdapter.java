@@ -26,6 +26,11 @@ public class ListOfDaysAdapter extends BaseAdapter {
         actualDay = ActivityUtils.getActualDay();
     }
 
+    public void replaceData(List<String> days) {
+        mDays = days;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mDays != null ? mDays.size() : 0;

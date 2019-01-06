@@ -33,7 +33,6 @@ public class Client implements Comparable<Client>{
         this.typeOfGroup = typeOfGroup;
         this.uniqueID = UUID.randomUUID().toString();
         this.nurseID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        dating = new HashMap<>();
     }
 
     public String getPassword() {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -49,6 +50,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+
+        Integer week = ActivityUtils.GetActualNumberOfWeek();
+        Log.d("cislo", week.toString());
 
         switchButton = findViewById(R.id.switch_fragment);
         loginViewModel = obtainViewModel(this);
@@ -141,13 +145,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 List<AuthUI.IdpConfig> providers = Collections.singletonList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
-                startActivityForResult(
+                /*startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);
-                //loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                        RC_SIGN_IN);*/
+                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
                 break;
             }
         }

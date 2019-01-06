@@ -76,7 +76,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
     }
 
     private void loadPlan() {
-        if (viewedPlanId.getValue() != null) {
+        if (!viewedPlanId.getValue().isEmpty()) {
             repository.getPlan(viewedPlanId.getValue(), new DataSource.LoadPlanCallback() {
                 @Override
                 public void onPlanLoaded(@NonNull Plan plan) {
