@@ -189,7 +189,7 @@
     <string name="title_activity_preview_nurse">Informace o vychovateli</string>
     <string name="title_activity_edit_nurse">Editace vychovatele</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_activity_previewFoodForClient">Selekce stravy</string>
+    <string name="title_activity_previewFoodForClient">Výběr stravy</string>
     <string name="morning_activities">Dopolední aktivity</string>
     <string name="lunch">Oběd</string>
     <string name="dinner">Večeře</string>

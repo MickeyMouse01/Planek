@@ -129,8 +129,8 @@ public class MainViewModel extends ViewModel {
     public MutableLiveData<Nurse> getLoggedNurse() {
         if(loggedNurse == null) {
             loggedNurse = new MutableLiveData<>();
-            loadLoggedNurse();
         }
+        loadLoggedNurse();
         return loggedNurse;
     }
 

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,9 +15,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.fragments.ClientsFragment;
+import com.example.thomas.plan.glide.GlideApp;
 import com.example.thomas.plan.viewmodels.MainViewModel;
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.R;
@@ -24,6 +27,8 @@ import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.fragments.PlansFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 public class MainActivity extends BaseActivity
@@ -135,9 +140,25 @@ public class MainActivity extends BaseActivity
     private void initializeData(Nurse nurse) {
         TextView txtMenuTypeOfGroup = findViewById(R.id.menu_typeOfGroup);
         TextView txtMenuNameSurname = findViewById(R.id.menu_name_surname);
+        ImageView imageOfNurse = findViewById(R.id.menu_image);
 
-        txtMenuNameSurname.setText(nurse.getNameAndSurname());
-        txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
+        if (nurse.getNameOfImage() != null){
+            if (imageOfNurse != null) {
+                StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getNameOfImage());
+
+                GlideApp.with(getApplicationContext())
+                        .load(ref)
+                        .into(imageOfNurse);
+            }
+        }
+
+        if (txtMenuNameSurname != null){
+            txtMenuNameSurname.setText(nurse.getNameAndSurname());
+        }
+
+        if (txtMenuTypeOfGroup != null){
+            txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
+        }
     }
 
     private void setupViewFragment(int frame) {

@@ -47,6 +47,7 @@ public class PreviewFoodForClientActivity extends BaseActivity {
     private Button saveButton;
     private String clientId;
     private int day;
+    private Boolean noPlanIsCreated = false;
     private Task taskLunch, taskDinner;
 
 
@@ -147,6 +148,11 @@ public class PreviewFoodForClientActivity extends BaseActivity {
                 isFilled = false;
             }
         }
+
+        if(noPlanIsCreated) {
+            showErrorToast("Nejříve musíte vytvořit plán pro klienta");
+            isFilled = false;
+        }
         return isFilled;
     }
 
@@ -242,7 +248,8 @@ public class PreviewFoodForClientActivity extends BaseActivity {
                 }
             });
         } else {
-            //zalozit novy plan
+            noPlanIsCreated = true;
+            showErrorToast("Nejříve musíte vytvořit plán pro klienta");
         }
 
     }

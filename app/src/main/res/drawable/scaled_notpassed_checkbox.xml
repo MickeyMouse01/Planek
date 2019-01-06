@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:width="45dp"
-        android:height="45dp">
+        android:width="60dp"
+        android:height="60dp">
         <shape>
             <corners android:radius="10dp" />
             <solid android:color="#FFFFFF" />

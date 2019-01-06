@@ -8,12 +8,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.thomas.plan.ActivityUtils;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
@@ -25,13 +28,14 @@ import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ClientScreenActivity extends BaseActivity {
 
     private TextView mTextMessage;
     private ClientScreenViewModel mViewModel;
-    private String viewPlanId;
+    private String viewPlanId, viewClientId;
     private TextView tvLunch, tvDinner;
     private ListView lvMorningActivities, lvAfternoonActivities,lvDinner,lvLunch;
     private ListOfTasksAdapter morningActivitesAdapter;
@@ -61,19 +65,19 @@ public class ClientScreenActivity extends BaseActivity {
                     mViewModel.getPartOfDay().setValue(Enums.PartOfDay.MORNING);
                     lvMorningActivities.setVisibility(View.VISIBLE);
                     lvLunch.setVisibility(View.VISIBLE);
-                    lvAfternoonActivities.setVisibility(View.INVISIBLE);
-                    lvDinner.setVisibility(View.INVISIBLE);
+                    lvAfternoonActivities.setVisibility(View.GONE);
+                    lvDinner.setVisibility(View.GONE);
                     tvLunch.setVisibility(View.VISIBLE);
-                    tvDinner.setVisibility(View.INVISIBLE);
+                    tvDinner.setVisibility(View.GONE);
                     mTextMessage.setText(R.string.morning_activities);
                     return true;
                 case R.id.navigation_afternoon:
                     mViewModel.getPartOfDay().setValue(Enums.PartOfDay.AFTERNOON);
-                    lvMorningActivities.setVisibility(View.INVISIBLE);
-                    lvLunch.setVisibility(View.INVISIBLE);
+                    lvMorningActivities.setVisibility(View.GONE);
+                    lvLunch.setVisibility(View.GONE);
                     lvAfternoonActivities.setVisibility(View.VISIBLE);
                     lvDinner.setVisibility(View.VISIBLE);
-                    tvLunch.setVisibility(View.INVISIBLE);
+                    tvLunch.setVisibility(View.GONE);
                     tvDinner.setVisibility(View.VISIBLE);
                     mTextMessage.setText(R.string.afternoon_activities);
                     return true;
@@ -88,7 +92,10 @@ public class ClientScreenActivity extends BaseActivity {
 
         mViewModel = obtainViewModel(this);
         viewPlanId = intent.getStringExtra("PlanId");
+        viewClientId = intent.getStringExtra("ClientId");
         mViewModel.setViewedPlanId(viewPlanId);
+        mViewModel.setViewedClientId(viewClientId);
+
 
         lvMorningActivities = findViewById(R.id.list_of_morning_tasks);
         lvLunch = findViewById(R.id.preview_task_lunch);
@@ -110,16 +117,58 @@ public class ClientScreenActivity extends BaseActivity {
             }
         });
 
+        mViewModel.getOnDataAdd().observe(this, new Observer<HashMap<String, String>>() {
+            @Override
+            public void onChanged(@Nullable HashMap<String, String> collection) {
+                if (collection != null){
+                    int day = ActivityUtils.getActualDay();
+                    String planId = collection.get(Enums.Day.values()[day].getNameOfDay());
+                    if (planId != null){
+                        viewPlanId = planId;
+                        mViewModel.setViewedPlanId(viewPlanId);
+                    }
+
+
+                    if (!collection.values().contains(viewPlanId)){
+                        if (morningActivitesAdapter != null){
+                            morningActivitesAdapter.clearData();
+                            lvMorningActivities.setBackground(null);
+                        }
+                        if (lunchAdapter != null){
+                            lunchAdapter.clearData();
+                            lvLunch.setBackground(null);
+                        }
+                        if (afternoonActivitesAdapter != null){
+                            afternoonActivitesAdapter.clearData();
+                            lvAfternoonActivities.setBackground(null);
+                        }
+                        if (dinnerAdapter != null){
+                            dinnerAdapter.clearData();
+                            lvDinner.setBackground(null);
+                        }
+                    } else {
+                        mViewModel.getMorningActivites();
+                        mViewModel.getLunch();
+                        mViewModel.getDinner();
+                        mViewModel.getAfternoonActivites();
+                    }
+                }
+            }
+        });
+
 
         mViewModel.getMorningActivites().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
                 if(tasks != null) {
                     if (!tasks.isEmpty()){
+                        lvMorningActivities.setVisibility(View.VISIBLE);
+                        lvMorningActivities.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.borderlines));
                         updateMorningTasks(tasks);
                     }
                 } else {
-                    noDataDisplayed();
+                    lvMorningActivities.setBackground(null);
+                    lvMorningActivities.setVisibility(View.GONE);
                 }
             }
         });
@@ -129,10 +178,13 @@ public class ClientScreenActivity extends BaseActivity {
             public void onChanged(@Nullable List<Task> tasks) {
                 if(tasks != null) {
                     if (!tasks.isEmpty()){
+                        lvAfternoonActivities.setVisibility(View.VISIBLE);
+                        lvAfternoonActivities.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.borderlines));
                         updateAfternoonTasks(tasks);
                     }
                 } else {
-                    noDataDisplayed();
+                    lvAfternoonActivities.setBackground(null);
+                    lvAfternoonActivities.setVisibility(View.GONE);
                 }
             }
         });
@@ -142,10 +194,13 @@ public class ClientScreenActivity extends BaseActivity {
             public void onChanged(@Nullable List<Task> tasks) {
                 if(tasks != null) {
                     if (!tasks.isEmpty()){
+                        lvLunch.setVisibility(View.VISIBLE);
+                        lvLunch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.borderlines));
                         updateLunch(tasks);
                     }
                 } else {
-                    noDataDisplayed();
+                    lvLunch.setBackground(null);
+                    lvLunch.setVisibility(View.GONE);
                 }
             }
         });
@@ -155,19 +210,19 @@ public class ClientScreenActivity extends BaseActivity {
             public void onChanged(@Nullable List<Task> tasks) {
                 if(tasks != null) {
                     if (!tasks.isEmpty()){
+                        lvDinner.setVisibility(View.VISIBLE);
+                        lvDinner.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.borderlines));
                         updateDinner(tasks);
                     }
                 } else {
-                    noDataDisplayed();
+                    lvDinner.setBackground(null);
+                    lvDinner.setVisibility(View.GONE);
                 }
             }
         });
 
     }
 
-    private void noDataDisplayed(){
-
-    }
 
     private static ClientScreenViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());

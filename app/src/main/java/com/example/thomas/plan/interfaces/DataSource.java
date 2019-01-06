@@ -8,6 +8,7 @@ import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Task;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -57,6 +58,12 @@ public interface DataSource {
     interface UploadImageCallback {
         void onImageUploaded();
     }
+
+    interface GetPlansForDateCallBack {
+        void onPlansForDateLoaded(HashMap<String, String> collection);
+    }
+
+    void getPlansForDate(@NonNull String clientId, GetPlansForDateCallBack callback);
 
     void uploadImage(@NonNull String name, byte[] data, UploadImageCallback callback);
     void downloadImage(@NonNull String name, LoadImageCallback callback);

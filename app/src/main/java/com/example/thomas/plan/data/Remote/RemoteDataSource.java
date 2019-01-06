@@ -24,6 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -148,6 +149,23 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
+    public void getPlansForDate(@NonNull String clientId, final GetPlansForDateCallBack callback) {
+        mDatabase.child("clients").child(clientId).child("plansForDate")
+                .getRef().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String,String> collection = (HashMap<String,String>)dataSnapshot.getValue();
+               callback.onPlansForDateLoaded(collection);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
     public void uploadImage(@NonNull String name, byte[] data, final UploadImageCallback callback) {
         UploadTask uploadTask = mStorage.child(name).putBytes(data);
 
@@ -263,7 +281,6 @@ public class RemoteDataSource implements DataSource {
 
     //Plans
     public void getPlans(@NonNull final LoadPlansCallback callback) {
-
         mDatabase.getDatabase().getReference("plans")
                 .getRef().addValueEventListener(new ValueEventListener() {
             @Override
@@ -379,26 +396,36 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void getSpecificTasksForPlan(@NonNull final LoadTasksCallback callback, final String planId, Enums.PartOfDay partOfDay) {
-        Query query = mDatabase.child("plans").child(planId).child(LIST_OF_RELATES_TASKS)
-                .orderByChild("partOfDay").equalTo(partOfDay.toString());
+        Query query;
+        try{
+            query = mDatabase.child("plans").child(planId).child(LIST_OF_RELATES_TASKS)
+                    .orderByChild("partOfDay").equalTo(partOfDay.toString());
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
-                };
-                Map<String, Task> map = dataSnapshot.getValue(t);
-                if (map != null) {
-                    List<Task> tasks = new ArrayList<>(map.values());
-                    callback.onTasksLoaded(tasks);
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    GenericTypeIndicator<Map<String, Task>> t = new GenericTypeIndicator<Map<String, Task>>() {
+                    };
+                    Map<String, Task> map = dataSnapshot.getValue(t);
+                    if (map != null) {
+                        List<Task> tasks = new ArrayList<>(map.values());
+                        callback.onTasksLoaded(tasks);
+                    } else {
+                        callback.onTasksLoaded(null);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+
+        } catch (NullPointerException e){
+            if (e.getMessage().contains("Can't pass null for argument")){
+                callback.onTasksLoaded(null);
             }
-        });
+        }
     }
 
 

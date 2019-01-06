@@ -10,6 +10,7 @@ import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Remote.RemoteDataSource;
 import com.example.thomas.plan.interfaces.DataSource;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -74,6 +75,16 @@ public class Repository implements DataSource {
     @Override
     public void deleteNurse(@NonNull String nurseId) {
         remoteDataSource.deleteNurse(nurseId);
+    }
+
+    @Override
+    public void getPlansForDate(@NonNull String clientId, final GetPlansForDateCallBack callback) {
+        remoteDataSource.getPlansForDate(clientId, new GetPlansForDateCallBack() {
+            @Override
+            public void onPlansForDateLoaded(HashMap<String, String> collection) {
+                callback.onPlansForDateLoaded(collection);
+            }
+        });
     }
 
     @Override

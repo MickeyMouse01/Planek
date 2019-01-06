@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/preview_image"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="551dp"
+        android:layout_height="542dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -35,6 +35,8 @@
         android:layout_marginTop="32dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,14 +51,16 @@
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="2dp"
         android:background="@drawable/borderlines"
-        android:text="Splnit"
         android:clickable="true"
+        android:focusable="true"
+        android:text="Splnit"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:focusable="true" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

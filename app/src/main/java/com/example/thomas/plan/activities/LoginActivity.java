@@ -106,17 +106,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         int day = ActivityUtils.getActualDay();
                         startPreviewTasksActivity(client
                                 .getPlansForDate()
-                                .get(Day.values()[day].getNameOfDay()));
+                                .get(Day.values()[day].getNameOfDay()), client.getUniqueID());
                     }
                 }
             });
         }
     }
 
-    private void startPreviewTasksActivity(String planId) {
+    private void startPreviewTasksActivity(String planId, String clientId) {
         showSuccessToast("Přihlášen");
         Intent intent = new Intent(this, ClientScreenActivity.class);
         intent.putExtra("PlanId", planId);
+        intent.putExtra("ClientId", clientId);
         startActivity(intent);
     }
 

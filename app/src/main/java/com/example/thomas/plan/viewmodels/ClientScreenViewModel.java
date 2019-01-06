@@ -5,11 +5,14 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.SingleLiveEvent;
+import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.interfaces.DataSource;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.data.Repository;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ClientScreenViewModel extends ViewModel {
@@ -17,12 +20,13 @@ public class ClientScreenViewModel extends ViewModel {
     private Repository repository;
 
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
+    private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
     private MutableLiveData<Enums.PartOfDay> partOfDay;
-    private MutableLiveData<List<Task>> listOfTasks;
     private MutableLiveData<List<Task>> morningActivites;
     private MutableLiveData<List<Task>> lunch;
     private MutableLiveData<List<Task>> afternoonActivites;
     private MutableLiveData<List<Task>> dinner;
+    private SingleLiveEvent<HashMap<String, String>> onDataAdd = new SingleLiveEvent<>();
 
     public ClientScreenViewModel(Repository repository) {
         this.repository = repository;
@@ -30,6 +34,10 @@ public class ClientScreenViewModel extends ViewModel {
 
     public void setViewedPlanId(String viewedPlanId) {
         this.viewedPlanId.setValue(viewedPlanId);
+    }
+
+    public void setViewedClientId(String viewedClientId) {
+        this.viewedClientId.setValue(viewedClientId);
     }
 
     public MutableLiveData<List<Task>> getMorningActivites() {
@@ -116,6 +124,20 @@ public class ClientScreenViewModel extends ViewModel {
             partOfDay = new MutableLiveData<>();
         }
         return partOfDay;
+    }
+
+    public SingleLiveEvent<HashMap<String, String>> getOnDataAdd() {
+        loadOnDataAdd();
+        return onDataAdd;
+    }
+
+    private void loadOnDataAdd(){
+        repository.getPlansForDate(viewedClientId.getValue(), new DataSource.GetPlansForDateCallBack() {
+            @Override
+            public void onPlansForDateLoaded(HashMap<String, String> collection) {
+                onDataAdd.setValue(collection);
+            }
+        });
     }
 
     /*MutableLiveData<List<Task>> getListOfTasks() {

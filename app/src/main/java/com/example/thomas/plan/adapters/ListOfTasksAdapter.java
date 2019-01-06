@@ -63,7 +63,7 @@ public class ListOfTasksAdapter extends BaseAdapter {
     public View getView(final int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        View viewTask = inflater.inflate(R.layout.task_item, null);
+        View viewTask = inflater.inflate(R.layout.task_item, viewGroup,false);
         TextView textViewName = viewTask.findViewById(R.id.view_plan_task_name);
         ImageView deleteImage = viewTask.findViewById(R.id.view_plan_task_delete_image);
         ConstraintLayout constraintLayout = viewTask.findViewById(R.id.view_plan_relative_layout);
@@ -94,7 +94,9 @@ public class ListOfTasksAdapter extends BaseAdapter {
             constraintLayout.setBackgroundColor(ContextCompat.getColor(viewTask.getContext(), R.color.isPassed));
             checkBox.setChecked(true);
             checkBox.setButtonDrawable(R.drawable.scaled_passed_checkbox);
-            deleteImage.setVisibility(View.VISIBLE);
+            if(!settings.isDisabledDeleteButton()){
+                deleteImage.setVisibility(View.VISIBLE);
+            }
         }
         if(!settings.isDisabledDeleteButton()){
             deleteImage.setVisibility(View.VISIBLE);

@@ -46,7 +46,7 @@ public class PreviewSelectedTaskActivity extends BaseActivity {
         String viewPlanId = intent.getStringExtra("PlanId");
         positionOfSelectedTask = intent.getIntExtra("positionOfTask", 0);
         mViewModel.setViewedPlanId(viewPlanId);
-        showDialog("Loading data");
+        showDialog("Načítání");
         mViewPager =  findViewById(R.id.container);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -75,7 +75,6 @@ public class PreviewSelectedTaskActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.logout, menu);
         return true;
     }
 

@@ -90,13 +90,15 @@ public class PreviewFoodForClientViewModel extends ViewModel {
         repository.getSpecificTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
-                switch (partOfDay) {
-                    case LUNCH:
-                        taskLunch.setValue(tasks.get(0));
-                        break;
-                    case DINNER:
-                        taskDinner.setValue(tasks.get(0));
-                        break;
+                if (tasks != null){
+                    switch (partOfDay) {
+                        case LUNCH:
+                            taskLunch.setValue(tasks.get(0));
+                            break;
+                        case DINNER:
+                            taskDinner.setValue(tasks.get(0));
+                            break;
+                    }
                 }
             }
         }, selectedPlan.getValue().getUniqueID(), partOfDay);
