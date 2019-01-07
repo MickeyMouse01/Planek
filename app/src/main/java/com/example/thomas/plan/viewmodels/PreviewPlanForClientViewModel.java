@@ -21,6 +21,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
    private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
    private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
    private MutableLiveData<String> nameOfDay = new MutableLiveData<>();
+   private MutableLiveData<String> nameOfWeek = new MutableLiveData<>();
    private MutableLiveData<Client> viewedClient;
    private MutableLiveData<List<Task>> listOfTasks;
    private SingleLiveEvent<String> mShowToastWithMessage = new SingleLiveEvent<>();
@@ -47,6 +48,10 @@ public class PreviewPlanForClientViewModel extends ViewModel {
 
     public void setNameOfDay(String nameOfDay) {
         this.nameOfDay.setValue(nameOfDay);
+    }
+
+    public void setNameOfWeek(String nameOfWeek) {
+        this.nameOfWeek.setValue(nameOfWeek);
     }
 
     public MutableLiveData<Client> getViewedClient() {
@@ -83,7 +88,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
                     if (plan != null) {
                         selectedPlan.setValue(plan);
                     } else {
-                        deletePlanFromClient(nameOfDay.getValue());
+                        deletePlanFromClient(nameOfDay.getValue(),nameOfWeek.getValue());
                     }
 
                 }
@@ -109,9 +114,9 @@ public class PreviewPlanForClientViewModel extends ViewModel {
         }, viewedPlanId.getValue());
     }
 
-    public void deletePlanFromClient(String nameOfDay) {
+    public void deletePlanFromClient(String nameOfDay, String nameOfWeek) {
         Client client = getViewedClient().getValue();
-        client.getPlansForDate().remove(nameOfDay);
+        client.getDating().get(nameOfWeek).put(nameOfDay, "");
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override
             public void onSavedData(@NonNull String message) {

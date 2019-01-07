@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.thomas.plan.ActivityUtils;
 import com.example.thomas.plan.Common.Enums.Day;
+import com.example.thomas.plan.Common.Enums.Week;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.data.Models.Client;
@@ -51,7 +52,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        Integer week = ActivityUtils.GetActualNumberOfWeek();
+        Integer week = ActivityUtils.getActualNumberOfWeek();
         Log.d("cislo", week.toString());
 
         switchButton = findViewById(R.id.switch_fragment);
@@ -108,9 +109,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     LOGGED_CLIENT = client;
                     if (client != null) {
                         int day = ActivityUtils.getActualDay();
+                        int week = ActivityUtils.getActualNumberOfWeek();
+                        String nameOfDay = Day.values()[day].toString();
+                        String nameOfWeek = Week.values()[week].toString();
                         startPreviewTasksActivity(client
-                                .getPlansForDate()
-                                .get(Day.values()[day].getNameOfDay()), client.getUniqueID());
+                                .getDating()
+                                .get(nameOfWeek).get(nameOfDay), client.getUniqueID());
                     }
                 }
             });
@@ -145,13 +149,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 List<AuthUI.IdpConfig> providers = Collections.singletonList(
                         new AuthUI.IdpConfig.EmailBuilder().build());
 
-                /*startActivityForResult(
+                startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .build(),
-                        RC_SIGN_IN);*/
-                loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
+                        RC_SIGN_IN);
+                //loginViewModel.getLoginState().setValue(LoginState.RESULT_OK);
                 break;
             }
         }

@@ -45,6 +45,7 @@ public class PreviewSelectedTaskActivity extends BaseActivity {
         mViewModel = obtainViewModel(this);
         String viewPlanId = intent.getStringExtra("PlanId");
         positionOfSelectedTask = intent.getIntExtra("positionOfTask", 0);
+        mViewModel.getPositionOfSelectedTask().setValue(positionOfSelectedTask);
         mViewModel.setViewedPlanId(viewPlanId);
         showDialog("Načítání");
         mViewPager =  findViewById(R.id.container);
@@ -53,8 +54,10 @@ public class PreviewSelectedTaskActivity extends BaseActivity {
         mViewModel.getListOfTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
-                mViewPager.setAdapter(mSectionsPagerAdapter);
-                mViewPager.setCurrentItem(positionOfSelectedTask);
+                if (mViewPager.getAdapter() == null){
+                    mViewPager.setAdapter(mSectionsPagerAdapter);
+                    mViewPager.setCurrentItem(mViewModel.getPositionOfSelectedTask().getValue());
+                }
                 hideDialog();
             }
         });
@@ -170,6 +173,7 @@ public class PreviewSelectedTaskActivity extends BaseActivity {
                 public void onClick(View v) {
                     txtIsDone.setBackgroundResource(R.color.isPassed);
                     txtIsDone.setText("Splněno");
+                    mViewModel.getPositionOfSelectedTask().setValue(position);
                     actionItemListener.onItemClick(null);
                 }
             });
@@ -182,6 +186,10 @@ public class PreviewSelectedTaskActivity extends BaseActivity {
                 constraintLayout.setBackgroundResource(R.color.isPassed);
                 txtIsDone.setBackgroundResource(R.color.isPassed);
                 txtIsDone.setText("Splněno");
+            } else {
+                constraintLayout.setBackground(null);
+                txtIsDone.setBackground(null);
+                txtIsDone.setText("Splnit");
             }
         }
 

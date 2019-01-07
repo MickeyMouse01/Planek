@@ -23,7 +23,6 @@ public class Client implements Comparable<Client>{
     private String createdDate;
     private String password;
     private String username;
-    private HashMap<String,String> plansForDate = new HashMap<>();
     private HashMap<String, HashMap<String, String>> dating = new HashMap<>();
 
     public Client(String name, String surname, TypeOfGroup typeOfGroup) {
@@ -103,13 +102,6 @@ public class Client implements Comparable<Client>{
         this.planId = planId;
     }
 
-    public HashMap<String, String> getPlansForDate() {
-        return plansForDate;
-    }
-
-    public void setPlansForDate(HashMap<String, String> plansForDate) {
-        this.plansForDate = plansForDate;
-    }
 
     public HashMap<String, HashMap<String, String>> getDating() {
         return dating;

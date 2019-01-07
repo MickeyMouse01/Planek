@@ -47,15 +47,19 @@
             android:name=".activities.AddEditTaskActivity"
             android:label="@string/add_task"
             android:parentActivityName=".activities.PlanInfoActivity" />
-        <activity android:name=".activities.PreviewSelectedTaskActivity" />
+        <activity
+            android:name=".activities.PreviewSelectedTaskActivity"
+            android:label="@string/title_activity_preview_task" />
         <activity
             android:name=".activities.PreviewPlanForClientActivity"
             android:label="@string/preview_client"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.NurseInfoActivity"
-            android:label="@string/title_activity_preview_nurse"/>
-        <activity android:name=".activities.NurseInfoEditActivity"
-            android:label="@string/title_activity_edit_nurse"/>
+        <activity
+            android:name=".activities.NurseInfoActivity"
+            android:label="@string/title_activity_preview_nurse" />
+        <activity
+            android:name=".activities.NurseInfoEditActivity"
+            android:label="@string/title_activity_edit_nurse" />
         <activity
             android:name=".activities.ClientScreenActivity"
             android:label="@string/title_activity_preview_task" />

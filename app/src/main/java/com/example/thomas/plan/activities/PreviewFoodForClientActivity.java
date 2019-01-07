@@ -46,7 +46,7 @@ public class PreviewFoodForClientActivity extends BaseActivity {
     private ImageView ivLunch, ivDinner;
     private Button saveButton;
     private String clientId;
-    private int day,week;
+    private String nameOfDay,nameOfWeek;
     private Boolean noPlanIsCreated = false;
     private Task taskLunch, taskDinner;
 
@@ -69,8 +69,10 @@ public class PreviewFoodForClientActivity extends BaseActivity {
         saveButton = findViewById(R.id.food_save_button);
 
         clientId = intent.getStringExtra("ClientId");
-        day = intent.getIntExtra("positionOfDay", 0);
-        week = intent.getIntExtra("positionOfWeek", 0);
+        int day = intent.getIntExtra("positionOfDay", 0);
+        int week = intent.getIntExtra("positionOfWeek", 0);
+        nameOfDay = Enums.Day.values()[day].toString();
+        nameOfWeek = Enums.Week.values()[week].toString();
 
         mViewModel.getClientId().setValue(clientId);
 
@@ -238,8 +240,9 @@ public class PreviewFoodForClientActivity extends BaseActivity {
     }
 
     private void initializeClient(Client client) {
-        String planId = client.getPlansForDate().get(Enums.Day.values()[day].getNameOfDay());
-        if (planId != null) { //plan existuje
+        String planId = client.getDating().get(nameOfWeek).get(nameOfDay);
+
+        if (!planId.isEmpty()) { //plan existuje
             showDialog("Načítání");
             mViewModel.getSelectedPlan(planId).observe(this, new Observer<Plan>() {
                 @Override

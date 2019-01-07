@@ -21,6 +21,7 @@ public class ClientScreenViewModel extends ViewModel {
 
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
     private MutableLiveData<String> viewedClientId = new MutableLiveData<>();
+    private MutableLiveData<List<Task>> allTasksForPlan;
     private MutableLiveData<Enums.PartOfDay> partOfDay;
     private MutableLiveData<List<Task>> morningActivites;
     private MutableLiveData<List<Task>> lunch;
@@ -140,26 +141,6 @@ public class ClientScreenViewModel extends ViewModel {
         });
     }
 
-    /*MutableLiveData<List<Task>> getListOfTasks() {
-        if (listOfTasks == null) {
-            listOfTasks = new MutableLiveData<>();
-        }
-        loadTasks();
-        return listOfTasks;
-    }
-
-    private void loadTasks() {
-        repository.getTasksForPlan(new DataSource.LoadTasksCallback() {
-            @Override
-            public void onTasksLoaded(@NonNull List<Task> tasks) {
-                if(tasks != null) {
-                    Collections.sort(tasks);
-                }
-                listOfTasks.setValue(tasks);
-            }
-        }, viewedPlanId.getValue());
-    }*/
-
     public void saveTask(Task task){
         repository.saveTask(task, viewedPlanId.getValue(), new DataSource.SavedDataCallback() {
             @Override
@@ -167,6 +148,26 @@ public class ClientScreenViewModel extends ViewModel {
 
             }
         });
+    }
+
+    public MutableLiveData<List<Task>> getAllTasksForPlan() {
+        if(allTasksForPlan == null){
+            allTasksForPlan = new MutableLiveData<>();
+        }
+        getAllTasks();
+        return allTasksForPlan;
+    }
+
+    private void getAllTasks(){
+        repository.getTasksForPlan(new DataSource.LoadTasksCallback() {
+            @Override
+            public void onTasksLoaded(@NonNull List<Task> tasks) {
+                if (tasks != null){
+                    Collections.sort(tasks);
+                }
+                allTasksForPlan.setValue(tasks);
+            }
+        }, viewedPlanId.getValue());
     }
 
     public void  deleteTaskFromPlan(Task task){

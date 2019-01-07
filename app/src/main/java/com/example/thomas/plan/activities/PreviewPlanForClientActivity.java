@@ -60,6 +60,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
         nameOfDay = Day.values()[day].toString();
         nameOfWeek = Enums.Week.values()[week].toString();
         mViewModel.setNameOfDay(nameOfDay);
+        mViewModel.setNameOfWeek(nameOfDay);
         mViewModel.setViewedClientId(clientId);
 
         listViewOnePlan = findViewById(R.id.plan_for_client_lv_plan);
@@ -116,7 +117,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
 
             @Override
             public void onItemDeleteClick(Plan item) {
-                mViewModel.deletePlanFromClient(nameOfDay);
+                mViewModel.deletePlanFromClient(nameOfDay, nameOfWeek);
                 planAdapter.clearData();
                 if (taskAdapter != null) {
                     taskAdapter.clearData();
@@ -212,7 +213,8 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(PreviewPlanForClientActivity.this, AddEditPlanActivity.class);
                 intent.putExtra("ClientId", clientId);
-                intent.putExtra("position", day);
+                intent.putExtra("positionOfDay", nameOfDay);
+                intent.putExtra("positionOfWeek", nameOfWeek);
                 startActivityForResult(intent, 1);
             }
         });

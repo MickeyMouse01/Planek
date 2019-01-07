@@ -111,9 +111,14 @@ public class ClientScreenActivity extends BaseActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mViewModel.getPartOfDay().observe(this, new Observer<Enums.PartOfDay>() {
+
+        mViewModel.getAllTasksForPlan().observe(this, new Observer<List<Task>>() {
             @Override
-            public void onChanged(@Nullable Enums.PartOfDay partOfDay) {
+            public void onChanged(@Nullable List<Task> tasks) {
+                mTasks.clear();
+                if (tasks != null){
+                    mTasks.addAll(tasks);
+                }
             }
         });
 
@@ -243,8 +248,13 @@ public class ClientScreenActivity extends BaseActivity {
 
             @Override
             public void onItemClick(Task item) {
-                Collections.sort(mTasks);
-                previewSelectedTask(item.getIdOfPlan(), mTasks.indexOf(item));
+                int index = 0;
+                for (Task x : mTasks){
+                    if (x.getUniqueID().equals(item.getUniqueID())){
+                        index = mTasks.indexOf(x);
+                    }
+                }
+                previewSelectedTask(item.getIdOfPlan(), index);
 
             }
 
@@ -282,6 +292,7 @@ public class ClientScreenActivity extends BaseActivity {
         if (morningActivitesAdapter == null){
             initializeMorningActivitiesAdapter(tasks);
         }
+
         morningActivitesAdapter.replaceData(tasks);
     }
 

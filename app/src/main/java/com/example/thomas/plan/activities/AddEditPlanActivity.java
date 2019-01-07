@@ -33,10 +33,9 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
    ImageView imageView;
    AddEditPlanViewModel mViewModel;
    Bitmap imageBitmap;
-   String clientId;
+   String clientId, nameOfDay,nameOfWeek;
    String nameOfPicture;
 
-   int day;
 
     private static AddEditPlanViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -48,7 +47,8 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         super.onViewReady(savedInstanceState, intent);
 
         clientId = intent.getStringExtra("ClientId");
-        day = intent.getIntExtra("position", 0);
+        nameOfDay = intent.getStringExtra("positionOfDay");
+        nameOfWeek = intent.getStringExtra("positionOfWeek");
         mViewModel = obtainViewModel(this);
         mName = findViewById(R.id.add_name);
         imageView = findViewById(R.id.add_image);
@@ -102,7 +102,7 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
         }
 
         if (clientId != null) {
-            mViewModel.savePlanToClient(newPlan, clientId, day);
+            mViewModel.savePlanToClient(newPlan, clientId, nameOfDay,nameOfWeek);
         }
         mViewModel.savePlan(newPlan);
 

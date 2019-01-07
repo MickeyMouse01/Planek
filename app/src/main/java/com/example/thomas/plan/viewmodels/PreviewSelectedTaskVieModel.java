@@ -16,9 +16,14 @@ public class PreviewSelectedTaskVieModel extends ViewModel {
     private Repository repository;
     private MutableLiveData<List<Task>> mListOfTasks;
     private MutableLiveData<String> viewedPlanId = new MutableLiveData<>();
+    private MutableLiveData<Integer> positionOfSelectedTask = new MutableLiveData<>();
 
     public PreviewSelectedTaskVieModel(Repository repository){
         this.repository = repository;
+    }
+
+    public MutableLiveData<Integer> getPositionOfSelectedTask() {
+        return positionOfSelectedTask;
     }
 
     public MutableLiveData<List<Task>> getListOfTasks() {

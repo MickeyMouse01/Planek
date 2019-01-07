@@ -32,12 +32,11 @@ public class AddEditPlanViewModel extends ViewModel {
         });
     }
 
-    public void savePlanToClient(final Plan newPlan, String clientId, final int day) {
+    public void savePlanToClient(final Plan newPlan, String clientId, final String nameOfDay, final String nameOfWeek) {
         repository.getClient(clientId, new DataSource.LoadClientCallback() {
             @Override
             public void onClientLoaded(@NonNull Client client) {
-                client .getPlansForDate()
-                        .put(Day.values()[day].getNameOfDay(), newPlan.getUniqueID());
+                client.getDating().get(nameOfWeek).put(nameOfDay,newPlan.getUniqueID());
                 mutableClient.setValue(client);
             }
         });
