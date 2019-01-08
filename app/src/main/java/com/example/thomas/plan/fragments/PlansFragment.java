@@ -65,7 +65,12 @@ public class PlansFragment extends Fragment
             @Override
             public void onChanged(@Nullable List<Plan> plans) {
                 if (mPlansAdapter != null) {
-                    mPlansAdapter.replaceData(plans);
+                    if (plans != null){
+                        mPlansAdapter.replaceData(plans);
+                    } else {
+                        mPlansAdapter.clearData();
+                    }
+
                 }
             }
         });

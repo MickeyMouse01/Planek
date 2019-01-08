@@ -91,7 +91,9 @@ public class MainViewModel extends ViewModel {
         repository.getClients(new DataSource.LoadClientsCallback() {
             @Override
             public void onClientsLoaded(@NonNull List<Client> clients) {
-                Collections.sort(clients);
+                if (clients != null){
+                    Collections.sort(clients);
+                }
                 mListOfClients.setValue(clients);
             }
         });
@@ -115,7 +117,9 @@ public class MainViewModel extends ViewModel {
         repository.getPlans(new DataSource.LoadPlansCallback() {
             @Override
             public void onPlansLoaded(@NonNull List<Plan> plans) {
-                Collections.sort(plans);
+                if (plans != null){
+                    Collections.sort(plans);
+                }
                 mListOfPlans.setValue(plans);
             }
         });

@@ -204,6 +204,8 @@ public class RemoteDataSource implements DataSource {
                 if (map != null) {
                     List<Client> clients = new ArrayList<>(map.values());
                     callback.onClientsLoaded(clients);
+                } else {
+                    callback.onClientsLoaded(null);
                 }
             }
 
@@ -292,6 +294,8 @@ public class RemoteDataSource implements DataSource {
                 if (map != null) {
                     List<Plan> plans = new ArrayList<>(map.values());
                     callback.onPlansLoaded(plans);
+                } else {
+                    callback.onPlansLoaded(null);
                 }
             }
 
@@ -379,6 +383,8 @@ public class RemoteDataSource implements DataSource {
                     if (map != null) {
                         List<Task> tasks = new ArrayList<>(map.values());
                         callback.onTasksLoaded(tasks);
+                    } else {
+                        callback.onTasksLoaded(null);
                     }
                 } catch (NullPointerException e){
                     if (e.getMessage().contains("Can't pass null for argument")){

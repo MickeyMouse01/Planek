@@ -41,7 +41,9 @@ public class PlanInfoEditViewModel extends ViewModel {
         repository.getTasksForPlan(new DataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(@NonNull List<Task> tasks) {
-                Collections.sort(tasks);
+                if (tasks != null){
+                    Collections.sort(tasks);
+                }
                 listOfTasks.setValue(tasks);
             }
         }, viewedPlanId.getValue());

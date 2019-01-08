@@ -70,6 +70,8 @@ public class PlanInfoActivity extends BaseActivity {
             public void onChanged(@Nullable List<Task> tasks) {
                 if (tasks != null) {
                     listOfTasksAdapter.replaceData(getSpecificTasks(tasks));
+                } else {
+                    listOfTasksAdapter.clearData();
                 }
             }
         });

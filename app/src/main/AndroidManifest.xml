@@ -20,7 +20,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,30 +29,25 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AddEditClientActivity"
-            android:label="@string/add_client"
-            android:parentActivityName=".activities.MainActivity" />
+            android:label="@string/add_client" />
         <activity
             android:name=".activities.ClientInfoActivity"
-            android:label="@string/client_info"
-            android:parentActivityName=".activities.MainActivity" />
+            android:label="@string/client_info" />
         <activity
             android:name=".activities.AddEditPlanActivity"
             android:label="@string/add_plan" />
         <activity
             android:name=".activities.PlanInfoActivity"
-            android:label="@string/plan_info"
-            android:parentActivityName=".activities.MainActivity" />
+            android:label="@string/plan_info"/>
         <activity
             android:name=".activities.AddEditTaskActivity"
-            android:label="@string/add_task"
-            android:parentActivityName=".activities.PlanInfoActivity" />
+            android:label="@string/add_task" />
         <activity
             android:name=".activities.PreviewSelectedTaskActivity"
             android:label="@string/title_activity_preview_task" />
         <activity
             android:name=".activities.PreviewPlanForClientActivity"
-            android:label="@string/preview_client"
-            android:parentActivityName=".activities.MainActivity" />
+            android:label="@string/preview_client"/>
         <activity
             android:name=".activities.NurseInfoActivity"
             android:label="@string/title_activity_preview_nurse" />

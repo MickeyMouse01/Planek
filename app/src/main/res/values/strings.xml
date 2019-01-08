@@ -196,7 +196,5 @@
     <string name="afternoon_activities">Odpolední aktivity</string>
     <string name="all_activities">Všechny aktivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

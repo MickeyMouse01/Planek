@@ -73,6 +73,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void userLogin(LoginState loginState) {
         switch (loginState) {
             case RESULT_OK:
+                hideDialog();
                 startActivity();
                 break;
             case ERROR_VALIDATIONS:
@@ -164,7 +165,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        showDialog("Přihlašování");
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
@@ -199,9 +200,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 });
 
             } else if (response != null) {
-                Toast.makeText(this,
-                        "Authentication Failed: " + response.getError().toString(),
-                        Toast.LENGTH_LONG).show();
+                hideDialog();
+                showErrorToast("Autentizace selhala: " + response.getError().toString());
             }
         }
     }

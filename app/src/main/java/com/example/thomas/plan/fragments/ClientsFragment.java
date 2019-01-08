@@ -65,7 +65,11 @@ public class ClientsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Client> clients) {
                 if (mClientsAdapter != null) {
-                    mClientsAdapter.replaceData(clients);
+                    if (clients != null){
+                        mClientsAdapter.replaceData(clients);
+                    } else {
+                        mClientsAdapter.clearData();
+                    }
                 }
             }
         });

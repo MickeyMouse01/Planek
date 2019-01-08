@@ -215,6 +215,7 @@ public class PlanInfoEditActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 mTasks.remove(task);
                 listOfTasksAdapter.replaceData(mTasks);
+                mViewModel.getViewedPlan().getValue().getListOfRelatesTasks().remove(task.getUniqueID());
                 mViewModel.deleteTaskFromPlan(viewPlanId, task);
             }
         }).show();

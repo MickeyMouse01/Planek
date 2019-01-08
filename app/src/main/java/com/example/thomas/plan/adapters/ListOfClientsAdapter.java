@@ -35,6 +35,11 @@ public class ListOfClientsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clearData(){
+        mClients.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mClients != null ? mClients.size() : 0;
