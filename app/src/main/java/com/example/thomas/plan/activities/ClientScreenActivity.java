@@ -10,13 +10,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
@@ -27,7 +25,6 @@ import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -279,7 +276,7 @@ public class ClientScreenActivity extends BaseActivity {
 
     private void initializeMorningActivitiesAdapter(List<Task> tasks){
         Settings settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDeleteInvisibleAfterPassed(true);
         morningActivitesAdapter = new ListOfTasksAdapter(
                 tasks,
                 taskItemListener,
@@ -298,7 +295,7 @@ public class ClientScreenActivity extends BaseActivity {
 
     private void initializeLunchAdapter(List<Task> tasks){
         Settings settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDeleteInvisibleAfterPassed(true);
         lunchAdapter = new ListOfTasksAdapter(
                 tasks,
                 taskItemListener,
@@ -316,7 +313,7 @@ public class ClientScreenActivity extends BaseActivity {
 
     private void initializeAfternoonActivitiesAdapter(List<Task> tasks){
         Settings settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDeleteInvisibleAfterPassed(true);
         afternoonActivitesAdapter = new ListOfTasksAdapter(
                 tasks,
                 taskItemListener,
@@ -335,7 +332,7 @@ public class ClientScreenActivity extends BaseActivity {
 
     private void initializeDinnerAdapter(List<Task> tasks){
         Settings settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDeleteInvisibleAfterPassed(true);
         dinnerAdapter = new ListOfTasksAdapter(
                 tasks,
                 taskItemListener,

@@ -94,11 +94,9 @@ public class ListOfTasksAdapter extends BaseAdapter {
             constraintLayout.setBackgroundColor(ContextCompat.getColor(viewTask.getContext(), R.color.isPassed));
             checkBox.setChecked(true);
             checkBox.setButtonDrawable(R.drawable.scaled_passed_checkbox);
-            if(!settings.isDisabledDeleteButton()){
-                deleteImage.setVisibility(View.VISIBLE);
-            }
+
         }
-        if(!settings.isDisabledDeleteButton()){
+        if (!settings.isDeleteInvisibleAfterPassed() && actualTask.isPassed()){
             deleteImage.setVisibility(View.VISIBLE);
         }
 

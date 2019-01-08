@@ -154,7 +154,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             }
         };
         Settings settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDeleteInvisibleAfterPassed(true);
         taskAdapter = new ListOfTasksAdapter(tasks, taskActionItemListener, settings);
         listViewTasks.setAdapter(taskAdapter);
     }

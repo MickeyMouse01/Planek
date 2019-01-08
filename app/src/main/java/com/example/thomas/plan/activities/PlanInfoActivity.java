@@ -145,7 +145,7 @@ public class PlanInfoActivity extends BaseActivity {
             }
         };
         Settings settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDeleteInvisibleAfterPassed(false);
         listOfTasksAdapter = new ListOfTasksAdapter(
                 mTasks,
                 taskItemListener,

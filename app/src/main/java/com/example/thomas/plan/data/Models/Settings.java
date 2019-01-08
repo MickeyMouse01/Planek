@@ -2,17 +2,20 @@ package com.example.thomas.plan.data.Models;
 
 public class Settings {
 
-    private boolean disableDeleteButton;
+    private boolean isDeleteInvisibleAfterPassed;
+
 
     public Settings() {
 
     }
 
-    public boolean isDisabledDeleteButton() {
-        return disableDeleteButton;
+
+
+    public boolean isDeleteInvisibleAfterPassed() {
+        return isDeleteInvisibleAfterPassed;
     }
 
-    public void setDisabledDeleteButton(boolean disableDeleteButton) {
-        this.disableDeleteButton = disableDeleteButton;
+    public void setDeleteInvisibleAfterPassed(boolean disableDeleteButton) {
+        this.isDeleteInvisibleAfterPassed = disableDeleteButton;
     }
 }

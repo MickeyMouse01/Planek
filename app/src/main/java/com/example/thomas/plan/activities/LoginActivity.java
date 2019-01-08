@@ -52,9 +52,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
-        Integer week = ActivityUtils.getActualNumberOfWeek();
-        Log.d("cislo", week.toString());
-
         switchButton = findViewById(R.id.switch_fragment);
         loginViewModel = obtainViewModel(this);
 
@@ -110,7 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     LOGGED_CLIENT = client;
                     if (client != null) {
                         int day = ActivityUtils.getActualDay();
-                        int week = ActivityUtils.getActualNumberOfWeek();
+                        int week = ActivityUtils.getActualNumberOfWeek() - 1;
                         String nameOfDay = Day.values()[day].toString();
                         String nameOfWeek = Week.values()[week].toString();
                         startPreviewTasksActivity(client

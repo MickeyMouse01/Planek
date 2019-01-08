@@ -40,7 +40,7 @@ public class PreviewAllPlansActivity extends BaseActivity {
         super.onViewReady(savedInstanceState, intent);
 
         settings = new Settings();
-        settings.setDisabledDeleteButton(true);
+        settings.setDeleteInvisibleAfterPassed(true);
 
         mViewModel = PreviewAllPlansActivity.obtainViewModel(this);
         String clientId = intent.getStringExtra("ClientId");

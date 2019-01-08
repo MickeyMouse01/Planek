@@ -84,7 +84,7 @@ public class ListOfPlansAdapter extends BaseAdapter {
         ConstraintLayout constraintLayout = planView.findViewById(R.id.plan_item_linear);
 
         if (settings != null) {
-            if (settings.isDisabledDeleteButton()){
+            if (settings.isDeleteInvisibleAfterPassed()){
                 deleteButton.setVisibility(View.INVISIBLE);
             }
         }
