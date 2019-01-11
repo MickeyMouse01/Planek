@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -92,6 +91,20 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             public void onChanged(@Nullable String s) {
                 hideDialog();
                 showSuccessToast(s);
+            }
+        });
+
+        mViewModel.getSelectedPlan().observe(this, new Observer<Plan>() {
+            @Override
+            public void onChanged(@Nullable Plan plan) {
+                setupPlanAdapter(plan);
+            }
+        });
+
+        mViewModel.getTasks().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable List<Task> tasks) {
+                setupTaskAdapter(tasks);
             }
         });
     }
@@ -185,33 +198,8 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             addNewPlanBut.setVisibility(View.VISIBLE);
             listViewOnePlan.setVisibility(View.GONE);
         } else {
-            mViewModel.getSelectedPlan().observe(this, new Observer<Plan>() {
-                @Override
-                public void onChanged(@Nullable Plan plan) {
-                    setupPlanAdapter(plan);
-                }
-            });
-
-            if (!mViewModel.getActiveObserverTasks().hasActiveObservers()){
-                mViewModel.getTasks().observe(this, new Observer<List<Task>>() {
-                    @Override
-                    public void onChanged(@Nullable List<Task> tasks) {
-                        if (taskAdapter == null){
-                            setupTaskAdapter(tasks);
-                        }
-                        if (taskAdapter != null && tasks == null){
-                            taskAdapter.clearData();
-                        }
-                        if (taskAdapter != null){
-                            taskAdapter.replaceData(tasks);
-                        }
-
-                    }
-                });
-            } else {
-                mViewModel.getTasks();
-            }
-
+            mViewModel.getSelectedPlan();
+            mViewModel.getTasks();
             fab.setVisibility(View.VISIBLE);
             addNewPlanBut.setVisibility(View.GONE);
             listViewOnePlan.setVisibility(View.VISIBLE);
