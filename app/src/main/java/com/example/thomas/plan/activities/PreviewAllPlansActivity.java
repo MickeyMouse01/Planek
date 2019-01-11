@@ -81,9 +81,12 @@ public class PreviewAllPlansActivity extends BaseActivity {
         planId = newPlan.getUniqueID();
         Map<String, Task> mapWithTasks = plan.getListOfRelatesTasks();
 
-        for (Task task: mapWithTasks.values()) {
-            task.setIdOfPlan(planId);
+        if (mapWithTasks != null){
+            for (Task task: mapWithTasks.values()) {
+                task.setIdOfPlan(planId);
+            }
         }
+
         newPlan.setListOfRelatesTasks(plan.getListOfRelatesTasks());
         newPlan.setName(plan.getName() + " - kopie");
         newPlan.setCreatedDate(dateTime);

@@ -89,7 +89,6 @@ public class ListOfPlansAdapter extends BaseAdapter {
             }
         }
 
-
         if(!mPlans.isEmpty()){
             nameOfPlan.setText(mPlans.get(position).getName());
 

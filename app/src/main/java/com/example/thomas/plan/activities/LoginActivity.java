@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             Boolean isNewUser = false;
             intent.putExtra("isNewUser", isNewUser);
             startActivity(intent);
-
+            finish();
 
         } else {
             loginViewModel.getLoggedClient().observe(this, new Observer<Client>() {
@@ -113,6 +113,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         startPreviewTasksActivity(client
                                 .getDating()
                                 .get(nameOfWeek).get(nameOfDay), client.getUniqueID());
+                        finish();
                     }
                 }
             });
@@ -162,12 +163,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        showDialog("Přihlašování");
+
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-
+                showDialog("Přihlašování");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 loginViewModel.getNurseByEmail(user.getEmail());

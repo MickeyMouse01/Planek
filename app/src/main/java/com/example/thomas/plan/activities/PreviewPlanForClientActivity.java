@@ -9,22 +9,23 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.thomas.plan.Common.Enums;
-import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.adapters.ListOfPlansAdapter;
+import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
-import com.example.thomas.plan.adapters.ListOfPlansAdapter;
+import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.viewmodels.PreviewPlanForClientViewModel;
-import com.example.thomas.plan.adapters.ListOfTasksAdapter;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
     ListOfTasksAdapter taskAdapter;
     Intent addEditTaskIntent;
     FloatingActionButton fab;
+    private AlertDialog.Builder confirmDialog;
 
     public static PreviewPlanForClientViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -54,6 +56,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
 
         addEditTaskIntent = new Intent(this, AddEditTaskActivity.class);
         mViewModel = obtainViewModel(this);
+        confirmDialog = createConfirmDialog();
         clientId = intent.getStringExtra("ClientId");
         week = intent.getIntExtra("positionOfWeek", 0);
         day = intent.getIntExtra("positionOfDay", 0);
@@ -94,6 +97,12 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        mViewModel.getViewedClient();
+    }
+
+    @Override
     protected int getContentView() {
         return R.layout.activity_plan_for_client;
     }
@@ -128,6 +137,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
         listViewOnePlan.setAdapter(planAdapter);
     }
 
+
     private void setupTaskAdapter(final List<Task> tasks) {
         ActionItemListener<Task> taskActionItemListener = new ActionItemListener<Task>() {
             @Override
@@ -147,22 +157,30 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             }
 
             @Override
-            public void onItemDeleteClick(Task item) {
-                tasks.remove(item);
-                taskAdapter.replaceData(tasks);
-                mViewModel.deleteTaskFromPlan(mViewModel.getViewedPlanId(), item);
+            public void onItemDeleteClick(final Task item) {
+                confirmDialog.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tasks.remove(item);
+                        taskAdapter.replaceData(tasks);
+                        mViewModel.deleteTaskFromPlan(mViewModel.getViewedPlanId(), item);
+                    }
+                });
+                confirmDialog.show();
+
             }
         };
         Settings settings = new Settings();
-        settings.setDeleteInvisibleAfterPassed(true);
+        settings.setDeleteInvisibleAfterPassed(false);
         taskAdapter = new ListOfTasksAdapter(tasks, taskActionItemListener, settings);
         listViewTasks.setAdapter(taskAdapter);
     }
 
+
     private void initializeClient(Client client) {
         String viewedPlanId = client.getDating().get(nameOfWeek).get(nameOfDay);
         mViewModel.setViewedPlanId(viewedPlanId);
-        if (viewedPlanId.isEmpty() ) {
+        if (viewedPlanId.isEmpty()) {
             fab.setVisibility(View.GONE);
             addNewPlanBut.setVisibility(View.VISIBLE);
             listViewOnePlan.setVisibility(View.GONE);
@@ -174,12 +192,26 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
                 }
             });
 
-            mViewModel.getTasks().observe(this, new Observer<List<Task>>() {
-                @Override
-                public void onChanged(@Nullable List<Task> tasks) {
-                    setupTaskAdapter(tasks);
-                }
-            });
+            if (!mViewModel.getActiveObserverTasks().hasActiveObservers()){
+                mViewModel.getTasks().observe(this, new Observer<List<Task>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Task> tasks) {
+                        if (taskAdapter == null){
+                            setupTaskAdapter(tasks);
+                        }
+                        if (taskAdapter != null && tasks == null){
+                            taskAdapter.clearData();
+                        }
+                        if (taskAdapter != null){
+                            taskAdapter.replaceData(tasks);
+                        }
+
+                    }
+                });
+            } else {
+                mViewModel.getTasks();
+            }
+
             fab.setVisibility(View.VISIBLE);
             addNewPlanBut.setVisibility(View.GONE);
             listViewOnePlan.setVisibility(View.VISIBLE);
@@ -228,13 +260,13 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             showDialog("Ukládání");
             String selectedPlanId = data.getStringExtra("planId");
             Client client = mViewModel.getViewedClient().getValue();
-            client.getDating().get(nameOfWeek).put(nameOfDay,selectedPlanId);
+            client.getDating().get(nameOfWeek).put(nameOfDay, selectedPlanId);
             mViewModel.saveUpdatedClient(client);
-        } else if (requestCode == 1 && data != null){
+        } else if (requestCode == 1 && data != null) {
             showDialog("Ukládání");
             String selectedPlanId = data.getStringExtra("planId");
             Client client = mViewModel.getViewedClient().getValue();
-            client.getDating().get(nameOfWeek).put(nameOfDay,selectedPlanId);
+            client.getDating().get(nameOfWeek).put(nameOfDay, selectedPlanId);
             mViewModel.saveUpdatedClient(client);
         }
     }

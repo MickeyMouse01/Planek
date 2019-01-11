@@ -201,6 +201,7 @@ public class PlanInfoEditActivity extends BaseActivity {
         };
         Settings settings = new Settings();
         settings.setDeleteInvisibleAfterPassed(false);
+        settings.setDeleteVisibleAllTime(true);
         listOfTasksAdapter = new ListOfTasksAdapter(
                 mTasks,
                 taskItemListener,

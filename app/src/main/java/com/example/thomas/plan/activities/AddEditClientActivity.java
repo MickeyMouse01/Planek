@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
     private String idOfClient;
     private Client client;
     private int countForSave = 0;
+    private ScrollView scrollView;
+    private Boolean passwordIsSet = false;
 
     private PatternLockView mPatternLockView;
     private AddEditClientViewModel mViewModel;
@@ -59,6 +62,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
         mPatternLockView = findViewById(R.id.add_pattern_lock_view);
         changePassword = findViewById(R.id.change_password);
         mUserName = findViewById(R.id.add_username);
+        scrollView = findViewById(R.id.add_scrollView);
         addListenerForPattern();
         mViewModel = obtainViewModel(this);
         idOfClient = intent.getStringExtra("idClient");
@@ -103,6 +107,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
 
     private void initializeClient(Client client) {
         this.client = client;
+        passwordIsSet = true;
         mFirstName.setText(client.getFirstName());
         mSurname.setText(client.getSurname());
         sTypeOfGroup.setSelection(client.getTypeOfGroup().getCode());
@@ -135,6 +140,7 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onProgress(List<PatternLockView.Dot> progressPattern) {
+                scrollView.requestDisallowInterceptTouchEvent(true);
             }
 
             @Override
@@ -145,22 +151,23 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
                     actualLock = "";
                     countForSave = 0;
                     txtForPassword.setText("Heslo se neshoduje, zadejte znovu!");
-
-                    Toast.makeText(AddEditClientActivity.this,
-                            "Heslo se neshoduje, zadejte znovu!",
-                            Toast.LENGTH_SHORT).show();
+                    showErrorToast("Heslo se neshoduje, zadejte znovu!");
+                    passwordIsSet = false;
 
                 } else {
                     countForSave++;
                     txtForPassword.setText("Zadejte znovu pro potvrzeni!");
                     actualLock = lock;
+                    passwordIsSet = false;
                 }
 
                 if (countForSave == 2) {
                     countForSave = 0;
                     actualLock = lock;
                     txtForPassword.setText("Heslo úspěšně vybráno!");
+                    passwordIsSet = true;
                 }
+                scrollView.requestDisallowInterceptTouchEvent(false);
             }
 
             @Override
@@ -221,6 +228,9 @@ public class AddEditClientActivity extends BaseActivity implements View.OnClickL
             isFilled = false;
         } else if (mUserName.getText().toString().isEmpty()) {
             mUserName.setError("Toto pole je povinné");
+            isFilled = false;
+        } else if (!passwordIsSet){
+            showErrorToast("Nastavte klientovi heslo!");
             isFilled = false;
         }
         return isFilled;

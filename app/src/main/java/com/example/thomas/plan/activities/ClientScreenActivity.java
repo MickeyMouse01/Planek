@@ -2,6 +2,7 @@ package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,9 +10,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActivityUtils;
@@ -23,6 +27,7 @@ import com.example.thomas.plan.viewmodels.ClientScreenViewModel;
 import com.example.thomas.plan.data.Models.Settings;
 import com.example.thomas.plan.data.Models.Task;
 import com.example.thomas.plan.adapters.ListOfTasksAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +46,8 @@ public class ClientScreenActivity extends BaseActivity {
     private ListOfTasksAdapter dinnerAdapter;
     private ActionItemListener<Task> taskItemListener;
     private List<Task> mTasks = new ArrayList<>();
+    private AlertDialog.Builder confirmDialog;
+    private ScrollView scrollView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,6 +95,8 @@ public class ClientScreenActivity extends BaseActivity {
         super.onViewReady(savedInstanceState, intent);
 
         mViewModel = obtainViewModel(this);
+        confirmDialog = createConfirmDialog();
+        confirmDialog.setMessage(R.string.do_you_want_to_signout);
         viewPlanId = intent.getStringExtra("PlanId");
         viewClientId = intent.getStringExtra("ClientId");
         mViewModel.setViewedPlanId(viewPlanId);
@@ -100,7 +109,9 @@ public class ClientScreenActivity extends BaseActivity {
         lvDinner = findViewById(R.id.preview_task_dinner);
         tvLunch = findViewById(R.id.tv_lunch);
         tvDinner = findViewById(R.id.tv_dinner);
+        scrollView = findViewById(R.id.client_screen_scrollView);
 
+        scrollUp();
         setupListAdapter();
 
         mTextMessage = findViewById(R.id.message);
@@ -122,6 +133,7 @@ public class ClientScreenActivity extends BaseActivity {
         mViewModel.getOnDataAdd().observe(this, new Observer<HashMap<String, String>>() {
             @Override
             public void onChanged(@Nullable HashMap<String, String> collection) {
+               scrollUp();
                 if (collection != null){
                     int day = ActivityUtils.getActualDay();
                     String planId = collection.get(Enums.Day.values()[day].getNameOfDay());
@@ -129,7 +141,6 @@ public class ClientScreenActivity extends BaseActivity {
                         viewPlanId = planId;
                         mViewModel.setViewedPlanId(viewPlanId);
                     }
-
 
                     if (!collection.values().contains(viewPlanId)){
                         if (morningActivitesAdapter != null){
@@ -225,6 +236,14 @@ public class ClientScreenActivity extends BaseActivity {
 
     }
 
+    private void scrollUp(){
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+    }
 
     private static ClientScreenViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -265,6 +284,37 @@ public class ClientScreenActivity extends BaseActivity {
                 mViewModel.deleteTaskFromPlan(item);
             }
         };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        signOut();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        signOut();
+    }
+
+    private void signOut(){
+        confirmDialog.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        confirmDialog.show();
     }
 
     private void previewSelectedTask(String planId, int position){

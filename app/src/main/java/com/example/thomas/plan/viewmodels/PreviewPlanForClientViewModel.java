@@ -57,8 +57,8 @@ public class PreviewPlanForClientViewModel extends ViewModel {
     public MutableLiveData<Client> getViewedClient() {
         if (viewedClient == null) {
             viewedClient = new MutableLiveData<>();
-            loadClient();
         }
+        loadClient();
         return viewedClient;
     }
 
@@ -96,6 +96,13 @@ public class PreviewPlanForClientViewModel extends ViewModel {
         }
     }
 
+    public MutableLiveData<List<Task>> getActiveObserverTasks() {
+        if (listOfTasks == null) {
+            listOfTasks = new MutableLiveData<>();
+        }
+        return listOfTasks;
+    }
+
     public MutableLiveData<List<Task>> getTasks() {
         if (listOfTasks == null) {
             listOfTasks = new MutableLiveData<>();
@@ -105,13 +112,17 @@ public class PreviewPlanForClientViewModel extends ViewModel {
     }
 
     private void loadTasks() {
-        repository.getTasksForPlan(new DataSource.LoadTasksCallback() {
-            @Override
-            public void onTasksLoaded(@NonNull List<Task> tasks) {
-                Collections.sort(tasks);
-                listOfTasks.setValue(tasks);
-            }
-        }, viewedPlanId.getValue());
+        if (viewedPlanId.getValue() != null){
+            repository.getTasksForPlan(new DataSource.LoadTasksCallback() {
+                @Override
+                public void onTasksLoaded(@NonNull List<Task> tasks) {
+                    if (tasks != null){
+                        Collections.sort(tasks);
+                    }
+                    listOfTasks.setValue(tasks);
+                }
+            }, viewedPlanId.getValue());
+        }
     }
 
     public void deletePlanFromClient(String nameOfDay, String nameOfWeek) {

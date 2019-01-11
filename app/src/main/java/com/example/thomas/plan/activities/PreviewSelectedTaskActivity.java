@@ -74,20 +74,6 @@ public class PreviewSelectedTaskActivity extends BaseActivity {
         return R.layout.activity_selected_task;
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent,3);
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */

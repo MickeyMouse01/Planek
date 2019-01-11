@@ -2,6 +2,7 @@ package com.example.thomas.plan.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -12,7 +13,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -38,6 +41,7 @@ public class MainActivity extends BaseActivity
     private final int VIEW_PLANS = 1;
     private MainViewModel mViewModel;
     private Toolbar toolbar;
+    private AlertDialog.Builder confirmDialog;
 
     public static MainViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
@@ -50,6 +54,8 @@ public class MainActivity extends BaseActivity
         super.onViewReady(savedInstanceState, intent);
 
         mViewModel = obtainViewModel(this);
+        confirmDialog = createConfirmDialog();
+        confirmDialog.setMessage(R.string.do_you_want_to_signout);
         mViewModel.addNewClient().observe(this, new Observer<Void>() {
             @Override
             public void onChanged(@Nullable Void aVoid) {
@@ -142,22 +148,24 @@ public class MainActivity extends BaseActivity
         TextView txtMenuNameSurname = findViewById(R.id.menu_name_surname);
         ImageView imageOfNurse = findViewById(R.id.menu_image);
 
-        if (nurse.getNameOfImage() != null){
-            if (imageOfNurse != null) {
-                StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getNameOfImage());
+        if(nurse != null){
+            if (nurse.getNameOfImage() != null){
+                if (imageOfNurse != null) {
+                    StorageReference ref = FirebaseStorage.getInstance().getReference().child(nurse.getNameOfImage());
 
-                GlideApp.with(getApplicationContext())
-                        .load(ref)
-                        .into(imageOfNurse);
+                    GlideApp.with(getApplicationContext())
+                            .load(ref)
+                            .into(imageOfNurse);
+                }
             }
-        }
 
-        if (txtMenuNameSurname != null){
-            txtMenuNameSurname.setText(nurse.getNameAndSurname());
-        }
+            if (txtMenuNameSurname != null){
+                txtMenuNameSurname.setText(nurse.getNameAndSurname());
+            }
 
-        if (txtMenuTypeOfGroup != null){
-            txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
+            if (txtMenuTypeOfGroup != null){
+                txtMenuTypeOfGroup.setText(nurse.getTypeOfGroup().getNameOfGroup());
+            }
         }
     }
 
@@ -211,13 +219,30 @@ public class MainActivity extends BaseActivity
             setupViewFragment(1);
 
         } else if (id == R.id.nav_logout) {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            signOut();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        signOut();
+    }
+
+    private void signOut(){
+        confirmDialog.setPositiveButton("Ano", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        confirmDialog.show();
     }
 
     private void addNewClient() {
@@ -242,13 +267,6 @@ public class MainActivity extends BaseActivity
         intent.putExtra("ClientId", clientId);
         startActivity(intent);
     }
-
-    /*private void previewClient(String clientId) {
-        mViewModel.getCurrentFragment().setValue(VIEW_CLIENTS);
-        Intent intent = new Intent(this, PreviewPlanForClientActivity.class);
-        intent.putExtra("ClientId", clientId);
-        startActivity(intent);
-    }*/
 
     private void viewPlan(String planId) {
         mViewModel.getCurrentFragment().setValue(VIEW_PLANS);

@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.thomas.plan.Common.Enums;
-import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.ActivityUtils;
+import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
+import com.example.thomas.plan.interfaces.ActionItemListener;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class ListOfDaysAdapter extends BaseAdapter {
         setDayAndWeek();
     }
 
-    private void setDayAndWeek(){
+    private void setDayAndWeek() {
         actualDay = ActivityUtils.getActualDay();
         actualWeek = ActivityUtils.getActualNumberOfWeek();
 
@@ -74,16 +74,19 @@ public class ListOfDaysAdapter extends BaseAdapter {
             }
         });
 
-        if (mDays.contains(nameOfWeek)){
-            if ((position + 1) == actualWeek){
+        if (mDays.contains(nameOfWeek)) {
+            if (position == actualWeek + 1) {
                 constraintLayout.setBackgroundColor(ContextCompat.getColor(dayView.getContext(), R.color.isPassed));
             }
         }
-        if (mDays.contains(nameOfDay)){
-            if (position  == actualDay){
+
+        if (mDays.contains(nameOfDay)) {
+
+            if (position == actualDay && position == (actualWeek + 1)) {
                 constraintLayout.setBackgroundColor(ContextCompat.getColor(dayView.getContext(), R.color.isPassed));
             }
         }
+
 
         return dayView;
     }

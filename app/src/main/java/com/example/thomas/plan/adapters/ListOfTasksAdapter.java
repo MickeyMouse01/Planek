@@ -100,6 +100,10 @@ public class ListOfTasksAdapter extends BaseAdapter {
             deleteImage.setVisibility(View.VISIBLE);
         }
 
+        if (settings.isDeleteVisibleAllTime()){
+            deleteImage.setVisibility(View.VISIBLE);
+        }
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.thomas.plan.Common.Enums;
@@ -27,6 +29,8 @@ public class ListOfDaysActivity extends BaseActivity {
     String clientId;
     private ListOfDaysAdapter listOfDaysAdapter;
     private int positionOfWeek;
+    private Button backToWeeksButton;
+    private boolean listOfWeeksIsDisplayed = true;
 
     private static ListOfDaysViewModel obtainViewModel(FragmentActivity activity) {
         ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
@@ -38,6 +42,7 @@ public class ListOfDaysActivity extends BaseActivity {
         super.onViewReady(savedInstanceState, intent);
 
         listViewDays = findViewById(R.id.list_of_days);
+        backToWeeksButton = findViewById(R.id.button_back_to_list_of_weeks);
         mViewModel = obtainViewModel(this);
 
         clientId = intent.getStringExtra("ClientId");
@@ -48,6 +53,26 @@ public class ListOfDaysActivity extends BaseActivity {
                 setupListAdapter(weeks);
             }
         });
+
+        backToWeeksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listOfDaysAdapter.replaceData(mViewModel.getListOfWeeks().getValue());
+                backToWeeksButton.setVisibility(View.GONE);
+                listOfWeeksIsDisplayed = true;
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (listOfWeeksIsDisplayed){
+            super.onBackPressed();
+        } else {
+            listOfDaysAdapter.replaceData(mViewModel.getListOfWeeks().getValue());
+            backToWeeksButton.setVisibility(View.GONE);
+            listOfWeeksIsDisplayed = true;
+        }
     }
 
     void previewPlanForClient(int positionOfDay, int positionOfWeek) {
@@ -71,6 +96,8 @@ public class ListOfDaysActivity extends BaseActivity {
                 if (weeks.contains(item)) {
                     positionOfWeek = weeks.indexOf(item);
                     listOfDaysAdapter.replaceData(mViewModel.getListOfDays().getValue());
+                    backToWeeksButton.setVisibility(View.VISIBLE);
+                    listOfWeeksIsDisplayed = false;
                 } else {
                     List<String> days = mViewModel.getListOfDays().getValue();
                     selectPlanOrFood(days.indexOf(item), positionOfWeek);

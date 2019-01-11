@@ -195,6 +195,8 @@
     <string name="dinner">Večeře</string>
     <string name="afternoon_activities">Odpolední aktivity</string>
     <string name="all_activities">Všechny aktivity</string>
+    <string name="do_you_want_to_signout">Opravdu se chcete odhlásit?</string>
+    <string name="pick_time">Vyberte čas</string>
 
 
 </resources>

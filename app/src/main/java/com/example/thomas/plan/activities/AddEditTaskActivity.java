@@ -119,6 +119,11 @@ public class AddEditTaskActivity extends BaseActivity implements View.OnClickLis
             mName.setError("Toto pole je povinné");
             isFilled = false;
         }
+
+        if (!timeForTaskIsSet){
+            timeInput.setError("Toto pole je povinné");
+            isFilled = false;
+        }
         return isFilled;
     }
 
