@@ -81,7 +81,6 @@ public class PreviewPlanForClientViewModel extends ViewModel {
 
     private void loadPlan() {
         if (viewedPlanId.getValue() != null) {
-            if (!viewedPlanId.getValue().isEmpty()) {
                 repository.getPlan(viewedPlanId.getValue(), new DataSource.LoadPlanCallback() {
                     @Override
                     public void onPlanLoaded(@NonNull Plan plan) {
@@ -93,7 +92,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
 
                     }
                 });
-            }
+
         }
     }
 
@@ -129,7 +128,7 @@ public class PreviewPlanForClientViewModel extends ViewModel {
     }
 
     public void deletePlanFromClient(String nameOfDay, String nameOfWeek) {
-        Client client = getViewedClient().getValue();
+        Client client = viewedClient.getValue();
         client.getDating().get(nameOfWeek).put(nameOfDay, "");
         repository.saveClient(client, new DataSource.SavedDataCallback() {
             @Override

@@ -169,7 +169,7 @@ public class Repository implements DataSource {
         });
     }
 
-    //todo bug, kdyz zbyde posledni plan/klienta, tak se odstrani z databaze ale ne z view
+
     public void deletePlan(@NonNull String planId) {
         remoteDataSource.deletePlan(planId);
     }

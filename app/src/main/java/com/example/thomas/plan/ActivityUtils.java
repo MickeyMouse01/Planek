@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import static android.support.v4.util.Preconditions.checkNotNull;
 
@@ -43,7 +44,7 @@ public class ActivityUtils {
             }
             week = week + 4;
         }
-        return week;
+        return week - 1;
     }
 
     public static int getActualDay(){

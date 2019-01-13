@@ -82,7 +82,6 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             public void onClick(View v) {
                 addEditTaskIntent.putExtra("PlanId", mViewModel.getViewedPlanId());
                 startActivity(addEditTaskIntent);
-                mViewModel.getViewedClient();
             }
         });
 
@@ -94,17 +93,16 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             }
         });
 
-        mViewModel.getSelectedPlan().observe(this, new Observer<Plan>() {
-            @Override
-            public void onChanged(@Nullable Plan plan) {
-                setupPlanAdapter(plan);
-            }
-        });
 
         mViewModel.getTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable List<Task> tasks) {
-                setupTaskAdapter(tasks);
+                if (taskAdapter != null && tasks == null){
+                    taskAdapter.clearData();
+                } else {
+                    setupTaskAdapter(tasks);
+                }
+
             }
         });
     }
@@ -198,7 +196,13 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
             addNewPlanBut.setVisibility(View.VISIBLE);
             listViewOnePlan.setVisibility(View.GONE);
         } else {
-            mViewModel.getSelectedPlan();
+            mViewModel.getSelectedPlan().observe(this, new Observer<Plan>() {
+                @Override
+                public void onChanged(@Nullable Plan plan) {
+                    setupPlanAdapter(plan);
+
+                }
+            });
             mViewModel.getTasks();
             fab.setVisibility(View.VISIBLE);
             addNewPlanBut.setVisibility(View.GONE);

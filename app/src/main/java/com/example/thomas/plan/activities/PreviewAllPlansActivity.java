@@ -88,9 +88,27 @@ public class PreviewAllPlansActivity extends BaseActivity {
         }
 
         newPlan.setListOfRelatesTasks(plan.getListOfRelatesTasks());
-        newPlan.setName(plan.getName() + " - kopie");
+        Integer numberOfCopy = getNumberOfCopy(plan.getName());
+        String newName = plan.getName();
+        if (numberOfCopy == -1){
+            numberOfCopy = 1;
+        } else {
+            String name = plan.getName();
+            newName = name.substring(0,name.indexOf(" ("));
+        }
+        newPlan.setName(newName + " (" + numberOfCopy + ")");
         newPlan.setCreatedDate(dateTime);
         mViewModel.savePlan(newPlan);
+    }
+
+    private Integer getNumberOfCopy(String name){
+        if (name.contains("(")){
+            String requiredString = name.substring(name.indexOf("(") + 1, name.indexOf(")"));
+            Integer number = Integer.parseInt(requiredString);
+            number++;
+            return number;
+        }
+        return -1;
     }
 
     private void finishThisActivity(String planId){

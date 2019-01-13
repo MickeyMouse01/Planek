@@ -74,15 +74,13 @@ public class ListOfDaysAdapter extends BaseAdapter {
             }
         });
 
-        if (mDays.contains(nameOfWeek)) {
-            if (position == actualWeek + 1) {
+        if (mDays.contains(nameOfWeek)){
+            if (position == actualWeek){
                 constraintLayout.setBackgroundColor(ContextCompat.getColor(dayView.getContext(), R.color.isPassed));
             }
         }
-
-        if (mDays.contains(nameOfDay)) {
-
-            if (position == actualDay && position == (actualWeek + 1)) {
+        if (mDays.contains(nameOfDay)){
+            if (position == actualDay){
                 constraintLayout.setBackgroundColor(ContextCompat.getColor(dayView.getContext(), R.color.isPassed));
             }
         }

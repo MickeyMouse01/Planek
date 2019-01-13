@@ -31,6 +31,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import static com.example.thomas.plan.ActivityUtils.getActualNumberOfWeek;
+
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -51,6 +53,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+
 
         switchButton = findViewById(R.id.switch_fragment);
         loginViewModel = obtainViewModel(this);
@@ -107,7 +110,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     LOGGED_CLIENT = client;
                     if (client != null) {
                         int day = ActivityUtils.getActualDay();
-                        int week = ActivityUtils.getActualNumberOfWeek() - 1;
+                        int week = getActualNumberOfWeek();
                         String nameOfDay = Day.values()[day].toString();
                         String nameOfWeek = Week.values()[week].toString();
                         startPreviewTasksActivity(client
