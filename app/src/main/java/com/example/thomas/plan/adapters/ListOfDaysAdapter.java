@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.interfaces.ActionItemListener;
 

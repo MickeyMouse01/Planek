@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.example.thomas.plan.Common.Enums;
-import com.example.thomas.plan.Common.Enums.Day;
+import com.example.thomas.plan.common.Enums;
+import com.example.thomas.plan.common.Enums.Day;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.adapters.ListOfPlansAdapter;

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
-import com.example.thomas.plan.Common.Enums.Day;
 import com.example.thomas.plan.SingleLiveEvent;
 import com.example.thomas.plan.interfaces.DataSource;
 import com.example.thomas.plan.data.Models.Client;

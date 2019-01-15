@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.common.Enums;
 import com.example.thomas.plan.interfaces.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;

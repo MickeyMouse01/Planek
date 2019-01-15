@@ -2,13 +2,10 @@ package com.example.thomas.plan.data.Models;
 
 import android.support.annotation.NonNull;
 
-import com.example.thomas.plan.Common.Enums;
-import com.example.thomas.plan.Common.Enums.TypeOfGroup;
+import com.example.thomas.plan.common.Enums.TypeOfGroup;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 

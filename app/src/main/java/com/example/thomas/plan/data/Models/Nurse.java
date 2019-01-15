@@ -1,6 +1,6 @@
 package com.example.thomas.plan.data.Models;
 
-import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.common.Enums;
 
 /**
  * Created by Tomas on 05-Mar-18.

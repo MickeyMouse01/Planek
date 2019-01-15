@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
-import com.example.thomas.plan.Common.LoginState;
+import com.example.thomas.plan.common.LoginState;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.activities.LoginActivity;
 import com.example.thomas.plan.viewmodels.LoginViewModel;

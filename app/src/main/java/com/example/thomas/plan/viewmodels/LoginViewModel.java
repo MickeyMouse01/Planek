@@ -8,7 +8,7 @@ import com.example.thomas.plan.interfaces.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
 import com.example.thomas.plan.data.Repository;
-import com.example.thomas.plan.Common.LoginState;
+import com.example.thomas.plan.common.LoginState;
 
 /**
  * Created by pospe on 11.02.2018.

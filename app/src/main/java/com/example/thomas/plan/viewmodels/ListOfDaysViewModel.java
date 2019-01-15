@@ -3,7 +3,7 @@ package com.example.thomas.plan.viewmodels;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.common.Enums;
 import com.example.thomas.plan.data.Repository;
 
 import java.util.Arrays;

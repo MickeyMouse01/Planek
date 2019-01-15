@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.viewmodels.AddEditTaskViewModel;

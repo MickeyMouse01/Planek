@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
-import com.example.thomas.plan.Common.Enums;
+import com.example.thomas.plan.common.Enums;
 import com.example.thomas.plan.interfaces.DataSource;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Plan;

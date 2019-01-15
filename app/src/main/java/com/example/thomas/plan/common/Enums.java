@@ -1,4 +1,4 @@
-package com.example.thomas.plan.Common;
+package com.example.thomas.plan.common;
 
 /**
  * Created by Thomas on 25.01.2018.

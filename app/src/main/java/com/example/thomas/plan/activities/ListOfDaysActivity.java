@@ -12,14 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.thomas.plan.Common.Enums;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
 import com.example.thomas.plan.adapters.ListOfDaysAdapter;
 import com.example.thomas.plan.interfaces.ActionItemListener;
 import com.example.thomas.plan.viewmodels.ListOfDaysViewModel;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ListOfDaysActivity extends BaseActivity {
