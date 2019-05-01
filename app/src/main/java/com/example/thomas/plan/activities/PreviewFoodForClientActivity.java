@@ -72,7 +72,7 @@ public class PreviewFoodForClientActivity extends BaseActivity {
         int day = intent.getIntExtra("positionOfDay", 0);
         int week = intent.getIntExtra("positionOfWeek", 0);
         nameOfDay = Enums.Day.values()[day].toString();
-        nameOfWeek = Enums.Week.values()[week].toString();
+        nameOfWeek = Enums.Week.values()[0].toString();
 
         mViewModel.getClientId().setValue(clientId);
 

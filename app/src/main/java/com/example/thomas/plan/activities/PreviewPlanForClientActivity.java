@@ -60,7 +60,7 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
         week = intent.getIntExtra("positionOfWeek", 0);
         day = intent.getIntExtra("positionOfDay", 0);
         nameOfDay = Day.values()[day].toString();
-        nameOfWeek = Enums.Week.values()[week].toString();
+        nameOfWeek = Enums.Week.values()[0].toString();
         mViewModel.setNameOfDay(nameOfDay);
         mViewModel.setNameOfWeek(nameOfDay);
         mViewModel.setViewedClientId(clientId);
@@ -100,7 +100,9 @@ public class PreviewPlanForClientActivity extends BaseActivity implements View.O
                 if (taskAdapter != null && tasks == null){
                     taskAdapter.clearData();
                 } else {
-                    setupTaskAdapter(tasks);
+                    if (tasks != null){
+                        setupTaskAdapter(tasks);
+                    }
                 }
 
             }

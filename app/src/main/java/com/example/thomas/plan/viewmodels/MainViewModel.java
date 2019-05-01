@@ -119,6 +119,7 @@ public class MainViewModel extends ViewModel {
             public void onPlansLoaded(@NonNull List<Plan> plans) {
                 if (plans != null){
                     Collections.sort(plans);
+
                 }
                 mListOfPlans.setValue(plans);
             }

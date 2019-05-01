@@ -11,15 +11,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.thomas.plan.ActivityUtils;
-import com.example.thomas.plan.common.Enums.Day;
-import com.example.thomas.plan.common.Enums.Week;
 import com.example.thomas.plan.R;
 import com.example.thomas.plan.ViewModelFactory;
+import com.example.thomas.plan.common.Enums.Day;
+import com.example.thomas.plan.common.Enums.Week;
+import com.example.thomas.plan.common.LoginState;
 import com.example.thomas.plan.data.Models.Client;
 import com.example.thomas.plan.data.Models.Nurse;
-import com.example.thomas.plan.common.LoginState;
-import com.example.thomas.plan.viewmodels.LoginViewModel;
 import com.example.thomas.plan.fragments.PatternLockFragment;
+import com.example.thomas.plan.viewmodels.LoginViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,8 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-
-import static com.example.thomas.plan.ActivityUtils.getActualNumberOfWeek;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -109,9 +107,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     LOGGED_CLIENT = client;
                     if (client != null) {
                         int day = ActivityUtils.getActualDay();
-                        int week = getActualNumberOfWeek();
                         String nameOfDay = Day.values()[day].toString();
-                        String nameOfWeek = Week.values()[week].toString();
+                        String nameOfWeek = Week.values()[0].toString();
                         startPreviewTasksActivity(client
                                 .getDating()
                                 .get(nameOfWeek).get(nameOfDay), client.getUniqueID());

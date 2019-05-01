@@ -155,7 +155,6 @@ public class AddEditPlanActivity extends BaseActivity implements View.OnClickLis
                     changePicture.setVisibility(View.INVISIBLE);
                     nameOfPicture = ActivityUtils.getNameOfFile(this, selectedImage);
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }

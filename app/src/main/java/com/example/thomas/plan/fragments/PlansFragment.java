@@ -61,6 +61,7 @@ public class PlansFragment extends Fragment
         listView = view.findViewById(R.id.plans_list);
 
         mMainViewModel = MainActivity.obtainViewModel(getActivity());
+
         mMainViewModel.getPlans().observe(this, new Observer<List<Plan>>() {
             @Override
             public void onChanged(@Nullable List<Plan> plans) {

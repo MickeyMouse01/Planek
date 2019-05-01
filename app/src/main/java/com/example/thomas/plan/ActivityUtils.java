@@ -44,7 +44,7 @@ public class ActivityUtils {
             }
             week = week + 4;
         }
-        return week - 1;
+        return 0;
     }
 
     public static int getActualDay(){

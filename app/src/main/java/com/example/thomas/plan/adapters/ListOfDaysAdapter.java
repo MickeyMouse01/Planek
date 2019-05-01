@@ -31,10 +31,9 @@ public class ListOfDaysAdapter extends BaseAdapter {
 
     private void setDayAndWeek() {
         actualDay = ActivityUtils.getActualDay();
-        actualWeek = ActivityUtils.getActualNumberOfWeek();
 
         nameOfDay = Enums.Day.values()[actualDay].toString();
-        nameOfWeek = Enums.Week.values()[actualWeek].toString();
+        nameOfWeek = Enums.Week.values()[0].toString();
     }
 
     public void replaceData(List<String> days) {
